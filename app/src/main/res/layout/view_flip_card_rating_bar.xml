@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_surface_variant"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/spacing_medium"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingBottom="@dimen/spacing_medium">
+
+    <TextView
+        style="@style/TextAppearance.TalkMe.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_xs"
+        android:gravity="center"
+        android:text="Qanchalik eslab qoldingiz? (Darajani tanlang)"
+        android:textColor="@color/color_text_secondary"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRateAgain"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="@dimen/spacing_xxs"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="4dp"
+            android:text="@string/flip_btn_again"
+            android:textColor="@color/color_error"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/color_error_light"
+            app:cornerRadius="@dimen/radius_medium"
+            app:strokeColor="@color/color_error"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRateHard"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginHorizontal="@dimen/spacing_xxs"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="4dp"
+            android:text="@string/flip_btn_hard"
+            android:textColor="#B45309"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/color_warning_light"
+            app:cornerRadius="@dimen/radius_medium"
+            app:strokeColor="@color/color_warning"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRateGood"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginHorizontal="@dimen/spacing_xxs"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="4dp"
+            android:text="@string/flip_btn_good"
+            android:textColor="@color/color_primary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/color_primary_light"
+            app:cornerRadius="@dimen/radius_medium"
+            app:strokeColor="@color/color_primary_variant"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRateEasy"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="@dimen/spacing_xxs"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="4dp"
+            android:text="@string/flip_btn_easy"
+            android:textColor="#047857"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/color_success_light"
+            app:cornerRadius="@dimen/radius_medium"
+            app:strokeColor="@color/color_success"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
+
+</LinearLayout>

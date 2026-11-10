@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/headerVocabTopics"
+        layout="@layout/view_screen_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_xs">
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:background="@color/color_primary" />
+
+        <TextView
+            android:id="@+id/tvVocabTopicsSummary"
+            style="@style/TextAppearance.TalkMe.Subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="O'tilgan mavzular va Sub-topiclar"
+            android:textColor="@color/color_text_primary"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvVocabularyTopics"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingHorizontal="10dp"
+        android:paddingBottom="@dimen/spacing_large" />
+
+</LinearLayout>

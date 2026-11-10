@@ -1,0 +1,6 @@
+{
+  "name": "TalkMe",
+  "description": "Offline-first English learning application for Uzbek speakers with structured curriculum, interactive exercises, 3D vocabulary flip cards, TTS, and Gemini Live Speaking & Reading AI tutors.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#60A5FA</color>
+    <color name="color_primary_variant">#3B82F6</color>
+    <color name="color_primary_light">#1E293B</color>
+    <color name="color_secondary">#2DD4BF</color>
+    <color name="color_secondary_light">#134E4A</color>
+    <color name="color_accent">#FBBF24</color>
+    <color name="color_accent_light">#451A03</color>
+
+    <color name="color_background">#0F172A</color>
+    <color name="color_surface">#1E293B</color>
+    <color name="color_surface_variant">#334155</color>
+    <color name="color_surface_elevated">#1E293B</color>
+    <color name="color_divider">#334155</color>
+    <color name="color_card_stroke">#334155</color>
+
+    <color name="color_text_primary">#F8FAFC</color>
+    <color name="color_text_secondary">#CBD5E1</color>
+    <color name="color_text_muted">#64748B</color>
+    <color name="color_text_on_primary">#0F172A</color>
+
+    <color name="color_success">#34D399</color>
+    <color name="color_success_light">#064E3B</color>
+    <color name="color_warning">#FBBF24</color>
+    <color name="color_warning_light">#451A03</color>
+    <color name="color_error">#F87171</color>
+    <color name="color_error_light">#7F1D1D</color>
+
+    <color name="color_topic_unlocked_bg">#1E293B</color>
+    <color name="color_topic_completed_bg">#064E3B</color>
+    <color name="color_topic_locked_bg">#0F172A</color>
+
+    <color name="color_hero_gradient_start">#1E3A8A</color>
+    <color name="color_hero_gradient_end">#115E59</color>
+
+    <color name="color_chart_reading">#60A5FA</color>
+    <color name="color_chart_writing">#A78BFA</color>
+    <color name="color_chart_speaking">#2DD4BF</color>
+    <color name="color_chart_listening">#FBBF24</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

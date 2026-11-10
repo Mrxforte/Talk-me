@@ -1,0 +1,1221 @@
+# TALKME — COMPLETE ANDROID APPLICATION REBUILD MASTER PROMPT
+
+## 1. ROLE AND PROJECT OBJECTIVE
+
+Act as a Senior Android Software Architect, Senior Kotlin Developer, UI/UX Designer, and AI Integration Engineer.
+
+Your task is to completely rebuild the TalkMe English Learning Android application from scratch.
+
+Do not simply redesign the existing UI. Analyze the existing project, understand its current structure, identify reusable learning concepts, and rebuild the application using a professional, scalable, maintainable Android architecture.
+
+The final result must be a fully functional English learning application, not a static UI prototype.
+
+### Product identity
+
+- Application name: TalkMe
+- Platform: Android
+- Programming language: Kotlin
+- UI technology: Native Android XML layouts
+- Architecture: Clean Architecture + MVVM
+- Activity architecture: Single Activity Architecture
+- UI binding: ViewBinding
+- Database: Room
+- Preferences: DataStore
+- Dependency Injection: Hilt
+- Asynchronous operations: Kotlin Coroutines and Flow
+- AI integration: Gemini API
+- Speech: Android Native Text-to-Speech and Gemini TTS
+- Speaking and Reading: Separate Gemini Live AI sessions
+- Network strategy: Offline-first
+- Backend: No custom backend for the current development phase.
+
+The application must be designed for long-term growth. Future developers must be able to add new topics, lessons, exercises, languages, AI services, and features without rewriting existing modules.
+
+---
+
+# 2. STRICT DEVELOPMENT RULES
+
+These requirements are mandatory.
+
+1. Use Kotlin exclusively for Android application logic.
+2. Use XML layouts for all UI screens.
+3. Do not use Jetpack Compose.
+4. Use a single MainActivity.
+5. Use Fragments and Navigation Component for screen navigation.
+6. Implement MVVM with ViewModels.
+7. Follow Clean Architecture and SOLID principles.
+8. Separate Presentation, Domain, and Data layers.
+9. Use Room as the primary local database.
+10. Use DataStore for application preferences.
+11. Use Hilt for dependency injection.
+12. Use Coroutines and Flow for asynchronous operations.
+13. Use RecyclerView and reusable adapters where appropriate.
+14. Use ViewBinding instead of findViewById.
+15. Do not create unnecessary duplicate components.
+16. Do not put business logic inside Activities or Fragments.
+17. Do not put database queries directly inside UI components.
+18. Do not create giant classes containing unrelated responsibilities.
+19. Do not hardcode UI values, strings, colors, dimensions, fonts, icons, or configuration values.
+20. Every important class, interface, method, and component must have clear English documentation explaining its purpose and responsibility.
+
+### Centralized resource management
+
+All UI resources must be centrally managed.
+
+- Colors: res/values/colors.xml
+- Strings: res/values/strings.xml
+- Dimensions: res/values/dimens.xml
+- Styles and themes: res/values/styles.xml and themes.xml
+- Fonts: res/font/
+- Icons: res/drawable/
+- Illustrations: res/drawable/ or appropriate image resources
+- Animations: res/anim/ and res/animator/
+- Navigation: res/navigation/
+- Layouts: res/layout/
+
+Create additional resource files when necessary.
+
+Use semantic naming conventions.
+
+Example:
+color_primary
+color_surface
+color_text_primary
+spacing_small
+spacing_medium
+spacing_large
+text_size_body
+text_size_heading
+radius_card_large
+
+Never duplicate resource definitions.
+
+Avoid magic numbers in Kotlin code. Centralize reusable configuration and UI values.
+
+---
+
+# 3. APPLICATION NAVIGATION
+
+Create one MainActivity containing a BottomNavigationView.
+
+The application must have exactly four primary navigation destinations:
+
+1. Home
+2. Lessons
+3. Practice
+4. Profile
+
+Use Navigation Component with a NavHostFragment.
+
+Navigation must preserve appropriate screen states and avoid unnecessarily recreating screens.
+
+Implement proper back navigation, deep navigation handling where appropriate, and selected navigation states.
+
+Settings must be accessible from Profile.
+
+---
+
+# 4. HOME SCREEN
+
+Create a premium, modern, visually attractive Home Dashboard.
+
+The Home Screen is the central learning dashboard.
+
+## 4.1 Header
+
+Display:
+- Greeting based on the time of day.
+- User avatar.
+- User name.
+- Notification icon if notifications are implemented.
+
+Keep the header clean and minimal.
+
+## 4.2 Hero Banner — Continue Learning
+
+This is one of the most important elements of the Home Screen.
+
+Create a large, visually attractive Hero Banner.
+
+It must contain:
+- Current course name.
+- Current topic.
+- Current lesson or subtopic.
+- Progress percentage.
+- Progress indicator.
+- Continue Learning button.
+- Attractive illustration or visual element.
+
+### Functional requirement
+
+When the user presses Continue Learning:
+
+Open the exact lesson and section where the user previously stopped.
+
+Do not simply open the beginning of the current topic.
+
+Persist:
+- Current topic ID.
+- Current section ID.
+- Current lesson ID.
+- Last learning position.
+- Completion status.
+
+The application must restore this state after closing and reopening.
+
+If the user has not started learning yet, display a Start Learning state instead.
+
+## 4.3 Learning Statistics
+
+Create two prominent statistic cards:
+
+### Card 1: Memorized Unique Words
+
+Display the number of unique English vocabulary items the user has genuinely memorized.
+
+### Card 2: Mastered Grammar Rules
+
+Display the number of grammar rules the user has genuinely mastered.
+
+IMPORTANT:
+
+These statistics must be dynamic.
+
+They must be calculated from actual learning progress stored in Room.
+
+Do not use static numbers.
+
+Do not count the same vocabulary item multiple times.
+
+Do not count every opened grammar lesson as mastered.
+
+Define clear completion and mastery criteria.
+
+## 4.4 Additional Progress
+
+Display:
+- Overall course completion.
+- Completed topics.
+- Current learning streak, if implemented.
+- Recent learning activity.
+
+All statistics must be connected to real local data.
+
+---
+
+# 5. LESSONS SCREEN
+
+Create a beautiful course progression interface.
+
+The Lessons Screen displays the complete TalkMe learning curriculum.
+
+Use reusable topic cards.
+
+Each topic card must display:
+- Topic title.
+- Uzbek translation or explanation.
+- Topic illustration or icon.
+- Completion progress.
+- Number of completed sections.
+- Locked, available, or completed state.
+
+Use attractive visual differences between locked, active, and completed topics.
+
+Locked topics must be visually recognizable but must not appear disabled in an ugly or outdated way.
+
+## 5.1 Initial Curriculum
+
+For the first version, implement ONLY the following 12 topics.
+
+Do not invent additional course topics.
+
+1. Phonetics — Fonetika
+2. Numbers — Sonlar
+3. Nouns — Otlar
+4. Demonstratives — Ko'rsatkichlar
+5. Adjectives — Sifatlar
+6. Articles — Artikllar
+7. Prepositions — Predloglar
+8. Pronouns — Olmoshlar
+9. Adverbs — Ravishlar
+10. Adverbials — Hol
+11. Verbs — Fe'llar
+12. Irregular Verbs — Noto'g'ri fe'llar
+
+The curriculum must be stored as structured local content, not hardcoded inside Fragments or Activities.
+
+Use entities and relationships that make adding future topics easy.
+
+## 5.2 Sequential Unlock System
+
+Implement a real course progression system.
+
+Rules:
+
+- The first topic is available.
+- Topics that have not been unlocked are locked.
+- Completing the required learning criteria unlocks the next topic.
+- Users cannot enter locked lessons.
+- Completed topics display their completion status.
+- Progress is preserved permanently in the local database.
+
+Do not implement a fake lock system that only changes card appearance.
+
+Enforce unlocking rules in the Domain layer.
+
+## 5.3 Topic Details Screen
+
+When a user opens an available topic, display its sections as individual lesson cards.
+
+Every topic must support multiple sections (subtopics).
+
+Each section must have:
+- Section title.
+- Short description.
+- Learning status.
+- Completion indicator.
+- Appropriate icon or illustration.
+
+Sections must also support sequential unlocking where required.
+
+The lesson content should be data-driven.
+
+Do not create separate hardcoded layouts for each topic.
+
+Use a common reusable lesson engine that renders different content types based on structured data.
+
+---
+
+# 6. LEARNING CONTENT SYSTEM
+
+The entire educational system must be designed around minimal vocabulary acquisition.
+
+The objective is to teach English from absolute beginner level to advanced practical usage through a carefully structured progression.
+
+## Core teaching philosophy
+
+1. Explain concepts in Uzbek first.
+2. Introduce only the vocabulary necessary for the current lesson.
+3. Avoid overwhelming beginners with terminology.
+4. Use short and clear examples.
+5. Explain English grammar in simple Uzbek.
+6. Increase complexity gradually.
+7. Reuse previously learned vocabulary.
+8. Connect grammar examples with previously studied topics.
+9. Avoid introducing unknown grammar in beginner exercises.
+10. Every lesson must have a clear learning objective.
+
+### Vocabulary rules
+
+Each lesson should introduce a small number of new words.
+
+Avoid unnecessarily large vocabulary lists.
+
+Each vocabulary entry must contain:
+- Unique ID.
+- English word.
+- Uzbek translation.
+- Topic association.
+- Lesson association.
+- Audio availability.
+- Learning status.
+
+Do not include phonetic transcriptions or IPA.
+
+Never display pronunciation transcriptions anywhere in the application.
+
+English pronunciation must be delivered through audio.
+
+### Grammar rules
+
+Each grammar rule must contain:
+- Rule ID.
+- Topic ID.
+- Section ID.
+- Uzbek explanation.
+- English examples.
+- Uzbek translations.
+- Associated vocabulary.
+- Learning status.
+
+The system must allow future developers to add more detailed grammar content without changing the lesson engine.
+
+---
+
+# 7. LESSON CONTENT EXPERIENCE
+
+Create a professional, reusable lesson interface.
+
+A lesson may contain:
+
+1. Introduction.
+2. Simple explanation in Uzbek.
+3. New vocabulary.
+4. Grammar rules.
+5. English examples.
+6. Uzbek translations.
+7. Interactive exercises.
+8. Lesson completion.
+9. Wrap-up.
+
+Use the term "Wrap-up" for the final lesson section.
+
+Do not use "Warm-up" as a replacement for Wrap-up.
+
+The lesson interface must support different content types without creating a separate Fragment for each lesson.
+
+All English words, sentences, examples, and reading texts must support audio playback.
+
+Every English text element that needs pronunciation must have an accessible speaker action.
+
+---
+
+# 8. PRACTICE SCREEN
+
+Create a separate Practice Center.
+
+This screen must contain exercises based exclusively on previously studied material.
+
+The Practice Center must not expose vocabulary or grammar rules that the user has not learned.
+
+Use the user's real learning history to generate eligible practice content.
+
+Create the following practice categories.
+
+## 8.1 Reading
+
+Reading exercises based on studied vocabulary and grammar.
+
+Features:
+- Short reading passages.
+- Sentence comprehension.
+- Questions about the text.
+- Vocabulary understanding.
+- Audio playback.
+- Reading progress.
+
+## 8.2 Writing
+
+Writing exercises based on studied content.
+
+Features:
+- Translate Uzbek sentences into English.
+- Complete missing words.
+- Build sentences.
+- Correct grammar mistakes.
+- Write short sentences using learned vocabulary.
+
+## 8.3 Speaking
+
+Speaking exercises based on studied topics.
+
+Features:
+- Topic-based AI conversation.
+- Voice input.
+- Spoken AI responses.
+- Pronunciation feedback.
+- Grammar feedback.
+- Vocabulary usage analysis.
+
+## 8.4 Listening
+
+Listening exercises based on studied vocabulary and grammar.
+
+Features:
+- Listen to English words.
+- Listen to English sentences.
+- Understand spoken phrases.
+- Choose the correct meaning.
+- Fill missing words.
+- Listen and answer questions.
+
+## 8.5 Grammar Practice
+
+Generate exercises using mastered and previously studied grammar rules.
+
+## 8.6 Vocabulary Practice
+
+Use previously studied vocabulary.
+
+Provide:
+- Translation.
+- Word recognition.
+- Word matching.
+- Sentence completion.
+- Audio recognition.
+
+All exercises must be connected to topic IDs, section IDs, vocabulary IDs, and grammar rule IDs.
+
+---
+
+# 9. FLIP CARD SYSTEM
+
+Implement a dedicated Vocabulary Review experience.
+
+This feature must have a polished, attractive design.
+
+Use custom card layouts and smooth 3D flip animations.
+
+### Front side
+
+Display:
+- English word.
+- Speaker button.
+- Optional visual illustration.
+
+### Back side
+
+Display:
+- Uzbek translation.
+- Simple example sentence.
+- Speaker button for English pronunciation.
+
+### Interaction
+
+When the user taps the card, rotate it with a smooth 3D flip animation.
+
+Provide:
+- I Know This Word.
+- Need More Practice.
+
+Save the result in Room.
+
+Words marked as memorized must contribute to the unique memorized words statistic.
+
+Words requiring more practice must return to the review queue.
+
+Implement a spaced repetition system with a configurable scheduling strategy.
+
+Keep the review scheduling logic independent from the UI.
+
+Avoid duplicate words in the same review session.
+
+---
+
+# 10. PROFILE SCREEN
+
+Create a premium Profile and Learning Analytics dashboard.
+
+The profile must display:
+
+- User avatar.
+- User name.
+- Account information.
+- Total learning progress.
+- Memorized unique words.
+- Mastered grammar rules.
+- Completed topics.
+- Completed sections.
+- Learning activity.
+
+## 10.1 Performance Charts
+
+Use attractive charts to visualize real learning data.
+
+Create separate statistics for:
+
+- Reading.
+- Writing.
+- Speaking.
+- Listening.
+
+Display:
+- Progress over time.
+- Practice accuracy.
+- Completed exercises.
+- Performance trends.
+- Weekly learning activity.
+
+Use a professional chart library compatible with native Android Views.
+
+Charts must be generated from real local records.
+
+Never display fake analytics.
+
+## 10.2 Learning History
+
+Display recent learning activities.
+
+Examples:
+- Completed a phonetics section.
+- Memorized new vocabulary.
+- Finished grammar exercises.
+- Completed a reading session.
+- Practiced speaking.
+
+## 10.3 Achievements
+
+Create a scalable achievement system.
+
+Achievements must be based on real user actions.
+
+---
+
+# 11. SETTINGS SCREEN
+
+Create a dedicated Settings screen accessible from Profile.
+
+Include:
+
+### Account
+- Profile information.
+- Account preferences.
+
+### Appearance
+- Light theme.
+- Dark theme.
+- System default.
+
+### Audio
+- Enable or disable sound.
+- Native TTS settings.
+- Voice preferences.
+- Speech speed.
+
+### Learning
+- Learning preferences.
+- Review preferences.
+- Daily learning goal.
+
+### Premium
+- Premium subscription information.
+- Gemini TTS access.
+- Premium AI features.
+
+### Storage
+- Local content information.
+- Cache management.
+- Storage usage.
+
+### About
+- Application version.
+- Privacy information.
+- Terms and conditions.
+
+Persist settings using DataStore.
+
+---
+
+# 12. TEXT-TO-SPEECH SYSTEM
+
+Implement a centralized TTS subsystem.
+
+Every English word, sentence, example, and reading passage must support audio playback.
+
+Do not use phonetic transcriptions.
+
+## 12.1 Free TTS
+
+Use Android Native TextToSpeech.
+
+Requirements:
+- Free usage.
+- No external API requirement.
+- Support offline playback when the selected device voice is installed.
+- Configurable speech speed.
+- Configurable voice selection.
+- Proper lifecycle management.
+- Audio state handling.
+- Error handling.
+
+## 12.2 Premium Gemini TTS
+
+Integrate Gemini TTS for premium users.
+
+Use the requested Gemini TTS 3.8 capability where available.
+
+Before implementation, verify the actual supported Gemini TTS model identifiers and current API requirements.
+
+Do not invent model names or endpoints.
+
+Requirements:
+- Natural English pronunciation.
+- Better speech quality.
+- Configurable voice.
+- Audio caching.
+- Reuse cached audio.
+- Proper error handling.
+- Premium entitlement checks.
+
+The application must automatically select the correct provider based on subscription status and user settings.
+
+Use a provider abstraction:
+
+TtsProvider
+- NativeTtsProvider
+- GeminiTtsProvider
+
+The UI must not depend directly on Gemini SDK classes.
+
+Do not expose API keys inside source code or APK resources.
+
+Use a secure configuration strategy and clearly document the limitations of direct client-side API access. Keep the AI service layer replaceable with a future backend proxy.
+
+---
+
+# 13. GEMINI LIVE — SPEAKING AND READING
+
+Implement two completely separate AI learning experiences.
+
+They must have separate session configurations, prompts, conversation history, and progress tracking.
+
+Do not combine them into one generic chatbot.
+
+## 13.1 Speaking AI
+
+Create a dedicated Speaking screen.
+
+The student communicates with an AI English tutor through voice.
+
+The AI must follow strict educational boundaries.
+
+### Speaking AI instructions
+
+The AI tutor must:
+
+1. Speak primarily in simple English appropriate to the student's level.
+2. Follow the currently selected topic.
+3. Use only previously learned vocabulary and grammar, except when explaining a necessary correction.
+4. Avoid introducing unrelated subjects.
+5. Ask questions connected to the selected topic.
+6. Encourage the student to produce English sentences.
+7. Detect grammar mistakes.
+8. Identify vocabulary mistakes.
+9. Provide simple corrections.
+10. Give short explanations when necessary.
+11. Avoid overwhelming beginners.
+12. Track the student's performance.
+
+Example:
+
+Current topic: Nouns.
+
+The AI may ask:
+- What is this?
+- Is this a book?
+- What objects can you see?
+- Can you make a sentence using a noun?
+
+The AI must not suddenly start discussing unrelated topics or advanced grammar.
+
+### Speaking interface
+
+Display:
+- AI tutor visual or avatar.
+- Current topic.
+- Listening indicator.
+- Speaking indicator.
+- Microphone button.
+- End session button.
+- Session duration.
+- Conversation transcript.
+- Connection state.
+
+Use Gemini Live for real-time voice interaction.
+
+Implement proper microphone permissions, audio session management, connection lifecycle, reconnection, and failure handling.
+
+## 13.2 Reading AI
+
+Create a separate Reading AI screen and a separate Gemini Live session configuration.
+
+The purpose is to help users improve English reading and comprehension.
+
+The AI must:
+
+1. Generate or present reading material appropriate to the current topic.
+2. Use previously learned vocabulary.
+3. Respect the student's grammar level.
+4. Help the student understand the text.
+5. Ask questions about the reading passage.
+6. Explain difficult words in Uzbek when needed.
+7. Evaluate comprehension answers.
+8. Provide corrections and feedback.
+9. Track reading performance.
+
+Reading sessions must not inherit Speaking session history or state.
+
+### Reading interface
+
+Display:
+- Reading passage.
+- Current topic.
+- Text playback.
+- Reading progress.
+- Questions.
+- Answer interface.
+- AI assistance.
+- Session results.
+
+All English reading text must have a speaker button.
+
+Both AI experiences must have independent session management and independent performance records.
+
+IMPORTANT:
+
+Gemini Live and other cloud AI features require internet access. Offline learning must continue normally when these services are unavailable.
+
+Do not pretend that AI functionality works offline.
+
+---
+
+# 14. OFFLINE-FIRST DATABASE ARCHITECTURE
+
+The application must work without a custom backend in this development phase.
+
+Room is the single source of truth for local learning data.
+
+Use a structured database schema.
+
+Suggested entities:
+
+- UserProfileEntity
+- CourseEntity
+- TopicEntity
+- LessonSectionEntity
+- LessonContentEntity
+- VocabularyEntity
+- GrammarRuleEntity
+- UserTopicProgressEntity
+- UserSectionProgressEntity
+- UserVocabularyProgressEntity
+- UserGrammarProgressEntity
+- ExerciseEntity
+- ExerciseAttemptEntity
+- PracticeSessionEntity
+- SpeakingSessionEntity
+- ReadingSessionEntity
+- LearningActivityEntity
+- ReviewScheduleEntity
+- AchievementEntity
+- UserAchievementEntity
+
+Design proper relationships, primary keys, foreign keys, indexes, and migrations.
+
+Do not store the entire application state in one database table.
+
+Use DAOs for database access.
+
+Use repositories to abstract data access.
+
+## Offline requirements
+
+The following must work without internet:
+
+- Home Screen.
+- Course navigation.
+- Lessons.
+- Lesson progress.
+- Vocabulary review.
+- Flip Cards.
+- Grammar practice.
+- Locally stored exercises.
+- Profile statistics.
+- Learning history.
+- Settings.
+- Native TTS when a compatible offline voice is installed.
+
+AI services and premium cloud TTS may require internet.
+
+Show appropriate offline states.
+
+Never block the entire application because of an internet connection failure.
+
+---
+
+# 15. CLEAN ARCHITECTURE AND PROJECT STRUCTURE
+
+Organize the application using feature-oriented modules or clearly separated packages.
+
+Suggested structure:
+
+app/
+- MainActivity
+- navigation
+- TalkMeApplication
+
+core/
+- common
+- designsystem
+- database
+- datastore
+- network
+- audio
+- ai
+- ui
+- extensions
+
+domain/
+- model
+- repository
+- usecase
+
+data/
+- local
+- remote
+- repository
+- mapper
+
+feature/
+- home
+- lessons
+- lesson_detail
+- practice
+- vocabulary_review
+- reading
+- speaking
+- profile
+- settings
+
+Each feature should contain its own:
+
+- data where needed
+- domain where needed
+- presentation
+- ViewModel
+- XML layouts
+- adapters
+- UI state models
+
+Avoid creating empty layers or unnecessary abstractions.
+
+Maintain clear dependency direction:
+
+Presentation → Domain ← Data
+
+The Domain layer must not depend on Android UI classes, Room entities, or Gemini SDK implementations.
+
+Use interfaces to isolate infrastructure dependencies.
+
+---
+
+# 16. UI/UX DESIGN REQUIREMENTS
+
+The application must look like a professionally designed commercial language-learning product.
+
+Do not use generic Android default layouts.
+
+Do not use an outdated or overly basic design.
+
+Design direction:
+
+- Premium.
+- Modern.
+- Minimal.
+- Professional.
+- Friendly.
+- Educational.
+- Visually consistent.
+
+Use:
+- Attractive typography.
+- Carefully balanced spacing.
+- Rounded cards.
+- Consistent corner radii.
+- Subtle shadows.
+- Smooth animations.
+- Beautiful empty states.
+- Loading skeletons where appropriate.
+- Meaningful icons.
+- Clear visual hierarchy.
+
+The design must support light and dark themes.
+
+Do not overcrowd the interface.
+
+Do not place unnecessary promotional banners on the Home Screen.
+
+The Continue Learning Hero Banner must be the main visual focus.
+
+All screens must use shared design components and centralized resources.
+
+Create reusable XML components for:
+- Buttons.
+- Statistic cards.
+- Topic cards.
+- Progress indicators.
+- Vocabulary cards.
+- Empty states.
+- Loading states.
+- Error states.
+- Headers.
+- Section titles.
+
+All components must be reusable and configurable.
+
+---
+
+# 17. DATA-DRIVEN CONTENT AND FUTURE SCALABILITY
+
+The first release must contain only the 12 specified topics.
+
+However, the content architecture must support future expansion.
+
+Do not create a separate Kotlin class for every topic.
+
+Create a structured content system that supports:
+
+- New topics.
+- New sections.
+- New grammar rules.
+- New vocabulary.
+- New exercises.
+- New languages.
+- New learning levels.
+
+Content should be stored in structured local JSON assets or an appropriate local content repository and imported into Room.
+
+Separate educational content from presentation logic.
+
+Adding a new topic should require adding structured content and registering its curriculum position, not rewriting the UI.
+
+Use stable IDs for all learning content.
+
+---
+
+# 18. EXERCISE ENGINE
+
+Create a reusable exercise engine.
+
+It must support multiple exercise types:
+
+- Multiple choice.
+- Word matching.
+- Translation.
+- Fill in the blanks.
+- Sentence building.
+- Listening comprehension.
+- Reading comprehension.
+- Grammar correction.
+- Vocabulary recognition.
+- Audio recognition.
+- Writing answers.
+
+Each exercise must have:
+- Unique ID.
+- Topic ID.
+- Section ID.
+- Difficulty.
+- Exercise type.
+- Question content.
+- Answer data.
+- Explanation.
+- Associated vocabulary IDs.
+- Associated grammar rule IDs.
+
+Randomize answer positions where appropriate.
+
+Never make the correct answer always appear in the same position.
+
+Exercise results must be stored locally.
+
+Practice sessions must use eligible previously studied content.
+
+Build the exercise engine so new exercise types can be introduced without rewriting existing exercises.
+
+---
+
+# 19. SECURITY, QUALITY AND PERFORMANCE
+
+Mandatory requirements:
+
+- Never commit API keys.
+- Never expose secret credentials in source code.
+- Use secure storage for sensitive local preferences where appropriate.
+- Request microphone permissions only when needed.
+- Handle microphone permission denial.
+- Handle AI connection failures.
+- Handle TTS failures.
+- Avoid memory leaks.
+- Avoid blocking the main thread.
+- Use lifecycle-aware components.
+- Use efficient RecyclerView implementations.
+- Use database migrations.
+- Use proper error states.
+- Avoid duplicate database records.
+- Validate user input.
+- Handle application process recreation.
+- Preserve user progress.
+
+Implement unit tests for:
+- Progress calculations.
+- Topic unlocking.
+- Lesson completion.
+- Vocabulary mastery.
+- Review scheduling.
+- Exercise evaluation.
+- Repository behavior.
+- ViewModel state handling.
+
+Add UI tests for the most important navigation and learning flows.
+
+---
+
+# 20. IMPLEMENTATION WORKFLOW
+
+Do not attempt to build the entire application in one uncontrolled step.
+
+Follow this implementation sequence.
+
+### Phase 1 — Existing Project Analysis
+
+Inspect the complete existing project.
+
+Identify:
+- Existing application structure.
+- Existing assets.
+- Existing learning content.
+- Existing business logic.
+- Existing dependencies.
+- Reusable components.
+
+Prepare a migration and rebuild plan.
+
+Do not blindly reuse incompatible code.
+
+### Phase 2 — Foundation
+
+Implement:
+- Gradle configuration.
+- Dependencies.
+- Hilt.
+- Single Activity.
+- Navigation Component.
+- Design system.
+- Resource structure.
+- Room database.
+- DataStore.
+- Core architecture.
+
+Make sure the project builds successfully.
+
+### Phase 3 — Core Learning System
+
+Implement:
+- Course content.
+- Curriculum.
+- Topic unlocking.
+- Sections.
+- Lesson engine.
+- Progress tracking.
+- Vocabulary system.
+- Grammar system.
+
+### Phase 4 — Main Screens
+
+Implement:
+- Home.
+- Lessons.
+- Topic details.
+- Lesson experience.
+- Practice.
+- Flip Cards.
+- Profile.
+- Settings.
+
+Connect every screen to real data.
+
+### Phase 5 — Exercise System
+
+Implement all initial exercise types.
+
+Connect results to the learning database.
+
+Implement practice eligibility based on studied topics.
+
+### Phase 6 — Audio
+
+Implement:
+- Native TTS.
+- Gemini TTS.
+- Audio provider abstraction.
+- Playback controls.
+- Audio caching.
+- Premium access handling.
+
+### Phase 7 — AI Features
+
+Implement:
+- Speaking Gemini Live.
+- Reading Gemini Live.
+- Separate prompts.
+- Separate sessions.
+- Topic restrictions.
+- Feedback.
+- Performance tracking.
+
+### Phase 8 — Quality Assurance
+
+Test:
+- First installation.
+- First lesson.
+- Lesson completion.
+- Topic unlocking.
+- Continue Learning.
+- Vocabulary review.
+- Flip Card animations.
+- Offline behavior.
+- TTS.
+- AI connection.
+- Profile analytics.
+- Settings persistence.
+- App process recreation.
+
+Fix all compilation errors and critical runtime bugs.
+
+---
+
+# 21. FINAL ACCEPTANCE CRITERIA
+
+The application is not complete until all of the following conditions are satisfied:
+
+1. The Android project builds successfully.
+2. The application launches without crashing.
+3. Single Activity navigation works.
+4. All four bottom navigation sections work.
+5. The Home Screen displays real learning statistics.
+6. Continue Learning restores the exact previous learning position.
+7. All 12 initial topics are available in the curriculum.
+8. Locked topics cannot be opened.
+9. Topic and section progress is persisted.
+10. Lessons use reusable data-driven layouts.
+11. Vocabulary mastery is tracked correctly.
+12. Grammar mastery is tracked correctly.
+13. Flip Cards have functional 3D animations.
+14. Vocabulary review results are saved.
+15. Practice exercises use previously studied content.
+16. Reading, Writing, Speaking, and Listening have separate experiences.
+17. Profile charts use real learning records.
+18. Settings are persisted.
+19. Native TTS works where a supported voice is available.
+20. Gemini TTS is isolated behind a provider interface.
+21. Speaking and Reading use separate Gemini Live sessions.
+22. AI sessions respect the current learning topic and vocabulary level.
+23. Core learning features work offline.
+24. No unnecessary hardcoded UI values exist.
+25. Adding new course topics does not require rewriting existing UI.
+26. Important code components have clear English documentation.
+27. Unit tests cover critical business logic.
+
+## FINAL INSTRUCTION
+
+Prioritize correctness, architecture, educational logic, and maintainability over superficial visual completion.
+
+Do not generate placeholder buttons that do nothing.
+
+Do not create fake statistics.
+
+Do not simulate AI functionality while claiming that real Gemini integration exists.
+
+Do not leave major screens as static prototypes.
+
+If an external API requires credentials, implement the actual integration structure, document the required configuration, and show a clear connection state until credentials are provided.
+
+After each implementation phase:
+- Explain what was implemented.
+- List created and modified files.
+- Report build and test results.
+- Identify remaining work.
+- Continue with the next phase.
+
+The final goal is a production-oriented, scalable, offline-first native Android English learning application called TalkMe.

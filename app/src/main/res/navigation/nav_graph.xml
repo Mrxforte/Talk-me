@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.feature.home.HomeFragment"
+        android:label="@string/nav_home" />
+
+    <fragment
+        android:id="@+id/lessonsFragment"
+        android:name="com.example.feature.lessons.LessonsFragment"
+        android:label="@string/nav_lessons" />
+
+    <fragment
+        android:id="@+id/topicDetailFragment"
+        android:name="com.example.feature.lessons.TopicDetailFragment"
+        android:label="@string/nav_lessons" />
+
+    <fragment
+        android:id="@+id/lessonDetailFragment"
+        android:name="com.example.feature.lessondetail.LessonDetailFragment"
+        android:label="@string/nav_lessons" />
+
+    <fragment
+        android:id="@+id/dailyTasksFragment"
+        android:name="com.example.feature.dailytasks.DailyTasksFragment"
+        android:label="@string/nav_tasks" />
+
+    <fragment
+        android:id="@+id/practiceFragment"
+        android:name="com.example.feature.practice.PracticeFragment"
+        android:label="@string/nav_practice" />
+
+    <fragment
+        android:id="@+id/exerciseSessionFragment"
+        android:name="com.example.feature.practice.ExerciseSessionFragment"
+        android:label="@string/nav_practice" />
+
+    <fragment
+        android:id="@+id/vocabularyTopicsFragment"
+        android:name="com.example.feature.vocabularyreview.VocabularyTopicsFragment"
+        android:label="@string/stat_memorized_words_title" />
+
+    <fragment
+        android:id="@+id/vocabularySubtopicsFragment"
+        android:name="com.example.feature.vocabularyreview.VocabularySubtopicsFragment"
+        android:label="@string/stat_memorized_words_title" />
+
+    <fragment
+        android:id="@+id/flipCardFragment"
+        android:name="com.example.feature.vocabularyreview.FlipCardFragment"
+        android:label="@string/flip_cards_title" />
+
+    <fragment
+        android:id="@+id/speakingAiFragment"
+        android:name="com.example.feature.speaking.SpeakingAiFragment"
+        android:label="@string/speaking_ai_title" />
+
+    <fragment
+        android:id="@+id/readingAiFragment"
+        android:name="com.example.feature.reading.ReadingAiFragment"
+        android:label="@string/reading_ai_title" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.feature.profile.ProfileFragment"
+        android:label="@string/nav_profile" />
+
+</navigation>

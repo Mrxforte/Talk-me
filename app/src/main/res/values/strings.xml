@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TalkMe</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_lessons">Lessons</string>
+    <string name="nav_tasks">Tasks</string>
+    <string name="nav_practice">Practice</string>
+    <string name="nav_profile">Profile</string>
+    <string name="action_back">Back</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Daily Tasks & Mistake Tracker -->
+    <string name="daily_tasks_header_title">Kunlik Reja (Daily Tasks)</string>
+    <string name="daily_tasks_header_subtitle">Mavzu bo\'yicha kunlik mashqlar va xatolarni tuzatish</string>
+    <string name="daily_tasks_topic_filter_label">O\'tilgan mavzu bo\'yicha reja (Topic Plan)</string>
+    <string name="daily_tasks_progress_title">Bugungi kunlik reja</string>
+    <string name="daily_tasks_btn_sequential">Birin-ketin bajarish (Start Sequential Plan)</string>
+    <string name="daily_tasks_btn_review_again">Barchasi bajarildi • Qayta mashq qilish</string>
+    <string name="daily_tasks_warnings_title">Mavzu bo\'yicha xatolar ogohlantirishi (Mistake Alerts)</string>
+    <string name="daily_tasks_no_mistakes">Ajoyib! Ushbu mavzuda xatolar yo\'q — barcha qoida va so\'zlar o\'zlashtirilgan.</string>
+    <string name="daily_tasks_steps_title">Kunlik 6 bosqichli mashqlar (Ketma-ket yoki alohida)</string>
+    <string name="daily_tasks_history_title">Kunlik bajarilish tarixi (Completed &amp; Missed Days)</string>
+
+    <!-- Greetings -->
+    <string name="greeting_morning">Xayrli tong,</string>
+    <string name="greeting_afternoon">Xayrli kun,</string>
+    <string name="greeting_evening">Xayrli kech,</string>
+    <string name="default_user_name">Azamat</string>
+    <string name="default_user_level">Beginner to Practical English</string>
+
+    <!-- Home Screen -->
+    <string name="hero_course_title">TalkMe Core English Curriculum</string>
+    <string name="hero_continue_learning">Continue Learning</string>
+    <string name="hero_start_learning">Start Learning</string>
+    <string name="hero_not_started_subtitle">Begin Topic 1: Introduction — Kirish</string>
+    <string name="hero_progress_format">%1$d%% completed</string>
+    <string name="stat_memorized_words_title">Vocabulary</string>
+    <string name="stat_memorized_words_subtitle">Mavzu so\'zlari va kartochkalar</string>
+    <string name="stat_mastered_grammar_title">Grammar</string>
+    <string name="stat_mastered_grammar_subtitle">Mavzu qoidalari va mashqlar</string>
+    <string name="home_topic_filter_title">Learning Experience</string>
+    <string name="home_skills_section_title">Skills by Topic</string>
+    <string name="home_skill_reading_title">Reading</string>
+    <string name="home_skill_writing_title">Writing</string>
+    <string name="home_skill_listening_title">Listening</string>
+    <string name="home_skill_speaking_title">Speaking</string>
+    <string name="home_new_words_badge_format">+%1$d yangi</string>
+    <string name="home_streak_format">%1$d Day Streak</string>
+    <string name="home_action_reading_ai">Reading AI Coach (Live)</string>
+    <string name="home_recent_activity_title">Recent Learning Activity</string>
+
+    <!-- Lessons & Topic Details -->
+    <string name="lessons_header_title">English Curriculum</string>
+    <string name="lessons_header_subtitle">Sequential curriculum • Explain in Uzbek first</string>
+    <string name="topic_status_locked">Locked — Complete previous topic</string>
+    <string name="topic_status_available">Available Now</string>
+    <string name="topic_status_completed">Completed</string>
+    <string name="topic_sections_progress_format">%1$d/%2$d Sections Completed</string>
+    <string name="topic_locked_toast">Please complete the previous topic first to unlock this topic.</string>
+    <string name="section_locked_toast">Please complete the previous section first.</string>
+    <string name="section_status_locked">Locked</string>
+    <string name="section_status_unlocked">Ready to Study</string>
+    <string name="section_status_completed">Mastered</string>
+
+    <!-- Lesson Content Experience -->
+    <string name="lesson_step_intro">1. Introduction</string>
+    <string name="lesson_step_explanation">2. O\'zbekcha Tushuntirish (Explanation)</string>
+    <string name="lesson_step_vocabulary">3. New Vocabulary</string>
+    <string name="lesson_step_grammar">4. Grammar Rules</string>
+    <string name="lesson_step_examples">5. English Examples &amp; Translations</string>
+    <string name="lesson_step_exercises">6. Interactive Lesson Exercises</string>
+    <string name="lesson_step_wrap_up">7. Wrap-up</string>
+    <string name="lesson_btn_listen">Listen Pronunciation</string>
+    <string name="lesson_btn_complete_section">Complete Section &amp; Save Progress</string>
+    <string name="lesson_btn_start_exercises">Practice Section Exercises</string>
+    <string name="lesson_completed_banner">Section Completed! Next content unlocked.</string>
+
+    <!-- Practice Center -->
+    <string name="practice_header_title">Practice Center</string>
+    <string name="practice_header_subtitle">Exclusively generated from your studied topics &amp; vocabulary</string>
+    <string name="practice_cat_reading">Reading Practice</string>
+    <string name="practice_cat_reading_desc">Passages &amp; comprehension questions</string>
+    <string name="practice_cat_writing">Writing Practice</string>
+    <string name="practice_cat_writing_desc">Uzbek-to-English translation &amp; sentence building</string>
+    <string name="practice_cat_speaking">Speaking AI (Gemini Live)</string>
+    <string name="practice_cat_speaking_desc">Topic-restricted real-time voice tutor</string>
+    <string name="practice_cat_listening">Listening Practice</string>
+    <string name="practice_cat_listening_desc">Audio recognition &amp; spoken phrase comprehension</string>
+    <string name="practice_cat_grammar">Grammar Practice</string>
+    <string name="practice_cat_grammar_desc">Exercises on studied grammar rules</string>
+    <string name="practice_cat_vocabulary">Vocabulary Practice</string>
+    <string name="practice_cat_vocabulary_desc">Word matching, translation &amp; completion</string>
+    <string name="practice_cat_flip_cards">3D Flip Card Review</string>
+    <string name="practice_cat_flip_cards_desc">Spaced repetition flashcards with 3D rotation</string>
+
+    <!-- Exercise Engine -->
+    <string name="exercise_progress_format">Question %1$d of %2$d</string>
+    <string name="exercise_btn_check">Check Answer</string>
+    <string name="exercise_btn_next">Next Question</string>
+    <string name="exercise_btn_finish">Finish Practice</string>
+    <string name="exercise_play_audio">Play English Audio</string>
+    <string name="exercise_hint_type_answer">Type your English answer here…</string>
+    <string name="exercise_feedback_correct">Correct! Great job!</string>
+    <string name="exercise_feedback_incorrect">Not quite right. Review the explanation below:</string>
+    <string name="exercise_session_complete_title">Practice Session Complete!</string>
+    <string name="exercise_session_score_format">Accuracy: %1$d%% (%2$d / %3$d correct)</string>
+
+    <!-- Flip Cards -->
+    <string name="flip_cards_title">Vocabulary Flip Cards</string>
+    <string name="flip_cards_subtitle">Tap card to rotate 3D • 4-level Spaced Repetition</string>
+    <string name="flip_card_tap_hint">Tap card to flip for Uzbek meaning &amp; example</string>
+    <string name="flip_btn_again">Qayta\n10m</string>
+    <string name="flip_btn_hard">Qiyin\n12h</string>
+    <string name="flip_btn_good">Yaxshi\n1d</string>
+    <string name="flip_btn_easy">Oson\n4d</string>
+    <string name="flip_btn_know">I Know This Word</string>
+    <string name="flip_btn_practice">Need More Practice</string>
+    <string name="flip_empty_queue">All studied vocabulary reviewed for this session! Great job!</string>
+    <string name="flip_reset_session">Review All Studied Words Again</string>
+
+    <!-- Speaking AI (Gemini Live) -->
+    <string name="speaking_ai_title">Speaking AI Tutor</string>
+    <string name="speaking_ai_topic_format">Active Topic: %1$s</string>
+    <string name="speaking_ai_status_ready">Connected • Ready for voice or text input</string>
+    <string name="speaking_ai_status_listening">Listening to your English…</string>
+    <string name="speaking_ai_status_thinking">AI Tutor is analyzing grammar &amp; vocabulary…</string>
+    <string name="speaking_ai_status_speaking">AI Tutor is speaking…</string>
+    <string name="speaking_ai_status_offline">Offline — Internet required for Gemini Live AI</string>
+    <string name="speaking_ai_btn_mic">Tap to Speak</string>
+    <string name="speaking_ai_btn_end">End Session</string>
+    <string name="speaking_ai_send">Send</string>
+    <string name="speaking_ai_input_hint">Or type your spoken response here…</string>
+    <string name="speaking_ai_permission_denied">Microphone permission is required for voice input. You can still type or grant permission in Settings.</string>
+
+    <!-- Reading AI (Gemini Live) -->
+    <string name="reading_ai_title">Reading AI Comprehension</string>
+    <string name="reading_ai_generate_btn">Generate New Topic Passage</string>
+    <string name="reading_ai_listen_passage">Listen to Full Passage</string>
+    <string name="reading_ai_ask_tutor_hint">Ask AI in Uzbek or English about a word or answer the question…</string>
+    <string name="reading_ai_evaluate_btn">Submit Answer / Ask AI</string>
+
+    <!-- Profile & Analytics -->
+    <string name="profile_header_title">Learner Profile &amp; Analytics</string>
+    <string name="profile_charts_title">Learning Statistics Chart</string>
+    <string name="profile_chart_subtitle">Haftalik, Oylik va Yillik ko\'rsatkichlar</string>
+    <string name="chart_filter_weekly">Hafta</string>
+    <string name="chart_filter_monthly">Oy</string>
+    <string name="chart_filter_yearly">Yillik</string>
+    <string name="profile_skill_reading">Reading</string>
+    <string name="profile_skill_writing">Writing</string>
+    <string name="profile_skill_speaking">Speaking</string>
+    <string name="profile_skill_listening">Listening</string>
+    <string name="profile_achievements_title">Achievements</string>
+    <string name="profile_history_title">Learning History</string>
+    <string name="profile_open_settings">Open Settings &amp; Preferences</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_account">Account</string>
+    <string name="settings_user_name_label">Learner Name</string>
+    <string name="settings_save_profile">Save Name</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_theme_system">System Default</string>
+    <string name="settings_theme_light">Light Theme</string>
+    <string name="settings_theme_dark">Dark Theme</string>
+    <string name="settings_section_audio">Audio &amp; Text-to-Speech</string>
+    <string name="settings_sound_enabled">Enable Audio Pronunciation</string>
+    <string name="settings_tts_speed_label">Speech Speed</string>
+    <string name="settings_tts_provider_label">TTS Engine Provider</string>
+    <string name="settings_tts_native">Android Native TTS (Offline Free)</string>
+    <string name="settings_tts_gemini">Gemini TTS 3.8 / Cloud Natural Voice (Premium)</string>
+    <string name="settings_section_learning">Learning &amp; Spaced Repetition</string>
+    <string name="settings_daily_goal_label">Daily Goal (Minutes)</string>
+    <string name="settings_section_premium">Premium Subscription</string>
+    <string name="settings_premium_toggle">Enable TalkMe Premium (Unlocks Gemini TTS &amp; AI)</string>
+    <string name="settings_section_storage">Storage &amp; Audio Cache</string>
+    <string name="settings_clear_cache">Clear Cached TTS Audio</string>
+    <string name="settings_cache_cleared">Audio cache cleared successfully.</string>
+    <string name="settings_section_about">About TalkMe</string>
+    <string name="settings_about_version">TalkMe v1.0.0 • Clean Architecture Offline-First Edition</string>
+    <string name="settings_about_privacy">All learning progress is stored locally in Room Database. Cloud AI features use Firebase AI Logic with App Check attestation.</string>
+</resources>

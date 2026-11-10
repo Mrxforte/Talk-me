@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_medium">
+
+        <!-- 4.1 Clean Minimal Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/spacing_small">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="@dimen/avatar_size_medium"
+                android:layout_height="@dimen/avatar_size_medium"
+                app:cardCornerRadius="@dimen/radius_pill"
+                app:cardElevation="@dimen/elevation_none"
+                app:strokeColor="@color/color_primary"
+                app:strokeWidth="@dimen/stroke_medium">
+
+                <ImageView
+                    android:id="@+id/ivUserAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/default_user_name"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_ai_tutor_avatar_1794304412196" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvGreeting"
+                    style="@style/TextAppearance.TalkMe.BodySecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/greeting_morning" />
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    style="@style/TextAppearance.TalkMe.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_user_name" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvStreakBadge"
+                style="@style/TextAppearance.TalkMe.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_badge_pill"
+                android:paddingHorizontal="@dimen/spacing_medium"
+                android:paddingVertical="@dimen/spacing_small"
+                android:textColor="@color/color_primary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- 4.2 Hero Banner — Continue Learning -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardHeroBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            app:cardCornerRadius="@dimen/radius_card_large"
+            app:cardElevation="@dimen/elevation_hero"
+            app:strokeWidth="@dimen/elevation_none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_hero_gradient"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_large">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_medium"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvHeroCourseName"
+                            style="@style/TextAppearance.TalkMe.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hero_course_title"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvHeroTopicName"
+                            style="@style/TextAppearance.TalkMe.Heading"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tvHeroSectionName"
+                            style="@style/TextAppearance.TalkMe.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xxs"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="@dimen/avatar_size_large"
+                        android:layout_height="@dimen/avatar_size_large"
+                        app:cardCornerRadius="@dimen/radius_card_medium"
+                        app:cardElevation="@dimen/elevation_none">
+
+                        <ImageView
+                            android:id="@+id/ivHeroIllustration"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/hero_course_title"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_hero_learning_1794304411125" />
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progressHero"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_medium"
+                        android:layout_weight="1"
+                        app:indicatorColor="@color/color_accent"
+                        app:trackColor="#4DFFFFFF"
+                        app:trackCornerRadius="@dimen/radius_pill"
+                        app:trackThickness="@dimen/progress_height_medium" />
+
+                    <TextView
+                        android:id="@+id/tvHeroProgressPercent"
+                        style="@style/TextAppearance.TalkMe.Body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnContinueLearning"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height_primary"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:text="@string/hero_continue_learning"
+                    android:textColor="@color/color_primary"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/white"
+                    app:cornerRadius="@dimen/radius_medium" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 4.3 Learning Experience Section Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginHorizontal="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="20dp"
+                android:background="@drawable/bg_new_badge" />
+
+            <TextView
+                style="@style/TextAppearance.TalkMe.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/home_topic_filter_title"
+                android:textColor="@color/color_text_primary"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Vocabulary & Grammar Cards -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/cardMemorizedWords"
+                    layout="@layout/view_statistic_card" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/cardMasteredGrammar"
+                    layout="@layout/view_statistic_card" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!-- 4.4 Skills by Topic Section Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginHorizontal="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="20dp"
+                android:background="@drawable/bg_new_badge" />
+
+            <TextView
+                style="@style/TextAppearance.TalkMe.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/home_skills_section_title"
+                android:textColor="@color/color_text_primary"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/cardSkillReading"
+                    layout="@layout/view_statistic_card" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/cardSkillWriting"
+                    layout="@layout/view_statistic_card" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/cardSkillListening"
+                    layout="@layout/view_statistic_card" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/cardSkillSpeaking"
+                    layout="@layout/view_statistic_card" />
+            </FrameLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

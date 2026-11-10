@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#1E3A8A</color>
+    <color name="color_primary_variant">#2563EB</color>
+    <color name="color_primary_light">#DBEAFE</color>
+    <color name="color_secondary">#0D9488</color>
+    <color name="color_secondary_light">#CCFBF1</color>
+    <color name="color_accent">#F59E0B</color>
+    <color name="color_accent_light">#FEF3C7</color>
+
+    <color name="color_background">#F8FAFC</color>
+    <color name="color_surface">#FFFFFF</color>
+    <color name="color_surface_variant">#F1F5F9</color>
+    <color name="color_surface_elevated">#FFFFFF</color>
+    <color name="color_divider">#E2E8F0</color>
+    <color name="color_card_stroke">#E2E8F0</color>
+
+    <color name="color_text_primary">#0F172A</color>
+    <color name="color_text_secondary">#475569</color>
+    <color name="color_text_muted">#94A3B8</color>
+    <color name="color_text_on_primary">#FFFFFF</color>
+
+    <color name="color_success">#10B981</color>
+    <color name="color_success_light">#D1FAE5</color>
+    <color name="color_warning">#F59E0B</color>
+    <color name="color_warning_light">#FEF3C7</color>
+    <color name="color_error">#EF4444</color>
+    <color name="color_error_light">#FEE2E2</color>
+
+    <color name="color_topic_unlocked_bg">#EFF6FF</color>
+    <color name="color_topic_completed_bg">#ECFDF5</color>
+    <color name="color_topic_locked_bg">#F1F5F9</color>
+
+    <color name="color_hero_gradient_start">#1E3A8A</color>
+    <color name="color_hero_gradient_end">#0F766E</color>
+
+    <color name="color_chart_reading">#2563EB</color>
+    <color name="color_chart_writing">#8B5CF6</color>
+    <color name="color_chart_speaking">#0D9488</color>
+    <color name="color_chart_listening">#F59E0B</color>
+
+    <color name="color_chart_series1_line">#FF5500</color>
+    <color name="color_chart_series1_node_center">#FFE082</color>
+    <color name="color_chart_series1_node_edge">#FB8C00</color>
+    <color name="color_chart_series2_line">#D80056</color>
+    <color name="color_chart_series2_node_center">#F8BBD0</color>
+    <color name="color_chart_series2_node_edge">#E91E63</color>
+    <color name="color_chart_grid_major">#9E9E9E</color>
+    <color name="color_chart_grid_minor">#D6D6D6</color>
+    <color name="color_chart_node_stroke">#1A1A1A</color>
+    <color name="color_chart_legend_stroke">#616161</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/headerSpeakingAi"
+        layout="@layout/view_screen_header" />
+
+    <!-- AI Tutor Status & Topic Header Card -->
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.TalkMe.Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_medium">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_medium">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="@dimen/avatar_size_medium"
+                android:layout_height="@dimen/avatar_size_medium"
+                app:cardCornerRadius="@dimen/radius_pill"
+                app:cardElevation="@dimen/elevation_none">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/speaking_ai_title"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_ai_tutor_avatar_1794304412196" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvSpeakingCurrentTopic"
+                    style="@style/TextAppearance.TalkMe.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_primary" />
+
+                <TextView
+                    android:id="@+id/tvSpeakingConnectionState"
+                    style="@style/TextAppearance.TalkMe.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xxs"
+                    android:text="@string/speaking_ai_status_ready" />
+
+                <TextView
+                    android:id="@+id/tvSpeakingDuration"
+                    style="@style/TextAppearance.TalkMe.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xxs"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEndSpeakingSession"
+                style="@style/Widget.TalkMe.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speaking_ai_btn_end" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Conversation Transcript -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSpeakingTranscript"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingBottom="@dimen/spacing_medium" />
+
+    <!-- Bottom Voice & Text Controls -->
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.TalkMe.Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_medium">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_medium">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMicrophoneSpeak"
+                style="@style/Widget.TalkMe.PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/speaking_ai_btn_mic"
+                app:icon="@drawable/ic_mic"
+                app:iconGravity="textStart" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etSpeakingInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:hint="@string/speaking_ai_input_hint"
+                    android:inputType="textCapSentences"
+                    android:minHeight="@dimen/touch_target_min" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSendSpeakingText"
+                    style="@style/Widget.TalkMe.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:text="@string/speaking_ai_send" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

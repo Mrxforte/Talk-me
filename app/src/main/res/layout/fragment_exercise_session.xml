@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/headerExercise"
+        layout="@layout/view_screen_header" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        app:indicatorColor="@color/color_primary"
+        app:trackColor="@color/color_divider"
+        app:trackCornerRadius="@dimen/radius_pill"
+        app:trackThickness="@dimen/progress_height_small" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_medium">
+
+            <!-- Active Question Container -->
+            <LinearLayout
+                android:id="@+id/layoutActiveQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvExerciseTypeBadge"
+                    style="@style/TextAppearance.TalkMe.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_badge_pill"
+                    android:paddingHorizontal="@dimen/spacing_medium"
+                    android:paddingVertical="@dimen/spacing_xs"
+                    android:textColor="@color/color_primary"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.TalkMe.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_medium">
+
+                        <TextView
+                            android:id="@+id/tvQuestionPrompt"
+                            style="@style/TextAppearance.TalkMe.Title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tvQuestionSubPrompt"
+                            style="@style/TextAppearance.TalkMe.BodySecondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_small" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnPlayQuestionAudio"
+                            style="@style/Widget.TalkMe.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text="@string/exercise_play_audio"
+                            app:icon="@drawable/ic_speaker" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Options Container for Multiple Choice / Matching / Recognition -->
+                <LinearLayout
+                    android:id="@+id/containerOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:orientation="vertical" />
+
+                <!-- Text Input Container for Translation / Writing / Fill in Blanks / Sentence Building -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilWrittenAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:hint="@string/exercise_hint_type_answer"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etWrittenAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Feedback Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardFeedback"
+                    style="@style/Widget.TalkMe.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_medium">
+
+                        <TextView
+                            android:id="@+id/tvFeedbackTitle"
+                            style="@style/TextAppearance.TalkMe.Subtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tvFeedbackExplanation"
+                            style="@style/TextAppearance.TalkMe.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSubmitOrNext"
+                    style="@style/Widget.TalkMe.PrimaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:text="@string/exercise_btn_check" />
+
+            </LinearLayout>
+
+            <!-- Session Complete Container -->
+            <LinearLayout
+                android:id="@+id/layoutSessionSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_large"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_xl"
+                    android:layout_height="@dimen/icon_size_xl"
+                    android:contentDescription="@string/exercise_session_complete_title"
+                    android:src="@drawable/ic_trophy" />
+
+                <TextView
+                    style="@style/TextAppearance.TalkMe.Heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:gravity="center"
+                    android:text="@string/exercise_session_complete_title" />
+
+                <TextView
+                    android:id="@+id/tvSessionSummaryScore"
+                    style="@style/TextAppearance.TalkMe.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:textColor="@color/color_primary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFinishSession"
+                    style="@style/Widget.TalkMe.PrimaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:text="@string/exercise_btn_finish" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

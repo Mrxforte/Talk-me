@@ -19,6 +19,7 @@ import com.example.R
 import com.example.core.audio.TtsManager
 import com.example.core.common.AppConstants
 import com.example.core.ui.GrammarRuleAdapter
+import com.example.core.ui.TopicVisualArtwork
 import com.example.core.ui.VocabularyAdapter
 import com.example.databinding.FragmentLessonDetailBinding
 import com.example.domain.model.GrammarRuleModel
@@ -34,17 +35,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import com.example.core.ui.TypewriterTextAnimator
+import com.example.domain.repository.UserPreferencesRepository
 
 data class LessonDetailUiState(
     val section: LessonSectionModel? = null,
     val vocabulary: List<VocabularyModel> = emptyList(),
     val grammarRules: List<GrammarRuleModel> = emptyList(),
-    val isCompletedSuccess: Boolean = false
+    val isCompletedSuccess: Boolean = false,
+    val userName: String = "Azamat"
 )
 
 @HiltViewModel
 class LessonDetailViewModel @Inject constructor(
     private val learningRepository: LearningRepository,
+    private val preferencesRepository: UserPreferencesRepository,
     private val ttsManager: TtsManager
 ) : ViewModel() {
 
@@ -57,13 +62,15 @@ class LessonDetailViewModel @Inject constructor(
             val section = learningRepository.getSectionById(sectionId)
             combine(
                 learningRepository.observeSectionVocabulary(sectionId),
-                learningRepository.observeSectionGrammarRules(sectionId)
-            ) { vocab, grammar ->
+                learningRepository.observeSectionGrammarRules(sectionId),
+                preferencesRepository.userPreferencesFlow
+            ) { vocab, grammar, prefs ->
                 LessonDetailUiState(
                     section = section,
                     vocabulary = vocab,
                     grammarRules = grammar,
-                    isCompletedSuccess = _uiState.value.isCompletedSuccess
+                    isCompletedSuccess = _uiState.value.isCompletedSuccess,
+                    userName = prefs.userName
                 )
             }.collect { state ->
                 _uiState.value = state
@@ -94,8 +101,8 @@ class LessonDetailViewModel @Inject constructor(
 
 /**
  * Reusable Data-Driven Lesson Experience Fragment.
- * Renders Introduction, Uzbek Explanation, New Vocabulary (with audio playback),
- * Grammar Rules & English Examples (with audio playback), Interactive Exercises button,
+ * Renders Introduction, Uzbek Explanation with Typewriter animation, New Vocabulary (with TTS audio),
+ * Grammar Rules & English Examples (with TTS audio), Interactive Exercises button,
  * and final Wrap-up section.
  */
 @AndroidEntryPoint
@@ -108,6 +115,8 @@ class LessonDetailFragment : Fragment() {
 
     private lateinit var vocabAdapter: VocabularyAdapter
     private lateinit var grammarAdapter: GrammarRuleAdapter
+    private var typewriterAnimator: TypewriterTextAnimator? = null
+    private var lastRenderedExplanation: String? = null
 
     private var currentTopicId: String = AppConstants.INITIAL_TOPIC_ID
     private var currentSectionId: String = AppConstants.INITIAL_SECTION_ID
@@ -141,7 +150,14 @@ class LessonDetailFragment : Fragment() {
         binding.rvLessonGrammar.adapter = grammarAdapter
 
         binding.headerLessonDetail.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+            val nav = findNavController()
+            if (!nav.popBackStack()) {
+                nav.navigateUp()
+            }
+        }
+
+        binding.tvUzbekExplanation.setOnClickListener {
+            typewriterAnimator?.skip()
         }
 
         binding.btnPracticeSectionExercises.setOnClickListener {
@@ -178,14 +194,27 @@ class LessonDetailFragment : Fragment() {
                         binding.headerLessonDetail.tvHeaderTitle.text = sec.titleEnglish
                         binding.headerLessonDetail.tvHeaderSubtitle.text = sec.titleUzbek
                         binding.ivLessonDetailBanner.setImageResource(
-                            com.example.core.ui.TopicVisualArtwork.getTopicImageRes(
+                            TopicVisualArtwork.getSectionImageRes(
                                 sec.topicId,
+                                sec.id,
                                 sec.orderIndex
                             )
                         )
                         binding.tvLessonObjective.text = sec.objectiveUzbek
-                        binding.tvUzbekExplanation.text = sec.explanationUzbek
-                        binding.tvWrapUpSummary.text = sec.wrapUpSummaryUzbek
+
+                        if (lastRenderedExplanation != sec.explanationUzbek) {
+                            lastRenderedExplanation = sec.explanationUzbek
+                            typewriterAnimator?.cancel()
+                            typewriterAnimator = TypewriterTextAnimator(
+                                textView = binding.tvUzbekExplanation,
+                                fullText = sec.explanationUzbek,
+                                scope = viewLifecycleOwner.lifecycleScope
+                            )
+                            typewriterAnimator?.start()
+                        }
+
+                        val wrapUpText = sec.wrapUpSummaryUzbek.replace("[USER_NAME]", state.userName)
+                        binding.tvWrapUpSummary.text = wrapUpText
                     }
                     vocabAdapter.submitList(state.vocabulary)
                     grammarAdapter.submitList(state.grammarRules)

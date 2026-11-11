@@ -131,7 +131,10 @@ class VocabularyTopicsFragment : Fragment() {
         binding.headerVocabTopics.tvHeaderSubtitle.text =
             "O'tilgan mavzuni tanlang → Sub-topiclar → 3D Flip Cards"
         binding.headerVocabTopics.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+            val nav = findNavController()
+            if (!nav.popBackStack()) {
+                nav.navigateUp()
+            }
         }
 
         binding.rvVocabularyTopics.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -274,7 +277,10 @@ class VocabularySubtopicsFragment : Fragment() {
         viewModel.selectTopic(topicId)
 
         binding.headerVocabSubtopics.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+            val nav = findNavController()
+            if (!nav.popBackStack()) {
+                nav.navigateUp()
+            }
         }
 
         binding.rvVocabularySubtopics.layoutManager = LinearLayoutManager(requireContext())
@@ -494,7 +500,10 @@ class FlipCardFragment : Fragment() {
         binding.headerFlipCards.tvHeaderTitle.text = getString(R.string.flip_cards_title)
         binding.headerFlipCards.tvHeaderSubtitle.text = getString(R.string.flip_cards_subtitle)
         binding.headerFlipCards.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+            val nav = findNavController()
+            if (!nav.popBackStack()) {
+                nav.navigateUp()
+            }
         }
 
         // Tapping the body of either side rotates the card in 3D

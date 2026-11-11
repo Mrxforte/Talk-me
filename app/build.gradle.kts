@@ -2,10 +2,12 @@ import com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesS
 
 plugins {
   alias(libs.plugins.android.application)
+  alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.google.devtools.ksp)
   alias(libs.plugins.secrets)
   alias(libs.plugins.google.services)
   alias(libs.plugins.hilt.android)
+  id("jacoco")
 }
 
 android {
@@ -33,7 +35,8 @@ android {
       keyPassword = System.getenv("KEY_PASSWORD")
     }
     create("debugConfig") {
-      storeFile = file("${rootDir}/debug.keystore")
+      val projectKeystore = file("${rootDir}/debug.keystore")
+      storeFile = if (projectKeystore.exists()) projectKeystore else signingConfigs.getByName("debug").storeFile
       storePassword = "android"
       keyAlias = "androiddebugkey"
       keyPassword = "android"
@@ -62,6 +65,7 @@ android {
   buildFeatures {
     viewBinding = true
     buildConfig = true
+    compose = true
   }
   testOptions { unitTests { isIncludeAndroidResources = true } }
   dependenciesInfo {
@@ -100,6 +104,17 @@ dependencies {
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.moshi.kotlin)
+  implementation(libs.okhttp)
+  implementation(libs.logging.interceptor)
+
+  implementation(platform(libs.androidx.compose.bom))
+  implementation(libs.androidx.activity.compose)
+  implementation(libs.androidx.compose.ui)
+  implementation(libs.androidx.compose.ui.graphics)
+  implementation(libs.androidx.compose.ui.tooling.preview)
+  implementation(libs.androidx.compose.material3)
+  implementation(libs.androidx.compose.material.icons.core)
+  implementation(libs.androidx.compose.material.icons.extended)
 
   // Unused template dependencies commented out per optimization rules:
   // implementation(platform(libs.androidx.compose.bom))
@@ -138,8 +153,8 @@ dependencies {
   androidTestImplementation(libs.androidx.espresso.core)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.runner)
+  debugImplementation(libs.leakcanary.android)
 
   "ksp"(libs.androidx.room.compiler)
-  "ksp"(libs.moshi.kotlin.codegen)
   "ksp"(libs.hilt.compiler)
 }

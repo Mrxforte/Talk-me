@@ -266,7 +266,10 @@ class ExerciseSessionFragment : Fragment() {
         val isSequentialPlan = arguments?.getBoolean(AppConstants.ARG_SEQUENTIAL_DAILY_PLAN, false) ?: false
 
         binding.headerExercise.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+            val nav = findNavController()
+            if (!nav.popBackStack()) {
+                nav.navigateUp()
+            }
         }
 
         binding.btnPlayQuestionAudio.setOnClickListener {

@@ -183,6 +183,24 @@ interface TalkMeDao {
 
     @Query("UPDATE user_mistakes SET isResolved = 1 WHERE topicId = :topicId AND correctAnswer = :correctAnswer")
     suspend fun resolveMistakesByCorrectAnswer(topicId: String, correctAnswer: String)
+
+    @Query("DELETE FROM topics WHERE id != :preserveTopicId")
+    suspend fun deleteObsoleteTopics(preserveTopicId: String)
+
+    @Query("DELETE FROM lesson_sections WHERE topicId != :preserveTopicId")
+    suspend fun deleteObsoleteSections(preserveTopicId: String)
+
+    @Query("DELETE FROM vocabulary WHERE topicId != :preserveTopicId")
+    suspend fun deleteObsoleteVocabulary(preserveTopicId: String)
+
+    @Query("DELETE FROM grammar_rules WHERE topicId != :preserveTopicId")
+    suspend fun deleteObsoleteGrammarRules(preserveTopicId: String)
+
+    @Query("DELETE FROM exercises WHERE topicId != :preserveTopicId")
+    suspend fun deleteObsoleteExercises(preserveTopicId: String)
+
+    @Query("DELETE FROM user_mistakes WHERE topicId != :preserveTopicId")
+    suspend fun deleteObsoleteUserMistakes(preserveTopicId: String)
 }
 
 /**

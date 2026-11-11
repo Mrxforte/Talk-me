@@ -61,9 +61,9 @@ class LearningRepositoryImpl @Inject constructor(
 
     override suspend fun ensureSeeded() {
         if (isSeedingChecked.get()) return
-        val existingCount = dao.getTopicCount()
-        if (existingCount == 0) {
-            val now = System.currentTimeMillis()
+        val now = System.currentTimeMillis()
+
+        if (dao.getUserProfileOnce() == null) {
             dao.insertUserProfile(
                 UserProfileEntity(
                     id = 1,
@@ -76,17 +76,51 @@ class LearningRepositoryImpl @Inject constructor(
                     lastStudyTimestamp = now
                 )
             )
-            dao.insertTopics(CurriculumSeedData.buildTopics())
-            dao.insertSections(CurriculumSeedData.buildSections())
-            dao.insertVocabulary(CurriculumSeedData.buildVocabulary())
-            dao.insertGrammarRules(CurriculumSeedData.buildGrammarRules())
-            dao.insertExercises(CurriculumSeedData.buildExercises())
-            dao.insertAchievements(CurriculumSeedData.buildAchievements())
+        }
 
-            // Seed daily task logs (Today + Yesterday incomplete + 2 days ago completed)
+        // Clean obsolete lesson records to preserve ONLY the Introduction lesson
+        dao.deleteObsoleteTopics(AppConstants.INITIAL_TOPIC_ID)
+        dao.deleteObsoleteSections(AppConstants.INITIAL_TOPIC_ID)
+        dao.deleteObsoleteVocabulary(AppConstants.INITIAL_TOPIC_ID)
+        dao.deleteObsoleteGrammarRules(AppConstants.INITIAL_TOPIC_ID)
+        dao.deleteObsoleteExercises(AppConstants.INITIAL_TOPIC_ID)
+        dao.deleteObsoleteUserMistakes(AppConstants.INITIAL_TOPIC_ID)
+
+        val seedTopics = CurriculumSeedData.buildTopics()
+        val seedSections = CurriculumSeedData.buildSections()
+        val existingTopicsMap = dao.getAllTopicsOnce().associateBy { it.id }
+        val existingSectionsMap = dao.getSectionsByTopicOnce(AppConstants.INITIAL_TOPIC_ID).associateBy { it.id }
+
+        val mergedTopics = seedTopics.map { seed ->
+            val existing = existingTopicsMap[seed.id]
+            if (existing != null) {
+                seed.copy(isUnlocked = existing.isUnlocked, isCompleted = existing.isCompleted)
+            } else {
+                seed
+            }
+        }
+
+        val mergedSections = seedSections.map { seed ->
+            val existing = existingSectionsMap[seed.id]
+            if (existing != null) {
+                seed.copy(isUnlocked = existing.isUnlocked, isCompleted = existing.isCompleted)
+            } else {
+                seed
+            }
+        }
+
+        dao.insertTopics(mergedTopics)
+        dao.insertSections(mergedSections)
+        dao.insertVocabulary(CurriculumSeedData.buildVocabulary())
+        dao.insertGrammarRules(CurriculumSeedData.buildGrammarRules())
+        dao.insertExercises(CurriculumSeedData.buildExercises())
+        dao.insertAchievements(CurriculumSeedData.buildAchievements())
+
+        val todayKey = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+        if (dao.getDailyTaskLogByDate(todayKey) == null) {
             val cal = Calendar.getInstance()
             val keyFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-            val todayKey = keyFormat.format(cal.time)
+            val calTodayKey = keyFormat.format(cal.time)
             cal.add(Calendar.DAY_OF_YEAR, -1)
             val yesterdayKey = keyFormat.format(cal.time)
             cal.add(Calendar.DAY_OF_YEAR, -1)
@@ -95,8 +129,8 @@ class LearningRepositoryImpl @Inject constructor(
             dao.insertDailyTaskLogs(
                 listOf(
                     DailyTaskLogEntity(
-                        dateKey = todayKey,
-                        displayDateLabel = "Bugun ($todayKey)",
+                        dateKey = calTodayKey,
+                        displayDateLabel = "Bugun ($calTodayKey)",
                         topicId = AppConstants.INITIAL_TOPIC_ID,
                         grammarDone = false,
                         vocabularyDone = false,
@@ -137,25 +171,25 @@ class LearningRepositoryImpl @Inject constructor(
             dao.insertUserMistakes(
                 listOf(
                     UserMistakeEntity(
-                        id = "mistake_topic_01_introduction_WRITING_morning",
+                        id = "mistake_topic_01_introduction_WRITING_name",
                         topicId = AppConstants.INITIAL_TOPIC_ID,
                         skillCategory = PracticeCategory.WRITING.id,
-                        itemPrompt = "'tong' so'zini ingliz tilida yozing",
-                        userWrongAnswer = "mornig",
-                        correctAnswer = "morning",
-                        explanationUzbek = "'morning' — tong (Good morning! — Xayrli tong!). Harflarni to'liq yozishga e'tibor bering.",
+                        itemPrompt = "'ism' so'zini ingliz tilida yozing",
+                        userWrongAnswer = "neme",
+                        correctAnswer = "name",
+                        explanationUzbek = "'name' — ism (My name is ... — Mening ismim ...). Harflarni to'liq yozishga e'tibor bering.",
                         mistakeCount = 1,
                         isResolved = false,
                         timestamp = now - 300_000L
                     ),
                     UserMistakeEntity(
-                        id = "mistake_topic_01_introduction_VOCABULARY_water",
+                        id = "mistake_topic_01_introduction_VOCABULARY_friend",
                         topicId = AppConstants.INITIAL_TOPIC_ID,
                         skillCategory = PracticeCategory.VOCABULARY.id,
-                        itemPrompt = "'water' so'zining ma'nosi va ishlatilishi",
-                        userWrongAnswer = "Qiyin / Bilmadim",
-                        correctAnswer = "suv",
-                        explanationUzbek = "'water' — suv (Clean water — Toza suv). Sanalmaydigan ot.",
+                        itemPrompt = "'friend' so'zining ma'nosi va ishlatilishi",
+                        userWrongAnswer = "dushman",
+                        correctAnswer = "do'st",
+                        explanationUzbek = "'friend' — do'st (Hello, my friend — Salom, mening do'stim).",
                         mistakeCount = 1,
                         isResolved = false,
                         timestamp = now - 600_000L

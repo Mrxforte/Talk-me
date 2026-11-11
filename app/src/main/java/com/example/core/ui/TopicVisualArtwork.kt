@@ -60,6 +60,11 @@ object TopicVisualArtwork {
         return when {
             secLower == "sec_01_01" -> R.drawable.img_lesson_conversation_1794310851367
             secLower == "sec_01_02" -> R.drawable.img_topic_morning_intro_1794316347713
+            secLower == "sec_01_03" -> R.drawable.img_skill_speaking_1794316279625
+            secLower == "sec_01_04" -> R.drawable.img_topic_pronouns_1794316352550
+            secLower == "sec_01_05" -> R.drawable.img_lesson_places_1794310885756
+            secLower == "sec_01_06" -> R.drawable.img_lesson_actions_1794310855917
+            secLower == "sec_01_07" -> R.drawable.img_daily_tasks_banner_1794310886631
             secLower == "sec_02_01" -> R.drawable.img_lesson_grammar_1794310851898
             secLower == "sec_02_02" -> R.drawable.img_skill_vocabulary_1794316277453
             secLower == "sec_03_01" -> R.drawable.img_lesson_numbers_1794310853767

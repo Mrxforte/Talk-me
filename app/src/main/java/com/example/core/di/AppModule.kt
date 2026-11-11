@@ -7,8 +7,10 @@ import com.example.core.database.TalkMeDao
 import com.example.core.database.TalkMeDatabase
 import com.example.core.datastore.UserPreferencesRepositoryImpl
 import com.example.data.repository.LearningRepositoryImpl
+import com.example.data.repository.SpeechRepositoryImpl
 import com.example.domain.repository.AiLearningService
 import com.example.domain.repository.LearningRepository
+import com.example.domain.repository.SpeechRepository
 import com.example.domain.repository.UserPreferencesRepository
 import dagger.Binds
 import dagger.Module
@@ -20,7 +22,7 @@ import javax.inject.Singleton
 
 /**
  * Hilt Dependency Injection Module providing Room Database, DAOs, DataStore Preferences,
- * LearningRepository, and AI Learning Service.
+ * LearningRepository, AI Learning Service, and SpeechRepository.
  */
 @Module
 @InstallIn(SingletonComponent::class)
@@ -68,4 +70,10 @@ abstract class RepositoryModule {
     abstract fun bindAiLearningService(
         impl: FirebaseAiLearningService
     ): AiLearningService
+
+    @Binds
+    @Singleton
+    abstract fun bindSpeechRepository(
+        impl: SpeechRepositoryImpl
+    ): SpeechRepository
 }

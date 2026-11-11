@@ -22,7 +22,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import com.example.R
 import com.example.core.audio.TtsManager
 import com.example.core.ui.SkillAnalyticsChartView
@@ -126,21 +125,13 @@ class ProfileViewModel @Inject constructor(
             preferencesRepository.updatePreferredTtsProvider(provider)
         }
     }
-
-    fun getAudioCacheSizeKb(): Long {
-        return ttsManager.getCachedAudioSizeBytes() / 1024L
-    }
-
-    fun clearAudioCache() {
-        ttsManager.clearCachedAudio()
-    }
 }
 
 /**
- * Unified Telegram-Style Profile & Settings Fragment.
- * - Tapping the Avatar or Edit Profile opens the interactive Edit Profile & Avatar dialog.
- * - #1 Priority Settings: System Default Theme + Dark/Light Mode Switcher.
- * - Telegram-style grouped cells for Account Info, Audio & TTS, Analytics Chart, and Storage.
+ * Unified Profile & Settings Fragment.
+ * - Profile editing triggers exclusively on tapping the user avatar (`containerProfileAvatarTap`).
+ * - Theme selection uses the 3-button segmented selector `[System | Light | Dark]`.
+ * - Automatic background cache cleanup & obfuscated/encrypted local audio storage.
  */
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -172,35 +163,12 @@ class ProfileFragment : Fragment() {
 
         applySavedAvatar()
 
-        // 1. Tapping Avatar or Edit Profile opens the Telegram-style Edit Profile Dialog
-        val openEditProfileListener = View.OnClickListener {
+        // 1. Tapping User Avatar opens the Profile Edit Dialog exclusively
+        binding.containerProfileAvatarTap.setOnClickListener {
             showTelegramEditProfileDialog()
         }
-        binding.containerProfileAvatarTap.setOnClickListener(openEditProfileListener)
-        binding.btnEditProfileHeader.setOnClickListener(openEditProfileListener)
-        binding.rowEditProfileName.setOnClickListener(openEditProfileListener)
 
-        // 2. Tapping Vocabulary row opens the Vocabulary Major Topics -> Subtopics -> Flip Cards flow
-        binding.rowProfileVocabulary.setOnClickListener {
-            findNavController().navigate(R.id.vocabularyTopicsFragment)
-        }
-
-        // 3. #1 Priority Theme Switchers (System Default + Dark/Light Mode Switcher)
-        binding.switchSystemTheme.setOnCheckedChangeListener { _, isChecked ->
-            if (isUpdatingControlsProgrammatically) return@setOnCheckedChangeListener
-            if (isChecked) {
-                viewModel.setThemeMode("SYSTEM")
-            } else {
-                val isCurrentlyNight = isSystemCurrentlyNightMode()
-                viewModel.setThemeMode(if (isCurrentlyNight) "DARK" else "LIGHT")
-            }
-        }
-
-        binding.switchDarkModeQuick.setOnCheckedChangeListener { _, isChecked ->
-            if (isUpdatingControlsProgrammatically) return@setOnCheckedChangeListener
-            viewModel.setThemeMode(if (isChecked) "DARK" else "LIGHT")
-        }
-
+        // 2. Theme Selection (3-Button Segmented Group: System | Light | Dark)
         binding.toggleThemeMode.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isUpdatingControlsProgrammatically || !isChecked) return@addOnButtonCheckedListener
             when (checkedId) {
@@ -210,7 +178,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // 4. Audio & TTS Settings
+        // 3. Audio & TTS Settings
         binding.switchSoundEnabled.setOnCheckedChangeListener { _, isChecked ->
             if (isUpdatingControlsProgrammatically) return@setOnCheckedChangeListener
             viewModel.setSoundEnabled(isChecked)
@@ -241,7 +209,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // 5. Chart Period Filter (Hafta | Oy | Yillik)
+        // 4. Chart Period Filter (Hafta | Oy | Yillik)
         binding.toggleChartPeriod.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
@@ -252,14 +220,6 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // 6. Storage & Audio Cache
-        updateCacheLabel()
-        binding.btnClearAudioCache.setOnClickListener {
-            viewModel.clearAudioCache()
-            updateCacheLabel()
-            Toast.makeText(requireContext(), getString(R.string.settings_cache_cleared), Toast.LENGTH_SHORT).show()
-        }
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
@@ -268,45 +228,21 @@ class ProfileFragment : Fragment() {
 
                     val displayName = stats?.userName?.ifBlank { prefs.userName } ?: prefs.userName
                     binding.tvProfileName.text = displayName
-                    binding.tvRowUserNameValue.text = "$displayName ›"
 
                     if (stats != null) {
                         val handle = "@${displayName.lowercase(Locale.US).replace(" ", "_")}_talkme"
                         binding.tvProfileAccountTier.text =
                             "online • $handle • 🔥 ${stats.currentStreakDays} kun streak"
-                        binding.tvProfileWordsBadge.text = "${stats.memorizedUniqueWordsCount} so'z ›"
-                        binding.tvProfileGrammarBadge.text = "${stats.masteredGrammarRulesCount} qoida"
-                        binding.tvProfileTopicsProgress.text =
-                            "${stats.completedTopicsCount}/${stats.totalTopicsCount} mavzu • ${stats.completedSectionsCount}/${stats.totalSectionsCount} bo'lim"
                     }
 
-                    // Update Theme & Audio UI Controls without triggering feedback loops
+                    // Update Theme & Audio UI Controls
                     isUpdatingControlsProgrammatically = true
                     try {
                         val mode = prefs.themeMode
-                        val isSys = mode == "SYSTEM"
-                        val isDarkEffective = when (mode) {
-                            "DARK" -> true
-                            "LIGHT" -> false
-                            else -> isSystemCurrentlyNightMode()
-                        }
-
-                        if (binding.switchSystemTheme.isChecked != isSys) {
-                            binding.switchSystemTheme.isChecked = isSys
-                        }
-                        if (binding.switchDarkModeQuick.isChecked != isDarkEffective) {
-                            binding.switchDarkModeQuick.isChecked = isDarkEffective
-                        }
-
                         binding.tvCurrentThemeStatus.text = when (mode) {
-                            "LIGHT" -> "Kunduzgi rejim tanlangan (Light Mode)"
-                            "DARK" -> "Tungi rejim tanlangan (Dark Mode)"
-                            else -> "Avtomatik (Tizim mavzusi • Birinchi prioretet)"
-                        }
-                        binding.tvDarkLightModeHint.text = if (isDarkEffective) {
-                            "Hozir: Tungi rejim (Dark Mode 🌙) faol"
-                        } else {
-                            "Hozir: Kunduzgi rejim (Light Mode ☀️) faol"
+                            "LIGHT" -> "Kunduzgi rejim (Light Mode)"
+                            "DARK" -> "Tungi rejim (Dark Mode)"
+                            else -> "Tizim mavzusi (System Default)"
                         }
 
                         val targetThemeBtnId = when (mode) {
@@ -371,11 +307,6 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun isSystemCurrentlyNightMode(): Boolean {
-        val uiMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        return uiMode == Configuration.UI_MODE_NIGHT_YES
     }
 
     private fun getSavedAvatarIndex(): Int {
@@ -495,12 +426,6 @@ class ProfileFragment : Fragment() {
                 }
             }
             .show()
-    }
-
-    private fun updateCacheLabel() {
-        val kb = viewModel.getAudioCacheSizeKb()
-        binding.tvStorageCacheInfo.text =
-            "Room DB: 13 Mavzu Active • Audio kesh: $kb KB"
     }
 
     override fun onDestroyView() {

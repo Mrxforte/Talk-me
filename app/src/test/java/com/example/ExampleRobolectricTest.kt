@@ -10,7 +10,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * Verifies curriculum integrity, 4-button flip card spaced repetition ratings,
+ * Verifies curriculum integrity for the preserved Introduction lesson, 4-button flip card spaced repetition ratings,
  * pixel-perfect chart data series (Yearly Jan..Dec, Monthly, Weekly), and the strict rule
  * that no phonetic transcriptions or IPA brackets appear anywhere in content.
  */
@@ -19,9 +19,8 @@ class ExampleRobolectricTest {
     @Test
     fun `vocabulary and grammar entries contain no phonetic transcriptions`() {
         val topics = CurriculumSeedData.buildTopics()
-        assertEquals(13, topics.size)
+        assertTrue(topics.isNotEmpty())
         assertEquals("Introduction", topics[0].titleEnglish)
-        assertEquals("Grammar Fundamentals", topics[1].titleEnglish)
 
         val vocabulary = CurriculumSeedData.buildVocabulary()
         assertFalse(vocabulary.isEmpty())
@@ -32,7 +31,7 @@ class ExampleRobolectricTest {
         }
 
         val sections = CurriculumSeedData.buildSections()
-        assertEquals(26, sections.size)
+        assertEquals(7, sections.size)
         assertTrueSectionWrapUp(sections.first().wrapUpSummaryUzbek)
     }
 
@@ -66,16 +65,16 @@ class ExampleRobolectricTest {
     }
 
     @Test
-    fun `vocabulary and exercises are strictly separated by topic without cross-topic leakage`() {
+    fun `vocabulary and exercises are strictly scoped to Introduction topic without leakage`() {
         val allVocab = CurriculumSeedData.buildVocabulary()
-        val numbersVocab = allVocab.filter { it.topicId == "topic_03_numbers" }
-        assertEquals(listOf("one", "two", "three", "first", "ten"), numbersVocab.map { it.englishWord })
+        val introVocab = allVocab.filter { it.topicId == "topic_01_introduction" }
+        assertEquals(16, introVocab.size)
 
         val allExercises = CurriculumSeedData.buildExercises()
-        val numbersExercises = allExercises.filter { it.topicId == "topic_03_numbers" }
-        assertEquals(5, numbersExercises.size)
-        numbersExercises.forEach { ex ->
-            assertEquals("topic_03_numbers", ex.topicId)
+        val introExercises = allExercises.filter { it.topicId == "topic_01_introduction" }
+        assertEquals(5, introExercises.size)
+        introExercises.forEach { ex ->
+            assertEquals("topic_01_introduction", ex.topicId)
         }
     }
 
@@ -83,4 +82,3 @@ class ExampleRobolectricTest {
         assertEquals(true, wrapUpText.startsWith("Wrap-up:"))
     }
 }
-

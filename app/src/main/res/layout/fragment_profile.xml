@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:padding="@dimen/spacing_medium">
 
-        <!-- 1. TELEGRAM-STYLE PROFILE HERO HEADER (Tap Avatar or Button to Edit Profile) -->
+        <!-- 1. TELEGRAM-STYLE PROFILE HERO HEADER (Tap Avatar to Edit Profile) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardTelegramProfileHeader"
             android:layout_width="match_parent"
@@ -100,26 +100,10 @@
                     android:text="Profilni tahrirlash uchun rasm ustiga bosing"
                     android:textColor="@color/color_text_secondary"
                     android:textSize="11sp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnEditProfileHeader"
-                    style="@style/Widget.Material3.Button.TonalButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:layout_marginTop="10dp"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:paddingHorizontal="18dp"
-                    android:text="✎ Edit Profile (Tahrirlash)"
-                    android:textColor="@color/color_primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="@color/color_primary_light"
-                    app:cornerRadius="@dimen/radius_pill" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 2. #1 PRIORITY SETTINGS: KO'RINISH VA MAVZU (SYSTEM THEME DEFAULT + DARK/LIGHT SWITCHER) -->
+        <!-- 2. APPEARANCE SETTINGS: SEGMENTED 3-MODE BUTTON (SYSTEM | LIGHT | DARK) -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,7 +111,7 @@
             android:layout_marginTop="18dp"
             android:layout_marginBottom="6dp"
             android:letterSpacing="0.05"
-            android:text="KO'RINISH VA MAVZU (APPEARANCE • #1)"
+            android:text="KO'RINISH VA MAVZU (APPEARANCE)"
             android:textColor="@color/color_primary"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -147,121 +131,21 @@
                 android:orientation="vertical"
                 android:padding="14dp">
 
-                <!-- Row 1: System Default Theme Switch (Priority #1) -->
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tvCurrentThemeStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_telegram_icon_blue">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="⚡"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Tizim mavzusi (System Default)"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvCurrentThemeStatus"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Avtomatik (Telefon sozlamasi bo'yicha)"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switchSystemTheme"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="@color/color_divider" />
-
-                <!-- Row 2: Direct Dark / Light Mode Switcher -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_telegram_icon_purple">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="🌙"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Dark / Light Mode Switcher"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvDarkLightModeHint"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Kunduzgi (Light) va Tungi (Dark) rejim"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switchDarkModeQuick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+                    android:text="Mavzuni tanlang (Theme Selection)"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <!-- Segmented 3-Mode Selector (System | Light | Dark) -->
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/toggleThemeMode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="10dp"
                     app:checkedButton="@id/btnThemeSystem"
                     app:selectionRequired="true"
                     app:singleSelection="true">
@@ -272,7 +156,7 @@
                         android:layout_width="0dp"
                         android:layout_height="42dp"
                         android:layout_weight="1"
-                        android:text="System"
+                        android:text="⚡ System"
                         android:textAllCaps="false"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -303,229 +187,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 3. TELEGRAM ACCOUNT & LEARNING INFO GROUP -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="6dp"
-            android:letterSpacing="0.05"
-            android:text="PROFIL VA NATIJALAR (ACCOUNT INFO)"
-            android:textColor="@color/color_primary"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/color_surface"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="1dp"
-            app:strokeColor="@color/color_card_stroke"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!-- Row: Edit Name -->
-                <LinearLayout
-                    android:id="@+id/rowEditProfileName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="14dp">
-
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_telegram_icon_blue">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/default_user_name"
-                            android:src="@drawable/ic_nav_profile"
-                            app:tint="@color/white" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Foydalanuvchi ismi"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="O'zgartirish uchun bosing"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvRowUserNameValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Azamat ›"
-                        android:textColor="@color/color_primary"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="62dp"
-                    android:background="@color/color_divider" />
-
-                <!-- Row: Vocabulary Words -->
-                <LinearLayout
-                    android:id="@+id/rowProfileVocabulary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="14dp">
-
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_telegram_icon_green">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/stat_memorized_words_title"
-                            android:src="@drawable/ic_nav_lessons"
-                            app:tint="@color/white" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Vocabulary (Yodlangan so'zlar)"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Mavzular va Sub-topic Flip Cards"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvProfileWordsBadge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="26dp"
-                        android:background="@drawable/bg_telegram_green_badge"
-                        android:gravity="center"
-                        android:paddingHorizontal="10dp"
-                        android:text="0 so'z"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="62dp"
-                    android:background="@color/color_divider" />
-
-                <!-- Row: Mastered Grammar -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="14dp">
-
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_telegram_icon_orange">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/stat_mastered_grammar_title"
-                            android:src="@drawable/ic_trophy"
-                            app:tint="@color/white" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Grammar (Grammatika qoidalari)"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvProfileTopicsProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="O'zlashtirilgan qoidalar va mavzular"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvProfileGrammarBadge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_uzum_metric_pill"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="4dp"
-                        android:text="0 qoida"
-                        android:textColor="#111827"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- 4. TELEGRAM AUDIO, VOICE & AI TTS SETTINGS GROUP -->
+        <!-- 3. AUDIO, VOICE & AI TTS SETTINGS GROUP -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -730,7 +392,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 5. PERFORMANCE ANALYTICS CHART (Hafta | Oy | Yillik) -->
+        <!-- 4. PERFORMANCE ANALYTICS CHART (Hafta | Oy | Yillik) -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -819,7 +481,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 6. TELEGRAM STORAGE & APP INFO GROUP -->
+        <!-- 5. APP VERSION & ENCRYPTED STORAGE INFO -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -827,7 +489,7 @@
             android:layout_marginTop="18dp"
             android:layout_marginBottom="6dp"
             android:letterSpacing="0.05"
-            android:text="XOTIRA VA MA'LUMOT (STORAGE &amp; ABOUT)"
+            android:text="MA'LUMOT (ABOUT)"
             android:textColor="@color/color_primary"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -845,79 +507,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="14dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_telegram_icon_orange">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="💾"
-                            android:textColor="@color/white"
-                            android:textSize="15sp" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Audio kesh va Offline Xotira"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvStorageCacheInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Room DB: Active • Kesh: 0 KB"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnClearAudioCache"
-                        style="@style/Widget.Material3.Button.TonalButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        android:text="Tozalash"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="@color/color_divider" />
-
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/settings_about_version"
-                    android:textColor="@color/color_text_secondary"
+                    android:text="🔒 Barcha audio va matnlar 100% Shifrlangan va Avtomatik tozalanadi"
+                    android:textColor="@color/color_secondary"
                     android:textSize="12sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/settings_about_version"
+                    android:textColor="@color/color_text_secondary"
+                    android:textSize="12sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

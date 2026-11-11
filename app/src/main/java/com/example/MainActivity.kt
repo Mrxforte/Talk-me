@@ -19,6 +19,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+
 /**
  * Single Activity host for the TalkMe application.
  * Configures Firebase App Check on launch before UI inflation, manages BottomNavigationView
@@ -41,9 +45,24 @@ class MainActivity : AppCompatActivity() {
         // Mandatory Step 1: Configure Firebase App Check with launch intent before any UI or ViewModels
         configureAppCheck(this, intent)
 
-        // Step 2: Inflate XML UI using ViewBinding
+        // Step 2: Enable edge-to-edge system bar layout
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Step 3: Inflate XML UI using ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Step 4: Apply status bar (top) and navigation bar (bottom) insets app-wide
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val statusBarInset = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            val navBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+
+            // Prevent top headers from colliding with status bar icons on 100% of screens
+            binding.root.setPadding(0, statusBarInset.top, 0, 0)
+            binding.bottomNavigation.setPadding(0, 0, 0, navBarInset.bottom)
+
+            insets
+        }
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -51,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setupWithNavController(navController)
 
-        // Hide bottom navigation on full-screen sub-flows (Lesson Detail, Exercise Session, AI Tutors, Flip Cards, Settings)
+        // Hide bottom navigation on full-screen sub-flows
         val topLevelDestinations = setOf(
             R.id.homeFragment,
             R.id.lessonsFragment,
@@ -85,5 +104,11 @@ class MainActivity : AppCompatActivity() {
                     }
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
+        return navHostFragment?.navController?.navigateUp() == true || super.onSupportNavigateUp()
     }
 }

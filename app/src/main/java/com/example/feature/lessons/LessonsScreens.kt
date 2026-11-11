@@ -170,7 +170,10 @@ class TopicDetailFragment : Fragment() {
         viewModel.loadTopicDetails(topicId)
 
         binding.headerTopicDetail.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+            val nav = findNavController()
+            if (!nav.popBackStack()) {
+                nav.navigateUp()
+            }
         }
 
         binding.rvSections.layoutManager = LinearLayoutManager(requireContext())

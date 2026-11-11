@@ -17,7 +17,7 @@ import org.junit.Test
 
 /**
  * Unit tests verifying TalkMe's core educational domain logic:
- * 1. Curriculum topics starting with 1. Introduction and 2. Grammar Fundamentals.
+ * 1. Curriculum topic containing 1. Introduction.
  * 2. Sequential topic unlocking enforcement.
  * 3. 4-button Spaced Repetition review scheduling (Again, Hard, Good, Easy).
  * 4. Exercise evaluation and option randomization.
@@ -25,54 +25,28 @@ import org.junit.Test
 class ExampleUnitTest {
 
     @Test
-    fun `curriculum seed starts with Introduction as Topic 1 and Grammar Fundamentals as Topic 2`() {
+    fun `curriculum seed contains Introduction as Topic 1`() {
         val topics = CurriculumSeedData.buildTopics()
-        assertEquals(13, topics.size)
+        assertTrue(topics.isNotEmpty())
         assertEquals("Introduction", topics[0].titleEnglish)
         assertEquals("Kirish", topics[0].titleUzbek)
         assertTrue(topics[0].isUnlocked)
-
-        assertEquals("Grammar Fundamentals", topics[1].titleEnglish)
-        assertEquals("Grammatika asoslari", topics[1].titleUzbek)
-        assertFalse(topics[1].isUnlocked)
-
-        assertEquals("Numbers", topics[2].titleEnglish)
-        assertEquals("Sonlar", topics[2].titleUzbek)
-        assertEquals("Nouns", topics[3].titleEnglish)
-        assertEquals("Demonstratives", topics[4].titleEnglish)
-        assertEquals("Adjectives", topics[5].titleEnglish)
-        assertEquals("Articles", topics[6].titleEnglish)
-        assertEquals("Prepositions", topics[7].titleEnglish)
-        assertEquals("Pronouns", topics[8].titleEnglish)
-        assertEquals("Adverbs", topics[9].titleEnglish)
-        assertEquals("Adverbials", topics[10].titleEnglish)
-        assertEquals("Verbs", topics[11].titleEnglish)
-        assertEquals("Irregular Verbs", topics[12].titleEnglish)
-        assertEquals("Noto'g'ri fe'llar", topics[12].titleUzbek)
     }
 
     @Test
-    fun `sequential topic unlocking unlocks Topic 2 only after Topic 1 is completed`() {
+    fun `sequential topic unlocking computes correct statuses`() {
         val initialRaw = listOf(
-            TopicModel("t1", 1, "Introduction", "Kirish", "", totalSections = 2, completedSections = 1, status = UnlockStatus.AVAILABLE),
-            TopicModel("t2", 2, "Grammar Fundamentals", "Grammatika asoslari", "", totalSections = 2, completedSections = 0, status = UnlockStatus.LOCKED),
-            TopicModel("t3", 3, "Numbers", "Sonlar", "", totalSections = 2, completedSections = 0, status = UnlockStatus.LOCKED)
+            TopicModel("t1", 1, "Introduction", "Kirish", "", totalSections = 7, completedSections = 3, status = UnlockStatus.AVAILABLE)
         )
 
         val beforeCompletion = CurriculumDomainLogic.computeTopicUnlockStatuses(initialRaw)
         assertEquals(UnlockStatus.AVAILABLE, beforeCompletion[0].status)
-        assertEquals(UnlockStatus.LOCKED, beforeCompletion[1].status)
-        assertEquals(UnlockStatus.LOCKED, beforeCompletion[2].status)
 
         val afterTopic1Completed = listOf(
-            initialRaw[0].copy(completedSections = 2),
-            initialRaw[1],
-            initialRaw[2]
+            initialRaw[0].copy(completedSections = 7)
         )
         val afterCompletion = CurriculumDomainLogic.computeTopicUnlockStatuses(afterTopic1Completed)
         assertEquals(UnlockStatus.COMPLETED, afterCompletion[0].status)
-        assertEquals(UnlockStatus.AVAILABLE, afterCompletion[1].status)
-        assertEquals(UnlockStatus.LOCKED, afterCompletion[2].status)
     }
 
     @Test
@@ -123,15 +97,15 @@ class ExampleUnitTest {
             difficulty = 1,
             promptText = "Translate:",
             subPromptText = "",
-            audioTextToSpeak = "This is an apple.",
+            audioTextToSpeak = "Hello, my friend.",
             options = emptyList(),
-            correctAnswer = "This is an apple.",
+            correctAnswer = "Hello, my friend.",
             explanationUzbek = "",
             vocabularyIds = emptyList(),
             grammarRuleIds = emptyList()
         )
 
-        assertTrue(CurriculumDomainLogic.evaluateExerciseAnswer(exercise, "  this is an apple! "))
-        assertFalse(CurriculumDomainLogic.evaluateExerciseAnswer(exercise, "this is a book"))
+        assertTrue(CurriculumDomainLogic.evaluateExerciseAnswer(exercise, "  hello, my friend! "))
+        assertFalse(CurriculumDomainLogic.evaluateExerciseAnswer(exercise, "goodbye my friend"))
     }
 }

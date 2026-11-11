@@ -205,7 +205,10 @@ class ReadingAiFragment : Fragment() {
         binding.headerReadingAi.tvHeaderTitle.text = getString(R.string.reading_ai_title)
         binding.headerReadingAi.tvHeaderSubtitle.text = "Independent Reading Comprehension AI Session"
         binding.headerReadingAi.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+            val nav = findNavController()
+            if (!nav.popBackStack()) {
+                nav.navigateUp()
+            }
         }
 
         binding.btnGeneratePassage.setOnClickListener {

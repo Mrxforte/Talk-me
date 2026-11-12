@@ -78,23 +78,22 @@ class LearningRepositoryImpl @Inject constructor(
             )
         }
 
-        // Clean obsolete lesson records to preserve ONLY the Introduction lesson
-        dao.deleteObsoleteTopics(AppConstants.INITIAL_TOPIC_ID)
-        dao.deleteObsoleteSections(AppConstants.INITIAL_TOPIC_ID)
-        dao.deleteObsoleteVocabulary(AppConstants.INITIAL_TOPIC_ID)
-        dao.deleteObsoleteGrammarRules(AppConstants.INITIAL_TOPIC_ID)
-        dao.deleteObsoleteExercises(AppConstants.INITIAL_TOPIC_ID)
-        dao.deleteObsoleteUserMistakes(AppConstants.INITIAL_TOPIC_ID)
-
         val seedTopics = CurriculumSeedData.buildTopics()
         val seedSections = CurriculumSeedData.buildSections()
+        val seedVocab = CurriculumSeedData.buildVocabulary()
+        val seedGrammar = CurriculumSeedData.buildGrammarRules()
+
         val existingTopicsMap = dao.getAllTopicsOnce().associateBy { it.id }
-        val existingSectionsMap = dao.getSectionsByTopicOnce(AppConstants.INITIAL_TOPIC_ID).associateBy { it.id }
+        val existingSectionsMap = dao.getAllSectionsOnce().associateBy { it.id }
+        val existingVocabMap = dao.getAllVocabularyOnce().associateBy { it.id }
 
         val mergedTopics = seedTopics.map { seed ->
             val existing = existingTopicsMap[seed.id]
             if (existing != null) {
-                seed.copy(isUnlocked = existing.isUnlocked, isCompleted = existing.isCompleted)
+                seed.copy(
+                    isUnlocked = seed.isUnlocked || existing.isUnlocked,
+                    isCompleted = existing.isCompleted
+                )
             } else {
                 seed
             }
@@ -103,7 +102,24 @@ class LearningRepositoryImpl @Inject constructor(
         val mergedSections = seedSections.map { seed ->
             val existing = existingSectionsMap[seed.id]
             if (existing != null) {
-                seed.copy(isUnlocked = existing.isUnlocked, isCompleted = existing.isCompleted)
+                seed.copy(
+                    isUnlocked = seed.isUnlocked || existing.isUnlocked,
+                    isCompleted = existing.isCompleted
+                )
+            } else {
+                seed
+            }
+        }
+
+        val mergedVocab = seedVocab.map { seed ->
+            val existing = existingVocabMap[seed.id]
+            if (existing != null) {
+                seed.copy(
+                    isStudied = seed.isStudied || existing.isStudied,
+                    isMemorized = existing.isMemorized,
+                    reviewCount = existing.reviewCount,
+                    nextReviewTimestamp = existing.nextReviewTimestamp
+                )
             } else {
                 seed
             }
@@ -111,8 +127,8 @@ class LearningRepositoryImpl @Inject constructor(
 
         dao.insertTopics(mergedTopics)
         dao.insertSections(mergedSections)
-        dao.insertVocabulary(CurriculumSeedData.buildVocabulary())
-        dao.insertGrammarRules(CurriculumSeedData.buildGrammarRules())
+        dao.insertVocabulary(mergedVocab)
+        dao.insertGrammarRules(seedGrammar)
         dao.insertExercises(CurriculumSeedData.buildExercises())
         dao.insertAchievements(CurriculumSeedData.buildAchievements())
 
@@ -167,7 +183,6 @@ class LearningRepositoryImpl @Inject constructor(
                 )
             )
 
-            // Seed initial mistake warnings on Topic 1 so the user can inspect and fix them immediately
             dao.insertUserMistakes(
                 listOf(
                     UserMistakeEntity(
@@ -214,8 +229,10 @@ class LearningRepositoryImpl @Inject constructor(
             dao.observeAllSections(),
             dao.observeMemorizedUniqueWordsCount(),
             dao.observeMasteredGrammarRulesCount(),
-            preferencesRepository.userPreferencesFlow
-        ) { topics, sections, memorizedWords, masteredGrammar, prefs ->
+            combine(preferencesRepository.userPreferencesFlow, dao.observeAllDailyTaskLogs()) { prefs, logs ->
+                prefs to logs
+            }
+        ) { topics, sections, memorizedWords, masteredGrammar, (prefs, logs) ->
             val sectionsByTopic = sections.groupBy { it.topicId }
             val domainTopics = CurriculumDomainLogic.computeTopicUnlockStatuses(
                 topics.map { topic ->
@@ -263,6 +280,18 @@ class LearningRepositoryImpl @Inject constructor(
                 progressPercent = currentTopic?.progressPercent ?: 0
             )
 
+            // Compute consecutive completed days from daily task logs
+            val sortedLogs = logs.sortedByDescending { it.dateKey }
+            var consecutiveStreak = 0
+            for (log in sortedLogs) {
+                if (log.isAllCompleted || log.completedStepsCount > 0) {
+                    consecutiveStreak++
+                } else {
+                    break
+                }
+            }
+            val finalStreak = consecutiveStreak.coerceAtLeast(if (completedSections > 0) 2 else 1)
+
             LearningDashboardStats(
                 userName = prefs.userName,
                 memorizedUniqueWordsCount = memorizedWords,
@@ -272,7 +301,7 @@ class LearningRepositoryImpl @Inject constructor(
                 completedSectionsCount = completedSections,
                 totalSectionsCount = sections.size,
                 overallCourseProgressPercent = overallPercent,
-                currentStreakDays = if (completedSections > 0) 2 else 1,
+                currentStreakDays = finalStreak,
                 continueLearning = continueState
             )
         }
@@ -314,7 +343,7 @@ class LearningRepositoryImpl @Inject constructor(
                 val prevCompleted = if (i == 0) true else (result[i - 1].status == UnlockStatus.COMPLETED)
                 val status = when {
                     sec.isCompleted -> UnlockStatus.COMPLETED
-                    sec.isUnlocked || prevCompleted -> UnlockStatus.AVAILABLE
+                    prevCompleted -> UnlockStatus.AVAILABLE
                     else -> UnlockStatus.LOCKED
                 }
                 result.add(sec.toDomain(status))
@@ -326,9 +355,12 @@ class LearningRepositoryImpl @Inject constructor(
     override suspend fun getSectionById(sectionId: String): LessonSectionModel? {
         ensureSeeded()
         val entity = dao.getSectionById(sectionId) ?: return null
+        val topicSecs = dao.getSectionsByTopicOnce(entity.topicId).sortedBy { it.orderIndex }
+        val idx = topicSecs.indexOfFirst { it.id == sectionId }
+        val prevCompleted = if (idx <= 0) true else topicSecs[idx - 1].isCompleted
         val status = when {
             entity.isCompleted -> UnlockStatus.COMPLETED
-            entity.isUnlocked -> UnlockStatus.AVAILABLE
+            entity.isUnlocked || prevCompleted -> UnlockStatus.AVAILABLE
             else -> UnlockStatus.LOCKED
         }
         return entity.toDomain(status)

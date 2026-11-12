@@ -3,279 +3,657 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:fillViewport="true">
+    android:background="@color/color_cosmic_background"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingBottom="90dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_medium">
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingTop="@dimen/spacing_medium">
 
-        <!-- Header -->
-        <TextView
-            android:id="@+id/tvDailyTasksHeaderTitle"
+        <!-- Top Header Bar -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/daily_tasks_header_title"
-            android:textColor="@color/color_text_primary"
-            android:textSize="@dimen/text_size_heading"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvDailyTasksHeaderSubtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/daily_tasks_header_subtitle"
-            android:textColor="@color/color_text_secondary"
-            android:textSize="@dimen/text_size_body" />
+            <FrameLayout
+                android:id="@+id/btnCalendarPicker"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_tasks_header_calendar">
 
-        <!-- Studied Topic Filter Bar -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:text="@string/daily_tasks_topic_filter_label"
-            android:textColor="@color/color_text_primary"
-            android:textSize="@dimen/text_size_subtitle"
-            android:textStyle="bold" />
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:scrollbars="none">
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/daily_tasks_title"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="@color/white" />
+            </FrameLayout>
 
             <LinearLayout
-                android:id="@+id/layoutDailyTopicTabs"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
-
-        <!-- Today's Daily Plan Hero Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardTodayPlanHero"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
-            app:cardBackgroundColor="@color/color_primary"
-            app:cardCornerRadius="@dimen/radius_card_large"
-            app:cardElevation="3dp"
-            app:strokeWidth="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="136dp">
-
-                    <ImageView
-                        android:id="@+id/ivDailyPlanBanner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/daily_tasks_header_title"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_daily_tasks_banner_1794310886631" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/bg_image_scrim" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/spacing_medium">
-
-                        <TextView
-                            android:id="@+id/tvDailyActiveTopicBadge"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Mavzu: 1. Introduction — Kirish"
-                            android:textColor="@color/color_accent_light"
-                            android:textSize="@dimen/text_size_caption"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvDailyStatusBadge"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_badge_pill"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="4dp"
-                            android:text="Jarayonda"
-                            android:textColor="@color/color_primary"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvDailyCompletedCount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:paddingHorizontal="@dimen/spacing_medium"
-                        android:paddingBottom="10dp"
-                        android:text="Bugungi reja: 2 / 6 bosqich bajarildi"
-                        android:textColor="@color/color_text_on_primary"
-                        android:textSize="@dimen/text_size_title"
-                        android:textStyle="bold" />
-                </FrameLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_medium">
-
-                    <TextView
-                        android:id="@+id/tvDailySequentialHint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Qoidalar, yangi so'zlar, Reading, Writing, Listening va Speaking mashqlarini birin-ketin yoki alohida bajaring."
-                        android:textColor="#D1FAE5"
-                        android:textSize="@dimen/text_size_body" />
-
-                    <ProgressBar
-                        android:id="@+id/progressDailyTasks"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="12dp"
-                        android:max="100"
-                        android:progress="33"
-                        android:progressTint="@color/color_accent" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnStartSequentialTasks"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/daily_tasks_btn_sequential"
-                        android:textAllCaps="false"
-                        android:textColor="@color/color_text_primary"
-                        android:textStyle="bold"
-                        app:backgroundTint="@color/color_accent"
-                        app:cornerRadius="@dimen/radius_medium" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Topic Mistake Warnings & Error Remediation Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:text="@string/daily_tasks_warnings_title"
-            android:textColor="@color/color_text_primary"
-            android:textSize="@dimen/text_size_title"
-            android:textStyle="bold" />
-
-        <!-- Topic Warning Banner -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardTopicWarningAlert"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            app:cardBackgroundColor="#FEF2F2"
-            app:cardCornerRadius="@dimen/radius_card_medium"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/color_error"
-            app:strokeWidth="1.5dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_medium">
-
                 <TextView
-                    android:id="@+id/tvTopicWarningBannerTitle"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tvDailyTasksTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ogohlantirish: Mavzu bo'yicha xatolar aniqlandi!"
-                    android:textColor="@color/color_error"
-                    android:textSize="@dimen/text_size_subtitle"
+                    android:text="@string/daily_tasks_title"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_title"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvTopicWarningBannerBody"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tvDailyTasksSubtitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="O'zlashtirilmagan qoida va so'zlar ustida ishlang."
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_size_body" />
+                    android:layout_marginTop="2dp"
+                    android:text="@string/daily_tasks_today_date"
+                    android:textColor="@color/color_slate_subtitle"
+                    android:textSize="@dimen/text_size_body_small" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Dynamic Container for Mistake Remediation Cards -->
+            <LinearLayout
+                android:id="@+id/layoutStreakBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tasks_streak_pill"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="@string/daily_tasks_title"
+                    android:src="@drawable/ic_flame" />
+
+                <TextView
+                    android:id="@+id/tvDailyTasksStreak"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/daily_tasks_streak_format"
+                    android:textColor="#FFA726"
+                    android:textSize="@dimen/text_size_body_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Hero Card (Bugungi maqsad) -->
+        <FrameLayout
+            android:id="@+id/cardTodayGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:background="@drawable/bg_tasks_hero_card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_medium">
+
+                <!-- Circular Progress Ring (2/4) -->
+                <com.example.feature.dailytasks.TasksCircularProgressView
+                    android:id="@+id/circleTasksProgress"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp" />
+
+                <!-- Text & Bar Info -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvHeroGoalTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/daily_tasks_hero_goal_title"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_subtitle"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvHeroCompletedCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/daily_tasks_hero_completed_format"
+                        android:textColor="@color/color_neon_green"
+                        android:textSize="@dimen/text_size_caption"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvHeroXpProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/daily_tasks_hero_xp_format"
+                        android:textColor="@color/color_neon_cyan_variant"
+                        android:textSize="@dimen/text_size_caption"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/progressHeroXp"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="120dp"
+                        android:layout_height="7dp"
+                        android:layout_marginTop="4dp"
+                        android:max="300"
+                        android:progress="120"
+                        android:progressDrawable="@drawable/progress_bar_cyan" />
+                </LinearLayout>
+
+                <!-- Glowing Golden Chest Illustration -->
+                <ImageView
+                    android:id="@+id/ivHeroChest"
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="@string/daily_tasks_reward_banner_text"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_tasks_hero_chest" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Section Title (Bugungi vazifalar) -->
         <LinearLayout
-            android:id="@+id/containerMistakeCards"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:orientation="vertical" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <!-- 6 Daily Task Steps (Sequential or Individual) -->
-        <TextView
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:contentDescription="@string/daily_tasks_section_title"
+                android:src="@drawable/ic_target_bullseye"
+                app:tint="@color/color_neon_cyan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/daily_tasks_section_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_subtitle"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- 1. Vocabulary Task Card -->
+        <FrameLayout
+            android:id="@+id/cardTaskVocab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:text="@string/daily_tasks_steps_title"
-            android:textColor="@color/color_text_primary"
-            android:textSize="@dimen/text_size_title"
-            android:textStyle="bold" />
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_tasks_card_vocab"
+            android:padding="12dp">
 
-        <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="74dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="@string/daily_tasks_task_vocab_title"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_tasks_vocab" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/daily_tasks_task_vocab_title"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvVocabSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/daily_tasks_task_vocab_subtitle"
+                        android:textColor="@color/color_slate_subtitle"
+                        android:textSize="@dimen/text_size_caption" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progressVocab"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="70dp"
+                            android:layout_height="6dp"
+                            android:max="5"
+                            android:progress="3"
+                            android:progressDrawable="@drawable/progress_bar_cyan" />
+
+                        <TextView
+                            android:id="@+id/tvVocabCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="3/5"
+                            android:textColor="@color/color_slate_subtitle"
+                            android:textSize="@dimen/text_size_caption"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_tasks_xp_pill"
+                        android:text="@string/daily_tasks_xp_badge_50"
+                        android:textColor="@color/color_gold_accent"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnTaskVocab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_tasks_btn_purple"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingHorizontal="14dp"
+                        android:text="@string/daily_tasks_btn_continue"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_caption"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- 2. Listening Task Card -->
+        <FrameLayout
+            android:id="@+id/cardTaskListening"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Har bir bo'limni ketma-ket yoki alohida kirib bajarishingiz mumkin — barchasi kunlik rejaga yoziladi."
-            android:textColor="@color/color_text_secondary"
-            android:textSize="@dimen/text_size_caption" />
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_tasks_card_listening"
+            android:padding="12dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="74dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="@string/daily_tasks_task_listening_title"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_tasks_listening" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/daily_tasks_task_listening_title"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvListeningSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/daily_tasks_task_listening_subtitle"
+                        android:textColor="@color/color_slate_subtitle"
+                        android:textSize="@dimen/text_size_caption" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progressListening"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="70dp"
+                            android:layout_height="6dp"
+                            android:max="3"
+                            android:progress="1"
+                            android:progressDrawable="@drawable/progress_bar_cyan" />
+
+                        <TextView
+                            android:id="@+id/tvListeningCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="1/3 daq"
+                            android:textColor="@color/color_slate_subtitle"
+                            android:textSize="@dimen/text_size_caption"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_tasks_xp_pill"
+                        android:text="@string/daily_tasks_xp_badge_50"
+                        android:textColor="@color/color_gold_accent"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnTaskListening"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_tasks_btn_cyan"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingHorizontal="14dp"
+                        android:text="@string/daily_tasks_btn_start_play"
+                        android:textColor="#060D1A"
+                        android:textSize="@dimen/text_size_caption"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- 3. Speaking Task Card -->
+        <FrameLayout
+            android:id="@+id/cardTaskSpeaking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_tasks_card_speaking"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="74dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="@string/daily_tasks_task_speaking_title"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_tasks_speaking" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/daily_tasks_task_speaking_title"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvSpeakingSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/daily_tasks_task_speaking_subtitle"
+                        android:textColor="@color/color_slate_subtitle"
+                        android:textSize="@dimen/text_size_caption" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progressSpeaking"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="70dp"
+                            android:layout_height="6dp"
+                            android:max="3"
+                            android:progress="1"
+                            android:progressDrawable="@drawable/progress_bar_cyan" />
+
+                        <TextView
+                            android:id="@+id/tvSpeakingCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="1/3 gap"
+                            android:textColor="@color/color_slate_subtitle"
+                            android:textSize="@dimen/text_size_caption"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_tasks_xp_pill"
+                        android:text="@string/daily_tasks_xp_badge_50"
+                        android:textColor="@color/color_gold_accent"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnTaskSpeaking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_tasks_btn_purple"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingHorizontal="14dp"
+                        android:text="@string/daily_tasks_btn_continue"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_caption"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- 4. Lesson Task Card -->
+        <FrameLayout
+            android:id="@+id/cardTaskLesson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_tasks_card_lesson"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="74dp"
+                    android:layout_height="56dp"
+                    android:contentDescription="@string/daily_tasks_task_lesson_title"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_tasks_lesson" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/daily_tasks_task_lesson_title"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvLessonSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/daily_tasks_task_lesson_subtitle"
+                        android:textColor="@color/color_slate_subtitle"
+                        android:textSize="@dimen/text_size_caption" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progressLesson"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="70dp"
+                            android:layout_height="6dp"
+                            android:max="1"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/progress_bar_cyan" />
+
+                        <TextView
+                            android:id="@+id/tvLessonCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="0/1"
+                            android:textColor="@color/color_slate_subtitle"
+                            android:textSize="@dimen/text_size_caption"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_tasks_xp_pill"
+                        android:text="@string/daily_tasks_xp_badge_50"
+                        android:textColor="@color/color_gold_accent"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnTaskLesson"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_tasks_btn_teal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingHorizontal="14dp"
+                        android:text="@string/daily_tasks_btn_lesson_go"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_caption"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Bottom Locked Reward Banner -->
         <LinearLayout
-            android:id="@+id/containerDailyTaskSteps"
+            android:id="@+id/layoutRewardBanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:orientation="vertical" />
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_tasks_reward_banner"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="10dp">
 
-        <!-- Daily Plan Tracking History (Completed vs Missed/Incomplete Days) -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:text="@string/daily_tasks_history_title"
-            android:textColor="@color/color_text_primary"
-            android:textSize="@dimen/text_size_title"
-            android:textStyle="bold" />
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="38dp"
+                android:contentDescription="@string/daily_tasks_reward_banner_text"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_tasks_reward_chest" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Barcha 6 mashq bajarilsa 'Bajarilgan kun', chalasi qolsa 'Bajarilmagan kun' sifatida saqlanadi."
-            android:textColor="@color/color_text_secondary"
-            android:textSize="@dimen/text_size_caption" />
-
-        <LinearLayout
-            android:id="@+id/containerDailyHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginBottom="@dimen/spacing_xl"
-            android:orientation="vertical" />
-
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/daily_tasks_reward_banner_text"
+                android:textColor="#EDE7F6"
+                android:textSize="@dimen/text_size_body_small"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

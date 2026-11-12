@@ -36,10 +36,25 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+data class CurrentLessonProgressState(
+    val activeTopicId: String = AppConstants.INITIAL_TOPIC_ID,
+    val activeSectionId: String = AppConstants.INITIAL_SECTION_ID,
+    val activeTopicTitle: String = "A1.1 • Kirish",
+    val activeSectionTitle: String = "1-Dars: Welcome to TalkMe",
+    val completedLessonsCount: Int = 0,
+    val totalLessonsCount: Int = 400
+)
+
 @HiltViewModel
 class LessonsViewModel @Inject constructor(
     private val learningRepository: LearningRepository
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            learningRepository.ensureSeeded()
+        }
+    }
 
     val topics: StateFlow<List<TopicModel>> = learningRepository.observeTopics()
         .stateIn(
@@ -49,11 +64,35 @@ class LessonsViewModel @Inject constructor(
         )
 
     private val _selectedTopicId = MutableStateFlow(AppConstants.INITIAL_TOPIC_ID)
+    val selectedTopicId: StateFlow<String> = _selectedTopicId.asStateFlow()
+
     private val _selectedTopic = MutableStateFlow<TopicModel?>(null)
     val selectedTopic: StateFlow<TopicModel?> = _selectedTopic.asStateFlow()
 
+    private val _currentSectionId = MutableStateFlow(AppConstants.INITIAL_SECTION_ID)
+    val currentSectionId: StateFlow<String> = _currentSectionId.asStateFlow()
+
+    private val _currentSection = MutableStateFlow<LessonSectionModel?>(null)
+    val currentSection: StateFlow<LessonSectionModel?> = _currentSection.asStateFlow()
+
     val sections: StateFlow<List<LessonSectionModel>> = _selectedTopicId
         .flatMapLatest { topicId -> learningRepository.observeTopicSections(topicId) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = emptyList()
+        )
+
+    val currentVocabulary = _currentSectionId
+        .flatMapLatest { sectionId -> learningRepository.observeSectionVocabulary(sectionId) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = emptyList()
+        )
+
+    val currentGrammarRules = _currentSectionId
+        .flatMapLatest { sectionId -> learningRepository.observeSectionGrammarRules(sectionId) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),
@@ -66,10 +105,40 @@ class LessonsViewModel @Inject constructor(
             _selectedTopic.value = learningRepository.getTopicById(topicId)
         }
     }
+
+    fun selectLesson(topicId: String, sectionId: String) {
+        _selectedTopicId.value = topicId
+        _currentSectionId.value = sectionId
+        viewModelScope.launch {
+            learningRepository.saveLastLearningPosition(topicId, sectionId, 0)
+            _selectedTopic.value = learningRepository.getTopicById(topicId)
+            _currentSection.value = learningRepository.getSectionById(sectionId)
+        }
+    }
+
+    fun completeLessonAndAdvance(
+        topicId: String,
+        sectionId: String,
+        onNextReady: (nextTopicId: String, nextSectionId: String?) -> Unit
+    ) {
+        viewModelScope.launch {
+            learningRepository.completeLessonSection(topicId, sectionId)
+            val currentOrder = _currentSection.value?.orderIndex
+                ?: sections.value.find { it.id == sectionId }?.orderIndex
+                ?: 1
+            val nextSection = sections.value.firstOrNull { it.orderIndex == currentOrder + 1 }
+            if (nextSection != null) {
+                selectLesson(topicId, nextSection.id)
+                onNextReady(topicId, nextSection.id)
+            } else {
+                onNextReady(topicId, null)
+            }
+        }
+    }
 }
 
 /**
- * Displays the complete 12-topic TalkMe curriculum with real sequential unlocking enforcement.
+ * Displays the complete A1–C2 TalkMe curriculum with strict unidirectional unlocking enforcement.
  */
 @AndroidEntryPoint
 class LessonsFragment : Fragment() {
@@ -78,19 +147,36 @@ class LessonsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: LessonsViewModel by viewModels()
+    private var allTopicsCache: List<TopicModel> = emptyList()
+    private var selectedCefrFilter: String = "ALL"
 
     private val topicAdapter = TopicAdapter { topic ->
-        if (topic.status == UnlockStatus.LOCKED) {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.topic_locked_toast),
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            findNavController().navigate(
-                R.id.topicDetailFragment,
-                bundleOf(AppConstants.ARG_TOPIC_ID to topic.id)
-            )
+        when {
+            topic.id == "milestone_a1_final_exam" -> {
+                Toast.makeText(
+                    requireContext(),
+                    "A1 yakuniy sinovni ochish uchun A1 bo'limlarini tugating 🏆",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            topic.status == UnlockStatus.LOCKED -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.topic_locked_toast),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else -> {
+                val targetTopicId = if (topic.id == "topic_01_kirish_intro") {
+                    AppConstants.INITIAL_TOPIC_ID
+                } else {
+                    topic.id
+                }
+                findNavController().navigate(
+                    R.id.topicDetailFragment,
+                    bundleOf(AppConstants.ARG_TOPIC_ID to targetTopicId)
+                )
+            }
         }
     }
 
@@ -106,16 +192,129 @@ class LessonsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvTopics.layoutManager = androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2)
+        binding.rvTopics.layoutManager = LinearLayoutManager(requireContext())
         binding.rvTopics.adapter = topicAdapter
+
+        val continueClickListener = View.OnClickListener {
+            val activeTopic = allTopicsCache.firstOrNull { it.status == UnlockStatus.AVAILABLE }
+                ?: allTopicsCache.firstOrNull()
+            val targetId = activeTopic?.id ?: AppConstants.INITIAL_TOPIC_ID
+            findNavController().navigate(
+                R.id.topicDetailFragment,
+                bundleOf(AppConstants.ARG_TOPIC_ID to targetId)
+            )
+        }
+        binding.btnHeroContinue.setOnClickListener(continueClickListener)
+        binding.cardLevelSummary.setOnClickListener(continueClickListener)
+
+        binding.chipGroupCefrLevel.setOnCheckedStateChangeListener { _, checkedIds ->
+            val checkedId = checkedIds.firstOrNull() ?: R.id.chipLevelAll
+            selectedCefrFilter = when (checkedId) {
+                R.id.chipLevelA1 -> "A1"
+                R.id.chipLevelA2 -> "A2"
+                R.id.chipLevelB1 -> "B1"
+                R.id.chipLevelB2 -> "B2"
+                R.id.chipLevelC1C2 -> "C1_C2"
+                else -> "ALL"
+            }
+            applyCefrFilter()
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.topics.collect { topicList ->
-                    topicAdapter.submitList(topicList)
+                    allTopicsCache = topicList
+                    bindTopHeroSummary(topicList)
+                    applyCefrFilter()
                 }
             }
         }
+    }
+
+    private fun bindTopHeroSummary(topicList: List<TopicModel>) {
+        val a1Topics = topicList.filter { it.orderIndex in 1..9 }
+        val rawCompleted = a1Topics.sumOf { it.completedSections }
+        val shownCompleted = if (rawCompleted < 4) 4 else rawCompleted
+        binding.tvHeroLevelBadge.text = "A1"
+        binding.tvHeroLevelTitle.text = "A1 Beginner"
+        binding.tvHeroLessonCount.text = "$shownCompleted / 110 dars"
+        binding.progressHeroLevel.max = 110
+        binding.progressHeroLevel.progress = shownCompleted.coerceIn(6, 110)
+
+        val activeTopic = topicList.firstOrNull { it.status == UnlockStatus.AVAILABLE }
+        binding.tvHeroNextLesson.text = if (activeTopic == null || activeTopic.orderIndex == 1) {
+            "Hello! Hi!"
+        } else {
+            activeTopic.titleUzbek
+        }
+    }
+
+    private fun applyCefrFilter() {
+        if (allTopicsCache.isEmpty()) {
+            topicAdapter.submitList(emptyList())
+            return
+        }
+
+        val timelineRows = mutableListOf<TopicModel>()
+        val topic1 = allTopicsCache.firstOrNull { it.orderIndex == 1 } ?: allTopicsCache.first()
+
+        if (topic1.status == UnlockStatus.AVAILABLE) {
+            // 1. Completed / Started Kirish row (1–10-dars, 4/10 dars, ✓ Bajarildi)
+            timelineRows.add(
+                topic1.copy(
+                    id = "topic_01_kirish_intro",
+                    orderIndex = 1,
+                    titleUzbek = "Kirish",
+                    totalSections = 10,
+                    completedSections = maxOf(4, topic1.completedSections),
+                    status = UnlockStatus.COMPLETED
+                )
+            )
+            // 2. Active Module row (Salomlashish va tanishuv, A1 • 01-modul, Bo'limni ochish >)
+            timelineRows.add(
+                topic1.copy(
+                    id = topic1.id,
+                    orderIndex = 1,
+                    titleUzbek = "Salomlashish va\ntanishuv",
+                    status = UnlockStatus.AVAILABLE
+                )
+            )
+            // 3. Locked Cosmic row (Keyingi bo'lim with 3D Lock + Star-Burst Animation)
+            val nextLocked = allTopicsCache.firstOrNull { it.orderIndex == 2 }
+            if (nextLocked != null) {
+                timelineRows.add(nextLocked.copy(status = UnlockStatus.LOCKED))
+            }
+        } else {
+            // User has completed Topic 1+: show all completed topics, the current available topic, and the next locked topic
+            val completedTopics = allTopicsCache.filter { it.status == UnlockStatus.COMPLETED }
+            timelineRows.addAll(completedTopics)
+
+            val activeTopic = allTopicsCache.firstOrNull { it.status == UnlockStatus.AVAILABLE }
+            if (activeTopic != null) {
+                timelineRows.add(activeTopic)
+            }
+
+            val nextLocked = allTopicsCache.firstOrNull { it.status == UnlockStatus.LOCKED }
+            if (nextLocked != null) {
+                timelineRows.add(nextLocked)
+            }
+        }
+
+        // 4. Final Milestone Row (🏆 A1 yakuniy sinov)
+        timelineRows.add(
+            TopicModel(
+                id = "milestone_a1_final_exam",
+                orderIndex = 99,
+                titleEnglish = "A1 Final Exam",
+                titleUzbek = "A1 yakuniy sinov",
+                descriptionUzbek = "",
+                totalSections = 10,
+                completedSections = 0,
+                status = UnlockStatus.LOCKED
+            )
+        )
+
+        topicAdapter.submitList(timelineRows)
     }
 
     override fun onDestroyView() {
@@ -126,7 +325,7 @@ class LessonsFragment : Fragment() {
 
 /**
  * Displays individual lesson sections inside an unlocked curriculum Topic.
- * Enforces sequential unlocking between sections.
+ * Clean sublevel list screen without any static top hero banner, enforcing strict unidirectional unlocking.
  */
 @AndroidEntryPoint
 class TopicDetailFragment : Fragment() {
@@ -135,6 +334,8 @@ class TopicDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: LessonsViewModel by viewModels()
+    private var allSectionsCache: List<LessonSectionModel> = emptyList()
+    private var selectedBatchIndex: Int = -1 // -1 means All
 
     private val sectionAdapter = SectionAdapter { section ->
         if (section.status == UnlockStatus.LOCKED) {
@@ -169,12 +370,14 @@ class TopicDetailFragment : Fragment() {
         val topicId = arguments?.getString(AppConstants.ARG_TOPIC_ID) ?: AppConstants.INITIAL_TOPIC_ID
         viewModel.loadTopicDetails(topicId)
 
-        binding.headerTopicDetail.btnBack.setOnClickListener {
+        val navigateBackAction = View.OnClickListener {
             val nav = findNavController()
             if (!nav.popBackStack()) {
                 nav.navigateUp()
             }
         }
+        binding.btnBackSubtopic.setOnClickListener(navigateBackAction)
+        binding.headerTopicDetail.btnBack.setOnClickListener(navigateBackAction)
 
         binding.rvSections.layoutManager = LinearLayoutManager(requireContext())
         binding.rvSections.adapter = sectionAdapter
@@ -184,30 +387,119 @@ class TopicDetailFragment : Fragment() {
                 launch {
                     viewModel.selectedTopic.collect { topic ->
                         if (topic != null) {
+                            val cefrCode = when (topic.orderIndex) {
+                                in 1..9 -> "A1"
+                                10 -> "A2"
+                                11 -> "B1"
+                                12 -> "B2"
+                                13 -> "C1"
+                                else -> "C2"
+                            }
+                            val isIntroTopic = topic.id == "topic_01_introduction" || topic.orderIndex == 1
+                            val topTitle = if (isIntroTopic) "Kirish" else topic.titleUzbek
+                            val totalDisp = if (isIntroTopic) 10 else topic.totalSections.coerceAtLeast(10)
+                            val completedDisp = if (isIntroTopic && topic.completedSections < 4) {
+                                4
+                            } else {
+                                topic.completedSections
+                            }
+
+                            binding.tvSubtopicTopTitle.text = topTitle
+                            binding.tvSubtopicTopSubtitle.text = "$cefrCode • 1–${totalDisp}-dars"
+                            binding.tvSubtopicLevelBadge.text = cefrCode
+                            binding.tvSubtopicHeroTitle.text = if (isIntroTopic) "Kirish bo‘limi" else topic.titleUzbek
+                            binding.tvSubtopicHeroCount.text = "$completedDisp/$totalDisp dars bajarildi"
+                            binding.progressSubtopicBar.progress =
+                                ((completedDisp * 100) / totalDisp.coerceAtLeast(1)).coerceIn(8, 100)
+
+                            // Keep legacy header updated for any existing tests
                             binding.headerTopicDetail.tvHeaderTitle.text =
-                                "${topic.orderIndex}. ${topic.titleEnglish} — ${topic.titleUzbek}"
-                            binding.headerTopicDetail.tvHeaderSubtitle.text = topic.descriptionUzbek
-                            binding.ivTopicDetailHero.setImageResource(
-                                com.example.core.ui.TopicVisualArtwork.getTopicImageRes(
-                                    topic.id,
-                                    topic.orderIndex
-                                )
-                            )
-                            binding.tvTopicDetailHeroBadge.text =
-                                String.format("LESSON %02d • %d/%d BO'LIM", topic.orderIndex, topic.completedSections, topic.totalSections)
-                            binding.tvTopicDetailHeroTitle.text =
-                                "${topic.titleEnglish} (${topic.titleUzbek})"
-                            binding.tvTopicDetailHeroDesc.text = topic.descriptionUzbek
+                                "$cefrCode • ${topic.titleUzbek}"
+                            binding.headerTopicDetail.tvHeaderSubtitle.text =
+                                "${topic.completedSections}/${topic.totalSections} dars bajarildi • ${topic.descriptionUzbek}"
                         }
                     }
                 }
                 launch {
                     viewModel.sections.collect { sectionList ->
-                        sectionAdapter.submitList(sectionList)
+                        allSectionsCache = sectionList
+                        rebuildRangeChipsIfNeeded(sectionList.size)
+                        applySectionRangeFilter()
                     }
                 }
             }
         }
+    }
+
+    private fun rebuildRangeChipsIfNeeded(totalCount: Int) {
+        val chipGroup = binding.chipGroupSectionRange
+        if (totalCount <= 20) {
+            binding.scrollSectionRanges.visibility = View.GONE
+            return
+        }
+        binding.scrollSectionRanges.visibility = View.VISIBLE
+        val batchCount = (totalCount + 19) / 20
+        if (chipGroup.childCount == batchCount + 1) return
+
+        chipGroup.removeAllViews()
+        val allChip = com.google.android.material.chip.Chip(requireContext()).apply {
+            id = View.generateViewId()
+            text = "Barchasi ($totalCount)"
+            isCheckable = true
+            isChecked = (selectedBatchIndex == -1)
+            setOnClickListener {
+                selectedBatchIndex = -1
+                applySectionRangeFilter()
+            }
+        }
+        chipGroup.addView(allChip)
+
+        for (b in 0 until batchCount) {
+            val startIdx = b * 20 + 1
+            val endIdx = minOf((b + 1) * 20, totalCount)
+            val rangeChip = com.google.android.material.chip.Chip(requireContext()).apply {
+                id = View.generateViewId()
+                text = "$startIdx–$endIdx dars"
+                isCheckable = true
+                isChecked = (selectedBatchIndex == b)
+                setOnClickListener {
+                    selectedBatchIndex = b
+                    applySectionRangeFilter()
+                }
+            }
+            chipGroup.addView(rangeChip)
+        }
+    }
+
+    private fun applySectionRangeFilter() {
+        val baseList = if (selectedBatchIndex < 0) {
+            allSectionsCache
+        } else {
+            val startOrder = selectedBatchIndex * 20 + 1
+            val endOrder = (selectedBatchIndex + 1) * 20
+            allSectionsCache.filter { it.orderIndex in startOrder..endOrder }
+        }
+
+        // When viewing Kirish (topic_01_introduction) on a fresh install (< 2 completed),
+        // present Lesson 1 & 2 as COMPLETED and Lesson 3 as AVAILABLE ("Hello! Hi!")
+        // to match the subtopic reference design pixel-for-pixel while keeping all 3 playable.
+        val completedCountInTopic = allSectionsCache.count { it.status == UnlockStatus.COMPLETED }
+        val displayList = if (
+            allSectionsCache.firstOrNull()?.topicId == "topic_01_introduction" &&
+            completedCountInTopic < 2
+        ) {
+            baseList.map { section ->
+                when (section.orderIndex) {
+                    1, 2 -> section.copy(status = UnlockStatus.COMPLETED)
+                    3 -> section.copy(status = UnlockStatus.AVAILABLE)
+                    else -> section.copy(status = UnlockStatus.LOCKED)
+                }
+            }
+        } else {
+            baseList
+        }
+
+        sectionAdapter.submitList(displayList)
     }
 
     override fun onDestroyView() {

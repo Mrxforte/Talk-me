@@ -52,15 +52,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Step 4: Apply status bar (top) and navigation bar (bottom) insets app-wide
+        // Step 4: Apply status bar (top), navigation bar (bottom), and IME insets cleanly
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val statusBarInset = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-            val navBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
-
-            // Prevent top headers from colliding with status bar icons on 100% of screens
-            binding.root.setPadding(0, statusBarInset.top, 0, 0)
-            binding.bottomNavigation.setPadding(0, 0, 0, navBarInset.bottom)
-
+            val systemBars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            )
+            binding.root.setPadding(0, systemBars.top, 0, 0)
+            binding.bottomNavigation.setPadding(0, 0, 0, systemBars.bottom)
             insets
         }
 

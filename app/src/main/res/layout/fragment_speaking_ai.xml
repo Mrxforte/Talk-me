@@ -1,196 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:orientation="vertical">
+    android:background="@color/color_background">
 
-    <include
-        android:id="@+id/headerSpeakingAi"
-        layout="@layout/view_screen_header" />
-
-    <!-- PROMINENT 2D ANIMATED AI TUTOR CHARACTER SECTION (~35-40% Screen Height) -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardAiCharacterSection"
-        style="@style/Widget.TalkMe.Card"
+    <LinearLayout
+        android:id="@+id/layoutSpeakingSessionContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_medium"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="3dp"
-        app:strokeColor="@color/color_card_stroke"
-        app:strokeWidth="1dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- 1. TOP AI TUTOR HERO PORTRAIT HEADER (Matches Reference UI) -->
+        <FrameLayout
+            android:id="@+id/cardAiCharacterSection"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="14dp">
+            android:layout_height="225dp"
+            android:background="#0F172A">
 
-            <!-- Top Status Bar Row: Connection State + Timer + End Button -->
+            <!-- Full-Bleed AI Tutor Portrait Image -->
+            <ImageView
+                android:id="@+id/ivAiCharacterAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/speaking_ai_title"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_ai_tutor_hero_1794423856585" />
+
+            <!-- Subtle Scrim Gradient for Readability of Overlay Controls -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/bg_image_scrim" />
+
+            <!-- Top Controls Overlay: Back Arrow (Left) + Duration Pill + Close/End Button (Right) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingTop="12dp">
 
-                <TextView
-                    android:id="@+id/tvSpeakingConnectionState"
-                    style="@style/TextAppearance.TalkMe.Caption"
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_overlay_circle_dark"
+                    android:contentDescription="@string/action_back"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="@color/white" />
+
+                <View
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="● Online AI Tutor"
-                    android:textColor="@color/color_secondary"
-                    android:textStyle="bold" />
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/tvSpeakingDuration"
                     style="@style/TextAppearance.TalkMe.Caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:textColor="@color/color_primary"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_glass_pill"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
-                <com.google.android.material.button.MaterialButton
+                <ImageButton
                     android:id="@+id/btnEndSpeakingSession"
-                    style="@style/Widget.Material3.Button.TonalButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="34dp"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:paddingHorizontal="12dp"
-                    android:text="@string/speaking_ai_btn_end"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="17dp" />
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_overlay_circle_dark"
+                    android:contentDescription="@string/speaking_ai_btn_end"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_close"
+                    app:tint="@color/white" />
             </LinearLayout>
 
-            <!-- Large 2D Animated AI Character Avatar Frame -->
-            <FrameLayout
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="8dp">
-
-                <!-- Pulsing Aura Background Ring -->
-                <View
-                    android:id="@+id/ivAiCharacterAura"
-                    android:layout_width="144dp"
-                    android:layout_height="144dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/bg_google_mic_btn"
-                    android:alpha="0.3" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardAiAvatarCircle"
-                    android:layout_width="132dp"
-                    android:layout_height="132dp"
-                    android:layout_gravity="center"
-                    app:cardCornerRadius="66dp"
-                    app:cardElevation="4dp"
-                    app:strokeColor="@color/color_primary"
-                    app:strokeWidth="3dp">
-
-                    <ImageView
-                        android:id="@+id/ivAiCharacterAvatar"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/speaking_ai_title"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_ai_tutor_avatar_1794304412196" />
-                </com.google.android.material.card.MaterialCardView>
-            </FrameLayout>
-
-            <!-- Topic Title Banner -->
-            <TextView
-                android:id="@+id/tvSpeakingCurrentTopic"
-                style="@style/TextAppearance.TalkMe.Subtitle"
-                android:layout_width="wrap_content"
+            <!-- Bottom-Left Overlay inside Portrait: Topic Title Badge -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:textColor="@color/color_primary"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_gravity="bottom"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="12dp">
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:id="@+id/tvSpeakingCurrentTopic"
+                    style="@style/TextAppearance.TalkMe.Subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:shadowColor="#99000000"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:shadowRadius="4"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-    <!-- Conversation Transcript -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSpeakingTranscript"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingHorizontal="@dimen/spacing_medium"
-        android:paddingBottom="8dp" />
+            <!-- Golden Speaking Activity Accent Line at the Bottom of Portrait -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3.5dp"
+                android:layout_gravity="bottom"
+                android:background="#33FACC15" />
 
-    <!-- Bottom Voice & Text Controls (Google Gemini Style) -->
-    <com.google.android.material.card.MaterialCardView
-        style="@style/Widget.TalkMe.Card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_medium"
-        app:cardCornerRadius="28dp"
-        app:cardElevation="4dp"
-        app:strokeColor="@color/color_divider"
-        app:strokeWidth="1dp">
+            <View
+                android:id="@+id/viewTutorSpeakingBar"
+                android:layout_width="180dp"
+                android:layout_height="3.5dp"
+                android:layout_gravity="bottom|start"
+                android:background="#FACC15" />
 
+        </FrameLayout>
+
+        <!-- 2. CONVERSATION TRANSCRIPT (Tutor & Student Spoken Messages + TTS) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSpeakingTranscript"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp" />
+
+        <!-- 3. BOTTOM CENTER MICROPHONE DOCK + AUXILIARY CONTROLS -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="8dp">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="16dp">
 
-            <EditText
-                android:id="@+id/etSpeakingInput"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autofillHints=""
-                android:background="@null"
-                android:hint="@string/speaking_ai_input_hint"
-                android:inputType="textCapSentences|textMultiLine"
-                android:maxLines="3"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="10dp"
-                android:textSize="15sp" />
-
-            <!-- Google Round Microphone Button -->
-            <ImageButton
-                android:id="@+id/btnMicrophoneSpeak"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:layout_marginStart="6dp"
-                android:background="@drawable/bg_google_mic_btn"
-                android:contentDescription="@string/speaking_ai_btn_mic"
-                android:elevation="2dp"
-                android:padding="10dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_mic"
-                app:tint="@color/white" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSendSpeakingText"
-                style="@style/Widget.TalkMe.PrimaryButton"
+            <!-- Live Provisional Speech Preview Pill (Visible when user is speaking) -->
+            <TextView
+                android:id="@+id/tvLiveInterimSpeech"
+                style="@style/TextAppearance.TalkMe.Body"
                 android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_marginStart="6dp"
-                android:minWidth="0dp"
-                android:paddingHorizontal="16dp"
-                android:text="@string/speaking_ai_send"
-                app:cornerRadius="22dp" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/bg_badge_pill"
+                android:gravity="center"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="6dp"
+                android:textColor="@color/color_primary"
+                android:textSize="13.5sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-</LinearLayout>
+            <!-- Compose Auxiliary Controls: Stop Conversation, Skip TTS, Retry Banner, Gboard Fallback -->
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/composeAuxiliaryControls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- Status / Instruction Text -->
+            <TextView
+                android:id="@+id/tvSpeakingConnectionState"
+                style="@style/TextAppearance.TalkMe.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="Suhbatni boshlash uchun mikrofonni bir marta bosing"
+                android:textColor="@color/color_text_secondary"
+                android:textSize="12.5sp"
+                android:textStyle="bold" />
+
+            <!-- Large Centered Microphone Button with Glowing Halo Ring -->
+            <FrameLayout
+                android:layout_width="104dp"
+                android:layout_height="104dp"
+                android:gravity="center">
+
+                <!-- Pulsing Blue Halo Aura Ring -->
+                <View
+                    android:id="@+id/ivAiCharacterAura"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_mic_glow_halo" />
+
+                <!-- Crisp White Circular Microphone Button -->
+                <ImageButton
+                    android:id="@+id/btnMicrophoneSpeak"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_mic_center_white"
+                    android:contentDescription="@string/speaking_ai_btn_mic"
+                    android:elevation="6dp"
+                    android:padding="18dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_mic"
+                    app:tint="#0F172A" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 4. JETPACK COMPOSE MICROPHONE PERMISSION GATE (Requests RECORD_AUDIO before initializing session) -->
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composePermissionGate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

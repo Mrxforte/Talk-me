@@ -1,43 +1,60 @@
 package com.example.data.repository
 
-import android.util.Log
 import com.example.core.audio.AudioRecordManager
 import com.example.core.speech.SherpaOfflineEngine
 import com.example.core.speech.SherpaStreamingEngine
+import com.example.core.speech.SileroVadDetector
+import com.example.core.speech.VadState
 import com.example.domain.repository.SpeechRecognitionResult
 import com.example.domain.repository.SpeechRecognitionState
 import com.example.domain.repository.SpeechRepository
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlin.math.abs
-
-private const val TAG = "SpeechRepositoryImpl"
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 
 /**
- * Implementation of [SpeechRepository] orchestrating the two-pass STT architecture:
- * - PASS 1: Captures audio via [AudioRecordManager], feeds float chunks to [SherpaStreamingEngine],
- *   and updates [interimText] live.
- * - PASS 2: Upon stopping, passes complete raw PCM float buffer to [SherpaOfflineEngine] for
- *   final batch transcription, updating [finalText] and returning [SpeechRecognitionResult].
+ * Fully local, backend-free implementation of [SpeechRepository]:
+ *
+ * Pipeline:
+ * `Android AudioRecord (16kHz Mono PCM) → Local Silero VAD → Local Sherpa-ONNX STT (Streaming Pass-1 + Offline Pass-2)`
+ *
+ * Key Guarantees:
+ * - Zero network requests during speech recognition.
+ * - Uses [SileroVadDetector] (multi-feature spectral/formant/ZCR/SNR + native Silero ONNX) to detect
+ *   `SPEECH_BEGIN`, `ACTIVE_SPEECH`, `PAUSE`, `SPEECH_END`, and `SILENCE`.
+ * - Automatically finalizes recognition when VAD detects `SPEECH_END` and emits [utteranceFinalizedEvents].
+ * - Never invents, rewrites, or substitutes fallback English sentences when recognition returns empty.
  */
 @Singleton
 class SpeechRepositoryImpl @Inject constructor(
     private val audioRecordManager: AudioRecordManager,
+    private val sileroVadDetector: SileroVadDetector,
     private val streamingEngine: SherpaStreamingEngine,
     private val offlineEngine: SherpaOfflineEngine
 ) : SpeechRepository {
 
     private val _speechState = MutableStateFlow(SpeechRecognitionState.IDLE)
     override val speechState: StateFlow<SpeechRecognitionState> = _speechState.asStateFlow()
+
+    override val vadState: StateFlow<VadState> = sileroVadDetector.vadState
 
     private val _interimText = MutableStateFlow("")
     override val interimText: StateFlow<String> = _interimText.asStateFlow()
@@ -47,21 +64,48 @@ class SpeechRepositoryImpl @Inject constructor(
 
     override val audioAmplitude: StateFlow<Float> = audioRecordManager.amplitude
 
+    override val isMuted: StateFlow<Boolean> = audioRecordManager.isMuted
+
     private val _recordingDurationSeconds = MutableStateFlow(0)
     override val recordingDurationSeconds: StateFlow<Int> = _recordingDurationSeconds.asStateFlow()
 
-    private val scope = CoroutineScope(Dispatchers.Default)
+    private val _utteranceFinalizedEvents = MutableSharedFlow<SpeechRecognitionResult>(
+        replay = 0,
+        extraBufferCapacity = 8,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    override val utteranceFinalizedEvents: SharedFlow<SpeechRecognitionResult> =
+        _utteranceFinalizedEvents.asSharedFlow()
+
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val finalizationMutex = Mutex()
+    private val isFinalizingAtomic = AtomicBoolean(false)
+
     private var audioCollectJob: Job? = null
     private var timerJob: Job? = null
     private var startTimestamp = 0L
 
+    @Volatile
+    private var speechDetectedInCurrentTurn = false
+
+    override fun hasRecordPermission(): Boolean = audioRecordManager.hasRecordPermission()
+
+    override fun setMuted(muted: Boolean) {
+        audioRecordManager.setMuted(muted)
+    }
+
     override fun startListening(): Boolean {
         if (_speechState.value == SpeechRecognitionState.LISTENING_PASS_1) return true
 
+        isFinalizingAtomic.set(false)
+        speechDetectedInCurrentTurn = false
         _interimText.value = ""
         _finalText.value = ""
         _recordingDurationSeconds.value = 0
         startTimestamp = System.currentTimeMillis()
+
+        sileroVadDetector.initialize()
+        sileroVadDetector.reset()
 
         val started = audioRecordManager.startRecording()
         if (!started) {
@@ -71,22 +115,46 @@ class SpeechRepositoryImpl @Inject constructor(
 
         _speechState.value = SpeechRecognitionState.LISTENING_PASS_1
 
-        // Start Pass 1 streaming engine
         scope.launch {
             streamingEngine.startStream()
+            offlineEngine.initialize()
         }
 
-        // Collect live audio chunks and feed Pass 1
+        audioCollectJob?.cancel()
         audioCollectJob = scope.launch {
             audioRecordManager.sampleChunkFlow.collect { chunk ->
-                val partial = streamingEngine.acceptSamples(chunk)
-                if (partial.isNotBlank()) {
-                    _interimText.value = partial
+                if (_speechState.value != SpeechRecognitionState.LISTENING_PASS_1 || isFinalizingAtomic.get()) {
+                    return@collect
+                }
+
+                // 1. Run local Silero VAD on the 16kHz float chunk
+                val vadResult = sileroVadDetector.acceptWaveform(chunk)
+
+                if (vadResult.isSpeechActive) {
+                    speechDetectedInCurrentTurn = true
+                    // 2. Feed active speech chunk to Sherpa-ONNX Streaming Engine for live partial transcript
+                    val partial = streamingEngine.acceptSamples(chunk)
+                    if (partial.isNotBlank()) {
+                        // Replace interim text with latest streaming hypothesis (never concatenatepartials)
+                        _interimText.value = partial
+                    }
+                }
+
+                // 3. When Silero VAD detects SPEECH_END, automatically finalize STT
+                if (vadResult.state == VadState.SPEECH_END && isFinalizingAtomic.compareAndSet(false, true)) {
+                    val segmentedSpeech = vadResult.completedSpeechSegment ?: FloatArray(0)
+                    launch {
+                        val result = finalizeRecognizedUtterance(
+                            vadSegmentedSpeech = segmentedSpeech,
+                            hadSpeechFromVad = true
+                        )
+                        _utteranceFinalizedEvents.emit(result)
+                    }
                 }
             }
         }
 
-        // Timer job
+        timerJob?.cancel()
         timerJob = scope.launch {
             while (isActive && _speechState.value == SpeechRecognitionState.LISTENING_PASS_1) {
                 delay(1000L)
@@ -97,60 +165,80 @@ class SpeechRepositoryImpl @Inject constructor(
         return true
     }
 
-    override suspend fun stopListening(): SpeechRecognitionResult {
-        val recDurationMs = System.currentTimeMillis() - startTimestamp
+    override suspend fun stopListening(): SpeechRecognitionResult = withContext(Dispatchers.IO) {
+        isFinalizingAtomic.set(true)
+        val flushedSegment = sileroVadDetector.flushActiveSpeechSegment()
+        finalizeRecognizedUtterance(
+            vadSegmentedSpeech = flushedSegment,
+            hadSpeechFromVad = speechDetectedInCurrentTurn || flushedSegment.isNotEmpty()
+        )
+    }
+
+    private suspend fun finalizeRecognizedUtterance(
+        vadSegmentedSpeech: FloatArray,
+        hadSpeechFromVad: Boolean
+    ): SpeechRecognitionResult = finalizationMutex.withLock {
+        val recDurationMs = (System.currentTimeMillis() - startTimestamp).coerceAtLeast(0L)
         val processStart = System.currentTimeMillis()
 
         _speechState.value = SpeechRecognitionState.PROCESSING_PASS_2
-        timerJob?.cancel()
+        runCatching { timerJob?.cancelAndJoin() }
         timerJob = null
-        audioCollectJob?.cancel()
+        runCatching { audioCollectJob?.cancelAndJoin() }
         audioCollectJob = null
 
-        // Stop Pass 1 streaming engine
-        val streamingFinalText = streamingEngine.stopStream()
+        val streamingFinalText = streamingEngine.stopStream().trim()
 
-        // Stop audio recording and get full raw PCM buffer
+        // Stop AudioRecord coroutine safely and extract full PCM buffer & WAV bytes
         val fullBuffer = audioRecordManager.stopRecording()
+        val wavBytes = audioRecordManager.getLastRecordedWavBytes()
 
-        // Execute Pass 2 offline batch decoding
-        offlineEngine.initialize()
-        val offlineFinalText = offlineEngine.decodeFullAudio(fullBuffer)
+        val targetSamplesForPass2 = if (vadSegmentedSpeech.isNotEmpty()) {
+            vadSegmentedSpeech
+        } else if (hadSpeechFromVad) {
+            fullBuffer
+        } else {
+            FloatArray(0)
+        }
 
+        val offlineFinalText = if (targetSamplesForPass2.isNotEmpty()) {
+            offlineEngine.decodeFullAudio(targetSamplesForPass2).trim()
+        } else {
+            ""
+        }
+
+        // Strict Transcript Integrity: resolve exact STT output without ever inventing fallback text
         val resolvedFinalText = when {
             offlineFinalText.isNotBlank() -> offlineFinalText
             streamingFinalText.isNotBlank() -> streamingFinalText
-            _interimText.value.isNotBlank() -> _interimText.value
-            fullBuffer.isNotEmpty() -> {
-                val avgAmp = fullBuffer.map { abs(it) }.average()
-                if (avgAmp > 0.003) {
-                    "Hello! My name is Azamat and I learn English with TalkMe."
-                } else {
-                    ""
-                }
-            }
+            _interimText.value.isNotBlank() -> _interimText.value.trim()
             else -> ""
         }
 
         _finalText.value = resolvedFinalText
         _speechState.value = SpeechRecognitionState.COMPLETED
 
-        val processDurationMs = System.currentTimeMillis() - processStart
+        val processDurationMs = (System.currentTimeMillis() - processStart).coerceAtLeast(0L)
 
-        return SpeechRecognitionResult(
+        SpeechRecognitionResult(
             recognizedText = resolvedFinalText,
             isFinal = true,
             recordingDurationMs = recDurationMs,
-            processingDurationMs = processDurationMs
+            processingDurationMs = processDurationMs,
+            audioWavBytes = wavBytes,
+            hadSpeechDetectedByVad = hadSpeechFromVad
         )
     }
 
     override fun cancelListening() {
+        isFinalizingAtomic.set(false)
+        speechDetectedInCurrentTurn = false
         timerJob?.cancel()
         timerJob = null
         audioCollectJob?.cancel()
         audioCollectJob = null
         audioRecordManager.cancelRecording()
+        sileroVadDetector.reset()
 
         scope.launch {
             streamingEngine.stopStream()

@@ -184,21 +184,29 @@ private class VocabularyTopicsAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: VocabularyTopicCardModel) {
-            binding.tvVocabTopicOrder.text = String.format("%02d-MAVZU", item.orderIndex)
+            val cefrBadge = when (item.orderIndex) {
+                in 1..9 -> "🟢 A1"
+                10 -> "🟡 A2"
+                11 -> "🟠 B1"
+                12 -> "🔵 B2"
+                else -> "🟣 C1–C2"
+            }
+            binding.tvVocabTopicOrder.text = String.format("%s • %02d-MAVZU", cefrBadge, item.orderIndex)
             binding.ivVocabTopicArtwork.setImageResource(
                 TopicVisualArtwork.getTopicImageRes(item.topicId, item.orderIndex)
             )
 
             if (item.status == UnlockStatus.LOCKED) {
                 binding.layoutVocabTopicMysteryOverlay.visibility = View.VISIBLE
-                binding.tvVocabTopicMysteryHint.text = "★ MAXFIY MAVZU ★"
-                binding.tvVocabTopicTitle.text = "❓ Maxfiy Mavzu #${item.orderIndex}"
-                binding.tvVocabTopicUzbek.text = "Sirli daraja • Qulflangan"
-                binding.tvVocabTopicSubtopicsMeta.text = "Avval oldingi mavzuni tugating"
+                binding.tvVocabTopicMysteryHint.text = "🔒 NAVBATDAGI DARAJA"
+                binding.tvVocabTopicTitle.text = item.titleEnglish
+                binding.tvVocabTopicUzbek.text = item.titleUzbek
+                binding.tvVocabTopicSubtopicsMeta.text =
+                    "${item.subtopicsCount} ta dars • 🔒 Oldingi mavzuni tugating"
                 binding.tvVocabTopicBadge.text = "🔒"
 
                 val triggerLockAnimation = View.OnClickListener {
-                    binding.tvVocabTopicMysteryHint.text = "✨ Oldingi darsni tugating! ✨"
+                    binding.tvVocabTopicMysteryHint.text = "✨ Avval oldingi mavzuni tugating!"
                     LockStarBurstAnimator.playLockTapStarBurst(
                         cardView = binding.cardVocabTopic,
                         lockCenterView = binding.layoutVocabTopicLockMedallion,
@@ -301,19 +309,7 @@ class VocabularySubtopicsFragment : Fragment() {
                         binding.headerVocabSubtopics.tvHeaderTitle.text =
                             "${topic.orderIndex}. ${topic.titleEnglish} — ${topic.titleUzbek}"
                         binding.headerVocabSubtopics.tvHeaderSubtitle.text =
-                            "Sub-topic tanlang va ichidagi Flip Cards orqali yodlang"
-
-                        binding.ivMajorTopicHero.setImageResource(
-                            TopicVisualArtwork.getTopicImageRes(topic.topicId, topic.orderIndex)
-                        )
-                        binding.tvMajorTopicHeroTitle.text =
-                            "${topic.titleEnglish} (${topic.titleUzbek})"
-                        binding.tvMajorTopicHeroDesc.text = topic.descriptionUzbek
-                        binding.tvMajorTopicHeroBadge.text = if (topic.newWordsBadgeCount > 0) {
-                            "+${topic.newWordsBadgeCount} yangi • ${topic.memorizedWordsCount}/${topic.totalWordsCount}"
-                        } else {
-                            "✓ ${topic.memorizedWordsCount}/${topic.totalWordsCount} so'z"
-                        }
+                            "Yodlangan: ${topic.memorizedWordsCount}/${topic.totalWordsCount} so'z • ${topic.descriptionUzbek}"
                     }
                 }
                 launch {

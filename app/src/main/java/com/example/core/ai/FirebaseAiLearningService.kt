@@ -4,26 +4,33 @@ import android.util.Log
 import com.example.domain.repository.AiLearningService
 import com.example.domain.repository.ReadingPassageResult
 import com.example.domain.repository.SpeakingAiResponse
+import com.example.feature.speaking.TutorPromptConfig
 import com.google.firebase.Firebase
 import com.google.firebase.ai.ai
+import com.google.firebase.ai.type.Content
 import com.google.firebase.ai.type.Schema
+import com.google.firebase.ai.type.content
 import com.google.firebase.ai.type.generationConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import org.json.JSONObject
 
 private const val TAG = "FirebaseAiLearning"
+private const val GEMINI_MODEL_NAME = "gemini-3.8-flash"
 
 /**
  * Firebase AI Logic implementation of [AiLearningService].
- * Provides two strictly separate AI experiences:
- * 1. Speaking AI Session (`speakingModel` with structured JSON feedback & spoken reply).
- * 2. Reading AI Session (`readingGenerationModel` and `readingEvaluationModel`).
  *
- * Supports seamless offline fallback so students always receive clean, natural English responses
- * without technical error messages.
+ * Key Guarantees (Sections 3, 4, 5, 6, 7, 8, 11, 13):
+ * - Separates tutor system instructions (`systemInstruction`) from chronological `user`/`model` conversation turns.
+ * - Preserves `studentUtterance` verbatim (`rawTranscript == displayedUserMessage == geminiStudentUtterance`).
+ * - Adapts to the learner's stored level (`A0_A1`, `A2_B1`, `B2_C2`) and current lesson topic/vocabulary.
+ * - Understands short elliptical replies ("Yes.", "At school.", "With cheese.") in context of the previous question.
+ * - Handles failures honestly by returning `Result.failure(e)` instead of injecting fabricated offline AI responses.
  */
 @Singleton
 class FirebaseAiLearningService @Inject constructor() : AiLearningService {
@@ -31,15 +38,16 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
     private val speakingSchema = Schema.obj(
         properties = mapOf(
             "spokenEnglishReply" to Schema.string(
-                description = "Simple English spoken reply and follow-up question strictly about the active topic"
+                description = "Natural, context-aware spoken English reply directly responding to the learner's latest utterance and asking ONE related follow-up question."
             ),
             "grammarAndVocabFeedbackUzbek" to Schema.string(
-                description = "Short constructive grammar and vocabulary feedback in simple Uzbek"
+                description = "Optional brief grammar or vocabulary tip in Uzbek (empty string if no correction is needed; never rewrite the learner's original transcript)."
             ),
             "accuracyScore" to Schema.integer(
-                description = "Score from 60 to 100 evaluating student grammar and vocabulary usage"
+                description = "Communication effectiveness score from 60 to 100 (do not claim acoustic pronunciation accuracy from text alone)."
             )
-        )
+        ),
+        optionalProperties = listOf("grammarAndVocabFeedbackUzbek", "accuracyScore")
     )
 
     private val readingPassageSchema = Schema.obj(
@@ -51,21 +59,9 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
         )
     )
 
-    // Separate lazy model for Speaking AI Tutor
-    private val speakingModel by lazy {
-        Firebase.ai.generativeModel(
-            modelName = "gemini-3.8-flash",
-            generationConfig = generationConfig {
-                responseMimeType = "application/json"
-                responseSchema = speakingSchema
-            }
-        )
-    }
-
-    // Separate lazy model for Reading AI Passage Generation
     private val readingPassageModel by lazy {
         Firebase.ai.generativeModel(
-            modelName = "gemini-3.8-flash",
+            modelName = GEMINI_MODEL_NAME,
             generationConfig = generationConfig {
                 responseMimeType = "application/json"
                 responseSchema = readingPassageSchema
@@ -73,9 +69,8 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
         )
     }
 
-    // Separate lazy model for Reading AI Comprehension Evaluation & Uzbek Explanations
     private val readingEvaluationModel by lazy {
-        Firebase.ai.generativeModel(modelName = "gemini-3.8-flash")
+        Firebase.ai.generativeModel(modelName = GEMINI_MODEL_NAME)
     }
 
     override suspend fun sendSpeakingTurn(
@@ -83,64 +78,108 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
         allowedVocabulary: List<String>,
         allowedGrammarSummaries: List<String>,
         conversationHistory: List<Pair<String, String>>,
-        studentUtterance: String
-    ): Result<SpeakingAiResponse> {
-        val vocabList = allowedVocabulary.joinToString(", ").ifEmpty { "hello, book, apple, table, student" }
-        val grammarList = allowedGrammarSummaries.joinToString("; ").ifEmpty { "Basic simple sentences" }
-        val historyText = conversationHistory.takeLast(6).joinToString("\n") { "${it.first}: ${it.second}" }
+        studentUtterance: String,
+        audioWavBytes: ByteArray?,
+        learnerLevel: String
+    ): Result<SpeakingAiResponse> = withContext(Dispatchers.IO) {
+        val exactRawTranscript = studentUtterance.trim()
+        if (exactRawTranscript.isEmpty()) {
+            return@withContext Result.failure(
+                IllegalArgumentException("Cannot submit an empty user transcript to Gemini.")
+            )
+        }
 
-        val prompt = """
-            You are the TalkMe Speaking AI English Tutor for a beginner Uzbek student.
-            STRICT EDUCATIONAL BOUNDARIES:
-            1. Current Topic: $topicTitle. Stay strictly on this topic.
-            2. Studied Vocabulary: [$vocabList]. Use primarily these words and very simple beginner words.
-            3. Studied Grammar: [$grammarList].
-            4. Never output phonetic transcriptions or IPA symbols.
-            5. Detect any grammar or vocabulary mistakes in the student's sentence, provide a short explanation in simple Uzbek in 'grammarAndVocabFeedbackUzbek', and reply in simple spoken English with a follow-up question on '$topicTitle' in 'spokenEnglishReply'.
-            
-            Recent Speaking Session Transcript:
-            $historyText
-            
-            Student just said: "$studentUtterance"
-        """.trimIndent()
-
-        return try {
-            val response = withTimeout(60_000L) {
-                speakingModel.generateContent(prompt)
+        // Identify the most recent assistant message/question for contextual grounding
+        val lastAssistantQuestion = conversationHistory
+            .lastOrNull { (role, _) ->
+                role.equals("ASSISTANT", ignoreCase = true) || role.equals("AI_TUTOR", ignoreCase = true)
             }
-            val rawJson = response.text ?: throw IllegalStateException("Empty response from Speaking AI model.")
+            ?.second
+
+        // Build separated system instruction (Section 11)
+        val systemGuidance = TutorPromptConfig.buildSystemGuidance(
+            topicTitle = topicTitle,
+            learnerLevel = learnerLevel,
+            allowedVocabulary = allowedVocabulary,
+            allowedGrammarSummaries = allowedGrammarSummaries,
+            lastAssistantQuestion = lastAssistantQuestion
+        )
+
+        // Build chronological history turns without duplicating the latest user utterance
+        val boundedHistory = conversationHistory
+            .takeLast(TutorPromptConfig.MAX_BOUNDED_HISTORY_TURNS)
+            .let { list ->
+                val last = list.lastOrNull()
+                if (last != null &&
+                    (last.first.equals("USER", ignoreCase = true) || last.first.equals("STUDENT", ignoreCase = true)) &&
+                    last.second.trim() == exactRawTranscript
+                ) {
+                    list.dropLast(1)
+                } else {
+                    list
+                }
+            }
+
+        val multiTurnContents = ArrayList<Content>(boundedHistory.size + 1)
+        for ((role, text) in boundedHistory) {
+            val cleanMsg = text.trim()
+            if (cleanMsg.isEmpty()) continue
+            val mappedRole = when (role.uppercase()) {
+                "USER", "STUDENT" -> "user"
+                else -> "model"
+            }
+            multiTurnContents.add(
+                content(role = mappedRole) {
+                    text(cleanMsg)
+                }
+            )
+        }
+
+        // Append the latest user turn with exact rawTranscript
+        multiTurnContents.add(
+            content(role = "user") {
+                text(exactRawTranscript)
+            }
+        )
+
+        try {
+            val model = Firebase.ai.generativeModel(
+                modelName = GEMINI_MODEL_NAME,
+                generationConfig = generationConfig {
+                    responseMimeType = "application/json"
+                    responseSchema = speakingSchema
+                },
+                systemInstruction = content {
+                    text(systemGuidance)
+                }
+            )
+
+            val response = withTimeout(45_000L) {
+                model.generateContent(multiTurnContents)
+            }
+
+            val rawJson = response.text
+                ?: throw IllegalStateException("Empty response from Speaking AI model.")
             val json = JSONObject(rawJson)
+            val reply = json.optString("spokenEnglishReply", "").trim()
+            if (reply.isEmpty()) {
+                throw IllegalStateException("Blank spokenEnglishReply from Speaking AI model.")
+            }
+
             Result.success(
                 SpeakingAiResponse(
-                    spokenEnglishReply = json.optString("spokenEnglishReply", "Good job! Can you make another sentence about $topicTitle?"),
-                    grammarAndVocabFeedbackUzbek = json.optString("grammarAndVocabFeedbackUzbek", "Juda yaxshi! Gap tuzilishi to'g'ri."),
-                    accuracyScore = json.optInt("accuracyScore", 85).coerceIn(0, 100)
+                    spokenEnglishReply = reply,
+                    grammarAndVocabFeedbackUzbek = json.optString("grammarAndVocabFeedbackUzbek", "").trim(),
+                    accuracyScore = json.optInt("accuracyScore", 88).coerceIn(0, 100),
+                    studentTranscript = exactRawTranscript
                 )
             )
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Log.w(TAG, "Speaking AI Gemini session notice (using local offline AI response)", e)
-            val cleanLower = studentUtterance.lowercase().trim()
-            val (offlineReply, feedbackUzbek) = when {
-                cleanLower.contains("hello") || cleanLower.contains("hi") ->
-                    "Hello! Great to talk to you. What is your name?" to "Salomlashish to'g'ri bajarildi!"
-                cleanLower.contains("name is") || cleanLower.contains("my name") ->
-                    "Nice to meet you! Where are you from?" to "O'zingizni tanishtirish juda chiroyli chiqdi!"
-                cleanLower.contains("from") ->
-                    "Wonderful! What do you like to do every morning?" to "Mamlakatingiz haqida gapirishni o'rgandingiz!"
-                cleanLower.contains("morning") || cleanLower.contains("water") || cleanLower.contains("apple") ->
-                    "That sounds great! Can you tell me more about $topicTitle?" to "Mavzu so'zlaridan to'g'ri foydalandingiz!"
-                else ->
-                    "Good effort! Try using words from $topicTitle in a short sentence." to "Ajoyib! Mavzu so'zlaridan foydalanib gapirishda davom eting."
-            }
-            Result.success(
-                SpeakingAiResponse(
-                    spokenEnglishReply = offlineReply,
-                    grammarAndVocabFeedbackUzbek = feedbackUzbek,
-                    accuracyScore = 90
-                )
-            )
+            // Section 13: Handle failures honestly — never present a fabricated offline response as a real AI answer
+            Log.e(TAG, "Speaking AI Gemini request failed", e)
+            Result.failure(e)
         }
     }
 
@@ -148,7 +187,7 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
         topicTitle: String,
         allowedVocabulary: List<String>,
         allowedGrammarSummaries: List<String>
-    ): Result<ReadingPassageResult> {
+    ): Result<ReadingPassageResult> = withContext(Dispatchers.IO) {
         val vocabList = allowedVocabulary.joinToString(", ").ifEmpty { "hello, apple, cat, water, book, table" }
         val grammarList = allowedGrammarSummaries.joinToString("; ").ifEmpty { "Basic sentences" }
 
@@ -160,8 +199,8 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
             Include Uzbek vocabulary notes and one comprehension question in English.
         """.trimIndent()
 
-        return try {
-            val response = withTimeout(60_000L) {
+        try {
+            val response = withTimeout(45_000L) {
                 readingPassageModel.generateContent(prompt)
             }
             val rawJson = response.text ?: throw IllegalStateException("Empty response from Reading AI model.")
@@ -177,15 +216,8 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Log.w(TAG, "Reading AI passage generation notice (using local offline passage)", e)
-            Result.success(
-                ReadingPassageResult(
-                    titleEnglish = "Reading: $topicTitle",
-                    passageEnglish = "Hello! My name is Ali. I am a student from Uzbekistan. Every morning I drink clean water and read a good book.",
-                    vocabularyNotesUzbek = "Lug'at: student — talaba, water — suv, morning — tong.",
-                    comprehensionQuestionEnglish = "What does Ali drink every morning?"
-                )
-            )
+            Log.e(TAG, "Reading AI passage generation error", e)
+            Result.failure(e)
         }
     }
 
@@ -194,7 +226,7 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
         passageText: String,
         comprehensionQuestion: String,
         studentQueryOrAnswer: String
-    ): Result<String> {
+    ): Result<String> = withContext(Dispatchers.IO) {
         val prompt = """
             You are the TalkMe Reading AI Comprehension Tutor.
             Topic: $topicTitle
@@ -208,21 +240,21 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
             - Keep your response concise (2-4 sentences).
         """.trimIndent()
 
-        return try {
-            val response = withTimeout(60_000L) {
+        try {
+            val response = withTimeout(45_000L) {
                 readingEvaluationModel.generateContent(prompt)
             }
             val text = response.text?.trim()
             if (!text.isNullOrEmpty()) {
                 Result.success(text)
             } else {
-                Result.success("Barakalla! Javobingiz matn va mazmun bo'yicha to'g'ri berildi.")
+                Result.failure(IllegalStateException("Empty evaluation response from Reading AI model."))
             }
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Log.w(TAG, "Reading AI evaluation notice", e)
-            Result.success("Barakalla! Topshiriq to'g'ri bajarildi.")
+            Log.e(TAG, "Reading AI evaluation error", e)
+            Result.failure(e)
         }
     }
 }

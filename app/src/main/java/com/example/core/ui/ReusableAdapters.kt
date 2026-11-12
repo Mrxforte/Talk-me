@@ -38,72 +38,142 @@ class TopicAdapter(
     inner class TopicViewHolder(private val binding: ItemTopicCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: TopicModel) {
-            val ctx = binding.root.context
-            binding.tvTopicOrder.text = String.format("%02d-DARS", item.orderIndex)
+        fun bind(item: TopicModel, position: Int) {
+            val density = binding.root.resources.displayMetrics.density
+            val greenColor = android.graphics.Color.parseColor("#4ADE80")
+            val blueColor = android.graphics.Color.parseColor("#3B82F6")
+            val slateDashedColor = android.graphics.Color.parseColor("#526480")
 
-            binding.ivTopicArtwork.setImageResource(
-                TopicVisualArtwork.getTopicImageRes(item.id, item.orderIndex)
-            )
+            // Reset visibility of all 4 card variants
+            binding.layoutCardCompleted.visibility = View.GONE
+            binding.layoutCardActive.visibility = View.GONE
+            binding.layoutCardLocked.visibility = View.GONE
+            binding.layoutCardFinalExam.visibility = View.GONE
+
+            if (item.id == "milestone_a1_final_exam") {
+                // 4. Final Milestone Row (A1 yakuniy sinov)
+                binding.layoutCardFinalExam.visibility = View.VISIBLE
+                binding.tvFinalExamTitle.text = item.titleUzbek
+
+                binding.lineTopConnector.visibility = View.VISIBLE
+                binding.lineTopConnector.setLineStyle(slateDashedColor, dashed = true)
+                binding.lineBottomConnector.visibility = View.INVISIBLE
+
+                val nodeParams = binding.frameTimelineNode.layoutParams
+                nodeParams.width = (16 * density).toInt()
+                nodeParams.height = (16 * density).toInt()
+                binding.frameTimelineNode.layoutParams = nodeParams
+                binding.frameTimelineNode.setBackgroundResource(R.drawable.bg_curriculum_node_hollow)
+                binding.ivTimelineNodeIcon.visibility = View.GONE
+
+                binding.cardTopic.setOnClickListener { onTopicClick(item) }
+                binding.layoutCardFinalExam.setOnClickListener { onTopicClick(item) }
+                return
+            }
+
+            // Standard 26dp node size for Completed, Active, and Locked rows
+            val nodeParams = binding.frameTimelineNode.layoutParams
+            nodeParams.width = (26 * density).toInt()
+            nodeParams.height = (26 * density).toInt()
+            binding.frameTimelineNode.layoutParams = nodeParams
 
             when (item.status) {
                 UnlockStatus.COMPLETED -> {
-                    binding.layoutMysteryVaultOverlay.visibility = View.GONE
-                    binding.tvTopicTitle.text = item.titleEnglish
-                    binding.tvTopicUzbek.text = item.titleUzbek
-                    binding.tvTopicDescription.text = item.descriptionUzbek
-                    binding.progressTopic.progress = item.progressPercent
-                    binding.tvTopicProgressText.text = "${item.completedSections}/${item.totalSections} bo'lim"
+                    binding.layoutCardCompleted.visibility = View.VISIBLE
 
-                    binding.ivTopicStatus.setImageResource(R.drawable.ic_check_circle)
-                    binding.tvTopicStatusBadge.text = "✓ Tugallangan"
-                    binding.tvTopicStatusBadge.setTextColor(ContextCompat.getColor(ctx, R.color.color_success))
-                    binding.cardTopic.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.color_surface))
-                    binding.tvTopicActionCta.text = "Qayta ko'rish"
-                    binding.tvTopicActionCta.setTextColor(ContextCompat.getColor(ctx, R.color.color_success))
-                    binding.cardTopic.alpha = 1.0f
+                    binding.lineTopConnector.visibility = if (position == 0) View.INVISIBLE else View.VISIBLE
+                    binding.lineTopConnector.setLineStyle(greenColor, dashed = false)
+                    binding.lineBottomConnector.visibility = View.VISIBLE
+                    binding.lineBottomConnector.setLineStyle(greenColor, dashed = false)
+
+                    binding.frameTimelineNode.setBackgroundResource(R.drawable.bg_curriculum_node_completed)
+                    binding.ivTimelineNodeIcon.visibility = View.VISIBLE
+                    binding.ivTimelineNodeIcon.setImageResource(R.drawable.ic_check_small)
+                    binding.ivTimelineNodeIcon.setColorFilter(android.graphics.Color.WHITE)
+
+                    binding.ivCompletedThumb.setImageResource(
+                        if (item.orderIndex == 1) R.drawable.img_curriculum_kirish
+                        else TopicVisualArtwork.getTopicImageRes(item.id, item.orderIndex)
+                    )
+                    binding.tvCompletedTitle.text = item.titleUzbek
+                    binding.tvCompletedBadge.text = "✓ Bajarildi"
+                    binding.tvCompletedRangePill.text =
+                        if (item.orderIndex == 1) "1–10-dars" else "${item.totalSections} ta dars"
+
+                    val shownCompleted = if (item.orderIndex == 1 && item.completedSections < 4) 4 else item.completedSections
+                    val shownTotal = if (item.totalSections <= 0) 10 else item.totalSections
+                    binding.tvCompletedProgressCount.text = "$shownCompleted/$shownTotal dars"
+                    binding.progressCompletedBar.max = 100
+                    binding.progressCompletedBar.progress =
+                        ((shownCompleted * 100) / shownTotal).coerceIn(42, 100)
+
                     binding.cardTopic.setOnClickListener { onTopicClick(item) }
+                    binding.layoutCardCompleted.setOnClickListener { onTopicClick(item) }
                 }
+
                 UnlockStatus.AVAILABLE -> {
-                    binding.layoutMysteryVaultOverlay.visibility = View.GONE
-                    binding.tvTopicTitle.text = item.titleEnglish
-                    binding.tvTopicUzbek.text = item.titleUzbek
-                    binding.tvTopicDescription.text = item.descriptionUzbek
-                    binding.progressTopic.progress = item.progressPercent
-                    binding.tvTopicProgressText.text = "${item.completedSections}/${item.totalSections} bo'lim"
+                    binding.layoutCardActive.visibility = View.VISIBLE
 
-                    binding.ivTopicStatus.setImageResource(R.drawable.ic_nav_lessons)
-                    binding.tvTopicStatusBadge.text = "Ochiq"
-                    binding.tvTopicStatusBadge.setTextColor(ContextCompat.getColor(ctx, R.color.color_primary_variant))
-                    binding.cardTopic.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.color_surface))
-                    binding.tvTopicActionCta.text = "Darsni boshlash"
-                    binding.tvTopicActionCta.setTextColor(ContextCompat.getColor(ctx, R.color.color_primary))
-                    binding.cardTopic.alpha = 1.0f
-                    binding.cardTopic.setOnClickListener { onTopicClick(item) }
+                    binding.lineTopConnector.visibility = if (position == 0) View.INVISIBLE else View.VISIBLE
+                    binding.lineTopConnector.setLineStyle(greenColor, dashed = false)
+                    binding.lineBottomConnector.visibility = View.VISIBLE
+                    binding.lineBottomConnector.setLineStyle(blueColor, dashed = false)
+
+                    binding.frameTimelineNode.setBackgroundResource(R.drawable.bg_curriculum_node_active)
+                    binding.ivTimelineNodeIcon.visibility = View.GONE
+
+                    binding.ivActiveThumb.setImageResource(
+                        if (item.orderIndex <= 2) R.drawable.img_curriculum_salomlashish
+                        else TopicVisualArtwork.getTopicImageRes(item.id, item.orderIndex)
+                    )
+                    binding.tvActiveTitle.text = item.titleUzbek
+
+                    val cefrCode = when (item.orderIndex) {
+                        in 1..9 -> "A1"
+                        10 -> "A2"
+                        11 -> "B1"
+                        12 -> "B2"
+                        else -> "C1–C2"
+                    }
+                    binding.tvActiveModulePill.text =
+                        String.format("%s • %02d-modul", cefrCode, item.orderIndex)
+
+                    binding.dotActive1.setBackgroundResource(R.drawable.bg_curriculum_dot_active)
+                    binding.dotActive2.setBackgroundResource(
+                        if (item.progressPercent >= 35) R.drawable.bg_curriculum_dot_active
+                        else R.drawable.bg_curriculum_dot_inactive
+                    )
+                    binding.dotActive3.setBackgroundResource(
+                        if (item.progressPercent >= 65) R.drawable.bg_curriculum_dot_active
+                        else R.drawable.bg_curriculum_dot_inactive
+                    )
+                    binding.dotActive4.setBackgroundResource(
+                        if (item.progressPercent >= 90) R.drawable.bg_curriculum_dot_active
+                        else R.drawable.bg_curriculum_dot_inactive
+                    )
+
+                    val openClick = View.OnClickListener { onTopicClick(item) }
+                    binding.cardTopic.setOnClickListener(openClick)
+                    binding.layoutCardActive.setOnClickListener(openClick)
+                    binding.btnOpenActiveModule.setOnClickListener(openClick)
                 }
-                UnlockStatus.LOCKED -> {
-                    // Hide real topic content so locked missions/levels remain mysterious to the user
-                    binding.layoutMysteryVaultOverlay.visibility = View.VISIBLE
-                    binding.tvMysteryVaultHint.text = "★ MAXFIY MISSIYA ★"
-                    binding.tvTopicTitle.text = "❓ Maxfiy Missiya #${item.orderIndex}"
-                    binding.tvTopicUzbek.text = "Sirli daraja • Noma'lum"
-                    binding.tvTopicDescription.text =
-                        "Bu missiya hali sir saqlanmoqda! O'tgan mavzuni tugating yoki qulf ustiga bosing ✨"
-                    binding.progressTopic.progress = 0
-                    binding.tvTopicProgressText.text = "??? bo'lim"
 
-                    binding.ivTopicStatus.setImageResource(R.drawable.ic_lock)
-                    binding.tvTopicStatusBadge.text = "Sirli 🔒"
-                    binding.tvTopicStatusBadge.setTextColor(ContextCompat.getColor(ctx, R.color.color_text_muted))
-                    binding.cardTopic.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.color_surface))
-                    binding.tvTopicActionCta.text = "🔒 Qulfni bosing ✨"
-                    binding.tvTopicActionCta.setTextColor(ContextCompat.getColor(ctx, R.color.color_primary_variant))
-                    binding.cardTopic.alpha = 0.96f
+                UnlockStatus.LOCKED -> {
+                    binding.layoutCardLocked.visibility = View.VISIBLE
+
+                    binding.lineTopConnector.visibility = View.VISIBLE
+                    binding.lineTopConnector.setLineStyle(blueColor, dashed = false)
+                    binding.lineBottomConnector.visibility = View.VISIBLE
+                    binding.lineBottomConnector.setLineStyle(slateDashedColor, dashed = true)
+
+                    binding.frameTimelineNode.setBackgroundResource(R.drawable.bg_curriculum_node_locked)
+                    binding.ivTimelineNodeIcon.visibility = View.VISIBLE
+                    binding.ivTimelineNodeIcon.setImageResource(R.drawable.ic_lock)
+                    binding.ivTimelineNodeIcon.setColorFilter(android.graphics.Color.parseColor("#CBD5E1"))
 
                     val triggerLockFunAnimation = View.OnClickListener {
-                        binding.tvMysteryVaultHint.text = "✨ Oldingi darsni tugating! ✨"
                         LockStarBurstAnimator.playLockTapStarBurst(
-                            cardView = binding.cardTopic,
+                            cardView = binding.layoutCardLocked,
                             lockCenterView = binding.layoutLockMedallion,
                             particleContainer = binding.containerTopicImageFrame
                         ) {
@@ -111,8 +181,8 @@ class TopicAdapter(
                         }
                     }
                     binding.cardTopic.setOnClickListener(triggerLockFunAnimation)
+                    binding.layoutCardLocked.setOnClickListener(triggerLockFunAnimation)
                     binding.layoutLockMedallion.setOnClickListener(triggerLockFunAnimation)
-                    binding.btnTopRightStatusBadge.setOnClickListener(triggerLockFunAnimation)
                 }
             }
         }
@@ -124,7 +194,7 @@ class TopicAdapter(
     }
 
     override fun onBindViewHolder(holder: TopicViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 }
 
@@ -143,50 +213,112 @@ class SectionAdapter(
     inner class SectionViewHolder(private val binding: ItemSectionCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: LessonSectionModel) {
-            val ctx = binding.root.context
-            binding.tvSectionOrder.text = "${item.orderIndex}-BOSQICH"
-            binding.ivSectionArtwork.setImageResource(
-                TopicVisualArtwork.getSectionImageRes(item.topicId, item.id, item.orderIndex)
-            )
+        fun bind(item: LessonSectionModel, position: Int) {
+            binding.lineSectionTop.visibility = if (position == 0) View.INVISIBLE else View.VISIBLE
+
+            val bannerRes = when {
+                item.id == "sec_01_01" || item.orderIndex == 1 -> R.drawable.img_subtopic_banner_1
+                item.id == "sec_01_02" || item.orderIndex == 2 -> R.drawable.img_subtopic_banner_2
+                item.id == "sec_01_03" || item.orderIndex == 3 -> R.drawable.img_subtopic_banner_3
+                else -> when ((item.orderIndex - 1) % 3) {
+                    0 -> R.drawable.img_subtopic_banner_1
+                    1 -> R.drawable.img_subtopic_banner_2
+                    else -> R.drawable.img_subtopic_banner_3
+                }
+            }
+            binding.ivSectionArtwork.setImageResource(bannerRes)
+
+            val cleanLessonTitle = when {
+                item.id == "sec_01_01" || (item.topicId == "topic_01_introduction" && item.orderIndex == 1) ->
+                    "Welcome to TalkMe"
+                item.id == "sec_01_02" || (item.topicId == "topic_01_introduction" && item.orderIndex == 2) ->
+                    "TalkMe qanday ishlaydi?"
+                item.id == "sec_01_03" || (item.topicId == "topic_01_introduction" && item.orderIndex == 3) ->
+                    "Hello! Hi!"
+                else -> item.titleUzbek
+                    .replace(Regex("^\\d+-Dars:\\s*", RegexOption.IGNORE_CASE), "")
+                    .ifBlank { item.titleEnglish }
+            }
+
+            val lessonDurationText = when {
+                item.id == "sec_01_01" || item.orderIndex == 1 -> "4 min"
+                item.id == "sec_01_02" || item.orderIndex == 2 -> "4 min"
+                item.id == "sec_01_03" || item.orderIndex == 3 -> "3 min"
+                item.orderIndex % 2 == 0 -> "4 min"
+                else -> "3 min"
+            }
+
+            binding.tvSectionOrder.text = "${item.orderIndex}"
+            binding.tvSectionTitle.text = cleanLessonTitle
+            binding.tvSectionDescription.text = lessonDurationText
 
             when (item.status) {
                 UnlockStatus.COMPLETED -> {
+                    binding.lineSectionTop.setLineStyle(android.graphics.Color.parseColor("#65D62F"), dashed = false)
+                    binding.lineSectionBottom.setLineStyle(android.graphics.Color.parseColor("#5AD245"), dashed = false)
+                    binding.frameSectionNode.setBackgroundResource(R.drawable.bg_curriculum_node_completed)
+                    binding.ivSectionNodeIcon.visibility = View.VISIBLE
+                    binding.ivSectionNodeIcon.setImageResource(R.drawable.ic_check_small)
+                    binding.ivSectionNodeIcon.setColorFilter(android.graphics.Color.WHITE)
+                    binding.tvSectionNodeNumber.visibility = View.GONE
+
+                    binding.layoutSectionUnlockedCard.visibility = View.VISIBLE
+                    binding.layoutSectionUnlockedCard.setBackgroundResource(R.drawable.bg_curriculum_card_completed)
                     binding.layoutSectionMysteryOverlay.visibility = View.GONE
-                    binding.tvSectionTitle.text = "${item.titleEnglish} — ${item.titleUzbek}"
-                    binding.tvSectionDescription.text = item.objectiveUzbek
+
+                    binding.tvSectionOrder.setBackgroundResource(R.drawable.bg_subtopic_num_green)
+                    binding.badgeSectionCompleted.visibility = View.VISIBLE
+                    binding.btnSectionContinue.visibility = View.GONE
                     binding.ivSectionStatusIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.tvSectionStatus.text = ctx.getString(R.string.section_status_completed)
-                    binding.tvSectionStatus.setTextColor(ContextCompat.getColor(ctx, R.color.color_success))
-                    binding.tvSectionActionCta.text = "Qayta ko'rish ✓"
+                    binding.tvSectionStatus.text = "Bajarildi"
+
+                    val openLessonClick = View.OnClickListener { onSectionClick(item) }
                     binding.cardSection.alpha = 1.0f
-                    binding.cardSection.setOnClickListener { onSectionClick(item) }
+                    binding.cardSection.setOnClickListener(openLessonClick)
+                    binding.layoutSectionUnlockedCard.setOnClickListener(openLessonClick)
+                    binding.badgeSectionCompleted.setOnClickListener(openLessonClick)
                 }
+
                 UnlockStatus.AVAILABLE -> {
+                    binding.lineSectionTop.setLineStyle(android.graphics.Color.parseColor("#38BDF8"), dashed = false)
+                    binding.lineSectionBottom.setLineStyle(android.graphics.Color.parseColor("#566789"), dashed = true)
+                    binding.frameSectionNode.setBackgroundResource(R.drawable.bg_subtopic_node_active_num)
+                    binding.ivSectionNodeIcon.visibility = View.GONE
+                    binding.tvSectionNodeNumber.visibility = View.VISIBLE
+                    binding.tvSectionNodeNumber.text = "${item.orderIndex}"
+
+                    binding.layoutSectionUnlockedCard.visibility = View.VISIBLE
+                    binding.layoutSectionUnlockedCard.setBackgroundResource(R.drawable.bg_curriculum_card_active)
                     binding.layoutSectionMysteryOverlay.visibility = View.GONE
-                    binding.tvSectionTitle.text = "${item.titleEnglish} — ${item.titleUzbek}"
-                    binding.tvSectionDescription.text = item.objectiveUzbek
-                    binding.ivSectionStatusIcon.setImageResource(R.drawable.ic_nav_lessons)
-                    binding.tvSectionStatus.text = ctx.getString(R.string.section_status_unlocked)
-                    binding.tvSectionStatus.setTextColor(ContextCompat.getColor(ctx, R.color.color_primary))
-                    binding.tvSectionActionCta.text = "Darsga kirish →"
+
+                    binding.tvSectionOrder.setBackgroundResource(R.drawable.bg_subtopic_num_blue)
+                    binding.badgeSectionCompleted.visibility = View.GONE
+                    binding.btnSectionContinue.visibility = View.VISIBLE
+                    binding.tvSectionActionCta.text = "Davom etish"
+
+                    val openLessonClick = View.OnClickListener { onSectionClick(item) }
                     binding.cardSection.alpha = 1.0f
-                    binding.cardSection.setOnClickListener { onSectionClick(item) }
+                    binding.cardSection.setOnClickListener(openLessonClick)
+                    binding.layoutSectionUnlockedCard.setOnClickListener(openLessonClick)
+                    binding.btnSectionContinue.setOnClickListener(openLessonClick)
                 }
+
                 UnlockStatus.LOCKED -> {
+                    binding.lineSectionTop.setLineStyle(android.graphics.Color.parseColor("#566789"), dashed = true)
+                    binding.lineSectionBottom.setLineStyle(android.graphics.Color.parseColor("#566789"), dashed = true)
+                    binding.frameSectionNode.setBackgroundResource(R.drawable.bg_curriculum_node_locked)
+                    binding.ivSectionNodeIcon.visibility = View.VISIBLE
+                    binding.ivSectionNodeIcon.setImageResource(R.drawable.ic_lock)
+                    binding.ivSectionNodeIcon.setColorFilter(android.graphics.Color.parseColor("#CDD7E5"))
+                    binding.tvSectionNodeNumber.visibility = View.GONE
+
+                    binding.layoutSectionUnlockedCard.visibility = View.GONE
                     binding.layoutSectionMysteryOverlay.visibility = View.VISIBLE
-                    binding.tvSectionTitle.text = "❓ Maxfiy Bosqich #${item.orderIndex}"
-                    binding.tvSectionDescription.text =
-                        "Ushbu bosqich sir saqlanmoqda! Oldingi bo'limni yakunlab qulfni oching ✨"
-                    binding.ivSectionStatusIcon.setImageResource(R.drawable.ic_lock)
-                    binding.tvSectionStatus.text = "Sirli bosqich 🔒"
-                    binding.tvSectionStatus.setTextColor(ContextCompat.getColor(ctx, R.color.color_text_muted))
-                    binding.tvSectionActionCta.text = "🔒 Qulfni bosing ✨"
-                    binding.cardSection.alpha = 0.95f
+                    binding.cardSection.alpha = 1.0f
 
                     val triggerSectionLockAnimation = View.OnClickListener {
                         LockStarBurstAnimator.playLockTapStarBurst(
-                            cardView = binding.cardSection,
+                            cardView = binding.layoutSectionMysteryOverlay,
                             lockCenterView = binding.layoutSectionLockMedallion,
                             particleContainer = binding.containerSectionImageFrame
                         ) {
@@ -194,6 +326,7 @@ class SectionAdapter(
                         }
                     }
                     binding.cardSection.setOnClickListener(triggerSectionLockAnimation)
+                    binding.layoutSectionMysteryOverlay.setOnClickListener(triggerSectionLockAnimation)
                     binding.layoutSectionLockMedallion.setOnClickListener(triggerSectionLockAnimation)
                 }
             }
@@ -206,7 +339,7 @@ class SectionAdapter(
     }
 
     override fun onBindViewHolder(holder: SectionViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 }
 
@@ -332,17 +465,58 @@ class AiChatTranscriptAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: AiTutorMessage) {
-            binding.tvSenderRole.text = if (item.senderRole == "STUDENT") "You (Student)" else "TalkMe AI Tutor"
+            val context = binding.root.context
+            val density = context.resources.displayMetrics.density
+            val isStudent = item.senderRole == "STUDENT"
+
+            val params = binding.cardMessage.layoutParams as? android.widget.FrameLayout.LayoutParams
+                ?: android.widget.FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+
+            if (isStudent) {
+                params.gravity = android.view.Gravity.END
+                params.marginStart = (56 * density).toInt()
+                params.marginEnd = (4 * density).toInt()
+                binding.cardMessage.layoutParams = params
+                binding.cardMessage.setBackgroundResource(R.drawable.bg_chat_bubble_student)
+
+                binding.tvSenderRole.text = "🔥 Siz (Student)"
+                binding.tvSenderRole.setTextColor(ContextCompat.getColor(context, R.color.color_primary))
+                binding.tvMessageContent.setTextColor(ContextCompat.getColor(context, R.color.color_text_primary))
+                binding.tvCorrectionFeedback.setTextColor(ContextCompat.getColor(context, R.color.color_text_secondary))
+                binding.tvListenActionLabel.setTextColor(ContextCompat.getColor(context, R.color.color_primary))
+                binding.btnSpeakMessage.setColorFilter(ContextCompat.getColor(context, R.color.color_primary))
+            } else {
+                params.gravity = android.view.Gravity.START
+                params.marginStart = (4 * density).toInt()
+                params.marginEnd = (48 * density).toInt()
+                binding.cardMessage.layoutParams = params
+                binding.cardMessage.setBackgroundResource(R.drawable.bg_chat_bubble_tutor)
+
+                binding.tvSenderRole.text = "✨ AI Tutor"
+                binding.tvSenderRole.setTextColor(android.graphics.Color.parseColor("#BFDBFE"))
+                binding.tvMessageContent.setTextColor(android.graphics.Color.WHITE)
+                binding.tvCorrectionFeedback.setTextColor(android.graphics.Color.parseColor("#DBEAFE"))
+                binding.tvListenActionLabel.setTextColor(android.graphics.Color.parseColor("#E0F2FE"))
+                binding.btnSpeakMessage.setColorFilter(android.graphics.Color.WHITE)
+            }
+
             binding.tvMessageContent.text = item.englishText
-            if (item.correctionOrUzbekFeedback.isNotBlank()) {
+            if (!isStudent && !item.correctionOrUzbekFeedback.isNullOrBlank()) {
                 binding.tvCorrectionFeedback.visibility = View.VISIBLE
                 binding.tvCorrectionFeedback.text = item.correctionOrUzbekFeedback
             } else {
                 binding.tvCorrectionFeedback.visibility = View.GONE
             }
-            binding.btnSpeakMessage.setOnClickListener {
+
+            val speakClickListener = View.OnClickListener {
                 onSpeakMessage(item.englishText)
             }
+            binding.btnSpeakMessage.setOnClickListener(speakClickListener)
+            binding.rowMessageActions.setOnClickListener(speakClickListener)
+            binding.cardMessage.setOnClickListener(speakClickListener)
         }
     }
 

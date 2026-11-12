@@ -1,33 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardSection"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/spacing_medium"
-    android:layout_marginVertical="@dimen/spacing_small"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/color_surface"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:strokeColor="@color/color_card_stroke"
-    app:strokeWidth="1dp">
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="horizontal">
 
+    <!-- Left Timeline Column (Node + Vertical Solid/Dashed Connectors) -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="34dp"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <!-- 1. Large Top Image Container + Mystery Vault Overlay when Section is Locked -->
-        <com.google.android.material.card.MaterialCardView
+        <com.example.core.ui.VerticalDashedLineView
+            android:id="@+id/lineSectionTop"
+            android:layout_width="4dp"
+            android:layout_height="28dp" />
+
+        <FrameLayout
+            android:id="@+id/frameSectionNode"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:background="@drawable/bg_curriculum_node_completed">
+
+            <ImageView
+                android:id="@+id/ivSectionNodeIcon"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:contentDescription="Status"
+                android:src="@drawable/ic_check_small"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tvSectionNodeNumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="#FFFFFF"
+                android:textSize="12.5sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <com.example.core.ui.VerticalDashedLineView
+            android:id="@+id/lineSectionBottom"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <!-- Right Lesson Card Container -->
+    <FrameLayout
+        android:id="@+id/cardSection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <!-- 1 & 2. UNLOCKED LESSON CARD (Completed & Active states) -->
+        <LinearLayout
+            android:id="@+id/layoutSectionUnlockedCard"
             android:layout_width="match_parent"
-            android:layout_height="164dp"
-            app:cardBackgroundColor="@color/color_surface_variant"
-            app:cardCornerRadius="14dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_curriculum_card_completed"
+            android:orientation="vertical"
+            android:padding="9dp"
+            android:visibility="visible">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="94dp"
+                app:cardBackgroundColor="#152544"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:id="@+id/ivSectionArtwork"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/nav_lessons"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_subtopic_banner_1" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvSectionOrder"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:background="@drawable/bg_subtopic_num_green"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15.5sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="#2B4066" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvSectionTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lineSpacingExtra="1dp"
+                        android:maxLines="2"
+                        android:text="Welcome to TalkMe"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15.5sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:contentDescription="Duration"
+                            android:src="@drawable/ic_clock_small" />
+
+                        <TextView
+                            android:id="@+id/tvSectionDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="4 min"
+                            android:textColor="#94A3B8"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Completed Right Pill: ✓ Bajarildi -->
+                <LinearLayout
+                    android:id="@+id/badgeSectionCompleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_curriculum_badge_completed"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp">
+
+                    <ImageView
+                        android:id="@+id/ivSectionStatusIcon"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:contentDescription="Completed"
+                        android:src="@drawable/ic_check_circle"
+                        app:tint="#4ADE80" />
+
+                    <TextView
+                        android:id="@+id/tvSectionStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Bajarildi"
+                        android:textColor="#4ADE80"
+                        android:textSize="11.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Active Right Pill Button: ▷ Davom etish -->
+                <LinearLayout
+                    android:id="@+id/btnSectionContinue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:background="@drawable/bg_curriculum_sky_btn"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="13dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:contentDescription="Play"
+                        android:src="@drawable/ic_play_outline" />
+
+                    <TextView
+                        android:id="@+id/tvSectionActionCta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Davom etish"
+                        android:textColor="#081426"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 3. LOCKED LESSON CARD (Keyingi dars / Avvalgi darsni tugating + 3D Lock Star-Burst) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/layoutSectionMysteryOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="108dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:visibility="gone"
+            app:cardBackgroundColor="#1B193E"
+            app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
-            app:strokeWidth="0dp">
+            app:strokeColor="#3A4370"
+            app:strokeWidth="1.5dp">
 
             <FrameLayout
                 android:id="@+id/containerSectionImageFrame"
@@ -37,151 +239,32 @@
                 android:clipToPadding="false">
 
                 <ImageView
-                    android:id="@+id/ivSectionArtwork"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/nav_lessons"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_lesson_conversation_1794310851367" />
+                    android:contentDescription="Keyingi dars"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_subtopic_locked_clean" />
 
-                <!-- Mystery Vault Overlay for Locked Sections -->
                 <FrameLayout
-                    android:id="@+id/layoutSectionMysteryOverlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_mystery_mission_vault"
+                    android:id="@+id/layoutSectionLockMedallion"
+                    android:layout_width="56dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:layout_marginTop="8dp"
                     android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:id="@+id/layoutSectionLockMedallion"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/bg_mystery_lock_circle"
-                            android:elevation="6dp">
-
-                            <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:layout_gravity="center"
-                                android:contentDescription="@string/section_status_locked"
-                                android:src="@drawable/ic_lock"
-                                app:tint="@color/white" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_glass_pill"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="★ MAXFIY BOSQICH ★"
-                            android:textColor="#FEF08A"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </FrameLayout>
-
-                <!-- Top-Right Circular Status Icon -->
-                <FrameLayout
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:layout_gravity="top|end"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/bg_uzum_circle_badge">
+                    android:clipToPadding="false">
 
                     <ImageView
-                        android:id="@+id/ivSectionStatusIcon"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="54dp"
+                        android:layout_height="42dp"
                         android:layout_gravity="center"
-                        android:contentDescription="@string/section_status_unlocked"
-                        android:src="@drawable/ic_check_circle" />
+                        android:contentDescription="@string/section_status_locked"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/img_subtopic_lock_medallion" />
                 </FrameLayout>
-
-                <!-- Bottom-Left Step Badge -->
-                <TextView
-                    android:id="@+id/tvSectionOrder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|start"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/bg_glass_pill"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 2. All Text Positioned Cleanly BELOW the Image -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="14dp">
+    </FrameLayout>
 
-            <TextView
-                android:id="@+id/tvSectionTitle"
-                style="@style/TextAppearance.TalkMe.Subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_text_primary" />
-
-            <TextView
-                android:id="@+id/tvSectionDescription"
-                style="@style/TextAppearance.TalkMe.BodySecondary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvSectionStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_uzum_metric_pill"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp"
-                    android:textColor="#111827"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tvSectionActionCta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="34dp"
-                    android:background="@drawable/bg_uzum_action_btn"
-                    android:gravity="center"
-                    android:paddingHorizontal="14dp"
-                    android:text="Darsga kirish →"
-                    android:textColor="@color/color_primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
-
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

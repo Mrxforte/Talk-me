@@ -1,41 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
+    android:background="@drawable/bg_curriculum_screen"
     android:orientation="vertical">
 
+    <!-- Top Header: O'quv yo'li -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/spacing_medium"
-        android:paddingTop="@dimen/spacing_medium"
-        android:paddingBottom="@dimen/spacing_xs">
+        android:paddingHorizontal="18dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="12dp">
 
         <TextView
             android:id="@+id/tvLessonsTitle"
-            style="@style/TextAppearance.TalkMe.Heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lessons_header_title" />
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="-0.01"
+            android:text="O‘quv yo‘li"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvLessonsSubtitle"
-            style="@style/TextAppearance.TalkMe.BodySecondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xxs"
-            android:text="@string/lessons_header_subtitle" />
+            android:layout_marginTop="3dp"
+            android:text="Ingliz tilini bosqichma-bosqich o‘rganing"
+            android:textColor="#94A3B8"
+            android:textSize="14sp" />
     </LinearLayout>
 
+    <!-- Top Level Summary Hero Card (A1 Beginner) -->
+    <LinearLayout
+        android:id="@+id/cardLevelSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_curriculum_hero_card"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvHeroLevelBadge"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_curriculum_a1_badge"
+                android:gravity="center"
+                android:text="A1"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHeroLevelTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A1 Beginner"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHeroLessonCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="4 / 110 dars"
+                    android:textColor="#9FB3C8"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivHeroGradCap"
+                android:layout_width="76dp"
+                android:layout_height="54dp"
+                android:contentDescription="A1 Beginner"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_curriculum_grad_cap" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressHeroLevel"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginTop="12dp"
+            android:max="110"
+            android:progress="6"
+            android:progressDrawable="@drawable/bg_curriculum_hero_progress" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Keyingi dars: "
+                    android:textColor="#94A3B8"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvHeroNextLesson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Hello! Hi!"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="#2B4066" />
+
+            <LinearLayout
+                android:id="@+id/btnHeroContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_curriculum_sky_btn"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Davom etish"
+                    android:textColor="#081426"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dp"
+                    android:contentDescription="Continue"
+                    android:src="@drawable/ic_chevron_right" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Hidden CEFR Filter Chips kept for compatibility -->
+    <HorizontalScrollView
+        android:id="@+id/scrollCefrLevels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupCefrLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:selectionRequired="true"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLevelAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Barchasi" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLevelA1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A1" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLevelA2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A2" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLevelB1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B1" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLevelB2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B2" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLevelC1C2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="C1–C2" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <!-- Vertical Timeline Curriculum Path -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTopics"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingHorizontal="8dp"
-        android:paddingBottom="@dimen/spacing_large" />
+        android:paddingStart="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp" />
 
 </LinearLayout>

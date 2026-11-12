@@ -3,30 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:fillViewport="true">
+    android:background="@drawable/bg_curriculum_screen"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingBottom="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_medium">
+        android:paddingHorizontal="14dp"
+        android:paddingTop="12dp">
 
-        <!-- 4.1 Clean Minimal Header -->
+        <!-- 1. TOP GREETING HEADER (Avatar + Xayrli tong, Azamat + 1 Day Streak) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingVertical="@dimen/spacing_small">
+            android:paddingVertical="4dp">
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="@dimen/avatar_size_medium"
-                android:layout_height="@dimen/avatar_size_medium"
-                app:cardCornerRadius="@dimen/radius_pill"
-                app:cardElevation="@dimen/elevation_none"
-                app:strokeColor="@color/color_primary"
-                app:strokeWidth="@dimen/stroke_medium">
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                app:cardBackgroundColor="#1E3A8A"
+                app:cardCornerRadius="27dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#60A5FA"
+                app:strokeWidth="2dp">
 
                 <ImageView
                     android:id="@+id/ivUserAvatar"
@@ -34,294 +38,717 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/default_user_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_ai_tutor_avatar_1794304412196" />
+                    android:src="@drawable/img_home_avatar_tutor" />
             </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvGreeting"
-                    style="@style/TextAppearance.TalkMe.BodySecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/greeting_morning" />
+                    android:text="Xayrli tong,"
+                    android:textColor="#CBD5E1"
+                    android:textSize="13.5sp" />
 
                 <TextView
                     android:id="@+id/tvUserName"
-                    style="@style/TextAppearance.TalkMe.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/default_user_name" />
+                    android:layout_marginTop="1dp"
+                    android:text="Azamat"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tvStreakBadge"
-                style="@style/TextAppearance.TalkMe.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_badge_pill"
-                android:paddingHorizontal="@dimen/spacing_medium"
-                android:paddingVertical="@dimen/spacing_small"
-                android:textColor="@color/color_primary"
+                android:background="@drawable/bg_home_streak_pill"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="8dp"
+                android:text="1 Day Streak"
+                android:textColor="#60A5FA"
+                android:textSize="13sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
-        <!-- 4.2 Hero Banner — Continue Learning -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- 2. HERO BANNER — CONTINUE LEARNING -->
+        <LinearLayout
             android:id="@+id/cardHeroBanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
-            app:cardCornerRadius="@dimen/radius_card_large"
-            app:cardElevation="@dimen/elevation_hero"
-            app:strokeWidth="@dimen/elevation_none">
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_home_hero_card"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="14dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_hero_gradient"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_large">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/tvHeroCourseName"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_medium"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:letterSpacing="0.03"
+                        android:text="TALKME ENGLISH COURSE"
+                        android:textAllCaps="true"
+                        android:textColor="#E2E8F0"
+                        android:textSize="11.5sp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/tvHeroCourseName"
-                            style="@style/TextAppearance.TalkMe.Caption"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/hero_course_title"
-                            android:textAllCaps="true"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tvHeroTopicName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="1. Introduction — Kirish"
+                        android:textColor="#FFFFFF"
+                        android:textSize="19.5sp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/tvHeroTopicName"
-                            style="@style/TextAppearance.TalkMe.Heading"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_xs"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:id="@+id/tvHeroSectionName"
-                            style="@style/TextAppearance.TalkMe.Body"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_xxs"
-                            android:textColor="@color/white" />
-                    </LinearLayout>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="@dimen/avatar_size_large"
-                        android:layout_height="@dimen/avatar_size_large"
-                        app:cardCornerRadius="@dimen/radius_card_medium"
-                        app:cardElevation="@dimen/elevation_none">
-
-                        <ImageView
-                            android:id="@+id/ivHeroIllustration"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="@string/hero_course_title"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/img_hero_learning_1794304411125" />
-                    </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/tvHeroSectionName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="1-Dars: Welcome to TalkMe\n(Xush kelibsiz — TalkMe bilan tanishuv)"
+                        android:textColor="#E2E8F0"
+                        android:textSize="12.5sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    app:cardBackgroundColor="#1E3A5F"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#4B83B8"
+                    app:strokeWidth="1dp">
+
+                    <ImageView
+                        android:id="@+id/ivHeroIllustration"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/hero_course_title"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_home_hero_thumb" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Hero Bottom Row: Progress Bar + 0% completed | Continue Learning > -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_medium"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_weight="1">
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
                         android:id="@+id/progressHero"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_medium"
-                        android:layout_weight="1"
-                        app:indicatorColor="@color/color_accent"
-                        app:trackColor="#4DFFFFFF"
-                        app:trackCornerRadius="@dimen/radius_pill"
-                        app:trackThickness="@dimen/progress_height_medium" />
+                        app:indicatorColor="#FBBF24"
+                        app:trackColor="#567C96"
+                        app:trackCornerRadius="99dp"
+                        app:trackThickness="8dp" />
+
+                    <View
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="3dp"
+                        android:background="@drawable/bg_gold_section_bar" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvHeroProgressPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="0% completed"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12.5sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="26dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="#3B6998" />
+
+                <LinearLayout
+                    android:id="@+id/btnContinueLearning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_home_continue_btn"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="13dp">
 
                     <TextView
-                        android:id="@+id/tvHeroProgressPercent"
-                        style="@style/TextAppearance.TalkMe.Body"
+                        android:id="@+id/tvContinueLearningLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:lineSpacingMultiplier="0.9"
+                        android:text="Continue\nLearning"
+                        android:textColor="#1D68E6"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginStart="6dp"
+                        android:contentDescription="Go"
+                        android:src="@drawable/ic_chevron_right_dark"
+                        app:tint="#1D68E6" />
                 </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnContinueLearning"
+        <!-- 3. SECTION HEADER: | Bugungi ko'nikmalar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="22dp"
+                android:background="@drawable/bg_gold_section_bar" />
+
+            <TextView
+                android:id="@+id/tvHomeSkillsHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Bugungi ko‘nikmalar"
+                android:textColor="#FFFFFF"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- 4. SKILLS 2x2 GRID (Speaking, Listening, Writing, Reading) -->
+        <!-- Row 1: Speaking & Listening -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <!-- Speaking Card (Purple Gradient) -->
+            <LinearLayout
+                android:id="@+id/cardHomeSpeaking"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_home_skill_speaking"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="14dp">
+
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height_primary"
-                    android:layout_marginTop="@dimen/spacing_medium"
-                    android:text="@string/hero_continue_learning"
-                    android:textColor="@color/color_primary"
-                    android:textStyle="bold"
-                    app:backgroundTint="@color/white"
-                    app:cornerRadius="@dimen/radius_medium" />
+                    android:layout_height="104dp"
+                    app:cardBackgroundColor="#00000000"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Speaking"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_home_skill_speaking" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Speaking"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHomeSpeakingSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Gapirish"
+                    android:textColor="#F3E8FF"
+                    android:textSize="14.5sp" />
+
+                <LinearLayout
+                    android:id="@+id/btnHomeSpeakingStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_home_white_pill_btn"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Boshlash"
+                        android:textColor="#6D28D9"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginStart="6dp"
+                        android:contentDescription="Start"
+                        android:src="@drawable/ic_chevron_right_dark"
+                        app:tint="#6D28D9" />
+                </LinearLayout>
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+            <!-- Listening Card (Teal-Blue Gradient) -->
+            <LinearLayout
+                android:id="@+id/cardHomeListening"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_home_skill_listening"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="14dp">
 
-        <!-- 4.3 Learning Experience Section Header -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="104dp"
+                    app:cardBackgroundColor="#00000000"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Listening"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_home_skill_listening" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Listening"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHomeListeningSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Tinglash"
+                    android:textColor="#E0F2FE"
+                    android:textSize="14.5sp" />
+
+                <LinearLayout
+                    android:id="@+id/btnHomeListeningStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_home_white_pill_btn"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Boshlash"
+                        android:textColor="#0E7490"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginStart="6dp"
+                        android:contentDescription="Start"
+                        android:src="@drawable/ic_chevron_right_dark"
+                        app:tint="#0E7490" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Row 2: Writing & Reading -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginHorizontal="6dp"
+            android:layout_marginTop="12dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <!-- Writing Card (Orange-Coral Gradient) -->
+            <LinearLayout
+                android:id="@+id/cardHomeWriting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_home_skill_writing"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="14dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="104dp"
+                    app:cardBackgroundColor="#00000000"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Writing"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_home_skill_writing" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Writing"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHomeWritingSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Yozish"
+                    android:textColor="#FEF3C7"
+                    android:textSize="14.5sp" />
+
+                <LinearLayout
+                    android:id="@+id/btnHomeWritingStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_home_white_pill_btn"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Boshlash"
+                        android:textColor="#C2410C"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginStart="6dp"
+                        android:contentDescription="Start"
+                        android:src="@drawable/ic_chevron_right_dark"
+                        app:tint="#C2410C" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Reading Card (Royal-Indigo Gradient) -->
+            <LinearLayout
+                android:id="@+id/cardHomeReading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_home_skill_reading"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="14dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="104dp"
+                    app:cardBackgroundColor="#00000000"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Reading"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_home_skill_reading" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Reading"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHomeReadingSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="O‘qish"
+                    android:textColor="#DBEAFE"
+                    android:textSize="14.5sp" />
+
+                <LinearLayout
+                    android:id="@+id/btnHomeReadingStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_home_white_pill_btn"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Boshlash"
+                        android:textColor="#1D4ED8"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginStart="6dp"
+                        android:contentDescription="Start"
+                        android:src="@drawable/ic_chevron_right_dark"
+                        app:tint="#1D4ED8" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 5. SECTION HEADER: | Learning tools -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <View
-                android:layout_width="4dp"
-                android:layout_height="20dp"
-                android:background="@drawable/bg_new_badge" />
+                android:layout_width="5dp"
+                android:layout_height="22dp"
+                android:background="@drawable/bg_gold_section_bar" />
 
             <TextView
-                style="@style/TextAppearance.TalkMe.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="@string/home_topic_filter_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="19sp"
+                android:text="Learning tools"
+                android:textColor="#FFFFFF"
+                android:textSize="21sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Vocabulary & Grammar Cards -->
+        <!-- 6. LEARNING TOOLS ROW (Vocabulary +36 & Grammar +10) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginTop="12dp"
             android:baselineAligned="false"
             android:orientation="horizontal">
 
-            <FrameLayout
+            <!-- Vocabulary Tool Card -->
+            <LinearLayout
+                android:id="@+id/cardHomeVocabulary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_home_tool_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <include
-                    android:id="@+id/cardMemorizedWords"
-                    layout="@layout/view_statistic_card" />
-            </FrameLayout>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    app:cardBackgroundColor="#00000000"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
-            <FrameLayout
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Vocabulary"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_home_tool_vocab" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="2dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Vocabulary"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvHomeVocabBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_home_green_count_pill"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="3dp"
+                        android:text="+36"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Grammar Tool Card -->
+            <LinearLayout
+                android:id="@+id/cardHomeGrammar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_home_tool_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <include
-                    android:id="@+id/cardMasteredGrammar"
-                    layout="@layout/view_statistic_card" />
-            </FrameLayout>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    app:cardBackgroundColor="#00000000"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Grammar"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_home_tool_grammar" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="2dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Grammar"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvHomeGrammarBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_home_green_count_pill"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="3dp"
+                        android:text="+10"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- 4.4 Skills by Topic Section Header -->
+        <!-- Hidden legacy statistic card includes preserved for view-binding safety -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:layout_marginHorizontal="6dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="4dp"
-                android:layout_height="20dp"
-                android:background="@drawable/bg_new_badge" />
-
-            <TextView
-                style="@style/TextAppearance.TalkMe.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/home_skills_section_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="19sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <include
-                    android:id="@+id/cardSkillReading"
-                    layout="@layout/view_statistic_card" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <include
-                    android:id="@+id/cardSkillWriting"
-                    layout="@layout/view_statistic_card" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:layout_marginBottom="@dimen/spacing_large"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <include
-                    android:id="@+id/cardSkillListening"
-                    layout="@layout/view_statistic_card" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <include
-                    android:id="@+id/cardSkillSpeaking"
-                    layout="@layout/view_statistic_card" />
-            </FrameLayout>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone">
+            <include android:id="@+id/cardMemorizedWords" layout="@layout/view_statistic_card" />
+            <include android:id="@+id/cardMasteredGrammar" layout="@layout/view_statistic_card" />
+            <include android:id="@+id/cardSkillReading" layout="@layout/view_statistic_card" />
+            <include android:id="@+id/cardSkillWriting" layout="@layout/view_statistic_card" />
+            <include android:id="@+id/cardSkillListening" layout="@layout/view_statistic_card" />
+            <include android:id="@+id/cardSkillSpeaking" layout="@layout/view_statistic_card" />
         </LinearLayout>
 
     </LinearLayout>

@@ -7,7 +7,6 @@ plugins {
   alias(libs.plugins.secrets)
   alias(libs.plugins.google.services)
   alias(libs.plugins.hilt.android)
-  id("jacoco")
 }
 
 android {
@@ -35,8 +34,7 @@ android {
       keyPassword = System.getenv("KEY_PASSWORD")
     }
     create("debugConfig") {
-      val projectKeystore = file("${rootDir}/debug.keystore")
-      storeFile = if (projectKeystore.exists()) projectKeystore else signingConfigs.getByName("debug").storeFile
+      storeFile = file("${rootDir}/debug.keystore")
       storePassword = "android"
       keyAlias = "androiddebugkey"
       keyPassword = "android"
@@ -116,9 +114,13 @@ dependencies {
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)
 
+  implementation(libs.accompanist.permissions)
+  implementation(libs.androidx.lifecycle.runtime.compose)
+  implementation(libs.androidx.lifecycle.viewmodel.compose)
+  implementation(libs.androidx.navigation.compose)
+
   // Unused template dependencies commented out per optimization rules:
   // implementation(platform(libs.androidx.compose.bom))
-  // implementation(libs.accompanist.permissions)
   // implementation(libs.androidx.activity.compose)
   // implementation(libs.androidx.camera.camera2)
   // implementation(libs.androidx.camera.core)
@@ -130,9 +132,6 @@ dependencies {
   // implementation(libs.androidx.compose.ui)
   // implementation(libs.androidx.compose.ui.graphics)
   // implementation(libs.androidx.compose.ui.tooling.preview)
-  // implementation(libs.androidx.lifecycle.runtime.compose)
-  // implementation(libs.androidx.lifecycle.viewmodel.compose)
-  // implementation(libs.androidx.navigation.compose)
   // implementation(libs.coil.compose)
   // implementation(libs.converter.moshi)
   // implementation(libs.firebase.firestore)
@@ -153,8 +152,8 @@ dependencies {
   androidTestImplementation(libs.androidx.espresso.core)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.runner)
-  debugImplementation(libs.leakcanary.android)
 
   "ksp"(libs.androidx.room.compiler)
+  "ksp"(libs.moshi.kotlin.codegen)
   "ksp"(libs.hilt.compiler)
 }

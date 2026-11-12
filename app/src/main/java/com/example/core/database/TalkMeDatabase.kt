@@ -53,6 +53,9 @@ interface TalkMeDao {
     @Query("SELECT * FROM lesson_sections ORDER BY topicId ASC, orderIndex ASC")
     fun observeAllSections(): Flow<List<LessonSectionEntity>>
 
+    @Query("SELECT * FROM lesson_sections ORDER BY topicId ASC, orderIndex ASC")
+    suspend fun getAllSectionsOnce(): List<LessonSectionEntity>
+
     @Query("SELECT * FROM lesson_sections WHERE id = :sectionId LIMIT 1")
     suspend fun getSectionById(sectionId: String): LessonSectionEntity?
 

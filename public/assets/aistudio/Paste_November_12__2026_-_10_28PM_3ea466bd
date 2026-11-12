@@ -1,0 +1,1885 @@
+# TalkMe — Lera bilan A0–C2: kontent va ilovaga joriy qilish topshirig‘i
+
+Versiya: 1.0 • Sana: 2026-11-12 • Til: o‘zbekcha (lotin yozuvi)
+
+## 1. Ushbu hujjat nimani saqlaydi
+
+Tasdiqlangan dars shabloni: **Qoida → Misollar → Mashqlar → Wrap-up**. Har biri alohida ekran. Tepada umumiy progress va bosqich chiplari saqlanadi. Dars ichida qo‘shimcha pastki navigatsiya bo‘lmaydi. Bosh ekranlardagi mavjud bottom bar o‘zgarmaydi.
+
+O‘quvchi hikoyani kuzatish bilan cheklanmaydi: o‘zi o‘qiydi, eshitadi, tanlaydi, tuzadi, yozadi, gapiradi, xatosini tuzatadi va yangi vaziyatda bilimini sinaydi. Lera kursning davomiy suhbatdoshi; asosiy qahramonlik va qarorlar o‘quvchiga ham tegishli.
+
+Ushbu hujjat — manba tahlili, saqlangan kontent standarti va Gemini/Argon deb atalgan coding-agent muhitiga beriladigan ijro topshirig‘i. Muayyan “Argon API” mavjudligi taxmin qilinmaydi. Bu tayyor 400 darslik nashr yoki joriy qilingan APK emas. Quyidagi inventar manba qamrovini nazorat qilish uchun boshlang‘ich dalil hisoblanadi; 1 224 avtomatik topilgan bandning hammasi mustaqil qoida degani emas.
+
+## 2. Kitob bo‘yicha aniq topilmalar
+
+Manba: `kitob(1).txt`; M. G‘apporov va R. Qosimova, “Ingliz tili grammatikasi”, Turon-Iqbol, 2010. Matnda 337 ta sahifa markeri bor; grammatika 3-sahifadan boshlanadi, noto‘g‘ri fe’llar 331–332, mundarija 333–336, oxirgi 337-marker bo‘sh. Sahifa raqamlari shu fayldagi markerlarga tegishli.
+
+Butun fayl strukturaviy skan qilindi: 169 ta mundarija yozuvi ajratildi. 3–332-sahifalarda raqamlangan yoki “Izoh” bilan boshlangan 1 224 ta tekshirish nomzodi topildi. Ular misollar, davom etuvchi bandlar va jadvallar bilan qo‘lda/semantik tahlilda birlashtirilishi kerak. Mundarija va ichki sarlavhalar ko‘rib chiqildi; sonlar bo‘limi (152–157) batafsil tekshirildi; boshqa bo‘limlarda tanlangan qoidalar ko‘rildi. Barcha 102 mingdan ortiq so‘zning har bir grammatik hukmi tahrirlangan deb hisoblamang.
+
+### Qamrovdagi muhim farqlar
+
+- Kitob fe’ldan boshlanadi; bu mutlaq boshlovchiga tayyor o‘quv tartibi emas. Manba tartibi bilan kurs tartibi alohida bo‘lsin.
+- 169 sarlavha = 169 dars emas. “Son” sarlavhasi ichida sanoq, tartib, katta sonlar, pul, telefon, sana, kasr, o‘nli kasr, foiz va maxsus qo‘llanishlar bor.
+- “Ba’zi predloglarning ishlatilishi” 201–244-sahifalarda ko‘plab predloglar, ma’nolar, birikmalar va taqqoslashlarni yashiradi. Har bir ma’no/birikma tekshiriladi.
+- To be, have, do, modal shakllar, going to va Simple Future kabi ayrim ichki mavzular umumiy mundarijada alohida yozilmagan. Faqat mundarijaga tayanish yetmaydi.
+- Kitob grammatik ma’lumotnoma. Boshlang‘ich o‘qish/fonetika, bosqichli audio, suhbat, erkin yozish, darajaviy baholash va C1–C2 muloqot kompetensiyalarini qo‘shimcha ishlab chiqish kerak.
+- Shilling va eski pens, telegramma, yuk kemasi kabi misollarni kundalik zamonaviy vaziyatlarga moslashtirish kerak. Tarixiy qo‘llanish mazmunan saqlanib, belgilangan qo‘shimcha materialga joylashtiriladi.
+
+### Tasdiqlangan muammolar va tekshirish navbati
+
+| Sahifa | Kuzatilgan holat | Qanday ishlov beriladi |
+|---|---|---|
+| Fayl boshi | Python paketlari o‘rnatilish loglari bor | O‘quv kontentidan chiqarish; asl faylni saqlash |
+| Ko‘p sahifalar | `fi nish`, `infi nitiv`, `fi rst`, ustunlar va so‘z bo‘linishlari | Kontekstli OCR tozalash; global ko‘r-ko‘rona almashtirish emas |
+| 80 | Used to inkori didsiz yasaladi degan cheklov | Zamonaviy asosiy namuna `didn’t use to`; eski shakllar registr bilan |
+| 80 | I/we bilan shall asosiy kelasi zamon sifatida berilgan | Will barcha shaxslar bilan; shall formal yoki taklif/savol vazifalarida kontekst bilan |
+| 152 | `hirteen` | `thirteen`; OCR yoki bosma xato ekanini asl PDF bo‘lmasa ajratib da’vo qilmaslik |
+| 153 | `two millions of books` umumiy namuna sifatida | Asosiy shakl `two million books`; noaniq miqdor `millions of books` |
+| 153 | £, shilling, eski pens tizimi | Tarixiy izoh; amaldagi pul darsida 1 pound = 100 pence |
+| 154 | `nineth`, `102 th` | `ninth`, `102nd` |
+| 154–155 | Tartib son bilan har doim the degan qoida, keyin istisnolar | Birlashtirish: `the second`, `my second`, `a second` ma’nolari bilan |
+| 154 | Telefonning o‘rtasida double ishlatilmaydi degan mutlaq cheklov | Ishonchli manbadan tekshirish; tekshirilmaguncha universal qoida sifatida nashr qilmaslik |
+| 156 | 0.1 va 1.01 uchun mos kelmaydigan o‘qishlar | Jadvalni qayta tiklash: `zero point one`, `one point zero one` |
+| 156 | `forth`, `three fourth`, `two fifth` | `fourth`, `three fourths`, `two fifths`; ma’no va son mosligini tekshirish |
+| 157 | Kasr/o‘nli kasrdan keyingi ot haqida keng umumlashtirishlar | O‘lchov birligi, sanaladigan ot, of-birikmasi va haqiqiy qo‘llanishni ajratib tekshirish |
+| 327 | `pensil`, `lettar`, `Your faithfully` | `pencil`, `letter`, `Yours faithfully`; yangi original misollar bilan |
+
+Bu ro‘yxat barcha xatolar tugadi degani emas. Har bir navbatdagi manba bandi correction log orqali o‘tadi.
+
+Tekshirishda foydalanilgan manbalar:
+
+- Cambridge, Number: https://dictionary.cambridge.org/grammar/british-grammar/number
+- Cambridge, Used to: https://dictionary.cambridge.org/grammar/british-grammar/used-to
+- Cambridge, Will and shall: https://dictionary.cambridge.org/grammar/british-grammar/future-will
+- Cambridge, kasrlarni o‘qish: https://dictionaryblog.cambridge.org/2016/09/14/three-and-three-quarters-how-to-say-numbers-2/
+- Royal Mint Museum, decimalisation: https://www.royalmintmuseum.org.uk/collection/film-and-photographs/film-collection/decimalisation/
+- Council of Europe, CEFR: https://www.coe.int/en/web/common-european-framework-reference-languages/home
+- CEFR tavsiflari: https://www.coe.int/en/web/common-european-framework-reference-languages/cefr-descriptors-search
+
+## 3. Gemini uchun asosiy topshiriq — shu yerdan bajarish
+
+Sen mavjud TalkMe ilovasini rivojlantiradigan Android muhandisi, o‘zbek tilida tushuntiruvchi ingliz tili metodisti va kontent muharriri vazifasini bajarasan. Quyidagi talablarni haqiqiy fayllar, ma’lumotlar va ishlaydigan oqimga aylantir. Faqat maslahat yoki demo bilan to‘xtama. Mavjud repo va AGENTS.md bo‘lsa o‘qi. Ishlayotgan ekranlar, foydalanuvchi progressi, audio integratsiyasi va ma’lumotlarni o‘chirib yuborma.
+
+Kirish fayllari: ushbu hujjat va `kitob(1).txt`. Kitob — grammatika tushunchalarining manbasi. Undagi matnni appga paragrafma-paragraf ko‘chirma. Ma’no, qoida, istisno va qo‘llanish qamrovini saqla; mustaqil o‘zbekcha tushuntirish, yangi hayotiy misollar va mashqlar yoz. “Original” bo‘lish uchun shunchaki ismlarni Lera bilan almashtirish yetarli emas.
+
+### 3.1. Har bir manba mazmunini hisobga olish
+
+Avval quyidagi fayllarni yarat:
+
+1. `source_manifest.json`: asl fayl SHA256, sahifalar, paragraf chegaralari, asl va tozalangan matn orasidagi manzil xaritasi.
+2. `source_topics.json`: har bir bo‘lim, kichik mavzu, raqamlangan qoida, raqamlanmagan qoida, izoh, istisno, jadval, qo‘shimcha va birikma.
+3. `corrections.json`: oldingi mazmunning qisqa identifikatori, muammo, yangi izoh, asos, URL, qaror holati.
+4. `coverage_matrix.csv`: source_id, page, source_kind, normalized_concept_id, lesson_ids, explanation_block_ids, example_ids, exercise_ids, review_ids, disposition, rationale, review_status.
+5. `curriculum_manifest.json`: darajalar, bo‘limlar, darslar, prerequisite, can-do natijalar, content version.
+6. `lesson_schema.json`, `lessons/`, `exercise_bank/`, `audio_manifest.json`, `asset_manifest.json`.
+7. `validation_report.md`, `generation_checkpoint.json`.
+
+Matnni sahifalar bo‘yicha o‘qi. Har bir o‘quv paragrafi biror source_id ga bog‘lansin. Bir qoida keyingi sahifada davom etsa birlashtir. Ustunli inglizcha-o‘zbekcha matnni qator bo‘yicha ko‘r-ko‘rona aralashtirma. Jadvaldan yo‘qolgan kasrlarni taxmin qilib to‘ldirma: `needs_source_review` bilan belgilab, manbani tikla.
+
+Manba bandining disposition qiymati: `teach`, `merge`, `correct_and_teach`, `historical_reference`, `noninstructional`. `merge` manzilsiz bo‘lmasin; `historical_reference` app ichidagi qo‘shimcha ma’lumotga bog‘lansin. `noninstructional` faqat nashriyot, watermark, paket logi kabi ta’limiy bo‘lmagan matn uchun. Qiyin qoida, kam uchraydigan birikma yoki istisnoni bu yorliq ostiga yashirma.
+
+Har bir source_id ning holati: `extracted → interpreted → mapped → authored → reviewed → validated`. `mapped` holatini “dars tayyor” deb ko‘rsatma. Manbaga to‘liq ishlov berilmaguncha “100% qamrov” da’vo qilma. Sarlavha qamrovi, atomik qoidalar qamrovi va tekshirilgan darslar qamrovi uchta alohida ko‘rsatkich bo‘lsin. Avtomatik 1 224 nomzodni haqiqiy qoida soni deb olma.
+
+Nashr mezoni: o‘quv mazmunli hech bir manba bandi izohsiz qolmaydi; har bir amaliy qoida tushuntirish, misol va o‘quvchi bajaradigan kamida bitta vazifaga bog‘lanadi. Takror qoida birlashtirilsa barcha manba havolalari saqlanadi. Reference material asosiy dars hisobiga sun’iy qo‘shilmaydi.
+
+### 3.2. Barcha darajalar: A0 → A1 → A2 → B1 → B2 → C1 → C2
+
+UI uchun A0 yorlig‘i mumkin; rasmiy moslashda `Pre-A1` deb yoz. Darajalar soni, darslar soni va grammatika mavzusi o‘z-o‘zidan CEFR sertifikati bermaydi. Har darsga kommunikativ natija, til shakli va baholash dalili qo‘sh. CEFR deskriptorlari uchun tekshirilgan scale, level, URL va parafraz saqla; o‘ylab topilgan rasmiy descriptor ID yozma.
+
+400 ta asosiy dars — rejalashtirish maqsadi. Mustahkamlash, fonetika va Practice bankidagi mashqlar alohida. Qamrov uchun darsni mayda qismlarga ajratish zarur bo‘lsa yashirmay hisobot ber. 400 ga sig‘dirish uchun mavzuni tashlama yoki uchta katta qoidani beginner darsga tiqma. Quyidagi taqsimot taklifiy; manba xaritasi asosida asoslangan tarzda o‘zgartirilishi mumkin:
+
+| Daraja | Darslar | Soni | Hikoya maydoni | Natija va baholash |
+|---|---|---:|---|---|
+| A0 / Pre-A1 | 1–30 | 30 | Lera bilan tanishuv, klub, ism kartasi, tanish buyumlar | So‘z-rasm-audio bog‘lash; qisqa tanish iboralarni o‘qish; ism va oddiy ehtiyojni aytish |
+| A1 | 31–90 | 60 | Uy, oila, kun tartibi, kafe, shahar | Oddiy savol-javob; qisqa xabar; oddiy audio va belgilarni tushunish |
+| A2 | 91–155 | 65 | Xarid, transport, uchrashuv, sayohat, xizmatlar | Odatiy vazifani bajarish; sodda bog‘langan matn; o‘tgan voqea va rejani tushuntirish |
+| B1 | 156–225 | 70 | Mustaqil safar, ish, tajriba, rejalardagi o‘zgarish | Tanish mavzuda izchil fikr; sabab va hikoya; muammoni suhbat bilan hal qilish |
+| B2 | 226–295 | 70 | Hamkorlik, taqdimot, muzokara, axborot va munozara | Batafsil dalil; qarshi fikrga javob; turli manbalardan axborotni birlashtirish |
+| C1 | 296–350 | 55 | Murakkab loyiha, professional va akademik vaziyat | Nozik ma’no, registr, matn bog‘liqligi; yashirin munosabatni anglash va aniq ifodalash |
+| C2 | 351–400 | 50 | Murakkab muhokama, tahrir, vositachilik va sintez | Turli matn/audio mazmunini nozik farqlarni saqlab yetkazish; moslashuvchan uslub va yuqori nazorat |
+
+C1–C2 ni inversion va kam uchraydigan zamonlardan iborat qilma. Pragmatika, diskurs, kollokatsiya, argument, noaniqlikni ehtiyotkor ifodalash, registr, vositachilik, tabiiy nutqni tushunish, yozuvni qayta tahrirlash kiritilsin. Bularning kitobdan tashqarida qo‘shilgan qismlari `origin: supplement` bo‘lsin. Kitobdagi har bir qoidani C2 deb belgilash ham mumkin emas.
+
+Har daraja uchun listening, reading, speaking, writing alohida baholansin; interaction va mediation mos bosqichlarda qo‘shilsin. Bir ko‘nikma bo‘yicha muvaffaqiyat boshqasini avtomatik yopmasin. Yakuniy topshiriqlarda ilgari ko‘rsatilmagan vaziyat bo‘lsin. C2 ga erishish haqidagi da’vo validatsiyalangan baholashga tayanadi; “400 dars tugadi” faqat kurs progressi.
+
+### 3.3. O‘quv ketma-ketligi
+
+Welcome, Greetings, Introduction, ABC, o‘qish va tovush poydevorini supplement sifatida yarat. Har bir harf uchun majburiy katta dars qilma. 26 ta audio harf kartasi va kichik amaliy guruhlar bo‘lsin. Harf nomi, tovush, harf birikmasi farqi aniq. O‘qishda faqat rasmni taxmin qilishga tayanma: tanish tovushlarni qo‘shish va yangi muntazam so‘zni o‘qish transferi ham bo‘lsin.
+
+Audio + matn + rasm → matn + ixtiyoriy audio → mustaqil o‘qish → audio bilan tekshirish. Fonetikada bitta yangi xususiyat, kam yangi so‘z, tushunarli og‘iz/til ko‘rsatmasi. Rasm faqat mazmunni tushunishga xizmat qilsa ishlatiladi. IPA ixtiyoriy yordam; o‘zbekcha taxminiy yozuvni aniq talaffuz deb ko‘rsatma. Asosiy audio aksentini izchil tanla, keyin boshqa aksentlarni tinglash tajribasi sifatida qo‘sh.
+
+I’m kabi iboralar boshida tayyor birikma sifatida kirishi mumkin; keyin qoida ochiladi. Ega-kesim, be, oddiy so‘z tartibi va savollarni kurs oxiriga qoldirma. Formal atamalar o‘zbekcha sodda izoh bilan berilsin.
+
+### 3.4. Lera va hikoya qoidalari
+
+Lera hamroh, o‘quvchi vazifani bajaruvchi. Epizod odatda 1–3 jumlalik vaziyatdan boshlanadi. Har safar kafe yoki har bir misolda “Lera” bo‘lmasin. Uy, do‘stlar, ish, yo‘l, tadbir, xarid, sport, madaniyat va xizmatlar o‘zaro bog‘lansin. O‘quvchi o‘z fikri va shaxsiy misolini ham aytsin; shaxsiy ma’lumotni berishga majburlanmasin, xayoliy variant taklif qilinsin.
+
+Story bible yarat: personajlar, tanishilgan odamlar, joylar, oldingi voqealar, o‘quvchi allaqachon biladigan so‘zlar. Lera har darsda qayta tanishmasin. Oldingi tanlovlar mos javob va dekorativ natijaga ta’sir qilishi mumkin, lekin grammatika haqiqatini o‘zgartirmaydi.
+
+Hikoya grammatikani o‘rganishga sabab beradi. Qoidani dialog ichiga yashirma. Qoida ekrani tushuntirishga, misollar ekrani namunalarga, mashqlar ekrani o‘quvchi harakatiga ajratiladi. Lera videosi/rasmi asosiy matnni siqib chiqarmasin.
+
+### 3.5. Saqlangan universal dars shabloni
+
+**Qoida:** (a) darsning aniq maqsadi; (b) qisqa vaziyat; (c) nima degani; (d) qachon va nima uchun ishlatilishi; (e) tuzilma/formula; (f) o‘zbekchadan muhim farqi; (g) bitta kontrast; (h) shu bosqichga zarur istisno/cheklov. Formulalardagi subject, verb, object belgilarini o‘zbekcha tushuntir. “Har doim”, “hech qachon” kabi mutlaq hukmlarni tekshir. Zarur izohni collapsed panelga yashirma. Murakkab qoida kichik ekran bloklariga ajraladi, lekin asosiy to‘rt bosqich o‘zgarmaydi.
+
+**Misollar:** 3–6 ta mazmunli namuna (daraja va mavzuga qarab). Har birida original English, tabiiy Uzbek, TTS, qaysi qoidani ko‘rsatishi, segment highlight va qisqa “nega” izohi. Kamida bir juft kontrast bo‘lsin. Kodga o‘xshash tartibli bloklar, ammo matn kod shriftida o‘qishga noqulay bo‘lmasin. Rang yagona ma’no tashuvchisi emas: label yoki tag ham bo‘lsin. Misollarni o‘quvchi o‘zgartirib ko‘ra oladigan “O‘zingiz sinang” amaliyoti bo‘lsin; baholanmaydigan sandbox asosiy baholashdan ajratilsin.
+
+**Mashqlar:** tanish → farqla → tuz → tuzat → o‘zing ishlab chiqar → yangi vaziyatga ko‘chir. Har darsda maqsadga mos turli amallar bo‘lsin, hammasi multiple choice bo‘lmasin. 6–10 asosiy topshiriq boshlang‘ich dizayn maqsadi; charchoq va murakkablikka qarab bo‘linadi. Qo‘shimcha variantlar Practice bankida. Har amaliy qoida kamida bir mashqda sinovdan o‘tsin. Listening/reading input va writing/speaking output butun modul bo‘yicha muvozanatda bo‘lsin; har mikro-darsga majburan to‘rt katta mashq yuklama.
+
+**Wrap-up:** 2–4 aniq o‘rganilgan fikr, esda qoladigan model, o‘quvchining haqiqiy ishiga asoslangan yutuq, bitta yangi transfer vazifasi, qaysi nuqtaga qaytish kerakligi. Faqat tabrik ekrani bo‘lmasin. Yakuniy nom aynan Wrap-up. Yakuniy transfer topshirig‘i tugamasdan lesson completed holati yozilmasin.
+
+### 3.6. Interaktiv mashqlar banki
+
+Quyidagi oilalarni qo‘llab-quvvatla; har bir mavzuga moslarini tanla:
+
+1. Audio → rasm/ma’no; variantlar joylashuvi aralashadi.
+2. Audio → raqam, vaqt, sana yoki miqdor.
+3. Matn → vaziyat; javob rasmsiz matnni o‘qishni ham talab qiladi.
+4. Moslashtirish; tarjima va asl so‘z doim bir qatorda turmaydi.
+5. So‘zlardan birikma/gap tuzish; bir nechta to‘g‘ri tartib bo‘lsa qabul qilish.
+6. Bo‘sh joyga mustaqil yozish; oldin o‘tilmagan so‘zni taxmin qilish talab qilinmaydi.
+7. Xatoni topish va tuzatish; foydalanuvchi nima o‘zgarganini ko‘radi.
+8. Ma’noni taqqoslash: qaysi gap qaysi holatga mos?
+9. Shaklni o‘zgartirish: inkor/savol/zamon; ma’no saqlanishini tekshirish.
+10. Eshitib yozish; avval qisqa bo‘lak, keyin gap.
+11. Rasm yoki vaziyatni birikma/gap bilan mustaqil tasvirlash.
+12. O‘quvchi savol tuzadi; Lera javob beradi.
+13. Ma’lumot yetishmaydigan suhbat: so‘rab jadval/kartani to‘ldirish.
+14. Dialogdagi bo‘sh navbatga o‘z javobini yozish yoki aytish.
+15. Muammoni hal qilish: yo‘l, xarid, uchrashuv, reja.
+16. Shaxsiy yoki xayoliy misol: “O‘zingizga mos gap tuzing”.
+17. B1+: qisqa hikoya, taqqoslash va sabab keltirish.
+18. B2+: dalil va qarshi dalil; ikki manbani solishtirish.
+19. C1+: registrni o‘zgartirish, matnni ixchamlashtirish, yashirin ma’noni izohlash.
+20. C2: manbalarni birlashtirish, nozik ma’no bilan qayta ifodalash, muzokara/mediation, matn tahriri.
+
+Variantlar faqat so‘zlarni tasodifiy almashtirishdan tuzilmasin. Kontekst, semantik to‘g‘rilik va javob bir ma’noliligi tekshirilsin. Har distractor uchun nima sababdan xato ekanligi yozilsin. Sanaladigan/sanalmaydigan ot, artikl, zamon va daraja mosligi buzilmasin.
+
+### 3.7. Javobni baholash va kayfiyat
+
+Yopiq mashq: to‘g‘ri javobdan keyin keyingi majburiy mashq ochiladi. Xato: aynan shu xatoga izoh → yordam → qayta urinish. Javobni ko‘rgan o‘quvchi yangi o‘xshash variantni o‘zi yechadi. Hint bilan muvaffaqiyatni mustaqil muvaffaqiyatdan ajratib saqla; progressni yo‘qotma.
+
+Ochiq writing/speaking: bitta exact string bilan tekshirma. Rubrika: vazifa bajarilishi, maqsad grammatika, ma’no, tushunarlilik va darajaga moslik. To‘g‘ri alternativlar, qisqartmalar va variantlarni qabul qil. Baholash noaniq bo‘lsa “wrong” emas `needs_review`; qayta urinish yoki teng maqsadli alternativ topshiriq. Baholanmagan ishni mastered qilma.
+
+STT to‘g‘ri yozib bergani fonetik jihatdan mukammallik emas. Maxsus talaffuz baholagichi bo‘lmasa 97% pronunciation kabi soxta ko‘rsatkich yo‘q. “So‘zingizni tanidim” deyish mumkin. Mikrofon ruxsati yo‘q, shovqin yoki offline xizmat yetishmaganda tegishli alternativ bo‘lsin; speaking hali tekshirilmaganligi saqlansin.
+
+Motivatsiya: “Bu yerda ikkita kitob bor. Book so‘zining ko‘plik shaklini eslaymiz.” kabi aniq, muloyim yordam. Xato uchun kamsitish, yo‘qotilgan hayot, uzluksiz qizil ekran, majburiy reklama yoki o‘rganishni to‘suvchi streak jazosi yo‘q. Muvaffaqiyat animatsiyasi qisqa; reduce-motion sozlamasiga mos. XP birinchi haqiqiy completion uchun idempotent, qayta bosish bilan ko‘paymaydi. Bilim o‘sishi haqidagi gaplar real natijaga tayanadi.
+
+### 3.8. Ma’lumot modeli va ilova shartnomasi
+
+Har lesson uchun majburiy maydonlar:
+
+```text
+id, version, titleUz, level, cefrMappingStatus, moduleId, order,
+sourceRefs[], prerequisiteLessonIds[], prerequisiteConceptIds[],
+learningObjectives[], canDo[], targetRuleIds[], knownVocabulary[],
+newVocabulary[], story{episodeId, location, goal, leraRole, continuityRefs},
+ruleBlocks[], examples[], exercises[], wrapUp{takeaways, model, transferExerciseId},
+reviewSchedule, assets[], editorialStatus
+```
+
+`ruleBlock`: id, type, titleUz, explanationUz, formulaTokens, contrastUz, sourceRuleIds, exceptionScope, englishSegments. Block turlari: explanation, formula, comparison, pronunciation, exception, diagram, miniCheck. `englishSegment`: id, text, translationUz, audioRef yoki aniq TTS text/locale, highlightSpans. Soxta audio fayl URLlari yozilmasin.
+
+`exercise`: id, type, targetRuleIds, objectiveId, promptUz, stimulus, inputMode, difficulty, hintLadder, validationMode, acceptedAnswers yoki rubric, feedbackByError, retryVariants, audioRefs, accessibilityAlternative, isRequired, sourceRefs. `validationMode`: exact, normalized, tokenSequence, numeric, rubric. Raqam/datetime normalization ma’noni yo‘qotmasin. Rubric mashqiga “answer = modelAnswer” tarzida exact validation qo‘llanmasin.
+
+Kontent JSON yoki mavjud loyiha formatida, UI satrlari Android string resourcesda. Appdagi kod identifikatorlari inglizcha bo‘lishi mumkin; barcha o‘quv tushuntirish va xato xabarlari o‘zbekcha. Source provenance learner UI ga texnik log ko‘rinishida chiqarilmaydi.
+
+MVVM va bir yo‘nalishli oqim: `UserAction → ViewModel/use case → repository → immutable UiState → Compose`. Audio, navigation, haptic kabi bir martalik effectlar alohida. Recomposition audio yoki XP ni qayta ishga tushirmasin. Avval repo mavjud tuzilmasini tekshir; kutubxona versiyalarini taxmin qilma va zarur bo‘lsa rasmiy hujjatdan tekshir.
+
+Rule/Misollar bosqichi o‘qib chiqish va mos mini-check orqali o‘tiladi; har pikselni majburiy scroll qilish yoki audiolarni oxirigacha kutish shart emas. Mashq holati `unseen/attempting/incorrect/correct/needs_review`; dars holati `locked/available/in_progress/completed`. Hozirgi bosqich va oldin tugallangan bosqichlar ochiq; kelgusi bosqich tegishli prerequisite bilan ochiladi. Wrap-up transferi to‘g‘ri bajarilgach dars tugaydi. Review oldingi progressni o‘chirmaydi.
+
+Room yoki mavjud lokal persistence bilan stage, javob, hint, attempt, completion, review due, contentVersion saqlanadi. App yopilib ochilganda o‘sha joydan davom etadi. Schema/content migratsiyasi progressni yo‘qotmaydi. Counterlar unique learned concept/vocabulary IDlardan olinadi, ekran ochilgan sonidan emas.
+
+Har ko‘rinadigan inglizcha so‘z/gap uchun TTS mavjud bo‘lsin; til kodi to‘g‘ri. Listening savolida transcript avval yashirin, javobdan keyin ochiladi. Inglizcha topshiriq matni orqali audio javobi oldindan oshkor qilinmaydi. Audio replay, slow/normal, loading/error/offline holatlari qo‘llansin; ikki audio bir vaqtda chalmasin. Rasm yo‘q bo‘lsa ma’no saqlanadigan fallback bo‘lsin.
+
+Core darslar offline. AI generatsiyasi avval tahrirlangan/paketlangan kontent yaratish uchun; foydalanuvchi ilovani ochganda yangi “qoida” uydirilmasin. Erkin suhbat baholashi mavjud konfiguratsiyaga mos alohida capability. API kalitini APKga joylashtirma. Xizmat yo‘q bo‘lsa sifatni soxtalashtirmay baholash holatini ko‘rsat.
+
+Practice: Reading, Writing, Speaking, Listening, Vocabulary, Grammar. Flipcard Vocabulary ichida. Mashqlar o‘tilgan rule/vocabulary va review holatidan shakllanadi. Lesson flowdagi yopiq kelgusi mavzu nomlari katta locked kartalarda yashiriladi, oldingi tugallangan darslar qayta ochiladi.
+
+## 4. To‘liq kontent namunasi: Sanoq soni + buyum
+
+Bu pilot A1 boshlanishiga mo‘ljallangan. Prerequisite: one/two/three; book/pen/bag; ot va oddiy -s ko‘pligi. Bu bilimlar yo‘q bo‘lsa oldingi mikro-dars yaratiladi. Manba: 152-sahifadagi sanoq soni ma’nosi va 110-sahifadan boshlangan ko‘plik bo‘limi. Asosiy maqsad — sonni buyum oldida ishlatish va o‘zbekchadan farqni anglash. Pilot butun sonlar bo‘limining o‘rnini bosmaydi.
+
+### Qoida
+
+Vaziyat: Lera klubdagi yangi ishtirokchilar uchun buyumlar tayyorlayapti. Siz kerakli buyumlarni sanab berasiz.
+
+**Sanoq soni nechta ekanini bildiradi.** One — bir, two — ikki, three — uch. Buyum nomi bilan kelganda son undan oldin turadi: **son + buyum nomi**. Masalan, **two books** — ikkita kitob.
+
+**O‘zbekchadan farqi:** o‘zbekchada “ikki kitob” deymiz. Inglizchada ikki yoki undan ko‘p sanaladigan buyum uchun otning ko‘plik shakli ishlatiladi: **one book → two books**. Ko‘p otlarda ko‘plik -s bilan yasaladi. Boshqacha ko‘plik shakllari bor; bu darsdagi book, pen va bag muntazam shakllardir.
+
+**Ko‘p uchraydigan xato:** `two book` o‘rniga `two books`. Sonning o‘zi otni ko‘plik shakliga almashtirmaydi: otning shakliga ham e’tibor beramiz.
+
+Mini-check: “Two nimani bildiradi?” Variantlar: miqdorni / buyumning rangini. To‘g‘ri: miqdorni. Noto‘g‘ri javob izohi: “Two — ikki. U buyum nechta ekanini bildiradi.”
+
+### Misollar
+
+| ID | English (har biri audio bilan) | O‘zbekcha | Izoh |
+|---|---|---|---|
+| EX01 | one book | bitta kitob | Bitta buyum; book birlikda |
+| EX02 | two books | ikkita kitob | Son oldinda; books ko‘plikda |
+| EX03 | three pens | uchta ruchka | Xuddi shu qoida boshqa buyumga qo‘llandi |
+| EX04 | two bags | ikkita sumka | Son va ot birga miqdorni nomlaydi |
+
+Sandbox: book/pen/bag tanlang; 1/2/3 miqdorni o‘zgartiring. Yozuv va rasm mos ravishda yangilanadi. Foydalanuvchi audio bosib farqni eshitadi. Sandbox muvaffaqiyati yakuniy baholash hisoblanmaydi.
+
+### Mashqlar va baholash
+
+| ID/tur | Topshiriq | Kutilgan natija | Xatoga yordam |
+|---|---|---|---|
+| E01 audio tanlash | Transcript ko‘rinmasdan “two books” eshittiring; 1/2/3 kitob rasmlari | 2 kitob | “Avval miqdorni tinglang. Two — ikki.” |
+| E02 tartiblash | `pens`, `three` kartalarini joylashtiring | three pens | “Son buyum nomidan oldin keladi.” |
+| E03 bo‘sh joy | 2 sumka rasmi, `two ___` | bags | “Bu yerda bitta emas. Bag so‘zining ko‘pligi qanday?” |
+| E04 tahrir | `three pen` ni to‘g‘rilang | three pens | “Miqdor to‘g‘ri; otning shaklini tekshiring.” |
+| E05 ma’no | Nega two books ichida -s bor? | Kitob bittadan ko‘p | “-s bu misolda kitobning ko‘pligini bildiradi.” |
+| E06 mustaqil yozish | 3 kitob rasmi, namunasiz nomlang | three books | “Avval sonni, keyin buyumni yozing.” |
+| E07 mustaqil aytish | 2 ruchka rasmi, ovoz chiqarib nomlang | two pens; semantik/target rubric | STT noaniq bo‘lsa needs_review, soxta fonetika foizi yo‘q |
+| E08 transfer | 3 sumka rasmi, Lera buyurtmasini yozing | three bags | Oldingi kitob/ruchka misolidan yangi buyumga qoida o‘tsin |
+
+E02/E04 javoblari lowercase va ortiqcha bo‘shliq normalizatsiyasi bilan qabul qilinadi. `two book` semantik yaqin bo‘lsa ham maqsad qoida hali bajarilmagan. E07 da “There are two pens” kabi grammatik to‘g‘ri, maqsadni bajaradigan javob ham qabul qilinadi; o‘quvchidan bunday uzun javob talab qilinmaydi. E08 Wrap-up transferi sifatida ham ishlatilishi mumkin, lekin ikki marta ball berilmaydi.
+
+### Wrap-up
+
+1. Sanoq soni nechta ekanini bildiradi.
+2. Son buyum nomidan oldin keladi.
+3. Bittadan ko‘p sanaladigan buyum uchun ko‘plik shaklini ishlatamiz.
+
+Model: **one book → two books** (audio).
+
+Natija xabari real attemptlardan tuziladi: “Miqdorni to‘g‘ri topdingiz. Ko‘plik shaklini yana bir marta mashq qilsak, yanada ishonchli bo‘ladi.” yoki mustaqil bajarilgan bo‘lsa “Yangi buyum bilan ham birikmani mustaqil tuzdingiz.”
+
+Lera: “Buyumlar tayyor. Endi ularni stolga joylashtiramiz.” Bu keyingi voqeaga o‘tish; asosiy qoida xulosasi allaqachon ko‘rindi.
+
+## 5. Sonlar bo‘limini to‘liq qayta ishlash xaritasi
+
+Quyidagi tartib kurs darajalariga tarqatiladi. Har band bitta yoki bir nechta kichik dars bo‘lishi mumkin; barchasini birinchi modulga tiqma.
+
+| Mazmun | Manba | Lera bilan original vaziyat | O‘quvchi mustaqil bajaradi |
+|---|---|---|---|
+| Miqdor va tartib farqi | 152 | Tadbirdagi odamlar va navbat | Nechta / nechanchi farqi |
+| 1–12 | 152 | Buyumlar to‘plami | Sanash, audio bilan moslash, yozish |
+| 13–19 va o‘zgargan shakllar | 152 | Klubdagi joylar | Miqdorni o‘qish/yozish |
+| O‘nliklar; -teen/-ty | 152 | Narx yorliqlari | Tinglab farqlash; tabiiy urg‘u kontekst bilan |
+| Qo‘shma sonlar va chiziqcha | 152 | Buyurtma raqamlari | twenty-one kabi yozuvni tuzish |
+| Hundred/thousand/million | 152–153 | Tadbir ishtirokchilari va budjet | Katta sonni guruhlarga ajratish |
+| Aniq son vs hundreds of | 153 | Hisobotdagi aniq/taxminiy son | Miqdorning aniqligini ifodalash |
+| And va variantlar | 153 | Narxni aniqlashtirish | Asosiy tanlangan variant; boshqa standartni xato demaslik |
+| Pul va o‘nli narxlar | 153–154 | Kafe/do‘kon | Eshitilgan summani kiritish |
+| Eski Britaniya pul tizimi | 153 | Lera bilan eski chipta yoki muzey hujjati | Tarixiy belgini tanish; hozirgi qoida sifatida emas |
+| Telefon raqamlari | 154 | Xayoliy aloqa kartasi | Raqamlarni o‘qish/eshitib yozish |
+| Tartib sonlar va imlo | 154–155 | Navbat va qavat | first/second/third, -th, -ieth |
+| Tartib sonning determinativlari | 154–155 | Birinchi tashrif, yana bir urinish | the/my/a farqini kontekstda tushunish |
+| Qo‘shma tartib sonlar | 155 | Tadbir sanasi | Faqat oxirgi qismni tartib songa aylantirish |
+| Page/room/size + son | 155 | Mehmonxona va kiyim do‘koni | room two kabi yorliqni the second room dan farqlash |
+| Yillar va sanalar | 156 | Tug‘ilgan kun/uchrashuv | O‘qish, aytish, kelishish; format farqlari |
+| Oddiy kasrlar | 156–157 | Taomni bo‘lish | half/quarter/third, ko‘plik maxraj |
+| Aralash kasr + ot | 157 | Retsept/o‘lchov | one and a half kabi birikmani tuzish |
+| O‘nli kasrlar | 156–157 | O‘lchov natijasi | Nuqtadan keyingi raqamlarni o‘qish |
+| Foiz va ulushlar | 157 | Chegirma, keyin so‘rov natijasi | Miqdorni tushunish; B2+ da dalilni tahlil qilish |
+
+## 6. Ishni bajarish bosqichlari va qabul mezonlari
+
+1. Repo audit va manba ingest. Originalni o‘zgartirma. Inventarni sahifa bo‘yicha to‘ldir; noaniq extractionni flag qil.
+2. Atomik qoidalar, istisnolar, birikmalar va correction log. Manba to‘liq klassifikatsiya qilinmaguncha global coverage yakunlandi dema.
+3. A0–C2 prerequisite graph, 400 asosiy dars rejasi, qo‘shimcha skill modullari va story bible. Har bir manba bandiga target manzil ber.
+4. Pilot sifatida sonlar bo‘yicha to‘liq mikro-dars, beginner reading pilot va bitta murakkab B2/C1 dars yarat. Bir universal renderer qisqa/uzun qoida, yopiq/ochiq mashq va audio bilan ishlashini ko‘rsat.
+5. Kontentni kichik paketlarda yarat, har paketni tahrirla va validatorlardan o‘tkaz. Batch sonini kontekstga qarab tanla; 400 darsni bitta javobga siqma. Checkpointda completed lesson ID, pending source ID, correction va keyingi aniq ish saqlansin. Har safar qaytadan boshlama.
+6. UI/data integratsiyasi, progress migratsiyasi, offline/audio holatlari. Tasodifiy demo kontent bilan final progressni to‘ldirma.
+7. Final reconciliation: unmapped rule=0; izohsiz deferred=0; darsda bo‘lmagan required prerequisite=0; yetim audio/asset reference=0; duplicate ID=0. Historical/reference bandlar alohida hisob.
+
+Mazmun tekshiruvi: qoida grammatik jihatdan to‘g‘ri; o‘zbekcha izoh sodda; tarjima tabiiy; misolning darajasi mos; avval o‘tilmagan so‘z izohsiz majburiy testga tushmagan; bir nechta to‘g‘ri javob tan olingan; Lera hikoyasi izchil; gaplar bir xil qolipda takrorlanmagan; barcha target rule mashqda sinovdan o‘tgan. Atomik source bandlarni inson/editor tekshiruvi uchun aniq dalil bilan chiqar.
+
+Muhim funksional testlar: xato javob nextni ochmaydi; to‘g‘ri javob ochadi; qayta bosish XPni takrorlamaydi; app restartdan keyin urinish saqlanadi; content migratsiyasi progressni saqlaydi; accepted alternate javob ishlaydi; noaniq STT mastery bermaydi; offline audio fallback to‘g‘ri; audio javob listening promptida oshkor emas; review asosiy progressni kamaytirmaydi; unlocked title maxfiy qolishi kerak bo‘lgan locked kartaga chiqmaydi.
+
+Oxirida qaysi fayllar yaratildi, qancha qoida haqiqatan reviewed, qancha dars authored/validated, qaysi testlar bajarildi va nimalar hali bajarilmaganini aniq yoz. “Hammasi tayyor” degan umumiy gap bilan yo‘q ishni bajarilgandek ko‘rsatma.
+
+## 7. Manba inventari — avtomatik ajratilgan mundarija
+
+Quyidagi ro‘yxat manba tartibida, app darslari tartibi emas. `SRC-T...` identifikatorlari saqlansin. Sarlavhalar asl extraction shaklida berilgan; OCR tahriri keyingi bosqichda provenance bilan amalga oshiriladi.
+
+| Source ID | Manba mavzusi | Sahifa |
+|---|---|---:|
+| SRC-T001 | FE‘L | 3 |
+| SRC-T002 | Fe’lning asosiy shakllari | 4 |
+| SRC-T003 | To‘g‘ri va noto‘g‘ri fe’llar | 4 |
+| SRC-T004 | Fe’l turlari | 5 |
+| SRC-T005 | Yordamchi fe’llar (Auxiliary verbs) | 6 |
+| SRC-T006 | Modal fe’llar | 23 |
+| SRC-T007 | Fe‘lning shaxsi noma’lum shakllari | 31 |
+| SRC-T008 | Infi nitiv | 31 |
+| SRC-T009 | Infi nitivning to yuklamasi bilan kelishi | 35 |
+| SRC-T010 | Infi nitivning to yuklamasisiz ishlatilishi | 41 |
+| SRC-T011 | For + ot (obyektiv kelishikdagi olmosh) + infi nitiv | 42 |
+| SRC-T012 | Nominative with the Infi nitive(Infi nitivli nominativ) | 42 |
+| SRC-T013 | Infi nitivli nominativning ishlatish holatlari | 44 |
+| SRC-T014 | Mustaqil infi nitivli birikma | 45 |
+| SRC-T015 | Gerund | 46 |
+| SRC-T016 | Gerundning predloglardan keyin kelishi | 49 |
+| SRC-T017 | Gerundning predlogsiz ishlatilishi | 55 |
+| SRC-T018 | Oldidan ot yoki olmosh kelgan gerund | 59 |
+| SRC-T019 | Verbal Nouns (fe’ldan yasalgan otlar) | 61 |
+| SRC-T020 | Sifatdosh | 62 |
+| SRC-T021 | Mustaqil sifatdoshli birikmalar | 72 |
+| SRC-T022 | Complex object (Murakkab to‘ldiruvchi) | 73 |
+| SRC-T023 | Fe’l zamonlari | 76 |
+| SRC-T024 | Oddiy hozirgi zamon | 76 |
+| SRC-T025 | Oddiy o‘tgan zamonning yasalishi | 78 |
+| SRC-T026 | Oddiy o‘tgan zamonning ishlatilishi | 78 |
+| SRC-T027 | O‘tgan zamondagi kelasi zamon | 81 |
+| SRC-T028 | Hozirgi davom zamon | 82 |
+| SRC-T029 | O‘tgan davom zamon | 85 |
+| SRC-T030 | Kelasi davom zamon | 87 |
+| SRC-T031 | O‘tgan zamondagi kelasi davom zamon | 90 |
+| SRC-T032 | Hozirgi tugallangan zamon | 91 |
+| SRC-T033 | O‘tgan tugallangan zamon | 94 |
+| SRC-T034 | Kelasi tugallangan zamon | 97 |
+| SRC-T035 | O‘tgan zamondagi kelasi tugallangan zamon | 99 |
+| SRC-T036 | Hozirgi tugallangan davom zamon | 99 |
+| SRC-T037 | O‘tgan tugallangan davom zamon | 102 |
+| SRC-T038 | Kelasi tugallangan davom zamon | 104 |
+| SRC-T039 | O‘timli va o‘timsiz fe’llar | 105 |
+| SRC-T040 | Majhul nisbat | 106 |
+| SRC-T041 | OT | 107 |
+| SRC-T042 | Atoqli va turdosh otlar | 108 |
+| SRC-T043 | Donalab sanaladigan va donalab sanalmaydigan otlar | 108 |
+| SRC-T044 | Otlarda son | 110 |
+| SRC-T045 | Faqat birlikda ishlatiladigan otlar | 113 |
+| SRC-T046 | Faqat ko‘plikda keladigan otlar | 114 |
+| SRC-T047 | Otlarda kelishik | 115 |
+| SRC-T048 | Ko‘rsatkichlar | 118 |
+| SRC-T049 | Artikl (The article) | 120 |
+| SRC-T050 | Turdosh otlar bilan noaniq artiklning ishlatilishi | 120 |
+| SRC-T051 | Aniq artiklning turdosh otlar bilan ishlatilishi | 124 |
+| SRC-T052 | Turdosh otlar oldida artiklning ishlatilmasligi | 129 |
+| SRC-T053 | Atoqli otlar oldida artiklning ishlatilishi | 131 |
+| SRC-T054 | Kasallik nomlari oldida artiklning ishlatilishi | 136 |
+| SRC-T055 | Artiklning har xil holatlarda ishlatilishi | 137 |
+| SRC-T056 | SIFAT | 143 |
+| SRC-T057 | Sifat darajalari | 143 |
+| SRC-T058 | Otlarning sifatga o‘xshab ishlatilishi | 149 |
+| SRC-T059 | Sifatlarning otlashishi | 150 |
+| SRC-T060 | Sifatlarning gapdagi o‘rni | 151 |
+| SRC-T061 | SON | 152 |
+| SRC-T062 | OLMOSH | 158 |
+| SRC-T063 | Kishilik olmoshlari | 158 |
+| SRC-T064 | Egalik olmoshlari | 160 |
+| SRC-T065 | O‘zlik olmoshlari | 161 |
+| SRC-T066 | Birgalik olmoshlari | 162 |
+| SRC-T067 | Ko‘rsatish olmoshlari | 162 |
+| SRC-T068 | So‘roq olmoshlari | 165 |
+| SRC-T069 | Nisbiy olmoshlar | 167 |
+| SRC-T070 | Nisbiy olmoshlarning tushib qolishi | 170 |
+| SRC-T071 | Gumon olmoshlari | 171 |
+| SRC-T072 | Some va any olmoshlaridan yasalgan olmoshlar | 173 |
+| SRC-T073 | No va none olmoshlari | 174 |
+| SRC-T074 | Much va many olmoshlari | 176 |
+| SRC-T075 | Little va few olmoshlari | 177 |
+| SRC-T076 | All olmoshi | 179 |
+| SRC-T077 | Both olmoshi | 180 |
+| SRC-T078 | Either va neither olmoshlari | 182 |
+| SRC-T079 | Each va every olmoshlari | 183 |
+| SRC-T080 | Other olmoshi | 184 |
+| SRC-T081 | One olmoshi | 185 |
+| SRC-T082 | RAVISH | 187 |
+| SRC-T083 | Ravishlarning turlari | 187 |
+| SRC-T084 | Ravish shakllari | 192 |
+| SRC-T085 | Ravish darajalari | 193 |
+| SRC-T086 | Ravishlarning gapdagi o‘rni | 195 |
+| SRC-T087 | PREDLOG | 198 |
+| SRC-T088 | Shakli ravishlar bilan mos keluvchi predloglar | 199 |
+| SRC-T089 | Predlogning gapdagi o‘rni | 200 |
+| SRC-T090 | Ba’zi predloglarning ishlanilishi | 201 |
+| SRC-T091 | Guruh predloglar | 245 |
+| SRC-T092 | Bog‘lovchi | 247 |
+| SRC-T093 | Teng bog‘lovchilar | 248 |
+| SRC-T094 | Ergashtiruvchi bog‘lovchilar | 249 |
+| SRC-T095 | Bog‘lovchi so‘zlar | 252 |
+| SRC-T096 | Shakli bir-biriga mos keladigan bog‘lovchilar,predloglar va ravishlar | 253 |
+| SRC-T097 | Undov so‘zlar (The Interjection) | 253 |
+| SRC-T098 | GAP | 254 |
+| SRC-T099 | Sodda gap. Yig‘iq va yoyiq gaplar | 255 |
+| SRC-T100 | Gapning bosh bo‘laklari | 256 |
+| SRC-T101 | Ega (The subject) | 256 |
+| SRC-T102 | It soxta egasi | 257 |
+| SRC-T103 | It is … that … birikmasi | 258 |
+| SRC-T104 | One va they ega vazifasida | 258 |
+| SRC-T105 | Kesim (The predicate) | 259 |
+| SRC-T106 | Sodda kesim | 259 |
+| SRC-T107 | Qo‘shma ot-kesim | 259 |
+| SRC-T108 | Qo‘shma fe’l-kesim | 260 |
+| SRC-T109 | There is birikmasida kesim | 261 |
+| SRC-T110 | Ega bilan kesimning moslashuvi | 264 |
+| SRC-T111 | Ikkinchi darajali bo‘laklar | 267 |
+| SRC-T112 | To‘ldiruvchi | 267 |
+| SRC-T113 | Vositasiz to‘ldiruvchi | 267 |
+| SRC-T114 | Predlogsiz vositali to‘ldiruvchi | 268 |
+| SRC-T115 | Predlogli vositali to‘ldiruvchi | 268 |
+| SRC-T116 | It soxta to‘ldiruvchisi | 269 |
+| SRC-T117 | Aniqlovchi (The attribute) | 269 |
+| SRC-T118 | HOL | 272 |
+| SRC-T119 | Darak gaplarda so‘z tartibi | 274 |
+| SRC-T120 | Gapda to‘ldiruvchining joylashishi | 274 |
+| SRC-T121 | Predlogsiz vositali to‘ldiruvchi va to predlogi bilan kelgan vositali to‘ldiruvchi | 275 |
+| SRC-T122 | Holning gapdagi o‘rni | 277 |
+| SRC-T123 | Bosh bo‘laklarning odatdagi so‘z tartibidan chekinishi | 278 |
+| SRC-T124 | Ikkinchi darajali bo‘laklarning odatdagi o‘rnidan chekinishi | 281 |
+| SRC-T125 | Bo‘lishsiz gaplar | 282 |
+| SRC-T126 | So‘roq gaplar | 284 |
+| SRC-T127 | Umumiy so‘roq gaplar | 284 |
+| SRC-T128 | Umumiy so‘roq gaplarning javoblari | 285 |
+| SRC-T129 | Bo‘lishsiz umumiy so‘roq gaplar | 286 |
+| SRC-T130 | Tasdiq so‘roq gaplari | 287 |
+| SRC-T131 | Maxsus so‘roq gaplar | 288 |
+| SRC-T132 | Maxsus so‘roq gaplarning javoblari | 290 |
+| SRC-T133 | Gapning egasiga va eganing aniqlovchisiga beriladigan savollar | 290 |
+| SRC-T134 | Ot-kesimlarga maxsus so‘roq gaplar tuzish | 291 |
+| SRC-T135 | Maxsus so‘roq gaplarning bo‘lishsiz shakli | 293 |
+| SRC-T136 | Muqobil so‘roq gaplar | 293 |
+| SRC-T137 | Buyruq gaplar | 294 |
+| SRC-T138 | Undov gaplar | 294 |
+| SRC-T139 | Qo‘shma gaplar | 295 |
+| SRC-T140 | Bog‘langan qo‘shma gap | 296 |
+| SRC-T141 | Ergashgan qo‘shma gaplar | 296 |
+| SRC-T142 | Ergash gaplarning turlari | 297 |
+| SRC-T143 | Ega ergash gaplar | 297 |
+| SRC-T144 | Kesim ergash gaplar | 298 |
+| SRC-T145 | To‘ldiruvchi ergash gaplar | 298 |
+| SRC-T146 | Ega, kesim va to‘ldiruvchi ergash gaplarga izoh | 299 |
+| SRC-T147 | Ko‘chirma va o‘zlashtirma gaplar | 299 |
+| SRC-T148 | Darak gaplarni o‘zlashtirma gaplarga aylantirish | 300 |
+| SRC-T149 | Buyruq gaplarni o‘zlashtirma gaplarga aylantirish | 308 |
+| SRC-T150 | Aniqlovchi ergash gaplar (Attributive clauses) | 308 |
+| SRC-T151 | Hol ergash gaplar (Adverbial clauses) | 312 |
+| SRC-T152 | Payt ergash gaplar | 312 |
+| SRC-T153 | O‘rin ergash gaplar | 313 |
+| SRC-T154 | Sabab ergash gaplar | 313 |
+| SRC-T155 | Natija ergash gaplar | 314 |
+| SRC-T156 | To‘siqsiz ergash gaplar | 314 |
+| SRC-T157 | Maqsad ergash gaplar | 314 |
+| SRC-T158 | Shart ergash gaplar | 316 |
+| SRC-T159 | Real shart gaplar | 317 |
+| SRC-T160 | Noreal shart gaplar | 318 |
+| SRC-T161 | Hozirgi zamon noreal shart gaplar | 318 |
+| SRC-T162 | O‘tgan zamon noreal shart gaplar | 319 |
+| SRC-T163 | Aralash noreal shart gaplar | 320 |
+| SRC-T164 | Sharti yoki natijasi bo‘lmagan noreal shart gaplar | 320 |
+| SRC-T165 | Bog‘lovchisiz bog‘langan shart gaplar | 321 |
+| SRC-T166 | Ravish ergash gaplar | 322 |
+| SRC-T167 | Wish gaplar | 325 |
+| SRC-T168 | Tinish belgilari | 326 |
+| SRC-T169 | Noto‘g‘ri fe’llarning ro‘yxati | 331 |
+
+## 8. Ichki sarlavhalar bo‘yicha qo‘shimcha dalillar
+
+Bu ro‘yxat katta harfli sarlavhalarni qidirishdan olingan; kichik harfli sarlavhalar va raqamlanmagan qoidalar uchun to‘liq sahifa o‘qilishi shart. Jadval qoldiqlari tekshiruvda chiqariladi.
+
+| Sahifa | Ichki sarlavhalar |
+|---:|---|
+| 3 | FE’L (THE VERB) |
+| 5 | FE’L TURLARI |
+| 6 | TO BE FE’LI |
+| 9 | TO HAVE FE’LI |
+| 14 | TO DO FE’LI |
+| 16 | SHALL |
+| 17 | SHOULD |
+| 22 | WOULD |
+| 24 | CAN (COULD) FE’LI |
+| 26 | MAY (MIGHT) |
+| 29 | OUGHT TO |
+| 31 | NON-FINITE FORMS OF THE VERB; (FE’LNING SHAXSI NOMA’LUM SHAKLLARI) |
+| 32 | INFINITIV SHAKLLARINING YASALISHI |
+| 33 | ACTIVE INFINITIVE VA PASSIVE INFINITIVE; SIMPLE VA PERFECT INFINITIVE |
+| 35 | CONTINUOUS VA PERFECT CONTINUOUS INFINITIVE |
+| 42 | FOR + OT (OBYEKTIV KELISHIKDAGI OLMOSH) + INFINITIV; NOMINATIVE WITH THE INFINITIVE (INFINITIVLI NOMINATIV) |
+| 44 | INFINITIVLI NOMINATIVNING ISHLATISH HOLATLARI |
+| 45 | MUSTAQIL INFINITIVLI BIRIKMA |
+| 47 | ODDIY NISBATDAGI GERUND (ACTIVE GERUND) VA MAJHUL; NISBATDAGI GERUND (PASSIVE GERUND) |
+| 48 | SIMPLE VA PERFECT GERUND |
+| 49 | GERUNDNING VAZIFALARI; GERUNDNING PREDLOGLARDAN KEYIN KELISHI |
+| 50 | VERB + PREPOSITION + GERUND |
+| 51 | ADJECTIVE (PARTICIPLE) + PREPOSITION + GERUND; NOUN + PREPOSITION + GERUND |
+| 55 | GERUNDNING PREDLOGSIZ ISHLATILISHI |
+| 59 | OLDIDAN OT YOKI OLMOSH KELGAN GERUND |
+| 63 | SIFATDOSHLARNING YASALISHI |
+| 65 | SIFATDOSHNING ISHLATILISHI; PRESENT PARTICIPLE ACTIVE |
+| 67 | PERFECT PARTICIPLE ACTIVE |
+| 68 | PRESENT PARTICIPLE PASSIVE |
+| 69 | PAST PARTICIPLE PASSIVE |
+| 71 | PERFECT PARTICIPLE PASSIVE; HOZIRGI VA O‘TGAN ZAMON SIFATDOSHLARINING; ANIQLOVCHI BO‘LIB KELGANDA GAPDAGI O‘RNI |
+| 72 | MUSTAQIL SIFATDOSHLI BIRIKMALAR |
+| 76 | FE’L ZAMONLARI |
+| 77 | ODDIY HOZIRGI (SIMPLE PRESENT) ZAMONNING ISHLATILISHI |
+| 78 | THE SIMPLE PAST TENSE (ODDIY O‘TGAN ZAMON ); ODDIY O‘TGAN ZAMONNING YASALISHI; ODDIY O‘TGAN ZAMONNING ISHLATILISHI |
+| 81 | ODDIY KELASI ZAMONNING ISHLATILISHI |
+| 83 | HOZIRGI DAVOM ZAMONNING ISHLATILISHI |
+| 84 | TO BE GOING TO V… BIRIKMASI |
+| 85 | O‘TGAN DAVOM ZAMONNING ISHLATILISHI |
+| 88 | KELASI DAVOM ZAMONNING ISHLATILISHI |
+| 91 | HOZIRGI TUGALLANGAN ZAMONNING ISHLATILISHI |
+| 94 | O‘TGAN TUGALLANGAN ZAMONNING ISHLATILISHI |
+| 98 | KELASI TUGALLANGAN ZAMONNING ISHLATILISHI |
+| 100 | HOZIRGI TUGALLANGAN DAVOM ZAMONNING ISHLATILISHI |
+| 103 | O‘TGAN TUGALLANGAN DAVOM ZAMONNING ISHLATILISHI |
+| 104 | KELASI TUGALLANGAN DAVOM ZAMONNING ISHLATILISHI |
+| 106 | MAJHUL NISBAT ZAMONLARINING YASALISHI |
+| 107 | OT (THE NOUN) |
+| 113 | QO‘SHMA OTLARNING KO‘PLIGI; FAQAT BIRLIKDA ISHLATILADIGAN OTLAR |
+| 114 | FAQAT KO‘PLIKDA KELADIGAN OTLAR |
+| 118 | DETERMINATIVES; (KO‘RSATKICHLAR) |
+| 120 | TURDOSH OTLAR BILAN; NOANIQ ARTIKLNING ISHLATILISHI |
+| 124 | ANIQ ARTIKLNING TURDOSH OTLAR BILAN ISHLATILISHI |
+| 129 | TURDOSH OTLAR OLDIDA ARTIKLNING ISHLATILMASLIGI |
+| 131 | ATOQLI OTLAR OLDIDA ARTIKLNING ISHLATILISHI |
+| 136 | KASALLIK NOMLARI OLDIDA ARTIKLNING ISHLATILISHI |
+| 137 | ARTIKLNING HAR XIL HOLATLARDA ISHLATILISHI |
+| 141 | BA’ZI SO‘Z BIRIKMALARI VA IBORALAR BILAN; DOIMO NOANIQ ARTIKL ISHLATILADI; BA’ZI SO‘Z BIRIKMALARI VA IBORALAR BILAN FAQAT; ANIQ ARTIKL ISHLATILADI |
+| 142 | QUYIDAGI SO‘Z BIRIKMALARI VA IBORALARI; ARTIKLSIZ ISHLATILADI |
+| 143 | SIFAT (THE ADJECTIVE) |
+| 149 | OTLARNING SIFATGA O‘XSHAB ISHLATILISHI |
+| 150 | SIFATLARNING OTLASHISHI |
+| 151 | SIFATLARNING GAPDAGI O‘RNI |
+| 152 | SON (THE NUMERAL); SANOQ SONLAR (CARDINAL NUMERALS) |
+| 154 | TARTIB SONLAR (ORDINAL NUMERALS) |
+| 156 | KASR SONLAR (FRACTIONAL NUMERALS) |
+| 158 | OLMOSH; KISHILIK OLMOSHLARI (PERSONAL PRONOUNS); III   —         — |
+| 160 | EGALIK OLMOSHLARI (POSSESSIVE PRONOUNS); II      —          —            — |
+| 161 | O‘ZLIK OLMOSHLARI (REFLEXIVE PRONOUNS) |
+| 162 | BIRGALIK OLMOSHLARI (RECIPROCAL PRONOUNS); KO‘RSATISH OLMOSHLARI(DEMONSTRATIVE PRONOUNS) |
+| 165 | SO‘ROQ OLMOSHLARI (INTERROGATIVE PRONOUNS) |
+| 167 | NISBIY OLMOSHLAR (RELATIVE PRONOUNS) |
+| 170 | NISBIY OLMOSHLARNING TUSHIB QOLISHI |
+| 171 | GUMON OLMOSHLARI (INDEFINITE PRONOUNS); SOME, ANY OLMOSHLARI |
+| 173 | SOME VA ANY OLMOSHLARIDAN YASALGAN OLMOSHLAR |
+| 174 | NO VA NONE OLMOSHLARI |
+| 176 | MUCH VA MANY OLMOSHLARI |
+| 177 | LITTLE VA FEW OLMOSHLARI |
+| 179 | ALL OLMOSHI |
+| 180 | BOTH OLMOSHI |
+| 182 | EITHER VA NEITHER OLMOSHLARI |
+| 183 | EACH VA EVERY OLMOSHLARI |
+| 184 | OTHER OLMOSHI |
+| 185 | ONE OLMOSHI |
+| 187 | RAVISH |
+| 192 | RAVISH SHAKLLARI |
+| 193 | RAVISH DARAJALARI |
+| 195 | RAVISHLARNING GAPDAGI O‘RNI |
+| 198 | PREDLOG; (THE PREPOSITION) |
+| 199 | SHAKLI RAVISHLAR BILAN MOS KELUVCHI PREDLOGLAR |
+| 200 | PREDLOGNING GAPDAGI O‘RNI |
+| 201 | BA’ZI PREDLOGLARNING ISHLANILISHI |
+| 204 | AGAINST; ALONG |
+| 205 | AMONG (AMONGST) |
+| 207 | BEFORE |
+| 208 | BEHIND |
+| 209 | BELOW; BESIDE; BESIDES |
+| 210 | BETWEEN; BEYOND |
+| 213 | DURING |
+| 214 | EXCEPT |
+| 222 | INSIDE |
+| 227 | ON (UPON) |
+| 229 | OUT OF |
+| 232 | OUT OF VA FROM PREDLOGLARINI TAQQOSLASH; OUTSIDE |
+| 234 | ROUND, AROUND; SINCE |
+| 235 | THROUGH; TILL, UNTIL |
+| 236 | TO PREDLOGI |
+| 238 | TO VA INTO PREDLOGLARINI TAQQOSLASH |
+| 239 | TOWARDS PREDLOGI; UNDER PREDLOGI |
+| 240 | UP PREDLOGI |
+| 241 | WITH PREDLOGI |
+| 243 | WITH VA BY PREDLOGLARINI TAQQOSLASH; WITHIN PREDLOGI |
+| 244 | FOR, DURING, IN, WITHIN PREDLOGLARINI TAQQOSLASH; WITHOUT PREDLOGI |
+| 245 | GURUH PREDLOGLAR |
+| 247 | BOG‘LOVCHI (THE CONJUNCTION) |
+| 248 | TENG BOG‘LOVCHILAR |
+| 249 | ERGASHTIRUVCHI BOG‘LOVCHILAR |
+| 252 | BOG‘LOVCHI SO‘ZLAR |
+| 253 | SHAKLI BIR-BIRIGA MOS KELADIGAN BOG‘LOVCHILAR,; PREDLOGLAR VA RAVISHLAR; UNDOV SO‘ZLAR (THE INTERJECTION) |
+| 254 | GAP (THE SENTENCE) |
+| 255 | SODDA GAP (THE SIMPLE SENTENCE); YIG‘IQ VA YOYIQ GAPLAR; (UNEXTENDED AND EXTENDED SENTENCES) |
+| 256 | GAPNING BOSH BO‘LAKLARI |
+| 257 | IT SOXTA EGASI |
+| 258 | IT IS … THAT … BIRIKMASI; ONE VA THEY EGA VAZIFASIDA |
+| 259 | SODDA KESIM; QO‘SHMA OT-KESIM |
+| 260 | QO‘SHMA FE’L-KESIM |
+| 261 | THERE IS BIRIKMASIDA KESIM |
+| 264 | EGA BILAN KESIMNING MOSLASHUVI |
+| 267 | IKKINCHI DARAJALI BO‘LAKLAR; VOSITASIZ TO‘LDIRUVCHI (THE DIRECT OBJECT) |
+| 268 | PREDLOGSIZ VOSITALI TO‘LDIRUVCHI; (THE INDIRECT OBJECT); PREDLOGLI VOSITALI TO‘LDIRUVCHI; (THE PREPOSITIONAL OBJECT) |
+| 274 | GAPLARDA SO‘Z TARTIBI; DARAK GAPLARDA SO‘Z TARTIBI; GAPDA TO‘LDIRUVCHINING JOYLASHISHI |
+| 275 | BILAN KELGAN VOSITALI TO‘LDIRUVCHI |
+| 277 | HOLNING GAPDAGI O‘RNI |
+| 278 | BOSH BO‘LAKLARNING ODATDAGI SO‘Z TARTIBIDAN CHEKINISHI |
+| 281 | IKKINCHI DARAJALI BO‘LAKLARNING ODATDAGI; O‘RNIDAN CHEKINISHI |
+| 282 | BO‘LISHSIZ DARAK GAPLAR |
+| 284 | UMUMIY SO‘ROQ GAPLAR; (GENERAL QUESTIONS) |
+| 285 | UMUMIY SO‘ROQ GAPLARNING JAVOBLARI |
+| 286 | BO‘LISHSIZ UMUMIY SO‘ROQ GAPLAR |
+| 287 | TASDIQ SO‘ROQ GAPLARI (DISJUNCTIVE QUESTIONS) |
+| 288 | MAXSUS SO‘ROQ GAPLAR |
+| 290 | MAXSUS SO‘ROQ GAPLARNING JAVOBLARI; GAPNING EGASIGA VA EGANING ANIQLOVCHISIGA; BERILADIGAN SAVOLLAR |
+| 291 | OT-KESIMLARGA MAXSUS SO‘ROQ GAPLAR TUZISH |
+| 293 | MAXSUS SO‘ROQ GAPLARNING BO‘LISHSIZ SHAKLI |
+| 295 | QO‘SHMA GAPLAR |
+| 297 | ERGASH GAPLARNING TURLARI; EGA ERGASH GAPLAR (SUBJECT CLAUSES) |
+| 298 | KESIM ERGASH GAPLAR (PREDICATIVE CLAUSES); TO’LDIRUVCHI ERGASH GAPLAR (OBJECT CLAUSES) |
+| 299 | EGA, KESIM VA TO‘LDIRUVCHI ERGASH GAPLARGA IZOH; DIRECT AND INDIRECT SPEECH (KO‘CHIRMA VA O‘ZLASHTIRMA GAPLAR) |
+| 300 | DARAK GAPLARNI O‘ZLASHTIRMA GAPLARGA AYLANTIRISH |
+| 308 | BUYRUQ GAPLARNI O‘ZLASHTIRMA GAPLARGA AYLANTIRISH |
+| 312 | PAYT ERGASH GAPLAR; (ADVERBIAL CLAUSES OF TIME) |
+| 313 | O‘RIN ERGASH GAPLAR; (ADVERBIAL CLAUSES OF PLACE); SABAB ERGASH GAPLAR; (ADVERBIAL CLAUSES OF CAUSE) |
+| 314 | NATIJA ERGASH GAPLAR; (ADVERBIAL CLAUSES OF RESULT); TO‘SIQSIZ ERGASH GAPLAR; (ADVERBIAL CLAUSES OF CONCESSION); MAQSAD ERGASH GAPLAR; (ADVERBIAL CLAUSES OF PURPOSE) |
+| 316 | SHART ERGASH GAPLAR; (ADVERBIAL CLAUSES OF CONDITION) |
+| 317 | REAL SHART GAPLAR |
+| 318 | NOREAL SHART GAPLAR; (UNREAL CONDITIONALS — NOT TRUE); HOZIRGI ZAMON NOREAL SHART GAPLAR |
+| 319 | O‘TGAN ZAMON NOREAL SHART GAPLAR |
+| 320 | ARALASH NOREAL SHART GAPLAR; SHARTI YOKI NATIJASI BO‘LMAGAN; NOREAL SHART GAPLAR |
+| 321 | BOG‘LOVCHISIZ BOG‘LANGAN SHART GAPLAR |
+| 322 | RAVISH ERGASH GAPLAR; (ADVERBIAL CLAUSES OF MANNER) |
+| 325 | WISH GAPLAR; FUTURE WISH; PRESENT WISH |
+| 326 | PAST WISH; TINISH BELGILARI; SODDA GAPLARDA VERGUL |
+| 327 | QO‘SHMA GAPLARDA VERGUL |
+| 329 | NUQTA |
+| 331 | NOTO‘G‘RI FE’LLARNING RO‘YXATI; SIMPLE    SIMPLE PAST    PAST      PRESENT; PRESENT TENSE  TENSE      PARTICIPLE  PARTICIPLE |
+| 332 | SIMPLE     SIMPLE PAST   PAST       PRESENT; PRESENT TENSE  TENSE     PARTICIPLE  PARTICIPLE |
+
+## 9. Atomik tahlil uchun bandlar lokatori
+
+Quyidagi barcha yozuvlar **candidate / pending semantic review** holatida. Qisqa parchalar faqat bandni asl fayldan topish uchun; darsga ko‘chirish uchun emas. P — fayldagi sahifa, L — markerdan keyingi sahifa matnidagi satr. Oldingi/keyingi satrlar va sahifalar ham o‘qilib, band to‘liq tiklanadi. Bu ro‘yxat raqamlanmagan qoidalarni qamrab olish kafolati emas; butun sahifalarni klassifikatsiya qilish majburiy.
+
+| Candidate ID | Boshlanish belgisi |
+|---|---|
+| SRC-P003-L018 | 1. Fe’llar sodda, yasama va qo‘shma bo‘ladi: |
+| SRC-P003-L044 | 1. Fe’lning shaxsi ma’lum shakllari shaxs, son, mayl, zamon, nisbatni |
+| SRC-P004-L011 | 2. Fe’lning shaxsi noma’lum shakliga — infi nitiv (the Infi nitive) hara- |
+| SRC-P004-L031 | 1. Fe’llar oddiy o‘tgan zamon (Simple Past) va o‘tgan zamon sifat- |
+| SRC-P004-L035 | 2. To‘g‘ri fe’llarning Simple Past va Past Participle shakllari fe’l o‘za- |
+| SRC-P004-L042 | 3. Simple Past va Past Participle shakllari -ed qo‘shimchasini qo‘shm asdan, |
+| SRC-P005-L018 | 1. Ma’nosiga va gapdagi vazifasiga ko‘ra fe’llar quyidagi turlarga |
+| SRC-P005-L021 | 2. Asosiy fe’llar (Notional Verbs) mustaqil ma’noga ega bo‘lib, gapda |
+| SRC-P005-L026 | 3. Yordamchi fe’llar (Auxilliary Verbs) mustaqil ma’noga ega bo‘l- |
+| SRC-P005-L034 | 4. Bog‘lovchi fe’llar (Link Verbs) ot-kesim yasashda bog‘lovchi bo‘lib |
+| SRC-P005-L039 | 5. Modal fe’llar (Modal Verbs) fe’lning asosiy shakli (infi nitive) bi- |
+| SRC-P006-L014 | 1. To be, to have, to do, shall (should), will (would) fe’llari yordam- |
+| SRC-P006-L025 | 2. Ba’zan to be, to have, shall (should), will (would) fe’llari modal fe’l |
+| SRC-P006-L028 | 3. Ba’zan to be bo‘lmoq, to have ega bo‘lmoq, to do qilmoq fe’lla ri |
+| SRC-P006-L033 | 1. Boshqa fe’llardan farq qilib to be fe’lining Simple Presentda 1-shaxs |
+| SRC-P006-L037 | 2. To be fe’lining Simple Past zamonda birlik va ko‘plik uchun alohida |
+| SRC-P006-L039 | 3. Bo‘lishsiz gaplar yasashda to be fe’lining tegishli shaklidan keyin not |
+| SRC-P006-L042 | 4. So‘roq gaplar yasashda to be fe’lining shakli egadan oldinga o‘tka- |
+| SRC-P007-L003 | 5. To be fe’li faqat ikkita davom zamonda ishlatiladi: Present Continuous |
+| SRC-P007-L007 | 6. To be fe’li Perfect Continuous zamonlarida ishlatilmaydi. |
+| SRC-P007-L008 | 7. To be fe’lining bo‘lishsiz buyruq shakli umumiy qoidaga asosan, uning |
+| SRC-P007-L012 | 8. Og‘zaki nutqda Simple Presentning bo‘lishli shaklida odatda quyidagi |
+| SRC-P007-L030 | 9. To be fe’li yordamchi fe’l bo‘lib keladi: |
+| SRC-P008-L009 | 10. To be fe’li ot-kesimlarda bog‘lovchi bo‘lib keladi va -dir, edi, bo‘- |
+| SRC-P008-L019 | 1. To be fe’li asosiy fe’l bo‘lib keladi va bo‘lmoq, joylashmoq ma’nosini |
+| SRC-P008-L029 | 2. To be fe’li asosiy fe’lning to yuklamasi bilan kelgan shakli bilan |
+| SRC-P009-L023 | Izoh: To bedan keyin majhul nisbatning infi nitivi kelib, zaruratdan tashqari ehtimol likni |
+| SRC-P009-L032 | 1. To have fe’lining Simple Presentda ikkita shakli bor: 3-shaxs bir- |
+| SRC-P009-L035 | 2. To have fe’li faqat to have dinner, to have a talk kabi birikmalar da |
+| SRC-P009-L042 | 3. To have fe’li yordamchi fe’l bo‘lib keladi va o‘tgan zamon sifatdos hi |
+| SRC-P010-L020 | 4. To have fe’li bor bo‘lmoq, ega bo‘lmoq ma‘nosida asosiy fe’l bo‘lib |
+| SRC-P010-L027 | 5. So‘roq shaklni yasashda Simple Present va Simple Pastda to have |
+| SRC-P010-L037 | 6. To have fe’lining bo‘lishsiz shakli uning sahkllaridan keyin not |
+| SRC-P011-L028 | 7. Og‘zaki nutqda to have fe’li o‘rnida hozirgi zamonda have (has) got |
+| SRC-P011-L042 | 8. To have fe’li qator otlar bilan birikib keladi va o‘zining dastlabki bor |
+| SRC-P012-L011 | 9. Yuqoridagi iboralarning so‘roq va bo‘lishsiz shakllari Simple Pre- |
+| SRC-P012-L018 | 10. To have fe’li to yuklamali infi nitive bilan kelib, biror tashqi kuch |
+| SRC-P012-L032 | Izoh: Had to o‘tgan zamonda bajarilishi kerak bo‘lgan va bajarilgan ish-harakatni |
+| SRC-P013-L003 | 11. Og‘zaki nutqda have va has o‘rnida zaruratni ifodalashda have |
+| SRC-P013-L008 | 12. To have fe’li to have + ot (yoki olmosh) + Past Participle birik- |
+| SRC-P013-L030 | 13. To have fe’li to have + ot (yoki olmosh) + to + V birikmasida |
+| SRC-P013-L038 | Izoh: AQSHda to havening Simple Present va Simple Pastdagi so‘roq va bo‘lishsiz |
+| SRC-P014-L007 | 1. To do fe’li aniq va majhul nisbatning barcha zamonlarida umumiy |
+| SRC-P014-L011 | 2. To do fe’lining shakllari yordamchi va modal fe’llardan tashqari |
+| SRC-P014-L019 | 3. To do fe’li buyruq gaplarning bo‘lishsiz shaklini yasash uchun yor- |
+| SRC-P014-L029 | 4. Simple Present va Simple Pastda bo‘lishli gaplarda fe’lning ma’nosi- |
+| SRC-P014-L043 | 5. To do fe’li buyruq gaplardagi iltimosni kuchaytirish ma’nosida |
+| SRC-P015-L009 | 6. To do fe’li qilmoq, bajarmoq ma’nosida asosiy fe’l bo‘lib keladi: |
+| SRC-P015-L023 | 1. Shall va will fe’llari to‘kis fe’llar emas, chunki ularning faqat ikki- |
+| SRC-P016-L005 | 1. Shall 1-shaxs birlik va ko‘plikda kelasi zamondagi ish-harakatni |
+| SRC-P016-L011 | Izoh: AQSHda birinchi shaxsda shall o‘rnida will ishlatiladi, hozir Angliyada ham shunga |
+| SRC-P016-L014 | 2. Shall 1-shaxsda so‘roq gaplarda farmoyish, buyruq, ko‘rsatma olish |
+| SRC-P016-L018 | 3. Shall 2 va 3-shaxs birlik va ko‘plikda ishlatilib, modal ma’noga ega |
+| SRC-P016-L028 | 4. Javobida shall ishlatish mumkin bo‘lgan so‘roq gaplarda 2-shaxs bilan |
+| SRC-P016-L038 | 5. Shall 3-shaxs birlik va ko‘plikda so‘roq gaplarda ishlatiladi va |
+| SRC-P017-L005 | 1. Should (shallning o‘tgan zamoni) Infi nitiv bilan birga kelib o‘tgan |
+| SRC-P017-L008 | 2. Should bosh gapdagi ish-harakat o‘tgan zamonda bo‘lganda, er- |
+| SRC-P017-L012 | 3. Should 1-shaxs birlik va ko‘plikda faqat yordamchi fe’l bo‘lib ke- |
+| SRC-P017-L018 | 4. Should 2 va 3-shaxs birlik va ko‘plikda ishlatilib va’dani, tahdidni, |
+| SRC-P017-L023 | 5. Should 1 va 3-shaxs birlik va ko‘plikda bosh gapidagi ish-hara- |
+| SRC-P017-L033 | 6. Should hozirgi va o‘tgan zamondagi noreal shart gapli qo‘shma gap- |
+| SRC-P017-L040 | Izoh: AQSHda 1-shaxs bilan ham would ishlatiladi. Angliyada ham should o‘rnida would |
+| SRC-P017-L042 | 7. Should noreal shart gaplarning ergash gapida taxminning yuz be rish |
+| SRC-P018-L008 | 8. Should bosh gaplari it is important muhim, it is necessary kerak, |
+| SRC-P018-L023 | Izoh: 1. It is possible mumkin, balki, it is probable aftidan, balki, ehtimol |
+| SRC-P018-L030 | 2. Bu vaziyatda (ayniqsa AQSHda) ko‘pincha shoud + V o‘rnida Present Subjunctive |
+| SRC-P018-L034 | 3. Bu vaziyatda ergash gap o‘rnida ko‘pincha for + ot (olmosh) +to + V quril masi |
+| SRC-P019-L016 | 9. Bosh gapida decide qaror qilmoq, demand, require talab qilmoq, in- |
+| SRC-P019-L037 | Izoh: Yuqoridagi fe’llardan keyin (ayniqsa AQSHda) should + V ham, Present Subjanktiv |
+| SRC-P019-L041 | 10. Bosh gapdagi kesim afsuslanishni, ajablanishni, g‘azabni, xursand- |
+| SRC-P020-L031 | 11. Bosh gapdagi fe’lning zamonidan qat’i nazar, maqsad ergash gap da |
+| SRC-P020-L038 | 12. Why bilan boshlangan ko‘chirma va o‘zlashtirma so‘roq gaplarda |
+| SRC-P021-L006 | 13. Should axloqiy burchni yoki maslahatni ifodalaydi: |
+| SRC-P021-L024 | 1. Will 2 va 3-shaxs birlik va ko‘plikda kelasi zamonni yasashda |
+| SRC-P021-L031 | 2. Will 1-shaxs birlik va ko‘plikda modal ma’nosida ishlatiladi va |
+| SRC-P021-L038 | 3. Will iltimosni ifodalash uchun ishlatiladi: |
+| SRC-P022-L005 | 1. Would (will fe’lining o‘tgan zamon shakli bo‘lib) qo‘shma gapning |
+| SRC-P022-L011 | 2. Would 1-shaxs birlik va ko‘plikda modal ma’nosida ishlatiladi va |
+| SRC-P022-L017 | 3. Would noreal shart gapli ergash gaplarning bosh gapida ishlati- |
+| SRC-P022-L023 | 4. Would bo‘lishsiz gaplarda ishlatilib, o‘tgan zamonda biror ishni |
+| SRC-P022-L033 | 5. Would o‘tgan zamonda takrorlanib turgan ish-harakatni ifoda- |
+| SRC-P022-L041 | 6. Would iltimosni ifodalaydi: |
+| SRC-P023-L009 | 1. Can (could), may (might), must, ought to, need modal fe’llar |
+| SRC-P023-L022 | 2. Modal fe’llar nuqsonli fe’llar (Defective Verbs) bo‘lib, ularning |
+| SRC-P023-L028 | 3. Modal fe’llardan keyin asosiy fe’l to yuklamasisiz ishlatiladi: |
+| SRC-P023-L034 | 4. Modal fe’llar hozirgi zamonda 3-shaxs birlikda -s qo‘shimchasi- |
+| SRC-P023-L039 | 5. Bo‘lishsiz gaplar yasashda modal fe’ldan keyin not inkor yukla masi |
+| SRC-P024-L008 | 6. So‘roq gaplar yasashda modal fe’llar gapdagi eganing oldiga qo‘yiladi: |
+| SRC-P024-L014 | 1. Can modal fe’li Simple Infi nitiv bilan kelib ish-harakatni bajarish |
+| SRC-P024-L022 | 2. Can o‘rnida be able to ni ham ishlatsa bo‘ladi. Be able to hozirgi, |
+| SRC-P024-L031 | 3. Can fe’li Perfect Infi nitiv bilan kelib (can + have + P.P.) bo‘lish siz |
+| SRC-P024-L037 | 4. Could + V ish-harakatni o‘tgan zamonda sodir etish imkoniyatini, |
+| SRC-P025-L016 | 5. Bosh gapi o‘tgan zamonda bo‘lgan o‘zlashtirma gapning ergash gapida |
+| SRC-P025-L029 | 6. Hozirgi zamon noreal shart gapli qo‘shma gapning bosh gapida |
+| SRC-P026-L005 | 1. May + V ruxsatni ifodalaydi: |
+| SRC-P026-L020 | Izoh: Mayga teskari mumkin emas ma’nosida may not (mayn’t) bilan bir qatorda |
+| SRC-P026-L024 | 2. May gapiruvchi to‘g‘riligiga ishonmagan taxminni ifodalaydi: |
+| SRC-P027-L009 | 3. May + V maqsad ergash gaplarda ishlatiladi: |
+| SRC-P027-L016 | 4. Ko‘chirma gapdagi may + V bosh gapi o‘tgan zamonda bo‘lgan o‘z- |
+| SRC-P027-L020 | 5. Might bosh gapi o‘tgan zamonda bo‘lgan o‘zlashtirma gapda taxminni |
+| SRC-P027-L032 | 6. Bosh gapi o‘tgan zamonda bo‘lgan qo‘shma gapdagi maqsad er gash |
+| SRC-P027-L036 | 7. Hozirgi zamonda bo‘lgan noreal shart gapli qo‘shma gaplarning bosh |
+| SRC-P028-L003 | 8. O‘tgan zamondagi noreal shart ergash gapli qo‘shma gapning bosh |
+| SRC-P028-L015 | 1. Must fe’li ma’lum bir kuch ta’siridagi zaruratni, buyruq yoki mas- |
+| SRC-P028-L026 | Izoh: Mustning bo‘lishsiz shakli must not modal fe’l mayning ma’nosiga teskari bo‘lgan |
+| SRC-P028-L035 | 2. Ma’lum bir kuch ta’siridagi zaruratni have + to + V ham ifodalay- |
+| SRC-P029-L007 | 3. Must gapiruvchi to‘g‘ri deb o‘ylagan taxminni ifodalash uchun ish- |
+| SRC-P029-L022 | 1. Ought + to + V hozirgi va kelasi zamondagi axloqiy burch yoki |
+| SRC-P029-L028 | 2. Ought + to + have + P.P. o‘tgan zamonga taalluqli bo‘lib, biror |
+| SRC-P029-L037 | 1. Need + V biror ish-harakatning bajarilishi zarurligini bildiradi va |
+| SRC-P030-L003 | Izoh: Need bilan boshlangan so‘roq gaplarning bo‘lishli javobida must bilan javob |
+| SRC-P030-L011 | 2. Need not (needn’t) + have + P.P. o‘tgan zamonda sodir bo‘l - |
+| SRC-P030-L016 | 3. Need fe’li asosiy fe’l bo‘lib keladi va kerak deb tarjima qilinib, bosh qa |
+| SRC-P030-L027 | 4. Need asosiy fe’l bo‘lib keladi va jonli egadan keyin kelganda uning |
+| SRC-P030-L038 | 5. Need asosiy fe’l sifatida jonsiz egadan keyin kelsa, undan keyin |
+| SRC-P031-L012 | 1. Fe’lning shaxsi noma’lum shakllari shaxsni, sonni va maylni ifoda- |
+| SRC-P031-L014 | 2. Fe’lning shaxsi noma’lum shakllarining ikkita xususiyati bor; otlik |
+| SRC-P031-L028 | 1. Ega bo‘lib keladi: |
+| SRC-P031-L031 | 2. Ot-kesim tarkibida keladi: |
+| SRC-P031-L034 | 3. Fe’l kesim tarkibida keladi: |
+| SRC-P031-L037 | 4. To‘ldiruvchi bo‘lib keladi: |
+| SRC-P031-L040 | 5. Aniqlovchi bo‘lib keladi: |
+| SRC-P032-L003 | 6. Hol bo‘lib keladi: |
+| SRC-P032-L008 | 1. Infi nitiv o‘zidan keyin vositasiz to‘ldiruvchi olishi mumkin: |
+| SRC-P032-L010 | 2. Infi nitiv ravish bilan aniqlanishi mumkin: |
+| SRC-P032-L014 | 3. Infi nitivning zamon va nisbat shakllari mavjud. |
+| SRC-P032-L025 | 1. Simple Infi nitive Active – to ask — infi nitivning oddiy shaklidir. |
+| SRC-P032-L028 | 2. Continuous Infi nitive Active to be fe’li va asosiy fe’lning Present |
+| SRC-P032-L030 | 3. Perfect Infi nitive Active to have fe’li va asosiy fe’lning Past Particip- |
+| SRC-P032-L033 | 4. Perfect Continuous Infi nitive Active to be fe’lining Perfect Infi nitive |
+| SRC-P032-L036 | 5. Simple Infi nitive Passive to be fe’lining shakli va asosiy fe’l ning |
+| SRC-P032-L038 | 6. Perfect Infi nitive Passive to be fe’lining Perfect Infi nitive shakli – to |
+| SRC-P032-L042 | 7. Infi nitive oldiga not yuklamasini qo‘yish bilan infi nitivning bo‘lishsiz |
+| SRC-P033-L005 | 1. Infi nitiv ifodalagan ish-harakati ma’lum bir shaxs yoki buyumga |
+| SRC-P033-L018 | 2. Infi nitiv ifodalagan ish-harakat o‘sha infi nitiv qarashli bo‘lgan |
+| SRC-P033-L025 | 3. Infi nitiv ifodalagan ish-harakat o‘sha infi nitiv qarashli bo‘lgan |
+| SRC-P033-L037 | 1. Infi nitiv gapning kesimidagi ish-harakat bilan bir vaqtda sodir etiladigan |
+| SRC-P033-L042 | 2. Infi nitiv may, must, should, ought modal fe’llari bilan va to expect |
+| SRC-P034-L011 | 3. Vaqtdan qat’i nazar, umuman sodir bo‘ladigan ish-harakatni ifo- |
+| SRC-P034-L016 | 1. Perfect Infi nitive gapning kesimidagi fe’l ifodalagan ish-harakat- |
+| SRC-P034-L022 | 2. may va must fe’llaridan keyin kelib ish-harakat allaqachon sodir |
+| SRC-P034-L028 | 3. should, would, could, might, ought to, va was (were) to modal fe’lla- |
+| SRC-P034-L035 | 4. to intend, to hope, to expect, to mean fe’llarining o‘tgan zamondagi |
+| SRC-P035-L005 | 1. Continuous Infi nitive gapning kesimidagi ish-harakat bilan bir payt- |
+| SRC-P035-L012 | 2. Perfect Continuous Infi nitive gapning kesimidagi ish-harakatdan |
+| SRC-P035-L022 | 1. Odatda infi nitivdan oldin to yuklamasi keladi: to speak, to buy. |
+| SRC-P035-L030 | 2. Quyidagi fe’llardan keyin har doim infi nitiv to yuklamasi bilan |
+| SRC-P038-L014 | 3. Quyidagi orqasidan ot (yoki olmosh) kelgan fe’llardan keyin har doim |
+| SRC-P039-L035 | 4. Quyidagi sifatlardan keyin infi nitiv to yuklamasi bilan keladi: |
+| SRC-P040-L015 | 5. to stop, to remember, to forget, to try fe’llaridan keyin infi nitiv ham, |
+| SRC-P040-L043 | 6. begin, continue, hate, like, love, start, can’t stand fe’llaridan keyin |
+| SRC-P041-L006 | 7. to want, to wish, to mean, to try, to allow, to be going to, ought |
+| SRC-P041-L025 | 1. must, can (could), may (might) va need modal fe’llaridan keyin: |
+| SRC-P041-L031 | 2. to make majbur qilmoq, to let ruxsat bermoq, to see ko‘rmoq, watch |
+| SRC-P042-L009 | Izoh: Yuqoridagi fe’llar majhul nisbatda ishlatilganda, ulardan keyin keladigan fe’l |
+| SRC-P042-L013 | 3. had better yaxshisi, would rather, would sooner yaxshisi kabi birik- |
+| SRC-P043-L014 | 1. Gapning kesimidagi ish-harakat bilan bir paytda sodir bo‘ladigan |
+| SRC-P043-L020 | 2. Gapning kesimidagi ish-harakat bilan bir paytda uzoq davom eta- |
+| SRC-P043-L025 | 3. Gapning kesimidagi ish-harakatdan oldin sodir bo‘lgan ish-hara- |
+| SRC-P043-L034 | 4. Gapning kesimidagi ish-harakatdan oldin ma’lum vaqt davomida |
+| SRC-P044-L005 | 1. Gapning kesimi to say gapirmoq, to state aytmoq, bildirmoq, to re- |
+| SRC-P044-L024 | Izoh: 1) to expect fe’lidan keyin Simple Infi nitive kelsa, kelasi zamondagi ish-hara katni |
+| SRC-P044-L028 | 2) to consider fe’lidan keyin ba’zan to be infi nitivi tushib qoladi: |
+| SRC-P044-L031 | 2. Gapning kesimi to seem, to appear o‘xshamoq, ko‘rinmoq, to prove |
+| SRC-P045-L006 | Izoh: to seem, to appear, to prove fe’llaridan keyin ko‘pincha to be fe’li tushib qo ladi; |
+| SRC-P045-L011 | 3. Gapning kesimi tarkibida likely ehtimol, balki, unlikely mahol, |
+| SRC-P046-L014 | 1. Gerund fe’lning fe’llik va otlik xususiyatiga ega bo‘lgan shaklidir. |
+| SRC-P046-L017 | 2. Gerund otlik xususiyatiga ega bo‘lganligi uchun gapda otga o‘x shab |
+| SRC-P046-L019 | 1) ega bo‘lib keladi: |
+| SRC-P046-L022 | 2) ot-kesim tarkibida keladi: |
+| SRC-P046-L026 | 3) fe’l kesim tarkibida keladi: |
+| SRC-P046-L029 | 4) vositasiz to‘ldiruvchi bo‘lib keladi: |
+| SRC-P046-L032 | 5) predlogli vositali to‘ldiruvchi bo‘lib keladi: |
+| SRC-P046-L034 | 6) aniqlovchi bo‘lib keladi: |
+| SRC-P046-L039 | 7) hol bo‘lib keladi: |
+| SRC-P047-L003 | 3. Gerund otga o‘xshab o‘zidan oldin predlog olishi mumkin, egalik |
+| SRC-P047-L012 | 4. Gerund fe’li quyidagi xususiyatlarga ega: |
+| SRC-P047-L026 | 1. Gerund ma’lum shaxs yoki buyumga qarashli bo‘lmagan ish-hara katni |
+| SRC-P047-L036 | 2. Gerund ifodalagan ish-harakat u qarashli bo‘lgan shaxs yoki bu yum |
+| SRC-P048-L003 | 3. Gerund ifodalayotgan ish-harakat u qarashli bo‘lgan shaxs yoki |
+| SRC-P048-L014 | 4. Ba’zan to need, to want, to require kerak ma’nosida kelgan fe’llar dan |
+| SRC-P048-L028 | 1. Quyidagi hollarda Simple Gerund ishlatiladi: |
+| SRC-P049-L003 | 2. Gapning kesimidagi ish-harakatdan oldin sodir bo‘lgan ish-hara katni |
+| SRC-P049-L010 | 3. on (upon), after predloglaridan keyin gerund ifodalaydigan ish- |
+| SRC-P049-L019 | 4. Gerunddagi ish-harakat kesimdagi ish-harakatdan oldin sodir bo‘l- |
+| SRC-P049-L029 | 1. Gerund ko‘pincha predloglar bilan kelib, gapda vositali to‘ldiruvchi, |
+| SRC-P049-L033 | 2. Gerund predlogsiz ega, vositasiz to‘ldiruvchi, fe’l kesim va ot-kesim |
+| SRC-P049-L039 | 1. Predlog talab qiluvchi ko‘pgina fe’llardan, sifatlardan, sifatdosh lardan |
+| SRC-P052-L023 | Izoh: Gerund fe’l yoki sifatdan yasalgan otni aniqlab kelganda, otdan keyin u yasal gan |
+| SRC-P052-L039 | 2. Gerund orqasidan for predlogini oluvchi ko‘pgina otlarning orqasidan |
+| SRC-P053-L011 | 3. Gerund gapda hol bo‘lib keladi: |
+| SRC-P055-L008 | 4. against qarshi, for uchun, tarafdor, shuningdek, to be on the point |
+| SRC-P055-L023 | 1. Predlogsiz gerund ko‘pincha fe’l-kesim tarkibida keladi: |
+| SRC-P056-L009 | Izoh: need, to want, to require fe’llaridan keyin va worth sifatidan keyin Passive Ge- |
+| SRC-P056-L011 | 2. Quyidagi fe’llardan keyin gerund ham, infi nitiv ham ishlatilishi |
+| SRC-P056-L026 | 3. to mention eslatmoq, to remember eslamoq, to mind e’tiroz bildirmoq |
+| SRC-P058-L037 | 4. Gerund ega vazifasida keladi: |
+| SRC-P059-L016 | 5. Gerund ot-kesim tarkibida keladi: |
+| SRC-P059-L025 | 1. Gerund ifodalagan ish-harakat gapning egasiga yoki to‘ldiruvchi- |
+| SRC-P059-L034 | 2. Gerund ifodalagan ish-harakat ega yoki to‘ldiruvchi bo‘lmagan |
+| SRC-P060-L003 | 3. Agar gerund qarashli bo‘lgan ot jonsiz bo‘lsa, u ot bosh kelishikda |
+| SRC-P060-L010 | 4. Bosh kelishikdagi jonsiz otlar o‘rnida birlikda its, ko‘plikda their |
+| SRC-P060-L015 | 5. Hozirgi zamon ingliz tilida jonli otlar ham ko‘pincha qaratqich |
+| SRC-P060-L024 | 6. Gerund va uning oldidan kelgan ot yoki olmosh bir-biri bilan ma’no |
+| SRC-P061-L009 | 1. -ing qo‘shimchasi bilan fe’llardan otlar yasash mumkin. Fe’ldan |
+| SRC-P061-L017 | 2. Fe’ldan yasalgan otlar gerunddan farq qilib, zamon va nisbatga ega |
+| SRC-P061-L022 | 3. Fe’llardan boshqa yo‘llar bilan ham otlar yasash mumkin: |
+| SRC-P062-L006 | 1. Sifatdosh fe’lning ham fe’llik, ham sifatlik yoki ravishlik xususiyatiga |
+| SRC-P062-L009 | 2. Sifatlik xususiyatiga ko‘ra sifatdosh gapda aniqlovchi bo‘lib ke- |
+| SRC-P062-L015 | 3. Sifatdosh ravishlik xususiyatiga ko‘ra gapda hol bo‘lib keladi: |
+| SRC-P062-L020 | 4. Fe’llik xususiyatiga ega bo‘lgan sifatdosh o‘zidan keyin to‘ldiruvchi |
+| SRC-P062-L025 | 5. Fe’llik xususiyatiga ega bo‘lgan sifatdosh ravish bilan aniqlanishi |
+| SRC-P062-L030 | 6. Sifatdosh fe’llik xususiyatiga egaligi tufayli zamon va nisbat shakl- |
+| SRC-P063-L005 | 1. Present Participle Active (oddiy nisbatdagi hozirgi zamon sifatdoshi) |
+| SRC-P064-L008 | 2. To‘g‘ri fe’llarning Past Participle (P.P. — O‘tgan zamon sifatdo- |
+| SRC-P064-L018 | 3. Perfect Participle Active (tugallangan sifatdoshning oddiy nisbati) |
+| SRC-P064-L026 | 4. Present Participle Passive (hozirgi zamon sifatdoshining majhul nis- |
+| SRC-P064-L033 | 5. Perfect Participle Passive (tugallangan sifatdoshning majhul nis bat |
+| SRC-P064-L041 | 6. Bo‘lishsiz shakli sifatdosh oldiga not inkor yuklamasini qo‘yish bilan |
+| SRC-P065-L006 | 1. Present Participle Active kesimdagi ish-harakat bilan bir paytda sodir |
+| SRC-P065-L012 | 1. She is looking at the woman sit- U deraza yonida o‘tirgan ayolga |
+| SRC-P065-L020 | 2. Knowing the English language Ingliz tilini yaxshi bilgani uchun u |
+| SRC-P065-L035 | 2. Present Participle Active otga aniqlovchi bo‘lib keladi: |
+| SRC-P066-L010 | 3. Present Participle Active hol bo‘lib keladi: |
+| SRC-P066-L031 | 4. Sabab holi bo‘lib keladigan sifatdoshli iboralarda ishlatiladi. Bu |
+| SRC-P066-L039 | 5. Ravish holi bo‘lib keladigan sifatdoshli iboralarda ishlatiladi: |
+| SRC-P067-L010 | 6. Present Participle Active to be fe’lining shakllari bilan kelib Continuous |
+| SRC-P067-L016 | 1. Perfect Participle Active hol bo‘lib keladi va gapning kesimidagi ish- |
+| SRC-P067-L018 | 2. Perfect Participle Active sifatdoshli iboralarda kelib sabab holi bo‘- |
+| SRC-P067-L029 | 3. Perfect Participle Active payt holi bo‘lib keladi va sifatdoshdagi ish- |
+| SRC-P067-L039 | Izoh: Ushbu hol uchun Perfect Participle bilan bir qatorda after predlogi bilan kel gan |
+| SRC-P068-L018 | Izoh: Yuqoridagi holat uchun sifatdosh bilan birgalikda ko‘pincha on predlogi bilan |
+| SRC-P068-L024 | 1. Present Participle Passive hozir yoki hozirgi vaqt davomida so- |
+| SRC-P068-L039 | 2. Present Participle Passive ishlatilgan sifatdoshli iboralar sabab |
+| SRC-P069-L018 | 1. Past Participle otlar oldida aniqlovchi bo‘lib keladi: |
+| SRC-P069-L023 | 2. Past Participle otlar orqasidan aniqlovchi bo‘lib keladi va ular |
+| SRC-P070-L003 | 3. Past Participle odatiy, umuman sodir bo‘ladigan ish-harakatni ifo- |
+| SRC-P070-L014 | 4. Past Participle qo‘shma kesim tarkibida keladi: |
+| SRC-P070-L017 | 5. Past Participle sifatdoshli iboralarda ishlatiladi, payt va sabab holi |
+| SRC-P070-L036 | Izoh: Ba’zi fe’llarning Past Participle (o‘tgan zamon sifatdoshi) shakli ko‘plikni bil dirgan |
+| SRC-P070-L040 | 6. Past Participle to have fe’lining shakllari bilan birikib kelib Perfect |
+| SRC-P071-L003 | 7. Past Participle to be fe’lining shakllari bilan birikib kelib majhul |
+| SRC-P071-L025 | Izoh: Payt holini ifodalovchi Perfect Participle Passive o‘rnida ko‘pincha Passive |
+| SRC-P071-L033 | 1. Present va Past Participle fe’llik xususiyatlarini butunlay yo‘qotib, |
+| SRC-P071-L040 | 2. Present va Past Participleda sifatlik xususiyati bo‘lmay, faqat |
+| SRC-P072-L011 | 3. Sifatdoshning izohlovchi so‘zlari bo‘lganda ular aniqlovchi bo‘lib |
+| SRC-P072-L024 | 1. Ingliz tilida hol bo‘lib kelgan sifatdoshli iboralar ikki xil bo‘ladi: |
+| SRC-P073-L007 | 2. Bunday iboralar turli xil hol vazifasida keladi. Ular ergash gaplar ga |
+| SRC-P073-L017 | 3. Mustaqil sifatdoshli iboralar there isli yoki soxta ega itli gaplarga ham |
+| SRC-P073-L029 | 1. Ba’zi o‘timli fe’llardan keyin Complex Object deb ataladigan qu rilma |
+| SRC-P073-L038 | 2. to want istamoq, to expect umid qilmoq, kutmoq, should / would like |
+| SRC-P074-L014 | 3. Sezgi, idrokni ifodalovchi to see ko‘rmoq, to watch, to observe ku- |
+| SRC-P074-L023 | 4. Complex Objectdagi tamom bo‘lgan ish-harakatni to yuklamasisiz |
+| SRC-P074-L031 | 5. Complex Objectdagi davom etayotgan ish-harakatni hozirgi zamon |
+| SRC-P075-L007 | 6. Complex Objectda Past Participle (O‘tgan zamon sifatdoshi) ham |
+| SRC-P076-L008 | 1. Simple Presentning 3-shaxs birlikdan tashqari barcha shakllari |
+| SRC-P076-L020 | Izoh: Oldida undosh harfi bo‘lgan -y harfi bilan tugagan fe’llarga 3-shaxs birlikda |
+| SRC-P076-L027 | 2. Bo‘lishsiz shakli asosiy fe’lning oldiga do (does) yordamchi fe’lini |
+| SRC-P076-L033 | 3. So‘roq shakli do yordamchi fe’lini (3-shaxs birlikda does) egadan |
+| SRC-P076-L038 | 4. Og‘zaki nutqda quyidagi qisqartirmalar qo‘llaniladi: |
+| SRC-P077-L005 | 1. Simple Present odatiy, doimiy, egaga xos bo‘lgan yoki umuman yuz |
+| SRC-P077-L019 | 2. Ingliz tilida davom zamonlarda ishlatilmaydigan to see, to recognize, |
+| SRC-P077-L029 | 3. If agar, unless agar …-masa, provided that bo‘lsa, shartda, when |
+| SRC-P078-L003 | 4. Harakatni (qatnovni) ifodalaydigan to leave jo‘namoq, tark etmoq, to |
+| SRC-P078-L016 | 1. Simple Pastni yasashda to‘g‘ri fe’llarning o‘zagiga -ed qo‘shim- |
+| SRC-P078-L022 | 2. Simple Pastning bo‘lishsiz shakli fe’lning asosiy shaklidan oldin did |
+| SRC-P078-L030 | 3. Simple Pastning so‘roq shakli eganing oldiga did yordamchi fe’lini va |
+| SRC-P078-L039 | 1. Simple Past o‘tgan zamonda sodir bo‘lgan ish-hrakatni ifodalash |
+| SRC-P078-L042 | 2. Simple Past yesterday kecha, last week o‘tgan hafta, an hour ago |
+| SRC-P079-L023 | 3. Bir nechta oldinma-ketin sodir bo‘lgan ish-harakat sodir bo‘lish |
+| SRC-P079-L035 | 4. Simple Past o‘tgan zamondagi odatiy, takrorlanib turgan ish-hara katni |
+| SRC-P080-L026 | 1. Simple Future asosiy felning oldiga 1-shaxs birlik va ko‘plikda |
+| SRC-P080-L033 | 2. Simple Futurening bo‘lishsiz shakli shall yoki will yordamchi fe’lidan |
+| SRC-P080-L039 | 3. So‘roq shaklini yasashda shall yoki will yordamchi fe’li eganing oldiga |
+| SRC-P081-L011 | 1. Simple Future kelasi zamonda sodir bo‘ladigan ish-harakatni ifo- |
+| SRC-P081-L025 | 1. Simple Future in the Past Simple Futurega o‘xshab yasaladi, fa qat |
+| SRC-P082-L015 | 1. Present Continuous to be fe’lining hozirgi zamondagi shakllaridan |
+| SRC-P082-L024 | 2. Bo‘lishsiz shakli am, is, are yordamchi fe’lidan keyin not inkor yuk- |
+| SRC-P082-L032 | 3. So‘roq shakli gapning egasining oldiga yordamchi fe’lni o‘tkazish |
+| SRC-P082-L039 | 4. Og‘zaki nutqda quyidagi qisqartirmalar ishlatiladi: I’m, He’s, |
+| SRC-P083-L005 | 1. Gapirayotgan paytda, hozir sodir bo‘layotgan ish-harakatni ifoda- |
+| SRC-P083-L024 | 2. Gapirayotgan paytda bo‘lmasa ham, hozirgi zamonda uzoq vaqt davom |
+| SRC-P083-L030 | 3. If, when, while va boshqalar bilan boshlangan payt va shart ergash |
+| SRC-P083-L038 | 4. Kelasi zamondagi ish-harakatni ifodalaydi. Bunda ish-harakat ning |
+| SRC-P084-L013 | 1. Agar biror ish qilishga niyat (qasd) qilingan bo‘lsa yoki shu ish- |
+| SRC-P084-L023 | Izoh: to go va to come fe’llari to be going to V… birikmasi bilan ishlatilmaydi. He is |
+| SRC-P084-L027 | 2. to be going to V... birikmasi egasi jonsiz buyum bo‘lgan gapdagi kelasi |
+| SRC-P084-L034 | 3. to be going to V… birikmasidan keyin majhul nisbatdagi infi nitiv ham |
+| SRC-P085-L006 | 1. Past Continuous to be fe’lining o‘tgan zamondagi shakllaridan biri |
+| SRC-P085-L013 | 2. Bo‘lishsiz shakli was (were)dan keyin not inkor yuklamasini qo‘yish |
+| SRC-P085-L019 | 3. So‘roq shaklini yasashda was (were) yordamchi fe’llari eganing oldiga |
+| SRC-P085-L028 | 1. Past Continuous o‘tgan zamondagi biror vaqtdan oldin boshlanib, |
+| SRC-P086-L026 | 2. Past Continuous o‘tgan zamonda uzilib-uzilib uzoq vaqt davom etgan |
+| SRC-P086-L034 | 3. all day long kun bo‘yi, all day yesterday kecha kun bo‘yi, all the |
+| SRC-P087-L014 | 4. Ikkita davom etgan ish-harakat bir paytda sodir bo‘lgan bo‘lsa, |
+| SRC-P087-L031 | 1. Future Continuous to be fe’lining kelasi zamondagi shakli va aso siy |
+| SRC-P087-L036 | 2. Bo‘lishsiz shakli shall (will) yordamchi fe’lidan keyin not inkor yuk- |
+| SRC-P087-L042 | 3. So‘roq shakli shall yoki will yordamchi fe’llarini eganing oldiga qo‘- |
+| SRC-P088-L013 | 4. Og‘zaki nutqda Simple Futureda ishlatilgan qisqartirmalar ishlati ladi: |
+| SRC-P088-L019 | 1. Future Continuous kelasi zamondagi biror vaqtdan oldin boshlanib, |
+| SRC-P088-L038 | Izoh: Payt va shart ergash gaplarda Future Continuous ishlatilmaydi, ularning o‘rnida |
+| SRC-P089-L003 | 2. Future Continuous kelasi zamondagi uzoq vaqt davomida uzilib- |
+| SRC-P089-L013 | 3. all day long kun bo‘yi, all day tomorrow ertaga kun bo‘yi, all the |
+| SRC-P089-L036 | 4. Ikkita davom etadigan ish-harakati bir vaqtda sodir bo‘lsa, jara yonni |
+| SRC-P090-L010 | 5. Future Continuous qisqa muddatli ish-harakatini ham ifodalab Simp- |
+| SRC-P091-L008 | 1. Present Perfect to have fe’lining hozirgi zamondagi shakllari have |
+| SRC-P091-L013 | 2. Present Perfectning bo‘lishsiz shakli have yoki has yordamchi |
+| SRC-P091-L019 | 3. Present Perfectning so‘roq shakli have va has yordamchi fe’llarini |
+| SRC-P091-L038 | 1. Present Perfect hozirdan oldin tugagan, natijasi ko‘z oldimizda |
+| SRC-P092-L008 | 2. Present Perfect bir necha marta takrorlangan ish-harakatni ifo- |
+| SRC-P092-L015 | 3. Present Perfect ko‘pincha quyidagi ravishlar bilan ishlatiladi: ever |
+| SRC-P092-L030 | Izoh: just now hozirgina ravishi bilan Simple Past ishlatiladi: I saw him just now. Men |
+| SRC-P092-L033 | 4. Hali tugamagan vaqt ko‘rsatkichlari – today bugun, this week shu |
+| SRC-P092-L039 | Izoh: today, this week, this month kabi hali tugamagan vaqt ko‘rsatkichlari mavjud |
+| SRC-P093-L003 | 5. Present Perfect since (biror vaqtdan hozirgacha) predlogi bilan ish- |
+| SRC-P093-L019 | 6. Davom zamonda ishlatilmaydigan fe’llar bilan Present Perfect |
+| SRC-P093-L031 | 7. after, when, as soon as, until (till), if bog‘lovchilari bilan bog‘lan gan |
+| SRC-P094-L006 | 1. Past Perfect to have fe’lining o‘tgan zamon shakli had va asosiy |
+| SRC-P094-L013 | 2. Past Perfectning bo‘lishsiz shaklini yasash uchun had yordamchi |
+| SRC-P094-L019 | 3. Past Perfectning so‘roq shaklini yasash uchun had yordamchi fe’lini |
+| SRC-P094-L031 | 4. Og‘zaki nutqda quyidagi qisqartmalar ishlatiladi: I’d, He’d, |
+| SRC-P094-L038 | 1. Past Perfect o‘tgan zamondagi biror vaqtdan oldin tamom bo‘l gan |
+| SRC-P095-L032 | 2. Ikki yoki undan ortiq oldinma-ketin sodir bo‘lgan ish-harakat sodir |
+| SRC-P096-L014 | 3. after – dan keyin bilan bog‘langan ergash gapda Past Perfect ish- |
+| SRC-P096-L029 | 4. Whendan keyin odatda Simple Past ishlatiladi. Lekin when -dan |
+| SRC-P096-L037 | 5. before bilan boshlangan ergash gapli qo‘shma gapning bosh gapida |
+| SRC-P097-L020 | 6. Hardly, scarcely, no sooner ravishlari bo‘lgan qo‘shma gaplarning |
+| SRC-P097-L030 | 1. Future Perfect to have fe’lining kelasi zamondagi shakli (shall have, |
+| SRC-P097-L037 | 2. Future Perfectning bo‘lishsiz shakli shall yoki will yordamchi |
+| SRC-P098-L003 | 3. Future Perfectning so‘roq shakli shall yoki will yordamchi fe’lini |
+| SRC-P098-L018 | 1. Future Perfect kelasi zamondagi biror vaqtdan oldin tamom bo‘la- |
+| SRC-P099-L003 | 2. Future Perfect ba’zan kelasi zamondagi ish-harakatini emas, o‘tgan |
+| SRC-P099-L017 | 1. Future Perfect in the Past Tense xuddi Future Perfect Tensedek |
+| SRC-P099-L020 | 2. Future Perfect in the Past Tense ko‘pincha o‘zlashtirma gaplarda |
+| SRC-P099-L032 | 1. Present Perfect Continuous to be fe’lining Present Perfect shakli |
+| SRC-P099-L038 | 2. Present Perfect Continuousning bo‘lishsiz shakli birinchi yordamc hi |
+| SRC-P100-L005 | 4. Present Perfect Continuousning so‘roq shakli birinchi yordamchi |
+| SRC-P100-L021 | 1. Present Perfect Continuous o‘tgan zamonda boshlanib hozir ham |
+| SRC-P100-L039 | 1998.                      dan dars beradi. |
+| SRC-P101-L003 | 2. Present Perfect Continuous hozir davom etayotgan ish-harakatni |
+| SRC-P101-L021 | 3. Umuman sodir bo‘ladigan, doimiy, odatiy, egaga xos ish-hara kati |
+| SRC-P101-L030 | 1998. = He has taught English since dan dars beradi. |
+| SRC-P101-L036 | 4. Davom zamonlarda ishlatilmaydigan fe’llar bilan Present Perfect |
+| SRC-P102-L003 | 5. Present Perfect Continuous o‘tgan zamonda boshlanib bevosita |
+| SRC-P102-L017 | 1. Past Perfect Continuous to be fe’lining Past Perfect shakli (had |
+| SRC-P102-L023 | 2. Past Perfect Continuousning bo‘lishsiz shakli birinchi yordamchi fe’l |
+| SRC-P102-L029 | 3. Past Perfect Continuousning so‘roq shaklini yasash uchun birinchi |
+| SRC-P103-L005 | 1. Past Perfect Continuous Simple Past zamoni bilan ifodalangan |
+| SRC-P103-L019 | 2. Yuqoridagi misollarda ilgari aytib o‘tilgan vaqt ko‘rsatkichlari bo‘l- |
+| SRC-P103-L026 | 1. I had been working for a long time I was working when my brother came. |
+| SRC-P103-L028 | 2. His sister had been living in London for His sister was living in London when the |
+| SRC-P103-L030 | 3. It had been raining for two hours when It was raining when I left home. |
+| SRC-P103-L032 | 4. She had been sleeping for three hours She was sleeping when we returned. |
+| SRC-P103-L034 | 3. Past Perfect Continuous o‘tgan zamondagi birorta ish-harakatidan oldin |
+| SRC-P104-L006 | 1. Future Perfect Continuous to be fe’lining Future Perfectdagi shakli |
+| SRC-P104-L013 | 2. Future Perfect Continuousning bo‘lishsiz shakli birinchi yordamchi |
+| SRC-P104-L018 | 3. Future Perfect Continuousning so‘roq shakli birinchi yordamchi |
+| SRC-P105-L016 | 1. Ingliz tilida ba’zi fe’llar o‘zidan keyin vositasiz to‘ldiruvchi talab |
+| SRC-P105-L022 | 2. O‘zidan keyin vositasiz to‘ldiruvchi talab qilmaydigan fe’llar o‘tim siz |
+| SRC-P105-L026 | 3. Ingliz tilida ba’zi fe’llar ham o‘timli, ham o‘timsiz fe’l bo‘lib ke ladi: |
+| SRC-P105-L030 | 2. ochilmoq (o‘timsiz) Kutubxona o‘nda ochildi. |
+| SRC-P105-L033 | 2. boshlanmoq Our English lessons begin at nine o’clock. (o‘timsiz) |
+| SRC-P105-L037 | 2. tushmoq The apple dropped to the ground. |
+| SRC-P105-L041 | 2. o‘smoq  Beautifaul fl owers grow in the garden. |
+| SRC-P106-L003 | 3. Ingliz tilidagi ba’zi o‘timli fe’llarga o‘zbek tilida o‘timsiz fe’l lar to‘g‘ ri |
+| SRC-P106-L008 | 4. Ingliz tilidagi ba’zi o‘timsiz fe’llarga o‘zbek tilida o‘timli fe’llar to‘g‘- |
+| SRC-P106-L015 | 1. Agar gapning egasi gapdagi ish-harakatni bajaruvchisi bo‘lsa, fe’l |
+| SRC-P106-L020 | 2. Agar gapning egasi ish-harakat ta’siri ostida bo‘lsa fe’l majhul |
+| SRC-P106-L026 | 3. O‘timli fe’llar ham oddiy nisbatda, ham majhul nisbatda ishlatiladi. |
+| SRC-P106-L031 | 1. Majhul nisbatning zamonlari to be yordamchi fe’lini kerakli zamon da |
+| SRC-P107-L003 | 2. Majhul nisbatning bo‘lishsiz shakli birinchi yordamchi fe’ldan keyin |
+| SRC-P107-L006 | 3. Majhul nisbatning so‘roq shakli birinchi yordamchi fe’lni eganing |
+| SRC-P107-L009 | 4. Oddiy nisbatdagi ega majhul nisbatda by predlogli to‘ldiruvchi bo‘ lib |
+| SRC-P107-L012 | 5. Majhul nisbatda ba’zan ish-harakatni bajarish qurolini ko‘rsatish uchun |
+| SRC-P107-L020 | 1. Shaxs yoki buyumni ifodalovchi who? kim? va what? nima? so‘- |
+| SRC-P107-L023 | 2. Otlar oldidan odatda artikl va predlog keladi. Ular otlarning asosiy |
+| SRC-P107-L025 | 3. Otlar birlik va ko‘plikda kelishi mumkin: a table — tables, |
+| SRC-P107-L027 | 4. Otlarda ikkita – bosh va qaratqich kelishigi bor: worker — wor- |
+| SRC-P107-L029 | 5. Otlar gapda quyidagi vazifalarda keladi: |
+| SRC-P108-L007 | 1. Alohida shaxs yoki buyumlarning nomlari atoqli otlardir: Tash kent, |
+| SRC-P108-L011 | 2. Turdosh otlar bir xil turdagi buyumlarning umumiy nomidir: a boy, a |
+| SRC-P108-L030 | 1. Donalab sanaladigan otlarni sanab bo‘ladi. Ular birlik va ko‘plikda |
+| SRC-P108-L042 | 2. Moddiy va mavhum otlar donalab sanalmaydigan otlardir. Ular |
+| SRC-P109-L009 | 3. Ba’zi moddiy otlar shu moddadan yasalgan buyumni ifodalab donalab |
+| SRC-P109-L017 | 4. Ba’zi moddiy otlar shu moddaning har xil navini yoki turini ifodalab, |
+| SRC-P109-L025 | 5. Ba’zi mavhum otlar konkretlashib donalab sanaladigan otlarga |
+| SRC-P109-L032 | 6. Ba’zi donalab sanalmaydigan otlar ro‘yxati: |
+| SRC-P111-L006 | 1. Ingliz tilida otlarning ko‘pligi ularga -s qo‘shimchasini qo‘shish bilan |
+| SRC-P111-L013 | 2. -s, -ss, -x, -ch, -sh harfl ari bilan tugagan otlarga -es qo‘shimchasi |
+| SRC-P111-L017 | 3. -se, -ce, -ze, -ge bilan tugagan otlarga qo‘shilgan -s qo‘shimchasi [ız] |
+| SRC-P111-L022 | 4. Otlar oxiridagi -y harfi ga ko‘plik qo‘shimchasi –es qo‘shilganda -y |
+| SRC-P111-L029 | 5. O harfi bilan tugagan so‘zlarga –es qo‘shiladi: |
+| SRC-P111-L035 | 6. -f, -fe bilan tugagan otlarga –es, -s qo‘shiladi va f harfi v ga ayla- |
+| SRC-P112-L003 | 7. Ba’zi otlarning ko‘pligi, qo‘shimcha qo‘shilmasdan, o‘zagidan o‘z- |
+| SRC-P112-L010 | 8. Grek va lotin tilidan kirib kelgan so‘zlarning ko‘pligi quyidagi cha |
+| SRC-P112-L021 | 9. penny — pens otining ikkita ko‘pligi bor: |
+| SRC-P112-L025 | 10. sheep — qo‘y, fi sh — baliq otlari birlik va ko‘plikda bir xil shakl ga |
+| SRC-P112-L034 | 11. dozen — dyujina (o‘n ikkitalik), score — yigirmatalik so‘zlaridan |
+| SRC-P112-L042 | 12. works — zavod, zavodlar, means — vosita, vositalar otlari birlik va |
+| SRC-P113-L014 | 1. Ajratib yoziladigan qo‘shma otlarning asosiy ma’no beruvchi so‘zi |
+| SRC-P113-L021 | 2. Agar qo‘shma so‘zning birinchi so‘zi man yoki woman bo‘lsa, har |
+| SRC-P113-L025 | 3. Qo‘shib yozilgan qo‘shma so‘zlarning ikkinchi so‘zi ko‘plikda bo‘- |
+| SRC-P113-L034 | 1. Donalab sanalmaydigan otlar — moddiy va mavhum otlar faqat |
+| SRC-P113-L038 | 2. advice — maslahat, information — axborot, progress — muvaffa- |
+| SRC-P114-L006 | 3. news oti va oxiri -ics qo‘shimchasi bilan tugagan fan nomlari va |
+| SRC-P114-L013 | 4. money — pul, hair — soch otlari faqat birlikda ishlatiladi: |
+| SRC-P114-L016 | 5. Fruit — meva oti faqat birlikda ishlatiladi: |
+| SRC-P114-L027 | 1. Ko‘pgina juft otlar (buyumlarning nomlari) faqat ko‘plikda ish- |
+| SRC-P115-L009 | 2. People so‘zi odamlar ma’nosida kelganda faqat ko‘plikda ishlati- |
+| SRC-P115-L024 | 1. Ingliz tilida otlarda faqat ikkita kelishik bor: |
+| SRC-P115-L027 | 2. Umumiy kelishikdagi otlarning hech qanday qo‘shimchasi bo‘l- |
+| SRC-P115-L037 | 3. Qaratqich kelishigi otga ‘s (apostrofl i s qo‘shimchasi ) qo‘shish bilan |
+| SRC-P116-L003 | 4. Qaratqich kelishigi ko‘plikdagi otlardan keyin faqat apostrof belgisini |
+| SRC-P116-L013 | 5. Qo‘shma so‘zlarga qaratqich kelishigi qo‘shimchasi oxirgi so‘zga |
+| SRC-P116-L017 | 6. Buyumning egasi (xo‘jayini) ikki yoki undan ortiq kishi bo‘lsa, |
+| SRC-P116-L021 | 7. Qaratqich kelishigi qo‘shimchasini olgan ot boshqa otdan oldin kelib, |
+| SRC-P116-L026 | 8. Agar otning boshqa aniqlovchisi bo‘lsa, qaratqich kelishigidagi ot |
+| SRC-P116-L030 | 9. Qaratqich kelishigidagi otdan keyin kelgan ot artikl bilan ishlatil- |
+| SRC-P116-L036 | 10. Egalikni ifodalash uchun qaratqich kelishigidagi ot bilan bir qator da |
+| SRC-P116-L040 | 11. Ko‘pincha ko‘plikdagi otlar qaratqich kelishigida of predlogi bilan |
+| SRC-P117-L003 | 12. Ikkita qaratqich kelishigi (egalik) qo‘shimchasi olgan ot kam dan- |
+| SRC-P117-L008 | 13. Bitta yaxlit ma’noni bildirgan so‘zlar kelganda, qo‘shimcha oxirgi |
+| SRC-P117-L015 | 14. house — uy, offi ce — idora, shop — do‘kon kabi so‘zlar ko‘pin cha |
+| SRC-P117-L021 | 15. Jonli otlardan tashqari quyidagi otlar ham qaratqich kelishigi (egalik) |
+| SRC-P118-L009 | 1. Ingliz tilida ko‘pgina otlar oldida maxsus so‘zlar keladi. Ular- |
+| SRC-P118-L012 | 2. Eng ko‘p tarqalgan ko‘rsatkichlar aniq va noaniq artikllar a, |
+| SRC-P118-L016 | 3. Artikllarning mustaqil ma’nosi yo‘q, ular shaxs yoki buyumning shu |
+| SRC-P118-L026 | 4. Ko‘rsatish olmoshlari: this — bu, these — bular, that — u, those — |
+| SRC-P118-L031 | 5. Egalik olmoshlari: |
+| SRC-P118-L037 | 6. Egalik (qaratqich) kelishigidagi otlar: |
+| SRC-P118-L041 | Izoh: Keyingi misoldagi my so‘zi brother so‘ziga taalluqli. |
+| SRC-P118-L043 | 7. many, much — ko‘p; little, few — oz, kam; some — bir qancha, |
+| SRC-P119-L010 | 8. What? — qanday?, which? — qaysi?, whose? — kimning? So‘roq |
+| SRC-P119-L015 | 9. Ba’zi ko‘rsatkichlar faqat donalab sanaladigan otlar oldida, ba’ zilari |
+| SRC-P119-L036 | 10. Ko‘rsatkichlar qaysi otga taalluqli bo‘lsa, o‘sha otdan oldin kela di, |
+| SRC-P120-L006 | 1. Artikl otlar oldida ishlatiladigan maxsus so‘zlardir. O‘zbek tilida |
+| SRC-P120-L009 | 2. Ingliz tilida ikkita artikl bor: Noaniq artikl (The Indefi nite Article) |
+| SRC-P120-L011 | 3. Noaniq artiklning ikkita shakli bor: a va an. An shakli unli tovushlar |
+| SRC-P120-L014 | 4. Aniq artiklning bitta shakli bor: the. |
+| SRC-P120-L015 | 5. Noaniq artikl eski ingliz tilidagi an (bir) so‘zidan kelib chiqqan, shu- |
+| SRC-P120-L017 | 6. Aniq artikl eski ingliz tilidagi the (u, o‘sha) ko‘rsatish olmoshidan |
+| SRC-P120-L020 | 7. Noaniq artikl ishlatilganda otning biror turga (sinfga) mansubligi ni |
+| SRC-P120-L022 | 8. Aniq artikl otni boshqa shu turdagi otlardan ajratib ko‘rsatganda |
+| SRC-P120-L029 | 1. Noaniq artikl biror turga mansub bo‘lgan birlikdagi shaxs yoki buyum |
+| SRC-P120-L041 | 2. Ot shaxs yoki buyumning kim yoki nima ekanligini ifodalasa no aniq |
+| SRC-P121-L012 | Izoh: Ot-kesim tarkibida kelgan yoki izohlovchi bo‘lib kelgan otning shu turdagi otlardan |
+| SRC-P121-L020 | 3. Agar ot shu turdagi shaxs yoki buyumlarning istagan bir vakilini |
+| SRC-P121-L030 | 4. Suhbatdoshga hali noma’lum bo‘lgan shaxs yoki buyumni ifodalagan |
+| SRC-P122-L003 | 5. Ba’zi hollarda noaniq artikl bir ma’nosini to‘liq saqlab qolgan: |
+| SRC-P122-L018 | 6. what dan keyin kelgan birlikdagi donalab sanaladigan ot oldida noaniq |
+| SRC-P122-L023 | 7. Such, quite va rather ravishlaridan keyin kelgan birlikdagi donalab |
+| SRC-P122-L033 | 8. Donalab sanaladigan birlikdagi otning oldida too, so bilan sifat kel- |
+| SRC-P123-L003 | 9. Noaniq artikl mavhum otlar oldida ham ishlatilishi mumkin. Bunda |
+| SRC-P123-L022 | Izoh: Konkretlashgan (aniqlashtirilgan) mavhum otlar oldida artikl umumiy qoidalarga |
+| SRC-P124-L032 | 1. The aniq artikli that o‘sha ko‘rsatish olmoshidan kelib chiqqan. U |
+| SRC-P124-L037 | 2. Otning shu turdagi shaxs yoki buymlardan ajratuvchi aniqlovchisi |
+| SRC-P125-L032 | 3. Qanday shaxs yoki buyum ekanligi vaziyat yoki matn mazmuni dan |
+| SRC-P126-L014 | 4. Oldin gapirilgan ot qayta takrorlanganda aniq artikl bilan ishla- |
+| SRC-P126-L031 | 5. Dunyoda yoki ushbu vaziyatda yagona bo‘lgan shaxs yoki buyum |
+| SRC-P126-L038 | 6. Dunyodagi yoki biror vaziyatdagi barcha shaxs yoki buyumlarni |
+| SRC-P127-L010 | 7. Birlikda kelgan ot shu buyum qarashli bo‘lgan butun turni ifoda- |
+| SRC-P127-L022 | 8. Otlashgan sifat yoki sifatdosh oldida aniq artikl ishlatiladi. Otlashgan |
+| SRC-P127-L029 | 9. Orttirma darajadagi sifat bilan kelgan ot aniq artikl bilan ishlati- |
+| SRC-P127-L035 | 10. Tartib sonlar bilan kelgan otlar oldida aniq artikl ishlatiladi: |
+| SRC-P127-L040 | Izoh: Tartib son ikkinchi bir, yana bir ma’nosida ishlatilsa noaniq artikl bilan ishla- |
+| SRC-P128-L010 | 11. Sanoq sonlar bilan kelgan ot artiklsiz ishlatiladi: |
+| SRC-P128-L017 | 12. same — bir xil; next, following — keyingi, kelgusi, last — oxirgi, |
+| SRC-P128-L035 | Izoh: next — kelasi; last — o‘tgan ma’nosida quyidagi birikmalarda artiklsiz ishla- |
+| SRC-P129-L005 | 1. Otning oldida birorta ko‘rsatkich bo‘lsa artikl ishlatilmaydi: |
+| SRC-P129-L010 | 2. Donalab sanalmaydigan otlar oldida noaniq artikl ishlatilmaydi: |
+| SRC-P129-L021 | 3. Donalab sanaladigan, birlikdagi ot biror holatda yagona bo‘lgan |
+| SRC-P129-L033 | Izoh: Yuqoridagi otlar gapda ega yoki to‘ldiruvchi bo‘lib kelganda aniq artikl bi lan |
+| SRC-P129-L039 | 4. Salad, steak, coffee kabi moddiy otlar oldida noaniq artikl ishlatil- |
+| SRC-P129-L042 | 5. Breakfast, lunch, dinner, supper so‘zlari have fe’li bilan kelganda |
+| SRC-P130-L005 | 6. Hafta kunlari nomlari oldida artikl ishlatilmaydi: |
+| SRC-P130-L007 | 7. Class so‘zi mashg‘ulot, dars ma’nosida kelganda artiklsiz ishlati- |
+| SRC-P130-L015 | 8. Time oti It’s time for birikmasida kelganda artiklsiz ishlatiladi: |
+| SRC-P130-L021 | 9. Orqasidan sanoq son kelgan otlar oldida artikl ishlatilmaydi: |
+| SRC-P130-L029 | 10. Home oti at predlogi bilan kelganda artiklsiz ishlatiladi: |
+| SRC-P130-L031 | 11. to watch television (TV) birikmasidagi television (TV) oldida artikl |
+| SRC-P130-L037 | 12. O‘quv fanlari va fan sohalari nomlari oldida artikl ishlatilmaydi: |
+| SRC-P130-L041 | 13. play fe’lidan keyin kelgan sport o‘yinlari nomlari oldidan artikl |
+| SRC-P131-L008 | 14. to have trouble birikmasida trouble oti oldida artikl ishlatil maydi: |
+| SRC-P131-L012 | 15. Tartib soni bilan kelgan grade (maktabdagi sinf ma’nosida), avenue, |
+| SRC-P131-L020 | 1. Atoqli otlar oldida artikl ishlatilmaydi: |
+| SRC-P131-L022 | 2. Atoqli ot oldida mansabni yoki muomala shaklini ifodalovchi turdosh |
+| SRC-P131-L026 | 3. Muomala so‘zlari bo‘lgan turdosh otlar oldida ham artikl ishlatil- |
+| SRC-P131-L033 | 4. Father, mother, uncle va boshqa oila a’zolarini ifodalovchi nomlar |
+| SRC-P131-L037 | 5. Familiyalar ko‘plikda ishlatilib, butun bir oilani ifodalaganda aniq |
+| SRC-P132-L003 | 6. Okeanlar, dengizlar, daryolar, ko‘rfazlar va cho‘l nomlari hamda atoqli |
+| SRC-P132-L021 | Izoh: Geografi k nom aniqlovchili atoqli otdan yasalgan bo‘lsa, artiklsiz |
+| SRC-P132-L041 | 7. Tog‘ tizmalari nomlari oldida aniq artikl ishlatiladi: |
+| SRC-P133-L008 | 8. Orol guruhlari nomlari aniq artikl bilan ishlatiladi: |
+| SRC-P133-L014 | 9. Ko‘llar nomlari aniq artikl bilan ishlatiladi: |
+| SRC-P133-L019 | 10. Kanallar va bo‘g‘ozlar nomlari aniq artikl bilan ishlatiladi: |
+| SRC-P133-L023 | 11. Yarim orol nomlari artiklsiz ishlatiladi: |
+| SRC-P133-L028 | 12. Qo‘ltiq nomlari artiklsiz ishlatiladi: |
+| SRC-P133-L030 | 13. Sharshara va dovonlarning nomlari aniq artikl bilan ishlatiladi: |
+| SRC-P133-L032 | 14. Geografi k nomlar odatda artikl olmaydi, lekin quyidagi hollarda artikl |
+| SRC-P134-L006 | 15. Shaxs ismlari oila vakili sifatida ishlatilganda noaniq artikl |
+| SRC-P134-L011 | 16. Certain so‘zi aniqlovchi bo‘lib kelgan shaxs nomlari noaniq ar tikl |
+| SRC-P134-L015 | 17. Dunyo tomonlari aniq artikl bilan ishlatiladi: |
+| SRC-P134-L020 | 18. Kema nomlari oldidan aniq artikl ishlatiladi: |
+| SRC-P134-L022 | 19. Ko‘chalar nomlari artiklsiz ishlatiladi: |
+| SRC-P134-L026 | Izoh: Xorijiy mamlakatlardagi ba’zi ko‘cha nomlari aniq artikl bilan ishlatiladi: |
+| SRC-P134-L028 | 20. Park nomlari artiklsiz ishlatiladi: |
+| SRC-P134-L035 | 21. Maydonlar, xiyobonlar nomlari artiklsiz ishlatiladi: |
+| SRC-P134-L040 | 22. Universitetlar, kollejlar nomlari oldida artikl ishlatilmaydi: |
+| SRC-P135-L003 | 24. Aeroport va temir yo‘l stansiyalari nomlari oldida artikl ishlatilmaydi: |
+| SRC-P135-L005 | 25. Teatrlar, muzeylar, surat galeriyalari, konsert zallari, kinoteatr lar, |
+| SRC-P135-L014 | 26. Gazeta va jurnal nomlari aniq artikl bilan ishlatiladi: |
+| SRC-P135-L016 | 27. Alohida binolarning ba’zilari aniq artikl bilan ishlatiladi, ba’zilari |
+| SRC-P135-L021 | 28. Davlat mahkamalari, tashkilotlar, siyosiy partiyalar nomlari aniq |
+| SRC-P135-L025 | 29. Til nomlari «language» so’zi bilan kelganda aniq artikl ishlatiladi: |
+| SRC-P135-L039 | 30. French poetry, modern art, American literature, German Philo- |
+| SRC-P136-L005 | 1. Bu guruhga bir qator sanalmaydigan otlar kiradi: |
+| SRC-P136-L038 | 2. Kasallik nomlari maxsus meditsina terminlari bilan emas, xalq tili |
+| SRC-P137-L021 | 1. Man so‘zi umumiy ma’noda artiklsiz ishlatiladi: |
+| SRC-P137-L025 | 2. Woman so‘zi umumiy ma’noda aniq artikl bilan yoki artiklsiz |
+| SRC-P137-L031 | 3. school, university, college, bed, prison, jail, hospital, church |
+| SRC-P139-L011 | 4. town so‘zi bilan quyidagi hollarda artikl ishlatilmaydi: |
+| SRC-P139-L025 | 5. Ijtimoiy guruhlar, siyosiy partiyalar, millat nomlari aniq artikl bilan |
+| SRC-P139-L035 | 6. Kun qismlari nomlari ko‘pincha aniq artikl bilan ishlatiladi: |
+| SRC-P140-L003 | 7. Fasllar nomi ko‘pincha aniq artikl bilan ishlatiladi: |
+| SRC-P140-L030 | 8. Agar yil vaqtlari, oy va hafta kunlari tasvirlovchi aniqlovchi bilan |
+| SRC-P140-L040 | 9. Most + of + noun. |
+| SRC-P143-L007 | 1. Shaxs yoki buyumning belgisini bildirgan so‘zlar sifat deyiladi: |
+| SRC-P143-L010 | 2. Sifat faqat darajalar bo‘yicha o‘zgarishi mumkin: long — uzun, longer |
+| SRC-P143-L012 | 3. Sifatlar oddiy va yasama bo‘ladi: |
+| SRC-P143-L028 | 4. Ikkita so‘zdan yasalib bitta ma’noni bildiruvchi sifatlar qo‘shma |
+| SRC-P143-L032 | 5. Sifat gapda aniqlovchi va ot-kesimning tarkibida keladi: |
+| SRC-P143-L040 | 1. Sifatning uchta darajasi bor: Oddiy (the Positive Degree), qiyosiy |
+| SRC-P144-L012 | 2. Sodda sifatlarning (bir, ikki bo‘g‘inli sifatlarning) qiyosiy dara jasi -er |
+| SRC-P144-L030 | 3. Qiyosiy va orttirma darajalarni yasaganda quyidagi imlo qoidalariga |
+| SRC-P145-L013 | 4. Ko‘pgina ikki bo‘g‘inli hamda uch va ko‘p bo‘g‘inli sifatlarning |
+| SRC-P145-L023 | 5. Orttirma darajadagi sifat bilan kelgan ot aniq artikl bilan ishlatiladi. |
+| SRC-P145-L031 | 6. Ba’zi sifatlarning darajalari qoidaga bo‘ysunmasdan o‘zakdan o‘z- |
+| SRC-P145-L038 | 7. Far sifatining qiyosiy va orttirma darajalarida ikkitadan shakl bor: |
+| SRC-P146-L013 | 8. Qiyosiy darajadan keyin than -ga qaraganda bog‘lovchisi keladi: |
+| SRC-P146-L018 | 9. Superior (yaxshiroq, balandroq) va inferio (pastroq, yomonroq) sifat- |
+| SRC-P146-L024 | 10. Qiyosiy daraja oldidan much yoki far (ancha) so‘zlarini qo‘yish bilan |
+| SRC-P146-L030 | 11. Orttirma darajadan keyin ko‘pincha of predlogi ishlatiladi: |
+| SRC-P146-L039 | 12. Orttirma daraja by far yoki far yordamida kuchaytirilishi mum- |
+| SRC-P147-L003 | 13. Sifatlarning ozroq yoki eng oz darajasini ifodalash uchun od- |
+| SRC-P147-L009 | 14. Ikkita bir xil darajadagi sifatni teng qiyoslash uchun oddiy dara jadagi |
+| SRC-P147-L023 | 15. Bir necha martalab qiyoslash as … as o‘rtasiga oddiy darajadagi sifat |
+| SRC-P148-L010 | 16. Qo‘sh qiyoslash: |
+| SRC-P149-L017 | 1. Ingliz tilida ko‘pgina otlar sifat vazifasida ishlatilib boshqa otlar ning |
+| SRC-P149-L019 | 2. Yuqoridagi misollarda birinchi ot sifatlarga o‘xshab orqasidan |
+| SRC-P149-L021 | 3. Sifat vazifasida kelgan otlar ko‘plikdagi otni tasvirlasa ham har doim |
+| SRC-P149-L033 | 1. Enough so‘zi sifat va ravishlarni aniqlab kelganda ularning orqa sidan |
+| SRC-P150-L003 | 2. Enough otlarni aniqlash uchun ularning oldidan keladi: |
+| SRC-P150-L015 | 1. Ba’zi sifatlar ot ma’nosida ishlatilishi mumkin. Ular shaxslarning |
+| SRC-P150-L022 | Izoh: Bir yoki bir nechta alohida shaxslarni ifodalash uchun sifatlarning man, men; |
+| SRC-P150-L026 | 2. Millatni ifodalovchi sifatlar, shu millatga mansub kishilarni ifo dalab |
+| SRC-P151-L027 | 1. Sifat aniqlovchi bo‘lib kelganda otdan oldin keladi, ot-kesim tar kibida |
+| SRC-P151-L032 | 2. Agar otning oldida ikkita yoki undan ko‘p sifat bo‘lsa, otga ma’nosi |
+| SRC-P151-L039 | 3. Ba’zi -able, -ible qo‘shimchalari bilan tugagan sifatlar otning oldida |
+| SRC-P152-L006 | 1. Buyumning miqdori yoki tartibini bildirgan so‘zlar sonlardir. |
+| SRC-P152-L007 | 2. Sonlar sanoq sonlar (Cardinal Numerals) va tartib sonlarga (Ordinal |
+| SRC-P152-L009 | 3. Sanoq sonlar shaxs yoki buyumlarning miqdorini bildirib how |
+| SRC-P152-L012 | 4. Tartib sonlar predmetlarning tartibini bildiradi va which? qaysi? |
+| SRC-P152-L035 | 1. 13 dan 19 gacha bo‘lgan sonlar -teen qo‘shimchasi yordamida yasa- |
+| SRC-P152-L038 | 2. O‘nlikni bildiruvchi sonlar –ty qo‘shimchasi yordamida yasaladi: six |
+| SRC-P152-L041 | 3. O‘nliklar va ulardan keyin kelgan birlik sonlarning orasiga chiziqcha |
+| SRC-P152-L043 | 4. Hundred, thousand, million sonlaridan oldin noaniq artikl a yoki one |
+| SRC-P153-L003 | 5. Hundred, thousand, million sonlari oldidan two, three, four va boshqa |
+| SRC-P153-L014 | Izoh: million soni oldidan two, three kabi sonlar kelganda va undan keyin boshqa sonlar |
+| SRC-P153-L017 | 6. Qo‘shma uch xonali sonlarning o‘nliklaridan oldin (agar ular bo‘l masa |
+| SRC-P153-L023 | 7. Angliya va AQSHda pul summasi quyidagicha aytiladi: |
+| SRC-P153-L024 | 1) ingliz pul birligi pound funt yoki pound sterling funt sterling qisqar- |
+| SRC-P153-L029 | 2) shilling pul birligi (1/20 funt) qisqartirib s. harfi bilan ifodalanadi; 12s. |
+| SRC-P153-L032 | 3) penny pens pul birligi (1/12 shilling) qisqartirib d. harfi bilan |
+| SRC-P153-L038 | 4) shillinglar va penslardan iborat summalar quyidagicha ifodalanadi: 2 s. 6 d. |
+| SRC-P153-L040 | 5) funtlar, shillinglar va penslardan iborat pul summasi quyidagicha |
+| SRC-P154-L003 | 6) amerika pul birligi dollar qisqartirib sondan oldin $ belgisi bilan |
+| SRC-P154-L007 | 7) cent pul birligi (1/100 dollar) qisqartirib ¢ belgisi bilan ifodalanadi.: |
+| SRC-P154-L010 | 8) dollarlar va sentlardan iborat summa quyidagicha ifodalanadi: $25.01 |
+| SRC-P154-L014 | 9) Angliya va AQSHda telefon chaqiriqlari uchun telefonning har bir |
+| SRC-P155-L009 | 1. Birinchi uchta sondan (fi rst, second, third) boshqa barcha tartib |
+| SRC-P155-L016 | 2. Qo‘shma tartib sonlarning yasalishida oxirgi son tartib songa ay lanadi |
+| SRC-P155-L020 | 3. Kitoblarning boblari, betlari, paragrafl ari, qismlari, pyesalarning |
+| SRC-P156-L003 | 4. Xronologik sanalar sanoq sonlar bilan quyidagicha ifodalanadi: |
+| SRC-P157-L010 | 1. Kasrdan keyin kelgan otlar birlikda bo‘ladi: ton (two thirds of a |
+| SRC-P157-L019 | 2. Aralash kasrlarga oid otlar ko‘plikda ishlatiladi. 2 tons (two and a |
+| SRC-P157-L034 | 3. O‘nli kasrlarda butun son bilan kasr nuqta yordamida ajratiladi. O‘nli |
+| SRC-P157-L039 | 4. O‘nli kasrning butun soni nolga teng bo‘lsa uning orqasidan kela- |
+| SRC-P157-L043 | 5. Foizlar quyidagicha o‘qiladi: 2% yoki 2 per cent. yoki 2 p.c. (two per |
+| SRC-P158-L011 | 1. Kishilik olmoshlari har doim olmosh-ot bo‘lib keladi. Ularda ikki ta |
+| SRC-P158-L025 | 2. Bosh kelishikdagi kishilik olmoshlari gapda ega va ot kesim tar kibida |
+| SRC-P158-L029 | Izoh: Og‘zaki nutqda ot kesim tarkibida kishilik olmoshining obyektiv kelishikdagi shakli |
+| SRC-P158-L031 | 3. I olmoshi har doim bosh harf bilan yoziladi. I olmoshi boshqa |
+| SRC-P158-L040 | 4. He u olmoshi erkaklarga nisbatan, she u xotin-qizlarga nisbatan, it u |
+| SRC-P159-L012 | 5. They ular olmoshi III shaxs ko‘plik uchun ishlatiladi: |
+| SRC-P159-L017 | 6. You Siz, sen olmoshi II shaxs birlik va ko‘plik uchun ishlatiladi: |
+| SRC-P159-L024 | 7. Obyektiv kelishikdagi kishilik olmoshlari gapda vositasiz to‘ldiruv chi |
+| SRC-P159-L029 | 8. Obyektiv kelishikdagi kishilik olmoshlari istagan predlog bilan kelishi |
+| SRC-P160-L005 | 1. Ingliz tilida egalik olmoshlari ikki xil bo‘ladi: egalik olmosh-sifat lari |
+| SRC-P160-L019 | 2. Egalik olmosh-sifatlari whose? kimning so‘rog‘iga javob bo‘lib, si- |
+| SRC-P160-L030 | 3. Egalik olmoshlari artiklga o‘xshab all va bothdan keyin qo‘yiladi: |
+| SRC-P160-L036 | 4. Egalik olmosh-otlaridan keyin hech qachon ot kelmaydi, ularning o‘zi |
+| SRC-P161-L003 | 5. O‘zbek tilida egalik olmoshlari tushib qolib, ularning o‘rnida |
+| SRC-P161-L021 | 1. O‘zlik olmoshlari my, your, him, her, it, one olmoshlariga selfni qo‘- |
+| SRC-P161-L031 | 2. II shaxs birlik va ko‘plik uchun o‘zlik olmoshlarinung alohida shakl- |
+| SRC-P161-L036 | 3. Ba’zi fe’llardan keyin o‘zlik olmoshi ishlatilib, shu ish-harakati ega ga |
+| SRC-P162-L003 | 4. O‘zim, o‘zing, o‘zi, o‘zimiz, o‘zingiz, o‘zlari deb tarjima qilinadi: |
+| SRC-P162-L008 | 5. O‘zlik olmoshlari eganing ish-harakatni o‘zi bajarganligini ta’kid lash |
+| SRC-P162-L019 | 1. Birgalik olmoshlariga each other, one another (bir-biri) kiradi. |
+| SRC-P162-L021 | 2. Each other odatda ikki shaxs yoki buyumga nisbatan ishlatiladi, |
+| SRC-P162-L034 | 1. Ko‘rsatish olmoshlarining birlik va ko‘plik shakllari bor. Birlikda this |
+| SRC-P162-L037 | 2. Ko‘rsatish olmosh-sifatlari otning ko‘rsatkichi bo‘lganligi uchun ular- |
+| SRC-P163-L003 | 3. This va these olmoshlari gapiruvchining yaqinidagi, that va those esa |
+| SRC-P163-L012 | 4. This country iborasi gapiruvchi yashayotgan mamlakatni, ingliz |
+| SRC-P163-L027 | 5. Ko‘rsatish olmoshlari vaqtga nisbatan ishlatilganda this hozirgi zamon |
+| SRC-P164-L003 | 6. This va that olmoshlaridan keyin ko‘pincha oldin ishlatilgan otni |
+| SRC-P164-L010 | 7. Ko‘rsatish olmosh-otlari ham olmosh-sifatlarga o‘xshab this va these |
+| SRC-P164-L019 | 8. Ko‘chirma gapdan oldin this keyin esa that ishlatiladi: |
+| SRC-P164-L024 | 9. Oldin ishlatilgan ot qayta ishlatilganda aniq artikl bilan ishlatish |
+| SRC-P164-L033 | 10. It ham ko‘rsatish olmoshi vazifasida keladi: |
+| SRC-P164-L039 | 11. Such — shunday olmoshi ham ko‘rsatish olmosh-sifat va olmosh-ot |
+| SRC-P165-L005 | 1. So‘roq olmoshlari quyidagilar: |
+| SRC-P165-L008 | 2. Who ikki kelishikda ishlatiladi: Bosh kelishikda who, obyektiv |
+| SRC-P165-L010 | 3. Who olmosh-ot bo‘lib gapda ega yoki ot-kesim tarkibida keladi: |
+| SRC-P165-L013 | 4. Who ega bo‘lib kelganda undan keyin kelgan fe’l birlikda ishlatiladi: |
+| SRC-P165-L017 | 5. Who ot-kesim tarkibida kelganda bog‘lovchi fe’l gapning egasi bilan |
+| SRC-P165-L021 | 6. Whom to‘ldiruvchi bo‘lib keladi, og‘zaki nutqda ko‘pincha whom |
+| SRC-P165-L025 | 7. Whom istagan predlog bilan ishlatilishi mumkin: |
+| SRC-P165-L033 | 8. Whomga taalluqli predlog odatda gapning oxirida fe’ldan keyin, agar |
+| SRC-P165-L042 | Izoh: Whom o‘rnida who ishlatilganda predlog faqat fe’ldan keyin, to‘ldiruvchi bo‘lsa |
+| SRC-P166-L003 | 9. Whose kimning olmosh-sifat bo‘lib keladi va otning ko‘rsatkichi |
+| SRC-P166-L009 | 10. What olmosh-ot va olmosh-sifat bo‘lib keladi. |
+| SRC-P166-L010 | 11. What nima, qancha olmosh-ot bo‘lib kelganda gapda ega, to‘ldi- |
+| SRC-P166-L019 | 12. What ot-kesim bo‘lib kelganda bog‘lovchi-fe’l ega bilan shaxs va |
+| SRC-P166-L026 | 13. What odamlarga nisbatan ularning kasbi yoki mansabi so‘ralgan da |
+| SRC-P166-L031 | Izoh: Savol kishining ismi yoki sharifi ni bilish maqsadida berilgan bo‘lsa who ishla tiladi: |
+| SRC-P166-L034 | 14. What istagan predlog bilan ishlatilishi mumkin. Predlog whatdan |
+| SRC-P167-L003 | 15. What qanday ma’nosida olmosh-sifat bo‘lib keladi, otning ko‘rsat- |
+| SRC-P167-L009 | 16. Which qaysi olmosh-sifat va olmosh-ot bo‘lib keladi. Which olmosh- |
+| SRC-P167-L024 | 1. Nisbiy olmoshlar ergash gaplarni bosh gaplar bilan bog‘lash uchun |
+| SRC-P167-L029 | 2. Ega, kesim va to‘ldiruvchi ergash gaplarni bosh gaplar bilan bog‘ lash |
+| SRC-P167-L037 | 3. Aniqlovchi ergash gaplarni bosh gaplar bilan bog‘lash uchun who, |
+| SRC-P168-L003 | 4. Who odamlarga nisbatan ishlatiladi va ergash gapda ega vazifasida |
+| SRC-P168-L012 | 5. Which jonsiz buyumlar va hayvonlarga nisbatan ishlatilib, ergash |
+| SRC-P168-L022 | 6. Which ayrim so‘zlarga emas, o‘zidan oldin kelgan butun gapga ham |
+| SRC-P168-L029 | 7. Whose jonlilarga nisbatan ishlatiladi va qaysi otga taalluqli bo‘lsa |
+| SRC-P168-L041 | 8. That olmoshi jonli va jonsizlarga nisbatan ishlatiladi. |
+| SRC-P169-L013 | Izoh: Ega bo‘lib keluvchi who olmoshi kamdan-kam hollarda that olmoshi bilan |
+| SRC-P169-L017 | 9. Orttirma darajadagi sifatlar, tartib sonlar va all, any, only so‘zlari bilan |
+| SRC-P169-L029 | 10. Tasvirlovchi aniqlovchi gaplar bilan that olmoshi ishlatilmaydi: |
+| SRC-P169-L037 | 11. Whom va which predloglar bilan kelib predlogli to‘ldiruvchi |
+| SRC-P170-L003 | 12. That ishlatilganda predlog har doim fe’ldan keyin qo‘yiladi: |
+| SRC-P170-L008 | Izoh: Ega bo‘lib kelgan nisbiy olmoshdan keyin kelgan fe’l o‘sha olmosh bosh gap dagi |
+| SRC-P170-L018 | 13. Aniqlovchi ergash gaplarni bosh gaplar bilan bog‘lash uchun whe re |
+| SRC-P170-L024 | 14. Reason otidan keyin nisbiy olmosh o‘rnida why ravishi ishlatiladi: |
+| SRC-P170-L027 | 15. Same shunday, shunga o‘xshash, such shunday so‘zlaridan keyin |
+| SRC-P170-L036 | 1. Ajratuvchi va tasnifl ovchi aniqlovchi gaplarda to‘diruvchi bo‘lib |
+| SRC-P171-L007 | 2. Ergash gapda ega bo‘lib keladigan nisbiy olmoshlar tushib qolmaydi: |
+| SRC-P171-L010 | 3. Whose olmoshi tushib qolmaydi: |
+| SRC-P171-L013 | 4. Tasvirlovchi aniqlovchi gaplarda nisbiy olmoshlar tushib qolmaydi: |
+| SRC-P171-L025 | 1. Some bo‘lishli gaplarda, any bo‘lishsiz gaplarda, umumiy so‘roq |
+| SRC-P171-L028 | 2. Some va any bir qancha, biroz, hech qanday ma’nosida ishlatiladi: |
+| SRC-P171-L042 | Izoh: Some ba’zan donalab sanaladigan birlikdagi ot oldida noaniq artikl ma’nosi da ham |
+| SRC-P172-L013 | 3. Some va any biroz, ozroq, hech qancha ma’nosida ishlatiladi: |
+| SRC-P172-L028 | 4. Some taklif va iltimosni ifodalagan umumiy va maxsus so‘roq gap- |
+| SRC-P172-L034 | 5. Some ba’zi ma’nosida olmosh-sifat bo‘lib, ko‘plikdagi ot oldida va |
+| SRC-P173-L007 | 6. Some donalab sanalmaydigan otlar oldida bir qismi ma’nosida ish- |
+| SRC-P173-L014 | 7. Some sonlarning oldida qariyb, taxminan ma’nosida ishlatiladi: |
+| SRC-P173-L018 | 8. Any istagan ma’nosida bo‘lishli va so‘roq gaplarda birlikdagi dona lab |
+| SRC-P173-L026 | 1. Some va anyga one, body va thing so‘zlari qo‘shilib someone, |
+| SRC-P173-L031 | 2. Someone, somebody, something bo‘lishli gaplarda anyone, anybody, |
+| SRC-P174-L011 | 3. Bu olmoshlar ega bo‘lib kelganda ulardan keyin keladigan fe’l bir likda |
+| SRC-P174-L015 | 4. Someone, somebody va something ham somega o‘xshab maxsus |
+| SRC-P174-L023 | 5. Anyone, anybody, anything ham any olmoshiga o‘xshab istagan |
+| SRC-P174-L032 | Izoh: Some va any so‘zlari where bilan birikib somewhere, anywhere ravishlarini |
+| SRC-P174-L040 | 1. No olmoshi birlik va ko‘plikdagi donalab sanaladigan otlar oldida |
+| SRC-P175-L014 | 2. Ega bo‘lib kelgan otlar oldida odatda no ishlatiladi va birorta ham, |
+| SRC-P175-L020 | 3. No olmosh-ot bo‘lib kelmaydi; uning o‘rnida birlik va ko‘plikdagi |
+| SRC-P175-L032 | 4. No so‘zi body, one, thing so‘zlari bilan birikib nobody, no one, nothing |
+| SRC-P176-L003 | 5. Nobody, no one, nothingga qaraganda not…anybody, not… anyone, |
+| SRC-P176-L010 | 6. Nobody, nothing ega bo‘lib kelganda ulardan keyin kelgan fe’l bir- |
+| SRC-P176-L016 | Izoh: No where ravishi bilan birikib kelib nowhere ravishini yasaydi: |
+| SRC-P176-L020 | 1. Much va many olmoshlari olmosh-sifat va olmosh-ot bo‘lib keladi. |
+| SRC-P176-L021 | 2. Much va many olmoshlari ko‘p ma’nosida olmosh-sifat bo‘lib kela di. |
+| SRC-P176-L032 | 3. Much va many ko‘pchilik, ko‘pi ma’nosida olmosh-ot bo‘lib keladi. |
+| SRC-P176-L039 | 4. Much va many asosan so‘roq va bo‘lishsiz gaplarda ishlatiladi: |
+| SRC-P177-L003 | 5. Much va many ega hamda egaga aniqlovchi bo‘lib kelsa, yoki very, |
+| SRC-P177-L017 | 6. Boshqa hollarda bo‘lishli gaplarda much o‘rnida a lot (of), lots (of), |
+| SRC-P177-L026 | Izoh: Much ravish ham bo‘lib keladi: |
+| SRC-P177-L031 | 1. Little va few olmoshlari olmosh-sifat va olmosh-ot bo‘lib keladi. |
+| SRC-P177-L032 | 2. Little va few oz, kam ma’nosida olmosh-sifat bo‘lib keladi. Little |
+| SRC-P177-L041 | 3. Bo‘lishli gaplarda little, few oldida very, rather, too, so, as, how |
+| SRC-P178-L008 | Izoh: Little kichkina ma’nosida sifat bo‘lib va oz ma’nosida ravish bo‘lib keladi: |
+| SRC-P178-L011 | 4. Olmosh-ot bo‘lib kelganda little ozi, ozginasi, kam ma’nosida, few |
+| SRC-P178-L017 | 5. Little va few noaniq artikl bilan ham ishlatilishi mumkin: |
+| SRC-P178-L030 | Izoh: Little, fewdan oldin keladigan noaniq artikl ulardan keyin keladigan otga emas, shu |
+| SRC-P178-L032 | 6. Little va fewdan oldin aniq artikl ham ishlatilishi mumkin va o‘sha |
+| SRC-P179-L005 | 1. All olmoshi olmosh-sifat va olmosh-ot bo‘lib keladi. |
+| SRC-P179-L006 | 2. All olmoshi olmosh-sifat bo‘lib kelganda hamma, barcha ma’nosi- |
+| SRC-P179-L015 | Izoh: Birlikdagi donalab sanaladigan ot oldida all o‘rnida odatda the whole ishlatiladi: |
+| SRC-P179-L020 | 3. Alldan keyin kelgan ot oldida artikl umumiy qoidalar asosida ishlatilishi |
+| SRC-P179-L031 | 4. All hamma ma’nosida olmosh-ot bo‘lib keladi: |
+| SRC-P179-L035 | 5. All ko‘pincha we all (bizning) hammamiz, you all (sizning) ham- |
+| SRC-P180-L021 | 6. All o‘rnida ko‘pincha hamma (kishi) ma’nosida everybody yoki |
+| SRC-P180-L036 | 1. Both har ikkala olmoshi olmosh-sifat va olmosh-ot bo‘lib keladi. |
+| SRC-P181-L010 | 2. Both bilan yasalgan we both, you both, they both kabi birikmalar |
+| SRC-P181-L032 | 3. We both, you both, they both birikmalari ma’no jihatidan both of us, |
+| SRC-P181-L036 | 4. Both gapning egasi bo‘lib kelganda, undan keyin kelgan fe’l ko‘plikda |
+| SRC-P181-L041 | 5. Bo‘lishsiz gaplarda both o‘rnida neither ishlatiladi: |
+| SRC-P182-L003 | Izoh: Both…and bog‘lovchisi ham…ham deb tarjima qilinadi: |
+| SRC-P182-L010 | 1. Either olmoshi ikki shaxs yoki buyumga taalluqli bo‘lib, har ikkalasi, |
+| SRC-P182-L013 | 2. Either birlikdagi donalab sanaladigan ot oldida ishlatiladi va ko‘r- |
+| SRC-P182-L020 | 3. Either olmosh-ot bo‘lib kelganda uning orqasidan of predlogi qo‘yi- |
+| SRC-P182-L025 | 4. Either har ikkala ma’nosida ishlatiladi: |
+| SRC-P182-L030 | 5. Either gapning egasi bo‘lib kelganda, undan keyin kelgan fe’l birlikda |
+| SRC-P182-L035 | 6. Neither olmoshi na unisi, na bunisi degan ma’no berib either ol- |
+| SRC-P182-L042 | Izoh: 1) Either bo‘lishsiz gaplarda ham ma’nosida ravish bo‘lib keladi: |
+| SRC-P183-L003 | 2) Neither Men ham =Neither do I iborasida ravish bo‘lib keladi: |
+| SRC-P183-L006 | 3) Either…or yoki…yoki, neither…nor na…na bog‘lovchi bo‘lib keladi: |
+| SRC-P183-L012 | 1. Each har bir olmoshi shaxs yoki buyumlarning cheklangan miqdoriga |
+| SRC-P183-L015 | 2. Each olmosh-sifat bo‘lib birlikdagi donalab sanaladigan ot oldida |
+| SRC-P183-L023 | 3. Each olmosh-ot bo‘lib kelganda undan keyin ko‘pincha of predlogi |
+| SRC-P183-L030 | 4. Every har bir olmoshi faqat olmosh-sifat bo‘lib kelib, birlikdagi |
+| SRC-P183-L040 | 5. Every olmoshi body, one, thing olmoshlari bilan birikib everybody, |
+| SRC-P184-L009 | Izoh: Every olmoshi where ravishi bilan birikib, everywhere hamma yerda ravishini |
+| SRC-P184-L015 | 1. Other boshqa olmoshi olmosh-sifat va olmosh-ot bo‘lib keladi. |
+| SRC-P184-L016 | 2. Other olmosh-sifat bo‘lib kelganda birlik va ko‘plikdagi otlar oldida |
+| SRC-P184-L025 | 3. Otherdan keyin oldin ishlatilgan otni qayta takrorlamaslik uchun one |
+| SRC-P184-L029 | 4. Olmosh-ot bo‘lib kelganda birlikdagi donalab sanaladigan ot o‘r- |
+| SRC-P184-L043 | Izoh: Other olmoshi each other va one another olmoshlarining tarkibiga ham kiradi. |
+| SRC-P185-L005 | 1. One olmoshi olmosh-ot bo‘lib keladi. |
+| SRC-P185-L006 | 2. One gapda ega bo‘lib kelib, noma’lum shaxsni bildiradi: |
+| SRC-P185-L012 | 3. One ega bo‘lib kelganida ko‘pincha must, should, ought, can, may |
+| SRC-P185-L018 | 4. One qaratqich kelishigi qo‘shimchasini ham olishi mumkin-one’s: |
+| SRC-P185-L021 | 5. Oldin ishlatilgan birlikdagi otni qayta noaniq artikl bilan ishlatish |
+| SRC-P185-L026 | 6. Oldin ishlatilgan birlikdagi otni qayta aniq artikl bilan ishlatish |
+| SRC-P185-L031 | 7. Oldin ishlatilgan sifatdan keyin kelgan donalab sanaladigan ot qayta |
+| SRC-P185-L039 | Izoh: Oldin gapirilgan sifatdan keyin keladigan donalab sanalmaydigan ot qayta ish- |
+| SRC-P186-L003 | 8. Oldin gapirilgan va this, that, which, another, the other olmoshlaridan |
+| SRC-P186-L016 | 9. Ko‘plikdagi ot o‘rnida whichdan keyin ones ishlatiladi: |
+| SRC-P186-L019 | 10. These va those olmoshlaridan keyin ones ishlatilmaydi: |
+| SRC-P186-L023 | 11. Otherdan keyin ones ishlatilmaydi; ko‘plikdagi ot o‘rnida others |
+| SRC-P186-L027 | 12. One ba’zan the fi rst, the next, the last so‘zlaridan keyin ham ish- |
+| SRC-P186-L031 | 13. My, his, her, our, your, their egalik olmoshlaridan keyin one ish- |
+| SRC-P186-L037 | 14. One qaratqich kelishigi qo‘shimchasi bilan kelgan otdan keyin ish- |
+| SRC-P187-L006 | 1. Ravish deb ish-harakatning qanday, qayerda, qachon sodir bo‘lganini |
+| SRC-P187-L013 | 2. Ravish sifat yoki boshqa ravishlarning belgi va xossalarini ham ifo- |
+| SRC-P187-L018 | 3. Gapda ravishlar hol bo‘lib keladi. |
+| SRC-P187-L023 | 1. O‘rin-joy ravishlari: here shu (bu) yerda, bu yoqqa, there u yerda, |
+| SRC-P188-L011 | 2. Payt (vaqt) ravishlari: now hozir, endi, when –da, vaqtda, paytda, |
+| SRC-P188-L037 | 3. O‘lchov va daraja ravishlari: much ko‘p, little oz, very juda, too o‘ta, |
+| SRC-P190-L020 | 4. Holat ravishlari: well yaxshi, fast, quickly tez, slowly asta, sekin, |
+| SRC-P190-L027 | 5. Too, also, either, else, only, even so‘zlari ham ravishlardir.Too va |
+| SRC-P191-L008 | 6. Ravishlar fe’l, sifat va boshqa ravishlarni aniqlashdan tashqari quyidagi |
+| SRC-P191-L010 | 1) so‘roq so‘zlar bilan boshlangan so‘roq gaplarda so‘roq so‘z bo‘lib |
+| SRC-P191-L018 | 2) gaplarni bir-biriga bog‘lash uchun ishlatiladi: |
+| SRC-P192-L013 | 1. Ravishlar shakliga ko‘ra ikki guruhga: sodda va yasama ravishlar ga |
+| SRC-P193-L039 | 1. Ko‘pgina ravishlarning, ayniqsa holat ravishlarining darajalari |
+| SRC-P193-L041 | 2. Bir, ikki bo‘g‘inli sodda ravishlarning qiyosiy darajasi -er |
+| SRC-P194-L009 | 3. Sifatga -ly qo‘shimchasi qo‘shib yasalgan ravishlarning qiyosiy |
+| SRC-P194-L018 | 4. Often tez-tez, quickly tez, slowly sekin ravishlarining darajalari har |
+| SRC-P195-L012 | 1. Gapdagi fe’l o‘timsiz bo‘lsa, holat ravishi fe’ldan keyin keladi: |
+| SRC-P195-L016 | 2. Gapdagi fe’l o‘timli bo‘lsa, ravish fe’ldan oldin yoki fe’ldan keyin |
+| SRC-P195-L027 | 3. Noaniq zamon ravishlari — always, often, seldom, ever, never, just, |
+| SRC-P197-L026 | Izoh: Enough sifat bo‘lib kelib, otni ham aniqlashi mumkin, bunda enough otdan oldin |
+| SRC-P198-L009 | 1. Predlog deb ot (yoki olmoshning) gapdagi boshqa so‘zlarga mu- |
+| SRC-P198-L019 | 2. Har bir predlog bir nechta mustaqil ma’nolarda kelishi mumkin. |
+| SRC-P198-L032 | 3. Ko‘p hollarda u yoki bu predlogning ishlatilishi undan oldin kelayotgan |
+| SRC-P198-L043 | 4. Ba’zi fe’llar turli predloglar bilan kelganda, ma’nosi o‘zgarib kelishi |
+| SRC-P199-L007 | 5. Predloglar ko‘pgina iboralar va birikmalar tarkibiga kiradi — in vain |
+| SRC-P199-L010 | 6. Predloglar quyidagi guruhlarga bo‘linadi: |
+| SRC-P199-L018 | 1. Ba’zi predloglarning shakllari ravishlar bilan mos keladi. Pred- |
+| SRC-P199-L033 | 2. Ba’zi predloglarga mos keluvchi ravishlar (in, on, up, down, by va boshqalar) |
+| SRC-P200-L005 | 1. Predloglar ot yoki olmoshdan oldin keladi. Agar otning aniqlov chisi |
+| SRC-P200-L009 | 2. Ammo quyidagi hollarda predlog o‘zi qarashli bo‘lgan so‘zning oldida |
+| SRC-P201-L006 | 1. haqida, to‘g‘risida: |
+| SRC-P201-L012 | Izoh: Ba’zi fe’llardan keyin (to think, to hear, to speak, to tell va boshqalar) yuqori dagi |
+| SRC-P201-L023 | 2. taxminan, atrofi da, qariyb, -lar: |
+| SRC-P201-L027 | 3. atrofga, atrofda, bo‘ylab, -da: |
+| SRC-P201-L030 | 4. atrofga, atrofda, u yoqdan-bu yoqqa (ravish bo‘lib keladi). |
+| SRC-P201-L037 | 5. about ishlatilgan iboralar: |
+| SRC-P202-L030 | 1. ustida, uzra, yuqorisida: |
+| SRC-P202-L033 | 2. ziyod, ko‘p: |
+| SRC-P202-L037 | 3. yuqorida, yuqoriga (ravish bo‘lib keladi): |
+| SRC-P202-L040 | 1. ko‘ndalangiga, ko‘ndalang, orqali, -dan: |
+| SRC-P203-L006 | 2. ko‘ndalang, ko‘ndalangiga, narigi tomonga (ravish): |
+| SRC-P203-L011 | 3. to come (run) across to‘satdan uchratib qolmoq: |
+| SRC-P203-L020 | 1. keyin, so‘ng (vaqtga nisbatan ishlatiladi, antonimi before): |
+| SRC-P203-L024 | 2. keyin, orqasidan (joyga nisbatan ishlatiladi): |
+| SRC-P203-L029 | 3. keyin, so‘ngra (ravish): |
+| SRC-P203-L032 | 4. keyin (bog‘lovchi bo‘lib keladi): |
+| SRC-P203-L036 | 5. after bilan ishlatilgan iboralar: |
+| SRC-P204-L009 | 1. qarshi: |
+| SRC-P204-L017 | 2. against bilan kelgan fe’llar va iboralar: |
+| SRC-P204-L027 | 1. bo‘ylab, -da, -dan: |
+| SRC-P204-L030 | 2. Ravish bo‘lib keladi: |
+| SRC-P204-L035 | 3. Iboralar: |
+| SRC-P205-L014 | 1. Joyga nisbatan ishlatiladi: |
+| SRC-P205-L039 | 2. -da (vaqtga nisbatan ishlatiladi, lahzada): |
+| SRC-P206-L003 | 3. At bilan keluvchi fe’llar: |
+| SRC-P207-L008 | 4. At bilan yasalgan iboralar: |
+| SRC-P207-L036 | 1. oldin, ilgari (vaqtga nisbatan ishlatiladi, antonimi after): |
+| SRC-P208-L003 | 2. oldida (joyga nisbatan ishlatiladi, antonimi behind): |
+| SRC-P208-L011 | 3. oldin, ilgari (ravish bo‘lib keladi): |
+| SRC-P208-L015 | Izoh: Before ilgari ma’nosida bog‘lovchi ham bo‘lib keladi. |
+| SRC-P208-L017 | 4. Before bilan kelgan iboralar. |
+| SRC-P208-L024 | 1. orqasida, ortida (joyga nisbatan ishlatiladi, antonimi before yoki in |
+| SRC-P208-L029 | 2. orqada, orqaga (ravish bo‘lib keladi): |
+| SRC-P208-L032 | 3. tarafi da bo‘lmoq, qo‘llamoq: |
+| SRC-P208-L035 | 4. orqasida bo‘lmoq, qo‘li bo‘lmoq: |
+| SRC-P208-L040 | 5. behind bilan kelgan iboralar: |
+| SRC-P209-L005 | 1. ostida, past (antonimi above): |
+| SRC-P209-L010 | 2. quyida, pastda, pastdan (ravish bo‘lib keladi): |
+| SRC-P209-L018 | 1. yonida, bo‘yida: |
+| SRC-P209-L022 | 2. o‘zida bo‘lmaslik: |
+| SRC-P209-L026 | 3. iboralar: |
+| SRC-P209-L032 | 1. -dan tashqari: |
+| SRC-P209-L040 | 2. bundan tashqari (ravish bo‘lib keladi): |
+| SRC-P210-L005 | 1. o‘rtasida, orasida (ikki shaxs yoki buyumlar o‘rtasida): |
+| SRC-P210-L011 | 1. orqasida, ortida, narigi tomonda (ancha narida): |
+| SRC-P210-L016 | 2. beyond bilan kelgan iboralar: |
+| SRC-P210-L027 | 1. tomonidan, bilan (ish-harakatni bajaruvchi shaxsni yoki kuchni ifo- |
+| SRC-P210-L033 | 2. bilan, yordamida (odatda gerund bilan kelib ish-harakatni bajarish |
+| SRC-P211-L003 | 3. -gacha (ish-harakat tamom bo‘ladigan vaqtni ko‘rsatadi): |
+| SRC-P211-L009 | 4. yonida, oldida: |
+| SRC-P211-L013 | 5. yonidan (= past): |
+| SRC-P211-L016 | 6. yonidan (past bilan birga ravish bo‘lib keladi): |
+| SRC-P211-L021 | 7. By ishlatilgan fe’l birikmalari: |
+| SRC-P212-L003 | 8. by bilan kelgan iboralar: |
+| SRC-P212-L032 | 1. pastga (harakat fe’llari bilan pastga yo‘nalishni bildiradi): |
+| SRC-P212-L039 | 2. pastga, pastda (ravish bo‘lib keladi): |
+| SRC-P213-L003 | 3. pastga (harakat fe’llari bilan pastga harakatni bildiradi) Masa lan: come |
+| SRC-P213-L009 | 4. birikmalar: |
+| SRC-P213-L017 | 5. iboralar: |
+| SRC-P214-L027 | 1. uchun, -ga: |
+| SRC-P214-L036 | 2. uchun, -ga (narx, to‘lov): |
+| SRC-P214-L042 | 3. uchun, tarafdor (ish harakat kim uchun sodir etilayotgan bo‘lsa, |
+| SRC-P215-L008 | 4. uchun (sababni ifodalaydi): |
+| SRC-P215-L012 | 5. uchun, -ga (maqsadni ifodalaydi): |
+| SRC-P215-L016 | 6. davomida (ish-harakatning qancha davom etishini ifodalaydi). O‘z bek |
+| SRC-P215-L022 | 7. -ga (ish-harakatning davom etish muddatini yoki belgilangan vaq tini |
+| SRC-P215-L029 | 8. for predlogi for + ot (olmosh) + to + V qurilmasida kelib ish- |
+| SRC-P215-L036 | 9. for predlogi bilan keladigan fe’l va otlar: |
+| SRC-P217-L009 | 10. for ishlatilgan iboralar: |
+| SRC-P217-L018 | 1. -dan (harakat yo‘nalishini ifodaydi, antonimi to): |
+| SRC-P217-L025 | 2. -dan (vaqtning boshlanishini ifodalaydi, antonimi since): |
+| SRC-P217-L030 | 3. -dan (boshqa predloglar bilan birikib keladi): |
+| SRC-P217-L039 | 4. from predlogi bilan keladigan fe’llar: |
+| SRC-P218-L027 | 5. from bilan kelgan iboralar: |
+| SRC-P218-L035 | 1. -da, ichida: |
+| SRC-P218-L039 | 2. vaqtni aytishda ishlatiladi: |
+| SRC-P219-L025 | 3. in ravish bo‘lib harakat fe’llari bilan ichkariga harakatni bildiradi: to |
+| SRC-P219-L036 | Izoh: Ichkarisiga kirilayotgan buyum ko‘rsatilganda into predlogi ishlatiladi: |
+| SRC-P219-L038 | 4. In predlogi bilan keladigan fe’llar, sifatlar va sifatdoshlar: |
+| SRC-P221-L003 | 5. in predlogi bilan kelgan iboralar: |
+| SRC-P222-L036 | 1. -ichiga, ichkarida (antonimi outside): |
+| SRC-P222-L040 | 2. -ichkariga, ichkarida (ravish bo‘lib keladi): |
+| SRC-P224-L005 | 1. -ning: |
+| SRC-P224-L012 | 2. -dan: |
+| SRC-P224-L017 | 3. -dan (buyumning nimadan yasalganini bildiradi): |
+| SRC-P224-L021 | 4. -li (o‘lchov, og‘irlik, pul birliklari oldidan kelgan sondan oldin ish- |
+| SRC-P224-L031 | 5. of bilan keladigan fe’llar, sifatlar va iboralar: |
+| SRC-P226-L026 | 1. -dan, ustidan (buyumning ustidan olinishini, qo‘zg‘atilishini ifodalaydi, |
+| SRC-P226-L033 | 2. -dan (biror narsadan uzib olish, ajratib olishda ishlatiladi): |
+| SRC-P226-L041 | 3. Ko‘pgina fe’llar bilan ravish bo‘lib keladi; ajratishni, uzishni |
+| SRC-P227-L008 | 4. off bilan keluvchi fe’llar: |
+| SRC-P227-L024 | 1. -da, -ga (ustida, ustiga): |
+| SRC-P227-L027 | 2. -da (hafta kunlari va sana oldida qo‘yiladi): |
+| SRC-P227-L033 | Izoh: Kun qismlari (bo‘laklari) oldida in predlogi ishlatiladi: in the morning, in the |
+| SRC-P227-L036 | 3. -da, keyin (odatda gerund bilan keladi): |
+| SRC-P228-L003 | 4. haqida, to‘g‘risida: |
+| SRC-P228-L011 | 5. Ravish bo‘lib kelib, birga kelgan fe’ldagi ish-harakatning davom |
+| SRC-P228-L020 | 6. On bilan birga keluvchi fe’llar: |
+| SRC-P229-L016 | 7. - on bilan kelgan iboralar: |
+| SRC-P229-L037 | 1. -dan (ichkaridan tashqariga chiqishni, harakatni bildiradi, anto- |
+| SRC-P230-L003 | 2. -siz bo‘lmoq, biror narsasi tugab qolmoq (out of + noun = to lack, to |
+| SRC-P230-L009 | 3. out ravish bo‘lib kelib, harakat fe’llari bilan keladi va ichkaridan |
+| SRC-P230-L025 | 4. out bilan kelgan birikmalar: |
+| SRC-P232-L003 | 5. out of bilan kelgan iboralar: |
+| SRC-P232-L028 | 1. tashqarida, tashqariga, tashqarisiga, tashqarisida (antonimi inside): |
+| SRC-P232-L033 | 2. tashqariga, tashqarida (ravish bo‘lib keladi): |
+| SRC-P232-L039 | 1. ustida, uzra (antonimi under): |
+| SRC-P233-L003 | 2. ko ‘p, ziyod, oshiq (antonimi under): |
+| SRC-P233-L008 | 3. ustidan, -dan (oshib): |
+| SRC-P233-L014 | 4. Ravish bo‘lib keladi va biror narsa yoki masofa ustidan oshib |
+| SRC-P233-L022 | 5. over bilan kelgan birikmalar: |
+| SRC-P233-L037 | 6. over bilan kelgan iboralar: |
+| SRC-P234-L005 | 1. yonidan (by bilan birga predlog va ravish bo‘lib keladi): |
+| SRC-P234-L010 | 2. o‘tdi (vaqtni aytishda ishlatiladi): |
+| SRC-P234-L017 | 1. atrofi da, aylana (round aroundga qaraganda ko‘proq ishlatiladi. Berk |
+| SRC-P234-L024 | 2. atrofga, atrofda, aylanib (ravish bo‘lib keladi): |
+| SRC-P234-L028 | 3. round va around bilan kelgan iboralar: |
+| SRC-P234-L036 | 1. -dan buyon (vaqtga nisbatan ishlatilib, vaqtning boshlanish nuqtasini |
+| SRC-P235-L003 | 2. O‘shandan buyon degan ma’noda since ravish bo‘lib keladi. |
+| SRC-P235-L013 | 3. Since va from predloglarini taqqoslash. |
+| SRC-P235-L031 | 1. -dan, ichidan, orasidan: |
+| SRC-P235-L036 | 2. -tufayli, oqibatida: |
+| SRC-P236-L012 | Izoh: 1. -gacha qo‘shimchasi joyni ifodalaganda till, until emas, as far as ishlatiladi: I’ll |
+| SRC-P236-L014 | 2. till, until bog‘lovchi vazifasida ham kelib, -guncha,-maguncha degan ma’noni |
+| SRC-P236-L018 | 1. -ga: |
+| SRC-P236-L025 | 2. -ga: |
+| SRC-P236-L032 | 3. O‘zidan keyin to predlogini talab qiluvchi fe’llar: |
+| SRC-P238-L003 | 4. to ko‘pgina sifatlardan keyin ishlatiladi: |
+| SRC-P238-L022 | Izoh: useful, important, strange, necessary kabi bir qator sifatlardan keyin toning o‘r- |
+| SRC-P238-L028 | 5. To bilan iboralar: |
+| SRC-P239-L007 | 1. -ga tomon, -ga qarab ma’nosida: |
+| SRC-P239-L013 | 2. -ga, -ga nisbatan ma’nosida: |
+| SRC-P239-L018 | 3. -ga yaqin, -gacha ma’nolarida vaqtni ifodalaydi va biror vaqtdan oldin, |
+| SRC-P239-L027 | 1. tagida, ostida ma’nosida joyni bildiradi (overning antonimi): |
+| SRC-P239-L031 | 2. ostida (ko‘chma ma’noda) quyidagi birikmalarda ishlatiladi: |
+| SRC-P239-L038 | 3. -dan kamroq, -ga yaqin ma’nosida kamaytirilgan miqdorni bildiradi |
+| SRC-P240-L003 | 4. under bilan iboralar: |
+| SRC-P240-L013 | 1. yuqoriga, -dan, bo‘ylab yuqoriga (antonimi down, harakat fe’lla ri |
+| SRC-P240-L018 | 2. yuqorida, yuqoriga ma’nosida ravish bo‘lib keladi: |
+| SRC-P240-L022 | 3. oldiga (harakat fe’llari bilan biror shaxs yoki buyumning oldiga |
+| SRC-P240-L031 | 4. to eat, to drink, to fi ll, to use, to sell, to buy, to grow va boshqa fe’llar |
+| SRC-P240-L036 | 5. up bilan keladigan fe’lli birikmalar: |
+| SRC-P241-L036 | 1. bilan ma’nosida (biror ishni bajarishda birgalik, hamkorlikni |
+| SRC-P242-L003 | 2. -li, bilan ma’nosida (biror narsa bilan birgalikda yana boshqa narsaga |
+| SRC-P242-L010 | 3. bilan ma’nosida(biror harakat bajarilayotgandagi holatni ifoda- |
+| SRC-P242-L017 | 4. bilan, yordamida ma’nosida (biror predmet vositasida ish-harakatni |
+| SRC-P242-L024 | 5. withdan oldin keladigan ayrim fe’llar, sifatlar va sifatdoshlar: |
+| SRC-P243-L036 | 1. ichida, -dan kechikmasdan ma’nosida (ish-harakat bajariladigan biror |
+| SRC-P244-L003 | 2. within masofada ma’nosida quyidagi birikmalarda ishlatiladi: wit- |
+| SRC-P244-L033 | 1. Without o‘zbek tilidagi -siz degan qo‘shimchaga to‘g‘ri keladi |
+| SRC-P244-L038 | 2. Without ko‘pincha gerund bilan birgalikda bo‘lishsizlikni ifoda lash |
+| SRC-P245-L003 | 3. Without bilan kelgan iboralar: |
+| SRC-P247-L023 | 1. Gaplarni va gap bo‘laklarini bir-biri bilan bog‘lash uchun ishlatila- |
+| SRC-P247-L026 | 2. Teng bog‘lovchilar gapning uyushuq bo‘laklarini va mustaqil gaplarni |
+| SRC-P247-L034 | 3. Ergashtiruvchi bog‘lovchilar ergash gaplarni bosh gaplarga bog‘- |
+| SRC-P248-L003 | 4. Bog‘lovchilar shakliga ko‘ra sodda va qo‘shma bo‘ladi: |
+| SRC-P249-L003 | Izoh: Mustaqil sodda gaplarni bir-biri bilan bog‘lash uchun moreover bundan tash- |
+| SRC-P249-L010 | 1. That, if, whether bog‘lovchilari ega, kesim va to‘ldiruvchi ergash |
+| SRC-P249-L021 | 2. Hol ergash gaplarni bosh gap bilan bog‘lovchi bog‘lovchilar: |
+| SRC-P253-L009 | 1. He always comes before I do U har doim men kelishimdan |
+| SRC-P253-L019 | 2. I found the letter after he had left Men u ketganidan keyin xatni |
+| SRC-P253-L025 | 3. What have you been doing since I Men sizni oxirgi marta ko‘r- |
+| SRC-P254-L006 | 1. Gap deb tugallangan fi krni ifodalovchi so‘zlar yig‘indisiga ayti ladi. |
+| SRC-P254-L009 | 2. Gapning tarkibiga kiruvchi va birorta so‘roqqa javob bo‘luvchi so‘zlar |
+| SRC-P254-L011 | 3. Gap bo‘laklari bosh bo‘laklar va ikkinchi darajali gap bo‘laklariga |
+| SRC-P254-L016 | 4. Tuzilishiga ko‘ra gaplar sodda va qo‘shma gaplarga bo‘linadi. |
+| SRC-P254-L017 | 5. Qo‘shma gaplar bog‘langan qo‘shma gaplarga va ergashgan qo‘sh ma |
+| SRC-P254-L028 | 6. Maqsadiga ko‘ra gaplar quyidagi turlarga bo‘linadi: |
+| SRC-P255-L008 | 1. Sodda gaplar yig‘iq va yoyiq gaplarga bo‘linadi. |
+| SRC-P255-L010 | 2. Yig‘iq gaplar faqat bosh bo‘laklar — ega va kesimdan iborat bo‘ladi: |
+| SRC-P255-L013 | 3. Yoyiq gaplarda bosh bo‘laklardan tashqari ikkinchi darajali bo‘ laklar |
+| SRC-P255-L027 | 4. Ega va unga qarashli bo‘lgan ikkinchi darajali bo‘laklar ega (yoyiq |
+| SRC-P255-L033 | 5. Ikkinchi darajali gap bo‘laklari ham o‘z navbatida boshqa ikkinchi |
+| SRC-P256-L013 | 1. Ot bilan: |
+| SRC-P256-L016 | 2. Olmosh bilan: |
+| SRC-P256-L021 | 3. Infi nitiv va infi nitivli iboralar bilan: |
+| SRC-P256-L025 | 4. Gerund yoki gerundli ibora bilan: |
+| SRC-P256-L030 | 5. Son bilan: |
+| SRC-P256-L036 | 6. Ot vazifasida ishlatilgan istagan so‘z yoki so‘z birikmasi bilan: |
+| SRC-P257-L011 | 1. Tabiat ko‘rinishlarini tasvirlaganda: |
+| SRC-P257-L016 | 2. Ob-havo holatini ifodalovchi fe’llar bilan: |
+| SRC-P257-L021 | 3. Vaqtni va masofani aytishda: |
+| SRC-P257-L030 | 4. Majhul nisbatdagi ba’zi iboralarda ishlatiladi: |
+| SRC-P257-L034 | 5. Gapning egasi kesimdan keyin kelib infi nitive, gerund yoki ergash |
+| SRC-P258-L005 | 1. Agar biror gap bo‘lagiga urg‘u bermoqchi bo‘lsak, shu gap bo‘lagini it |
+| SRC-P258-L012 | 2. Agar his sister to‘ldiruvchini ajratib ko‘rsatmoqchi bo‘lsak uni it was |
+| SRC-P258-L016 | 3. Agar in the park o‘rin holini ajratib ko‘rsatmoqchi bo‘lsak, uni it was |
+| SRC-P258-L020 | 4. It is …that birikmasi yordamida ergash gaplarni ham ajratib ko‘r satish |
+| SRC-P258-L028 | 5. Until (till) mavjud bo‘lgandagi notli bo‘lishsizliklarning tarjimasiga |
+| SRC-P258-L041 | 1. Ish-harakatni bajaruvchi noaniq yoki umumlashgan bo‘lsa, one |
+| SRC-P259-L008 | 2. Xuddi shunday vazifada they olmoshi ham ishlatiladi. They ko‘pin cha |
+| SRC-P259-L015 | 1. Kesim sodda va qo‘shma kesimga bo‘linadi. Qo‘shma kesim ham o‘z |
+| SRC-P259-L038 | 1. Otdan. |
+| SRC-P259-L041 | 2. Olmoshdan. |
+| SRC-P260-L003 | 3. Predlogli ot yoki olmosh bilan: |
+| SRC-P260-L008 | 4. Sifat yoki sifatdoshdan: |
+| SRC-P260-L011 | 5. Infi nitivdan: |
+| SRC-P260-L017 | Izoh: To be fe’li infi nitiv bilan kelib qo‘shma fe’l-kesim ham bo‘lib keladi va kerak |
+| SRC-P260-L025 | 6. Gerunddan: |
+| SRC-P260-L028 | 7. Qo‘shma kesimlarda to bedan tashqari to become, to grow, to get, to |
+| SRC-P261-L004 | 1. Modal fe’llar va infi nitivdan: |
+| SRC-P261-L012 | 2. Infi nitiv yoki gerund va yakka o‘zi to‘liq ma’no bermaydigan to |
+| SRC-P261-L020 | 3. Qo‘shma fe’l-kesim oldidan bog‘lovchi fe’l kelgan sifat va infi nitiv- |
+| SRC-P261-L029 | 1. O‘quvchiga hali noma’lum bo‘lgan shaxs yoki buyumning biror joy da |
+| SRC-P261-L041 | 2. There is birikmasidan keyin donalab sanaladigan birlikdagi ot noaniq |
+| SRC-P262-L006 | 3. There is birikmasidan keyin aniq artikl bilan kelgan otlar, this, |
+| SRC-P262-L009 | 4. There is are birikmasidagi to be turli zamonlarda ishlatilishi mum kin: |
+| SRC-P262-L019 | 5. So‘roq shakli to be fe’lining shaklini yoki undan oldin yordamchi fe’l |
+| SRC-P262-L040 | 6. Bo‘lishsiz gaplar ikki yo‘l bilan yasaladi: |
+| SRC-P263-L024 | 7. Theredan keyin to be, can, must, may, ought to va boshqa modal |
+| SRC-P263-L033 | 8. Theredan keyin to be ma’nosida kelgan to live yashamoq, to exist |
+| SRC-P264-L005 | 1. Kesim ega bilan shaxs va sonda moslashadi: |
+| SRC-P264-L015 | 2. Agar gapda and bilan bog‘langan ikkita ega bo‘lsa kesim ko‘plikda |
+| SRC-P264-L020 | 3. Agar there is/are iborasidan keyin bir nechta ega bo‘lsa, kesim ular- |
+| SRC-P264-L027 | 4. Agar ko‘plikdagi otning oldida a lot of bo‘lsa, fe’l ko‘plikda ish- |
+| SRC-P264-L031 | 5. Ikkita ega with bilan, as well as shuningdek bog‘lovchilari bilan bog‘- |
+| SRC-P264-L037 | 6. Agar ikkita ega either… or yoki…yoki, neither … nor na … na |
+| SRC-P265-L003 | 7. Agar ega jamlama otdan yasalgan bo‘lsa (crew, family, committee, |
+| SRC-P265-L019 | 8. Agar each, every, everyone, everybody, everything, no one, nobody, |
+| SRC-P265-L032 | 9. Agar all hamma narsa ma’nosida ega bo‘lib kelgan bo‘lsa, kesim |
+| SRC-P265-L038 | 10. Agar ega both har ikkalasi olmoshidan yasalgan bo‘lsa, kesim ko‘p- |
+| SRC-P266-L003 | 11. Agar ega who?, what? kabi so‘roq olmoshlardan yasalgan bo‘lsa, |
+| SRC-P266-L008 | 12. Agar ega who, which, that kabi nisbiy olmoslardan yasalgan bo‘l sa, |
+| SRC-P266-L021 | 13. Agar gapning egasi news yangiliklar, physics fi zika, statistics |
+| SRC-P266-L029 | 14. Agar ega faqat ko‘plikda ishlatiladigan goods mollar (tovarlar), |
+| SRC-P267-L018 | 1. Vositasiz to‘ldiruvchi o‘timli fe’ldagi ish-harakat bevosita o‘tuvchi |
+| SRC-P267-L021 | 2. Vositasiz to‘ldiruvchi otdan yasalgan bo‘ladi: |
+| SRC-P267-L026 | 3. Vositasiz to‘ldiruvchi olmoshlardan yasalgan bo‘ladi: |
+| SRC-P267-L030 | 4. Vositasiz to‘ldiruvchi sondan yasalgan bo‘ladi: |
+| SRC-P267-L038 | 5. Vositasiz to‘ldiruvchi infi nitivdan yasalgan bo‘ladi: |
+| SRC-P267-L041 | 6. Vositasiz to‘ldiruvchi gerunddan yasalgan bo‘ladi: |
+| SRC-P268-L015 | Izoh: Ish-harakat yo‘naltirilgan shaxs vositasiz to‘ldiruvchidan keyin predlogli vositali |
+| SRC-P268-L023 | 1. Predlogli vositali to‘ldiruvchilar otdan yasaladi: |
+| SRC-P268-L027 | 2. Predlogli vositali to‘ldiruvchi predlogli olmoshdan yasaladi: |
+| SRC-P268-L031 | 3. Predlogli vositali to‘ldiruvchilar predlogli gerunddan yasaladi: |
+| SRC-P269-L021 | 1. Aniqlovchi sifatdan yasaladi: |
+| SRC-P269-L027 | 2. Aniqlovchi sifatdoshdan yasaladi: |
+| SRC-P269-L032 | 3. Aniqlovchi sifatdoshli iboradan yasaladi: |
+| SRC-P269-L038 | 4. Aniqlovchi sondan yasaladi: |
+| SRC-P270-L003 | 5. Aniqlovchi olmoshdan yasaladi: |
+| SRC-P270-L008 | 6. Aniqlovchi bosh kelishikdagi otdan yasaladi: |
+| SRC-P270-L013 | 7. Aniqlovchi qaratqich kelishigidagi otdan yasaladi: |
+| SRC-P270-L019 | 8. Aniqlovchi predlogli otdan yasaladi: |
+| SRC-P270-L023 | 9. Aniqlovchi infi nitivdan yasaladi: |
+| SRC-P270-L026 | 10. Aniqlovchi predlogli gerunddan yasaladi: |
+| SRC-P270-L030 | 11. Ingliz tilida yana otdan yasalgan shunday aniqlovchilar borki, ular |
+| SRC-P270-L038 | 12. Aniqlovchining gapda doimiy o‘rni yo‘q. U otdan yasalgan, istalgan |
+| SRC-P271-L036 | Izoh: Agar sifatdosh sifatni bildirmasdan, faqat fe’llik ma’nosida ishlatilsa, u aniq lanuvchi |
+| SRC-P272-L032 | 1. Vaqtni: |
+| SRC-P272-L036 | 2. O‘rin-joyni: |
+| SRC-P272-L040 | 3. Harakatning qanday sodir bo‘lishini: |
+| SRC-P273-L003 | 4. Harakatning sodir bo‘lish sababini: |
+| SRC-P273-L010 | 5. Maqsadni: |
+| SRC-P273-L015 | 6. Darajani: |
+| SRC-P273-L024 | 1. Ravishdan: |
+| SRC-P273-L028 | 2. Predlogli otdan: |
+| SRC-P273-L032 | 3. Sifatdoshdan: |
+| SRC-P273-L038 | 4. Infi nitivdan: |
+| SRC-P274-L003 | 5. Predlogli gerunddan: |
+| SRC-P274-L041 | 1. Vositasiz to‘ldiruvchi bevosita fe’ldan keyin keladi: |
+| SRC-P275-L007 | Izoh: Qo‘shma fe’llardan keyin (to put on kiymoq, to take off yechmoq, to pick up terib |
+| SRC-P275-L018 | 2. Predlogsiz vositali to‘ldiruvchi har doim fe’l bilan vositasiz to‘ldiruvchi |
+| SRC-P275-L022 | 3. Predlogli vositali to‘ldiruvchi vositasiz to‘ldiruvchidan keyin |
+| SRC-P275-L035 | 1. Vositasiz to‘ldiruvchi olmoshdan yasalgan bo‘lsa: |
+| SRC-P275-L041 | 2. Ish-harakat yo‘naltirilgan to‘ldiruvchi so‘zlarning uzun guruhi dan, |
+| SRC-P276-L009 | 3. Ish-harakat yo‘naltirilgan to‘ldiruvchiga (murojaat qilinayotgan |
+| SRC-P276-L015 | 4. to announce e’lon qilmoq, to communicate xabar bermoq, to deliver |
+| SRC-P276-L029 | 5. Murojaat qilinayotgan shaxs so‘roq yoki nisbiy olmoshlardan yasalgan |
+| SRC-P277-L008 | Izoh: Ammo 4-bandda aytib o‘tilgan fe’llardan keyin to‘ldiruvchi faqat to predlogi bilan |
+| SRC-P277-L021 | Izoh: Ammo 4-bandda aytib o‘tilgan fe’llardan keyin to‘ldiruvchi faqat to predlogi bilan |
+| SRC-P277-L028 | 1. Ravish holi to‘ldiruvchidan keyin keladi: |
+| SRC-P277-L031 | Izoh: Ravishdan yasalgan ravish hollari fe’ldan oldin kelishi mumkin: |
+| SRC-P277-L034 | 2. O‘rin holi ravish holidan keyin keladi: |
+| SRC-P277-L037 | 3. Payt holi o‘rin holidan keyin keladi (gapning oxirida). Payt holi gapning |
+| SRC-P278-L007 | Izoh: Noaniq vaqt ravishlaridan yasalgan payt hollari asosiy fe’ldan oldin keladi, to be |
+| SRC-P278-L042 | 1. Gapda there is birikmasi ishlatilgan bo‘lsa teskari so‘z tartibi |
+| SRC-P279-L003 | 2. Muallif gapi ko‘chirma gapdan keyin kelganda va unda to say, to |
+| SRC-P279-L038 | 3. Hol bilan boshlangan (ko‘pincha o‘rin holi bilan), otdan yasalgan |
+| SRC-P280-L005 | 4. Here va there ravishlari bilan boshlangan egasi otdan yasalgan |
+| SRC-P280-L016 | 5. never hech qachon, hardly, scarcely arang, seldom kamdan-kam, |
+| SRC-P280-L033 | 6. Bog‘lovchisiz bog‘langan shart ergash gaplarda teskari so‘z tartibi |
+| SRC-P281-L003 | 7. So do I, Neither do I kabi gaplarda ham teskari so‘z tartibi |
+| SRC-P281-L012 | 1. Agar vositasiz to‘ldiruvchi so‘zlarning uzun guruhidan iborat bo‘lsa, |
+| SRC-P281-L023 | 2. Agar boshqacha tartib gapning ma’nosining buzilishiga olib kelsa |
+| SRC-P281-L031 | 3. Orin holi odatda ravish holidan keyin keladi, ammo o‘rin holi here |
+| SRC-P282-L005 | 1. Bo‘lishsiz gaplarda kesim bo‘lishsiz shaklda keladi. Not inkor |
+| SRC-P282-L020 | 2. Agar kesimda ikki va undan ortiq yordamchi fe’l bo‘lsa not yuklamasi |
+| SRC-P282-L025 | 3. Ingliz tilida bo‘lishsizlik not yuklamasini emas, bo‘lishsiz olmoshlar |
+| SRC-P282-L038 | 4. Bo‘lishsiz olmoshlar, ravishlar va bog‘lovchilar bilan yasalgan |
+| SRC-P283-L031 | 5. Bo‘lishsiz ega hech qachon not … any va ularning yasamalaridan |
+| SRC-P283-L041 | 6. There is birikmasi bilan bo‘lishsizlik no one, nobody, nothing |
+| SRC-P284-L014 | 1. So‘roq gaplar ikki xil bo‘ladi: umumiy so‘roq gaplar va maxsus so‘- |
+| SRC-P284-L022 | 2. Maxsus so‘roq gaplar (Special Questions) gapning biror bo‘lagiga |
+| SRC-P284-L035 | 1. Umumiy so‘roq gaplar gapning boshida, eganing oldiga yordam chi fe’l |
+| SRC-P285-L019 | 2. Kesim tarkibida ikki yoki undan ziyod yordamchi fe’l bo‘lsa, eganing |
+| SRC-P285-L025 | 3. Simple Present yoki Simple Pastdagi to be va to have fe’llarining |
+| SRC-P285-L031 | 4. to be fe’li bog‘lovchi fe’l bo‘lib kelganda uning shakli eganing oldiga |
+| SRC-P285-L039 | 1. Umumiy so‘roq gaplarga odatda qisqa javob beriladi. Odatda javob |
+| SRC-P286-L012 | 2. Qisqa javoblarda yordamchi yoki modal fe’llardan oldin ravishlar |
+| SRC-P286-L022 | 3. Ingliz tilida ba’zan faqat yes yoki nodan iborat javoblar ham |
+| SRC-P286-L028 | 4. Qisqa javoblardan tashqari umumiy so‘roq gaplarga to‘liq javob ham |
+| SRC-P286-L036 | 1. Umumiy so‘roq gaplarning bo‘lishsiz shakli egadan keyin asosiy |
+| SRC-P287-L008 | 2. Bo‘lishsiz umumiy so‘roq gaplarning javobi ham bo‘lishli umumiy |
+| SRC-P287-L020 | 1. Umumiy so‘roq gaplarning bir turi tasdiq so‘roq gaplaridir. |
+| SRC-P287-L033 | 2. Tasdiq so‘roq gaplari gapiruvchi o‘zining aytgan fikriga tasdiq |
+| SRC-P288-L013 | 3. Bunday savollarga javoblar odatda qisqa bo‘ladi va tasdiqni yoki |
+| SRC-P288-L041 | 1. Maxsus so‘roq gaplar gapning biror bo‘lagiga beriladi va Who? |
+| SRC-P289-L006 | 2. Maxsus so‘roq gaplarda so‘z tartibi umumiy so‘roq gaplarnikiga |
+| SRC-P289-L016 | 3. Maxsus so‘roq gaplar gapning birorta bo‘lagiga beriladi: |
+| SRC-P289-L022 | 1. Yesterday payt holiga: |
+| SRC-P289-L025 | 2. To the students predlogli vositali to‘ldiruvchiga: |
+| SRC-P289-L032 | 3. An interesting story vositasiz to‘ldiruvchiga: |
+| SRC-P289-L035 | 4. Read kesimga: |
+| SRC-P289-L037 | 5. Interesting aniqlovchiga: |
+| SRC-P290-L009 | 1. Maxsus so‘roq gaplarga ma’no tomonidan zarur bo‘lgan barcha gap |
+| SRC-P290-L020 | 2. Ingliz tilida ham o‘zbek tilidagidek qaysi gap bo‘lagiga savol berilgan |
+| SRC-P290-L030 | 1. Egaga beriladigan so‘roq gaplar Who? Kim? va What? Nima? ol- |
+| SRC-P290-L042 | Izoh: Kesim Simple Present yoki Simple Past zamonlarida bo‘lsa, do yordamchi fe’li |
+| SRC-P291-L003 | 2. Eganing aniqlovchisiga berilgan savollarda ham darak gap so‘z |
+| SRC-P291-L013 | 3. Egaga yoki eganing aniqlovchisiga berilgan so‘roq gaplarga qisqa |
+| SRC-P291-L026 | 4. Ingliz tilida ham o‘zbek tilidagidek egaga berilgan so‘roq gap- |
+| SRC-P291-L035 | 1. Kesimi ot-kesim bo‘lgan gaplarning egasiga savol berganda, so‘ roq |
+| SRC-P291-L039 | 2. Savol egaga berilganda bog‘lovchi fe’l orqasidan kelayotgan ot bilan |
+| SRC-P292-L003 | 3. Ot-kesimning ot qismi otdan boshqa so‘zlardan yasalgan bo‘lsa, |
+| SRC-P292-L009 | 4. Savol ot-kesimning ot qismiga berilgan bo‘lsa, o‘sha buyumning qan- |
+| SRC-P292-L018 | 5. Ot-kesimga berilgan savollar va ularning javoblari: |
+| SRC-P292-L032 | 6. Ot-kesimga savol berilib kishining nasabi (ismi, sharifi ) yoki qarin- |
+| SRC-P293-L005 | 1. Maxsus so‘roq gaplarning bo‘lishsiz shaklini yasash uchun not inkor |
+| SRC-P293-L012 | 2. Savol egaga yoki eganing aniqlovchisiga berilgan bo‘lsa, not inkori |
+| SRC-P293-L020 | 1. Muqobil so‘roq gaplar or bog‘lovchisi bilan bog‘langan ikkita umu- |
+| SRC-P293-L030 | 2. Muqobil so‘roq gaplarga to‘liq javob beriladi: |
+| SRC-P293-L035 | 3. Muqobil so‘roq gap egaga berilgan bo‘lsa, ikkinchi egadan ol din |
+| SRC-P294-L003 | 4. Muqobil so‘roq gaplar so‘roq so‘zlar bilan ham boshlanishi mumkin. |
+| SRC-P294-L016 | 1. Buyruq gaplar hamsuhbatni biror ish qilishga undaydi. Ular buy- |
+| SRC-P294-L025 | 2. Iltimosni ifodalash uchun buyruq gaplarning oxirida ko‘pincha will |
+| SRC-P294-L030 | 3. Iltimosni ifodalash uchun will yoki would bilan boshlangan so‘roq |
+| SRC-P294-L041 | 1. Har qanday darak gapni undov gapga aylantirsa bo‘ladi. Undov gaplar |
+| SRC-P295-L006 | 2. Undov gaplar ko‘pincha what qanday, how qanchalik olmoshlari bilan |
+| SRC-P295-L014 | 3. Whatdan keyin keladigan donalab sanaladigan birlikdagi ot noaniq artikl |
+| SRC-P295-L024 | 4. How bilan aniqlanadigan sifat va ravishlar bevosita howdan |
+| SRC-P295-L028 | 5. Ot-kesimli undov gaplarda ega bilan bog‘lovchi fe’l tushib qolishi |
+| SRC-P296-L005 | 1. Bog‘langan qo‘shma gap teng huquqli, bir-biriga qaram (tobe) bo‘l- |
+| SRC-P296-L014 | 2. Qo‘shma gaplarda bir nechta sodda gaplar bog‘lovchisiz ham |
+| SRC-P296-L025 | 1. Ergashgan qo‘shma gap teng bo‘lmagan, bir gap ikkinchisiga tobe |
+| SRC-P296-L040 | 2. Ergash gaplar bosh gap bilan bog‘lovchilarsiz ham bog‘lanishi |
+| SRC-P297-L011 | 1. Ergash gaplar qo‘shma gapda bitta gap bo‘lagi vazifasini bajarib keladi. |
+| SRC-P297-L015 | 2. Gapda bitta, ikkita va undan ko‘p gap bo‘lagi ergash gaplar bilan |
+| SRC-P297-L018 | 1. As it was raining, we could not Yomg‘ir yog‘ayotgani uchun |
+| SRC-P297-L024 | 2. As it was raining, we could not Yomg’ir yog‘ayotgani uchun |
+| SRC-P297-L030 | 3. As it was raining, we could not Yomg‘ir yog‘ayotgani uchun |
+| SRC-P297-L040 | 1. Ega ergash gaplar qo‘shma gapda ega vazifasida keladi. Ular bosh gaplar |
+| SRC-P298-L010 | 2. Ega ergash gaplar ko‘pincha kesimdan keyin keladi; bu holda ke simdan |
+| SRC-P298-L016 | 3. Ega ergash gaplar bosh gapdan vergul bilan ajratilmaydi. |
+| SRC-P298-L020 | 1. Kesim ergash gaplar qo‘shma gapda kesim vazifasida keladi. Ular bosh |
+| SRC-P298-L028 | 2. Kesim ergash gaplar bosh gapdan vergul bilan ajratilmaydi. |
+| SRC-P298-L032 | 1. To‘ldiruvchi ergash gaplar qo‘shma gapda vositasiz yoki predlogli |
+| SRC-P299-L003 | 2. Ko‘pincha that bog‘lovchisi ishlatilmaydi: |
+| SRC-P299-L008 | 3. To‘ldiruvchi ergash gaplar bosh gapdan vergul bilan ajratilmaydi. |
+| SRC-P299-L012 | 1. Whose, whom, which, what, when, where, how, why so‘zlari bilan |
+| SRC-P299-L022 | 2. When bilan bog‘langan ega, kesim va to‘ldiruvchi ergash gaplarda |
+| SRC-P299-L034 | 1. Bir odamning gapini boshqa birovga o‘zgartirmasdan yetkazish |
+| SRC-P300-L008 | 2. Ko‘chirma gaplardan oldin odatda vergul qo‘yiladi. Ammo uzun |
+| SRC-P300-L012 | 3. Ko‘chirma gaplar darak gaplar, so‘roq gaplar va buyruq gaplarga |
+| SRC-P300-L020 | 1. Bosh gap bilan ko‘chirma gap o‘rtasidagi vergul va qo‘shtirnoqlar |
+| SRC-P300-L027 | 2. Agar bosh gapda to‘ldiruvchisiz say fe’li ishlatilgan bo‘lsa, o‘zlash- |
+| SRC-P300-L040 | Izoh: To saydan keyin vositali to‘ldiruvchi to predlogi bilan ishlatiladi, to telldan keyin |
+| SRC-P301-L003 | 3. Ko‘chirma gapdagi kishilik va egalik olmoshlari ma’noga qarab |
+| SRC-P301-L014 | 4. Agar bosh gapdagi fe’l Simple Present, Present Perfect yoki Simp le |
+| SRC-P301-L028 | 5. Agar bosh gapdagi fe’l Simple Past, Past Continuous, Past Perfect |
+| SRC-P303-L003 | 6. Ko‘chirma gapni o‘zlashtirma gapga aylantirganda ish-harakat ning |
+| SRC-P303-L025 | 7. Ko‘chirma gapni o‘zlashtirma gapga aylantirganda must so‘zi ish- |
+| SRC-P304-L003 | 8. Should, ought to fe’llari o‘zlashtirma gaplarda o‘zgarmay qoladi: |
+| SRC-P304-L010 | 9. Ko‘chirma gapni o‘zlashtirma gapga aylantirganda ko‘rsatish |
+| SRC-P304-L042 | 1) He said, «My brother U dedi: «Mening akam shu yerda |
+| SRC-P305-L014 | 2) He said, «I like this book». U dedi: «Men bu kitobni yoqtira- |
+| SRC-P305-L023 | 3) He said, «I saw Nancy U dedi: «Men Nansini kecha ko‘r- |
+| SRC-P305-L036 | 1. Agar ko‘chirma gaplar so‘roq gap bo‘lsa, ularni o‘zlashtirma gapga |
+| SRC-P305-L042 | 2. Maxsus so‘roq gaplarni o‘zlashtirma gaplarga aylantirganda quyi dagi |
+| SRC-P307-L010 | 3. Yordamchi yoki modal fe’l bilan boshlangan so‘roq gaplarni o‘z- |
+| SRC-P307-L024 | 4. Umumiy so‘roq gaplarning javoblarini o‘zlashtirma gapga aylan- |
+| SRC-P308-L013 | 1. Agar ko‘chirma gap buyruq qap bo‘lsa, bosh gapdagi say fe’li |
+| SRC-P308-L017 | 2. Ko‘chirma gapdagi buyruq maylidagi fe’l o‘zlashtirma gapda to |
+| SRC-P308-L021 | 3. Kishilik, egalik va ko‘rsatish olmoshlari mazmunga qarab almash- |
+| SRC-P308-L038 | 1. Aniqlovchi ergash gaplar qo‘shma gapda aniqlovchi vazifasida keladi |
+| SRC-P309-L021 | 2. Aniqlovchi ergash gaplar uch xil bo‘ladi: |
+| SRC-P310-L018 | 3. Ajratuvchi va tasnifl ovchi aniqlovchi ergash gaplarni tushirib |
+| SRC-P310-L033 | 4. Ajratuvchi va tasnifl ovchi aniqlovchi ergash gaplar bosh gapdan vergul |
+| SRC-P310-L037 | 5. Ajratuvchi va tasnifl ovchi aniqlovchi ergash gaplarda whom (who |
+| SRC-P311-L003 | 6. Who olmoshi kamdan-kam hollarda that olmoshi bilan almashtiriladi. |
+| SRC-P311-L006 | 7. That olmoshidan keyin predlog kelmaydi. Bu holda predlog fe’ldan |
+| SRC-P311-L013 | 8. Tasvirlovchi aniqlovchi ergash gaplarda who, whom, which o‘rnida |
+| SRC-P311-L015 | 9. Ajratuvchi aniqlovchi ergash gaplarda to‘ldiruvchi bo‘lib kelgan that |
+| SRC-P311-L024 | 10. Agar nisbiy olmoshdan oldin predlog bo‘lsa, va nisbiy olmosh tushib |
+| SRC-P311-L034 | 11. Ega bo‘lib kelgan nisbiy olmoshlar tushirib qoldirilmaydi: |
+| SRC-P311-L039 | 12. Tasvirlovchi aniqlovchi ergash gaplarda nisbiy olmoshlar tushib |
+| SRC-P312-L005 | 1. Hol ergash gaplar qo‘shma gapda turli hollarning vazifasini bajaradi. |
+| SRC-P312-L010 | 2. Hol ergash gaplar qo‘shma gapning boshida kelganda bosh gap dan |
+| SRC-P312-L016 | 1. Payt ergash gaplar bosh gapga when, whenever, while, as, after, |
+| SRC-P312-L038 | 2. Payt ergash gaplarda kelasi zamon ishlatilmaydi. Simple Future o‘r- |
+| SRC-P313-L013 | Izoh: Till va untildan keyin ergash gapning fe’li bo‘lishli shaklda keladi: |
+| SRC-P313-L025 | 1. O‘rin ergash gaplari bosh gap bilan where, wherever so‘zlari yor- |
+| SRC-P314-L013 | 1. Natija ergash gaplar bosh gapning mazmunidan kelib chiqadigan |
+| SRC-P314-L037 | 1. Maqsad ergash gaplar bosh gapdagi ish-harakat qanday maqsadda sodir |
+| SRC-P315-L026 | 2. May be able o‘rnida can, might be able o‘rnida could ishlatilishi |
+| SRC-P315-L031 | 3. Kitobiy tilda ba’zan maqsad ergash gaplari bosh gapga that va lest |
+| SRC-P316-L003 | 4. Bosh va ergash gaplarning egasi bitta bo‘lsa, ergash gaplar odatda |
+| SRC-P316-L021 | 1. Shart ergash gaplar bosh gap bilan if agar, unless agar … — masa, |
+| SRC-P316-L034 | 2. Shart ergash gaplar bosh gapdagi fe’l ifodalagan ish-harakatning |
+| SRC-P316-L037 | 3. Bundan keyin qulaylik uchun «Shart ergash gapli qo‘shma gap» ata- |
+| SRC-P317-L005 | 1. Real shart gaplar agar gapirilayotgan shart-sharoit mavjud bo‘lgan da |
+| SRC-P317-L016 | 2. Real shart ergash gaplarda Simple Present o‘rnida should + V (fe’lning |
+| SRC-P317-L023 | 3. Shart ergash gaplarda ba’zan will + V ishlatilishi mumkin. Bu yerda |
+| SRC-P317-L031 | 4. Bosh gapdagi fe’l buyruq maylida ham bo’lishi mumkin: |
+| SRC-P317-L036 | 5. Real shart gaplarda hozirgi va o‘tgan zamondagi taxmin ham |
+| SRC-P318-L013 | 1. Hozirgi zamon noreal shart gaplar hozirgi va kelasi zamondagi ish- |
+| SRC-P318-L040 | 2. Hozirgi paytda 1- va 3- shaxs birlikda were o‘rnida was ishlatish |
+| SRC-P319-L003 | 3. Ish-harakatning yuz berish ehtimoli juda kam bo‘lganda, kelasi |
+| SRC-P319-L014 | 3. Shart ergash gapda ba’zan would + V ishlatiladi va bu yerda would |
+| SRC-P319-L026 | 1. O‘tgan zamon noreal shart gaplar o‘tgan zamondagi farazni ifodalaydi |
+| SRC-P321-L035 | 1. Real shart gaplarning kesimi should + V bilan ifodalangan bo‘lib, if |
+| SRC-P322-L003 | 2. Agar hozirgi zamondagi noreal shart gaplarning kesimi tarkibida had, |
+| SRC-P322-L023 | 3. O‘tgan zamondagi noreal shart gaplar oldidan if bog‘lovchisi tu shib |
+| SRC-P322-L037 | 1. Ravish ergash gaplar bosh gapga as, as if (as though), that bog‘lov- |
+| SRC-P323-L003 | 2. Agar ergash gap that bog‘lovchisi bilan bog‘langan bo‘lsa, bosh gapda |
+| SRC-P323-L012 | 3. Qiyoslash ergash gaplari (Adverbial Clauses of Comparison) ham |
+| SRC-P323-L022 | Izoh: the…the ishlatilganda birinchi thedan keyin (ergash gapda) kelasi zamon o‘r nida |
+| SRC-P323-L025 | 4. As if (as though) bilan bog‘langan ergash gapdagi ish harakat bosh |
+| SRC-P324-L009 | 5. As ifdan keyin hamma shaxs va son uchun to bening were shakli ish- |
+| SRC-P324-L017 | 6. Bosh gapdagi ish-harakat qaysi zamonda bo‘lishidan qat’i nazar, ergash |
+| SRC-P324-L036 | Izoh: Yuqoridagi ikkita qoida as if yoki as though haqiqatga teskari voqelikni ko‘rsatganda |
+| SRC-P326-L024 | 1. Uyushuq bo‘laklarni ajratish uchun ishlatiladi. Vergul oxirgi |
+| SRC-P326-L030 | 2. Otdan keyin kelgan izohlovchini ajratadi: |
+| SRC-P326-L033 | 3. Mustaqil sifatdoshli iboralarni ajratish uchun ishlatiladi: |
+| SRC-P326-L041 | 4. Kirish so‘zlar, so‘z birikmalari va kirish gaplarni ajratadi: |
+| SRC-P327-L010 | 5. Murojaatni ajratadi: |
+| SRC-P327-L025 | 6. Xatning oxiridagi jumlalarda imzodan oldin ishlatiladi: |
+| SRC-P327-L028 | 7. Sanani yozganda oyni yildan ajratadi: |
+| SRC-P327-L031 | 8. Manzil qismlarini ajratadi (adresatni, ko‘chani, shaharni, pochtani, |
+| SRC-P327-L037 | 1. Vergul bog‘langan qo‘shma gaplarda sodda gaplar orasida teng |
+| SRC-P328-L003 | 2. Vergul tasvirlovchi aniqlovchi ergash gaplarni bosh gapdan ajratadi, |
+| SRC-P328-L020 | 3. Hol ergash gaplar bosh gapdan oldin kelsa, vergul bilan ajrati ladi: |
+| SRC-P328-L039 | 1. Sitata oldida ishlatiladi: |
+| SRC-P328-L043 | 2. Ko‘chirma gapdagi uzun matndan oldin ishlatiladi: |
+| SRC-P329-L007 | Izoh: Qisqa ko‘chirma gaplardan oldin vergul qo‘yiladi: |
+| SRC-P329-L010 | 3. Uyushuq bo‘laklar bilan ularni umumlashtiruvchi so‘zlar (as fol lows |
+| SRC-P329-L017 | 1. Nuqta darak va buyruq gaplardan keyin qo‘yiladi: |
+| SRC-P329-L020 | 2. So‘zlarni qisqartirganda nuqta ishlatiladi: |
+| SRC-P329-L026 | 1. So‘roq belgisi so‘roq gaplardan keyin qo‘yiladi: |
+| SRC-P329-L029 | 2. O‘zlashtirma so‘roq gaplardan keyin nuqta qo‘yiladi, chunki |
+| SRC-P329-L037 | 3. O‘zlashtirma so‘roq gapning bosh gapi so‘roq gap bo‘lsa, gap oxirida |
+
+## 10. Ushbu yetkazilgan paketning tekshiruv holati
+
+- Asl manba SHA256: `1bfad34178890f6a0343b462ecdb65e633037ad8aeee318707149d6c38576179`.
+- 337/337 sahifa markeri tartibi tekshirildi.
+- 169/169 nuqtali mundarija yozuvi inventarga kiritildi.
+- 1 224/1 224 raqamlangan/izoh nomzodi lokatorga kiritildi.
+- To‘rtta bosqichli shablon va A0–C2 darajalar saqlandi; taklifiy darslar yig‘indisi 400.
+- Bir to‘liq sonlar mikro-darsi va sonlar bo‘limi transformatsiya xaritasi yozildi.
+- To‘liq 400 dars hali yozilmagan. Barcha atomik qoidalar semantik auditi va CEFR mapping hali yakunlanmagan.
+- Ushbu suhbatda repo berilmagani uchun Android kodi o‘zgartirilmadi va build bajarilmadi.

@@ -3,246 +3,177 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:fillViewport="true">
+    android:background="@drawable/bg_curriculum_screen"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingBottom="18dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_medium">
+        android:paddingHorizontal="12dp"
+        android:paddingTop="10dp">
 
-        <TextView
-            style="@style/TextAppearance.TalkMe.Heading"
+        <!-- 1. TOP BRAND & DAILY GOAL ROW (TalkMe + Bugungi maqsad • 2/5) -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/practice_header_title" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="2dp">
 
-        <TextView
-            android:id="@+id/tvPracticeEligibilityStatus"
-            style="@style/TextAppearance.TalkMe.BodySecondary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xxs"
-            android:text="@string/practice_header_subtitle" />
-
-        <!-- Flip Cards Dedicated Card (Uzum.uz Style: Large Top Image + Text Below) -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardPracticeFlipCards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/color_surface"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:strokeColor="@color/color_card_stroke"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                app:cardBackgroundColor="#1E3A8A"
+                app:cardCornerRadius="21dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#60A5FA"
+                app:strokeWidth="1.5dp">
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="176dp"
-                    android:contentDescription="@string/practice_cat_flip_cards"
+                    android:layout_height="match_parent"
+                    android:contentDescription="TalkMe"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_daily_tasks_banner_1794310886631" />
+                    android:src="@drawable/img_home_avatar_tutor" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="14dp">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_uzum_metric_pill"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="2dp"
-                        android:text="SPACED REPETITION • 3D CARDS"
-                        android:textColor="#111827"
-                        android:textSize="10sp"
+                        android:text="Talk"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        style="@style/TextAppearance.TalkMe.Title"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/practice_cat_flip_cards"
-                        android:textColor="@color/color_text_primary" />
-
-                    <TextView
-                        style="@style/TextAppearance.TalkMe.BodySecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="@string/practice_cat_flip_cards_desc" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/bg_uzum_action_btn"
-                        android:gravity="center"
-                        android:text="3D Kartochkalarni ochish →"
-                        android:textColor="@color/color_primary"
-                        android:textSize="13sp"
+                        android:text="Me"
+                        android:textColor="#38BDF8"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="English Learning"
+                    android:textColor="#94A3B8"
+                    android:textSize="11sp" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Row 1: Reading & Writing (2-Column Uzum.uz Grid Style) -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
+            <!-- Daily Goal Pill: 🎯 Bugungi maqsad • 2/5 -->
+            <LinearLayout
+                android:id="@+id/pillPracticeDailyGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_practice_goal_pill"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="11dp">
 
-            <!-- 8.1 Reading -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardPracticeReading"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/color_surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeColor="@color/color_card_stroke"
-                app:strokeWidth="1dp">
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="Goal"
+                    android:src="@drawable/ic_lesson_target_cyan" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tvPracticeDailyGoal"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginStart="6dp"
+                    android:text="Bugungi maqsad • 2/5"
+                    android:textColor="#F1F5F9"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="144dp"
-                        android:contentDescription="@string/practice_cat_reading"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_skill_reading_1794316278550" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/practice_cat_reading"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:minLines="2"
-                            android:text="@string/practice_cat_reading_desc"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="34dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_uzum_action_btn"
-                            android:gravity="center"
-                            android:text="Mashq qilish"
-                            android:textColor="@color/color_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- 8.2 Writing -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardPracticeWriting"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/color_surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeColor="@color/color_card_stroke"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="144dp"
-                        android:contentDescription="@string/practice_cat_writing"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_skill_writing_1794316279347" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/practice_cat_writing"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:minLines="2"
-                            android:text="@string/practice_cat_writing_desc"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="34dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_uzum_action_btn"
-                            android:gravity="center"
-                            android:text="Mashq qilish"
-                            android:textColor="@color/color_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                    android:layout_marginStart="8dp"
+                    android:max="5"
+                    android:progress="2"
+                    app:indicatorColor="#22D3EE"
+                    app:indicatorSize="20dp"
+                    app:trackColor="#263B5E"
+                    app:trackCornerRadius="99dp"
+                    app:trackThickness="3dp" />
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Row 2: Speaking AI & Listening (2-Column Uzum.uz Grid Style) -->
+        <!-- 2. MASHQ STUDIYASI COSMIC HEADER BANNER -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="4dp"
+            android:contentDescription="@string/practice_header_title"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_practice_header_banner" />
+
+        <!-- 3. ARALASH MASHQ HERO CHALLENGE BANNER -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPracticeFlipCards"
+            android:layout_width="match_parent"
+            android:layout_height="124dp"
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#0F203C"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Aralash mashq • 5 daqiqalik challenge"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_practice_hero_aralash" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 4. SECTION HEADER: | Ko'nikmani tanlang -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="20dp"
+                android:background="@drawable/bg_gold_section_bar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:text="Ko‘nikmani tanlang"
+                android:textColor="#FFFFFF"
+                android:textSize="19.5sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- 5. 2x3 COSMIC NEON SKILL GRID -->
+        <!-- Row 1: Speaking & Listening -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -250,142 +181,52 @@
             android:baselineAligned="false"
             android:orientation="horizontal">
 
-            <!-- 8.3 Speaking AI -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardPracticeSpeaking"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="142dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/color_surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeColor="@color/color_card_stroke"
-                app:strokeWidth="1dp">
+                app:cardBackgroundColor="#0D223A"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
 
-                <LinearLayout
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="144dp"
-                        android:contentDescription="@string/practice_cat_speaking"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_skill_speaking_1794316279625" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/practice_cat_speaking"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:minLines="2"
-                            android:text="@string/practice_cat_speaking_desc"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="34dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_uzum_action_btn"
-                            android:gravity="center"
-                            android:text="Mashq qilish"
-                            android:textColor="@color/color_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/practice_cat_speaking"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_practice_card_speaking" />
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 8.4 Listening -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardPracticeListening"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="142dp"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/color_surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeColor="@color/color_card_stroke"
-                app:strokeWidth="1dp">
+                app:cardBackgroundColor="#161A3E"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
 
-                <LinearLayout
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="144dp"
-                        android:contentDescription="@string/practice_cat_listening"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_skill_listening_1794316280104" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/practice_cat_listening"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:minLines="2"
-                            android:text="@string/practice_cat_listening_desc"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="34dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_uzum_action_btn"
-                            android:gravity="center"
-                            android:text="Mashq qilish"
-                            android:textColor="@color/color_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/practice_cat_listening"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_practice_card_listening" />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- Row 3: Grammar & Vocabulary (2-Column Uzum.uz Grid Style) -->
+        <!-- Row 2: Reading & Writing -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -393,149 +234,116 @@
             android:baselineAligned="false"
             android:orientation="horizontal">
 
-            <!-- 8.5 Grammar Practice -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardPracticeGrammar"
+                android:id="@+id/cardPracticeReading"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="138dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/color_surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeColor="@color/color_card_stroke"
-                app:strokeWidth="1dp">
+                app:cardBackgroundColor="#0E2244"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
 
-                <LinearLayout
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="144dp"
-                        android:contentDescription="@string/practice_cat_grammar"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_lesson_grammar_1794310851898" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/practice_cat_grammar"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:minLines="2"
-                            android:text="@string/practice_cat_grammar_desc"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="34dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_uzum_action_btn"
-                            android:gravity="center"
-                            android:text="Mashq qilish"
-                            android:textColor="@color/color_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/practice_cat_reading"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_practice_card_reading" />
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 8.6 Vocabulary Practice -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardPracticeVocabulary"
+                android:id="@+id/cardPracticeWriting"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="138dp"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/color_surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeColor="@color/color_card_stroke"
-                app:strokeWidth="1dp">
+                app:cardBackgroundColor="#1B1E3C"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
 
-                <LinearLayout
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="144dp"
-                        android:contentDescription="@string/practice_cat_vocabulary"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_skill_vocabulary_1794316277453" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/practice_cat_vocabulary"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:minLines="2"
-                            android:text="@string/practice_cat_vocabulary_desc"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="34dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_uzum_action_btn"
-                            android:gravity="center"
-                            android:text="Mashq qilish"
-                            android:textColor="@color/color_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/practice_cat_writing"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_practice_card_writing" />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- Reading AI Coach button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnOpenReadingAiCoach"
-            style="@style/Widget.TalkMe.OutlinedButton"
+        <!-- Row 3: Vocabulary (Flipcard • 12 ta) & Grammar -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:text="@string/home_action_reading_ai" />
+            android:layout_marginTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPracticeVocabulary"
+                android:layout_width="0dp"
+                android:layout_height="142dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="#0E2A38"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/practice_cat_vocabulary"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_practice_card_vocab" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPracticeGrammar"
+                android:layout_width="0dp"
+                android:layout_height="142dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="#16193E"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/practice_cat_grammar"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_practice_card_grammar" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- Hidden legacy views preserved for view-binding safety -->
+        <TextView
+            android:id="@+id/tvPracticeEligibilityStatus"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpenReadingAiCoach"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

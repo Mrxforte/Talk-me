@@ -52,4 +52,20 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Semantic Cosmic Dark Theme Palette -->
+    <color name="color_cosmic_background">#070B14</color>
+    <color name="color_cosmic_card">#0A1326</color>
+    <color name="color_cosmic_card_stroke">#1B3358</color>
+    <color name="color_neon_cyan">#00E5FF</color>
+    <color name="color_neon_cyan_variant">#40C4FF</color>
+    <color name="color_neon_green">#00E676</color>
+    <color name="color_neon_purple">#9D4EDD</color>
+    <color name="color_gold_accent">#FFD54F</color>
+    <color name="color_gold_stroke">#FFB300</color>
+    <color name="color_slate_subtitle">#8E9CAE</color>
+    <color name="color_pill_gold_bg">#241E11</color>
+    <color name="color_pill_streak_bg">#211718</color>
+    <color name="color_pill_banner_bg">#1A1033</color>
+    <color name="color_pill_banner_stroke">#4D2A87</color>
 </resources>

@@ -193,7 +193,9 @@ interface AiLearningService {
         allowedVocabulary: List<String>,
         allowedGrammarSummaries: List<String>,
         conversationHistory: List<Pair<String, String>>,
-        studentUtterance: String
+        studentUtterance: String,
+        audioWavBytes: ByteArray? = null,
+        learnerLevel: String = "A0_A1"
     ): Result<SpeakingAiResponse>
 
     /**
@@ -219,7 +221,8 @@ interface AiLearningService {
 data class SpeakingAiResponse(
     val spokenEnglishReply: String,
     val grammarAndVocabFeedbackUzbek: String,
-    val accuracyScore: Int
+    val accuracyScore: Int,
+    val studentTranscript: String = ""
 )
 
 data class ReadingPassageResult(

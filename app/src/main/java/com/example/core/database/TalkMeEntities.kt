@@ -28,13 +28,13 @@ data class UserProfileEntity(
 )
 data class TopicEntity(
     @PrimaryKey val id: String,
-    val courseId: String,
+    val courseId: String = com.example.core.common.AppConstants.DEFAULT_COURSE_ID,
     val orderIndex: Int,
     val titleEnglish: String,
     val titleUzbek: String,
     val descriptionUzbek: String,
-    val isUnlocked: Boolean,
-    val isCompleted: Boolean
+    val isUnlocked: Boolean = false,
+    val isCompleted: Boolean = false
 )
 
 /**
@@ -53,8 +53,8 @@ data class LessonSectionEntity(
     val objectiveUzbek: String,
     val explanationUzbek: String,
     val wrapUpSummaryUzbek: String,
-    val isUnlocked: Boolean,
-    val isCompleted: Boolean
+    val isUnlocked: Boolean = false,
+    val isCompleted: Boolean = false
 )
 
 /**
@@ -73,10 +73,10 @@ data class VocabularyEntity(
     val uzbekTranslation: String,
     val exampleEnglish: String,
     val exampleUzbek: String,
-    val isStudied: Boolean,
-    val isMemorized: Boolean,
-    val reviewCount: Int,
-    val nextReviewTimestamp: Long
+    val isStudied: Boolean = false,
+    val isMemorized: Boolean = false,
+    val reviewCount: Int = 0,
+    val nextReviewTimestamp: Long = 0L
 )
 
 /**

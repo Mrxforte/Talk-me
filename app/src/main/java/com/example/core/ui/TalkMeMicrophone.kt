@@ -29,7 +29,6 @@ import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,11 +41,14 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.core.speech.VadState
 import com.example.domain.repository.SpeechRecognitionState
+import java.util.Locale
 import kotlin.math.sin
 
 val TalkMePrimaryColor = Color(0xFF1E3A8A)
@@ -56,11 +58,11 @@ val TalkMeErrorColor = Color(0xFFEF4444)
 val TalkMeSurfaceColor = Color(0xFFFFFFFF)
 
 /**
- * Premium Jetpack Compose Microphone Component featuring:
+ * Jetpack Compose Microphone Component featuring:
  * - Animated microphone button with pulsing aura during active recording.
- * - Real-time voice waveform visualization powered by actual audio amplitude.
- * - Live interim and final offline STT transcription display.
- * - Interactive controls (Stop, Cancel, Retry).
+ * - Real-time voice waveform visualization powered by actual audio amplitude and Silero VAD state.
+ * - Live interim and final local Sherpa-ONNX STT transcription display.
+ * - Interactive controls (Start, Stop, Cancel).
  */
 @Composable
 fun TalkMeMicrophone(
@@ -72,7 +74,8 @@ fun TalkMeMicrophone(
     onStartRecording: () -> Unit,
     onStopRecording: () -> Unit,
     onCancelRecording: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    vadState: VadState = VadState.SILENCE
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -91,6 +94,9 @@ fun TalkMeMicrophone(
             if (speechState == SpeechRecognitionState.LISTENING_PASS_1) {
                 AudioWaveformBars(
                     amplitude = amplitude,
+                    isSpeechActive = vadState == VadState.SPEECH_BEGIN ||
+                        vadState == VadState.ACTIVE_SPEECH ||
+                        vadState == VadState.PAUSE,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
@@ -98,13 +104,18 @@ fun TalkMeMicrophone(
                 Spacer(modifier = Modifier.height(12.dp))
             }
 
-            // Real-Time STT Transcription Text Display
+            // Real-Time Local STT Transcription Text Display
             val displayText = when {
                 finalText.isNotBlank() -> finalText
                 interimText.isNotBlank() -> interimText
-                speechState == SpeechRecognitionState.LISTENING_PASS_1 -> "Eshitilmoqda (Inglizcha gapiring)…"
-                speechState == SpeechRecognitionState.PROCESSING_PASS_2 -> "Oflayn STT Pass-2 tahlil qilinmoqda…"
-                else -> "Tugmani bosib inglizcha gapiring"
+                speechState == SpeechRecognitionState.LISTENING_PASS_1 &&
+                    (vadState == VadState.SPEECH_BEGIN || vadState == VadState.ACTIVE_SPEECH) ->
+                    "Nutq aniqlanmoqda (Silero VAD + Sherpa-ONNX)…"
+                speechState == SpeechRecognitionState.LISTENING_PASS_1 ->
+                    "Eshitilmoqda (Inglizcha gapiring)…"
+                speechState == SpeechRecognitionState.PROCESSING_PASS_2 ->
+                    "Oflayn Sherpa-ONNX Pass-2 yakunlanmoqda…"
+                else -> "Tugmani bir marta bosib suhbatni boshlang"
             }
 
             Text(
@@ -116,13 +127,14 @@ fun TalkMeMicrophone(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp)
+                    .testTag("talkme_mic_status_text")
             )
 
             if (speechState == SpeechRecognitionState.LISTENING_PASS_1) {
                 val mins = durationSeconds / 60
                 val secs = durationSeconds % 60
                 Text(
-                    text = String.format("● REC %02d:%02d", mins, secs),
+                    text = String.format(Locale.US, "● REC %02d:%02d", mins, secs),
                     color = TalkMeErrorColor,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
@@ -140,13 +152,13 @@ fun TalkMeMicrophone(
             ) {
 
                 if (speechState == SpeechRecognitionState.LISTENING_PASS_1) {
-                    // Cancel Button
                     IconButton(
                         onClick = onCancelRecording,
                         modifier = Modifier
-                            .size(44.dp)
+                            .size(48.dp)
                             .clip(CircleShape)
                             .background(Color(0xFFF1F5F9))
+                            .testTag("talkme_mic_cancel_button")
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
@@ -158,7 +170,6 @@ fun TalkMeMicrophone(
                     Spacer(modifier = Modifier.width(24.dp))
                 }
 
-                // Main Pulsing Mic Button
                 val isListening = speechState == SpeechRecognitionState.LISTENING_PASS_1
                 val animatedScale by animateFloatAsState(
                     targetValue = if (isListening) 1f + (amplitude * 0.3f) else 1f,
@@ -202,6 +213,7 @@ fun TalkMeMicrophone(
                             .clickable {
                                 if (isListening) onStopRecording() else onStartRecording()
                             }
+                            .testTag("talkme_mic_primary_button")
                     ) {
                         Icon(
                             imageVector = if (isListening) Icons.Default.Stop else Icons.Default.Mic,
@@ -215,13 +227,13 @@ fun TalkMeMicrophone(
                 if (speechState == SpeechRecognitionState.LISTENING_PASS_1) {
                     Spacer(modifier = Modifier.width(24.dp))
 
-                    // Done / Finish Button
                     IconButton(
                         onClick = onStopRecording,
                         modifier = Modifier
-                            .size(44.dp)
+                            .size(48.dp)
                             .clip(CircleShape)
                             .background(TalkMeSecondaryColor)
+                            .testTag("talkme_mic_done_button")
                     ) {
                         Icon(
                             imageVector = Icons.Default.Check,
@@ -238,6 +250,7 @@ fun TalkMeMicrophone(
 @Composable
 private fun AudioWaveformBars(
     amplitude: Float,
+    isSpeechActive: Boolean,
     modifier: Modifier = Modifier
 ) {
     val barsCount = 20
@@ -253,13 +266,13 @@ private fun AudioWaveformBars(
         val maxHeight = size.height * 0.8f
 
         for (i in 0 until barsCount) {
-            val factor = sin(i * 0.5f + System.currentTimeMillis() * 0.005f) * 0.5f + 0.5f
+            val factor = sin(i * 0.5f) * 0.5f + 0.5f
             val barHeight = (maxHeight * (amplitude * 0.7f + factor * 0.3f)).coerceAtLeast(8.dp.toPx())
             val x = startX + i * (barWidth + gap)
             val top = centerY - barHeight / 2f
 
             drawRoundRect(
-                color = if (amplitude > 0.05f) activeColor else inactiveColor,
+                color = if (isSpeechActive || amplitude > 0.05f) activeColor else inactiveColor,
                 topLeft = Offset(x, top),
                 size = Size(barWidth, barHeight),
                 cornerRadius = CornerRadius(barWidth / 2f, barWidth / 2f)

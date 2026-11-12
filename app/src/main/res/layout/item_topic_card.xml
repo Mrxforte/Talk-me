@@ -1,32 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardTopic"
+    android:id="@+id/rootTimelineRow"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/color_surface"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:strokeColor="@color/color_card_stroke"
-    app:strokeWidth="1dp">
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="horizontal">
 
+    <!-- Left Timeline Column (Node + Vertical Solid/Dashed Connectors) -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="34dp"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <!-- 1. Large Tall Top Image Container (Uzum.uz Card Style) + Mystery Vault Overlay for Locked Levels -->
-        <com.google.android.material.card.MaterialCardView
+        <com.example.core.ui.VerticalDashedLineView
+            android:id="@+id/lineTopConnector"
+            android:layout_width="4dp"
+            android:layout_height="16dp" />
+
+        <FrameLayout
+            android:id="@+id/frameTimelineNode"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:background="@drawable/bg_curriculum_node_completed">
+
+            <ImageView
+                android:id="@+id/ivTimelineNodeIcon"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:contentDescription="Status"
+                android:src="@drawable/ic_check_small"
+                app:tint="#FFFFFF" />
+        </FrameLayout>
+
+        <com.example.core.ui.VerticalDashedLineView
+            android:id="@+id/lineBottomConnector"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <!-- Right Card Column -->
+    <FrameLayout
+        android:id="@+id/cardTopic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="12dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <!-- 1. COMPLETED / INTRO CARD (Kirish style) -->
+        <LinearLayout
+            android:id="@+id/layoutCardCompleted"
             android:layout_width="match_parent"
-            android:layout_height="182dp"
-            app:cardBackgroundColor="@color/color_surface_variant"
-            app:cardCornerRadius="14dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_curriculum_card_completed"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="11dp"
+            android:visibility="visible">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="92dp"
+                android:layout_height="88dp"
+                app:cardBackgroundColor="#152544"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:id="@+id/ivCompletedThumb"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Kirish"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_curriculum_kirish" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvCompletedTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Kirish"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCompletedBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_curriculum_badge_completed"
+                        android:paddingHorizontal="9dp"
+                        android:paddingVertical="3dp"
+                        android:text="✓ Bajarildi"
+                        android:textColor="#4ADE80"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvCompletedRangePill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_curriculum_pill_dark"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="2dp"
+                    android:text="1–10-dars"
+                    android:textColor="#CBD5E1"
+                    android:textSize="11.5sp" />
+
+                <TextView
+                    android:id="@+id/tvCompletedProgressCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="4/10 dars"
+                    android:textColor="#CBD5E1"
+                    android:textSize="12.5sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressCompletedBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:layout_marginTop="5dp"
+                    android:max="100"
+                    android:progress="42"
+                    android:progressDrawable="@drawable/bg_curriculum_green_progress" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 2. ACTIVE / CURRENT MODULE CARD (Salomlashish va tanishuv style) -->
+        <LinearLayout
+            android:id="@+id/layoutCardActive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_curriculum_card_active"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="98dp"
+                    android:layout_height="90dp"
+                    app:cardBackgroundColor="#152544"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageView
+                        android:id="@+id/ivActiveThumb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Salomlashish va tanishuv"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_curriculum_salomlashish" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="13dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvActiveTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lineSpacingExtra="1dp"
+                        android:maxLines="2"
+                        android:text="Salomlashish va\ntanishuv"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvActiveModulePill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_curriculum_pill_dark"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="2dp"
+                        android:text="A1 • 01-modul"
+                        android:textColor="#CBD5E1"
+                        android:textSize="11.5sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/dotActive1"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:background="@drawable/bg_curriculum_dot_active" />
+
+                        <View
+                            android:id="@+id/dotActive2"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_curriculum_dot_inactive" />
+
+                        <View
+                            android:id="@+id/dotActive3"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_curriculum_dot_inactive" />
+
+                        <View
+                            android:id="@+id/dotActive4"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_curriculum_dot_inactive" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnOpenActiveModule"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/bg_curriculum_sky_btn"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvOpenActiveModuleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bo‘limni ochish"
+                    android:textColor="#081426"
+                    android:textSize="14.5sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginStart="5dp"
+                    android:contentDescription="Open"
+                    android:src="@drawable/ic_chevron_right" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 3. LOCKED COSMIC PURPLE CARD (Keyingi bo'lim with 3D Lock + Star-Burst Animation) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/layoutCardLocked"
+            android:layout_width="match_parent"
+            android:layout_height="118dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:visibility="gone"
+            app:cardBackgroundColor="#1B133A"
+            app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
-            app:strokeWidth="0dp">
+            app:strokeColor="#523880"
+            app:strokeWidth="1.5dp">
 
             <FrameLayout
                 android:id="@+id/containerTopicImageFrame"
@@ -39,215 +306,63 @@
                     android:id="@+id/ivTopicArtwork"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/lessons_header_title"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_lesson_conversation_1794310851367" />
+                    android:contentDescription="Keyingi bo'lim"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_curriculum_locked_card_clean" />
 
-                <!-- Mystery Vault Overlay: Hides locked mission artwork & plays Star Burst Animation on tap -->
+                <!-- Interactive 3D Padlock Medallion that shakes & bursts shooting stars on tap -->
                 <FrameLayout
-                    android:id="@+id/layoutMysteryVaultOverlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_mystery_mission_vault"
+                    android:id="@+id/layoutLockMedallion"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:layout_marginTop="14dp"
                     android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|start"
-                        android:layout_margin="12dp"
-                        android:text="✦ ★ ✧"
-                        android:textColor="#80FACC15"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="12dp"
-                        android:text="✧ ★ ✦"
-                        android:textColor="#80F472B6"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:id="@+id/layoutLockMedallion"
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            android:background="@drawable/bg_mystery_lock_circle"
-                            android:elevation="6dp">
-
-                            <ImageView
-                                android:id="@+id/ivMysteryLockCenter"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center"
-                                android:contentDescription="@string/topic_status_locked"
-                                android:src="@drawable/ic_lock"
-                                app:tint="@color/white" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:id="@+id/tvMysteryVaultHint"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_glass_pill"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="★ MAXFIY MISSIYA ★"
-                            android:textColor="#FEF08A"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </FrameLayout>
-
-                <!-- Top-Right Circular Status Icon -->
-                <FrameLayout
-                    android:id="@+id/btnTopRightStatusBadge"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="top|end"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/bg_uzum_circle_badge">
+                    android:clipToPadding="false">
 
                     <ImageView
-                        android:id="@+id/ivTopicStatus"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:id="@+id/ivMysteryLockCenter"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_gravity="center"
-                        android:contentDescription="@string/topic_status_available"
-                        android:src="@drawable/ic_check_circle" />
+                        android:contentDescription="@string/topic_status_locked"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/img_curriculum_lock_medallion" />
                 </FrameLayout>
-
-                <!-- Bottom-Left Compact Lesson Number Pill -->
-                <TextView
-                    android:id="@+id/tvTopicOrder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|start"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/bg_glass_pill"
-                    android:paddingHorizontal="9dp"
-                    android:paddingVertical="3dp"
-                    android:text="01-DARS"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 2. All Text & Details Positioned Cleanly BELOW the Image (Uzum.uz Layout) -->
+        <!-- 4. FINAL EXAM MILESTONE CARD (A1 yakuniy sinov) -->
         <LinearLayout
+            android:id="@+id/layoutCardFinalExam"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:layout_height="50dp"
+            android:background="@drawable/bg_curriculum_card_completed"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:visibility="gone">
 
-            <!-- English Topic Title (or Mystery Mission Title when Locked) -->
+            <ImageView
+                android:id="@+id/ivFinalExamTrophy"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Trophy"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_curriculum_trophy" />
+
             <TextView
-                android:id="@+id/tvTopicTitle"
-                android:layout_width="match_parent"
+                android:id="@+id/tvFinalExamTitle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/color_text_primary"
-                android:textSize="15sp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="A1 yakuniy sinov"
+                android:textColor="#FFFFFF"
+                android:textSize="15.5sp"
                 android:textStyle="bold" />
-
-            <!-- Uzbek Topic Subtitle -->
-            <TextView
-                android:id="@+id/tvTopicUzbek"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/color_primary_variant"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <!-- Short Description -->
-            <TextView
-                android:id="@+id/tvTopicDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:ellipsize="end"
-                android:lineSpacingExtra="1dp"
-                android:maxLines="2"
-                android:minLines="2"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="11sp" />
-
-            <!-- Status & Metric Pill -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvTopicProgressText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_uzum_metric_pill"
-                    android:paddingHorizontal="7dp"
-                    android:paddingVertical="2dp"
-                    android:textColor="#111827"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tvTopicStatusBadge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- Progress Bar -->
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/progressTopic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                app:indicatorColor="@color/color_primary_variant"
-                app:trackColor="@color/color_surface_variant"
-                app:trackCornerRadius="@dimen/radius_pill"
-                app:trackThickness="5dp" />
-
-            <!-- Full-Width Bottom Action Button -->
-            <TextView
-                android:id="@+id/tvTopicActionCta"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_uzum_action_btn"
-                android:gravity="center"
-                android:text="Darsni boshlash"
-                android:textColor="@color/color_primary"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
         </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

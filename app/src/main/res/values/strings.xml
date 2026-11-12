@@ -181,4 +181,28 @@
     <string name="settings_section_about">About TalkMe</string>
     <string name="settings_about_version">TalkMe v1.0.0 • Clean Architecture Offline-First Edition</string>
     <string name="settings_about_privacy">All learning progress is stored locally in Room Database. Cloud AI features use Firebase AI Logic with App Check attestation.</string>
+
+    <!-- Daily Tasks Cosmic UI Strings -->
+    <string name="daily_tasks_title">Kunlik vazifalar</string>
+    <string name="daily_tasks_today_date">Bugun • 12-noyabr</string>
+    <string name="daily_tasks_streak_format">%1$d kun</string>
+    <string name="daily_tasks_hero_goal_title">Bugungi maqsad</string>
+    <string name="daily_tasks_hero_completed_format">&#x2713; %1$d ta vazifa bajarildi</string>
+    <string name="daily_tasks_hero_xp_format">%1$d / %2$d XP</string>
+    <string name="daily_tasks_section_title">Bugungi vazifalar</string>
+    <string name="daily_tasks_task_vocab_title">Vocabulary</string>
+    <string name="daily_tasks_task_vocab_subtitle">5 ta yangi so‘z o‘rgan</string>
+    <string name="daily_tasks_task_listening_title">Listening</string>
+    <string name="daily_tasks_task_listening_subtitle">3 daqiqa tingla</string>
+    <string name="daily_tasks_task_speaking_title">Speaking</string>
+    <string name="daily_tasks_task_speaking_subtitle">3 ta gapni ovoz chiqarib ayt</string>
+    <string name="daily_tasks_task_lesson_title">Lesson</string>
+    <string name="daily_tasks_task_lesson_subtitle">Bugungi darsni yakunla</string>
+    <string name="daily_tasks_xp_badge_50">+50 XP</string>
+    <string name="daily_tasks_btn_continue">Davom etish &gt;</string>
+    <string name="daily_tasks_btn_start_play">&#x25B6; Boshlash</string>
+    <string name="daily_tasks_btn_lesson_go">Darsga o‘tish &gt;</string>
+    <string name="daily_tasks_reward_banner_text">Vazifalar bajarilganda mukofot ochiladi</string>
+    <string name="daily_tasks_reward_claimed_msg">&#x1F389; Mukofot ochildi! +100 XP va maxsus yulduz berildi!</string>
+    <string name="daily_tasks_reward_remaining_format">Yana %1$d ta vazifani bajaring va mukofot sandig‘i ochiladi! &#x2728;</string>
 </resources>

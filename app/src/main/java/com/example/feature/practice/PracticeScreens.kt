@@ -56,18 +56,12 @@ class PracticeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Hero Banner: "Aralash mashq • 5 daqiqalik challenge • Boshlash ▶"
         binding.cardPracticeFlipCards.setOnClickListener {
-            findNavController().navigate(R.id.vocabularyTopicsFragment)
+            openExerciseSession(PracticeCategory.SECTION_QUIZ)
         }
 
-        binding.cardPracticeReading.setOnClickListener {
-            openExerciseSession(PracticeCategory.READING)
-        }
-
-        binding.cardPracticeWriting.setOnClickListener {
-            openExerciseSession(PracticeCategory.WRITING)
-        }
-
+        // Row 1: Speaking & Listening
         binding.cardPracticeSpeaking.setOnClickListener {
             findNavController().navigate(R.id.speakingAiFragment)
         }
@@ -76,12 +70,22 @@ class PracticeFragment : Fragment() {
             openExerciseSession(PracticeCategory.LISTENING)
         }
 
-        binding.cardPracticeGrammar.setOnClickListener {
-            openExerciseSession(PracticeCategory.GRAMMAR)
+        // Row 2: Reading & Writing
+        binding.cardPracticeReading.setOnClickListener {
+            openExerciseSession(PracticeCategory.READING)
         }
 
+        binding.cardPracticeWriting.setOnClickListener {
+            openExerciseSession(PracticeCategory.WRITING)
+        }
+
+        // Row 3: Vocabulary (Flipcard • 12 ta) & Grammar
         binding.cardPracticeVocabulary.setOnClickListener {
-            openExerciseSession(PracticeCategory.VOCABULARY)
+            findNavController().navigate(R.id.vocabularyTopicsFragment)
+        }
+
+        binding.cardPracticeGrammar.setOnClickListener {
+            openExerciseSession(PracticeCategory.GRAMMAR)
         }
 
         binding.btnOpenReadingAiCoach.setOnClickListener {

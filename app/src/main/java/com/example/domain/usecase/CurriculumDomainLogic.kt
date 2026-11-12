@@ -30,7 +30,7 @@ object CurriculumDomainLogic {
 
             val computedStatus = when {
                 isCompleted -> UnlockStatus.COMPLETED
-                previousCompleted -> UnlockStatus.AVAILABLE
+                previousCompleted || current.status == UnlockStatus.AVAILABLE -> UnlockStatus.AVAILABLE
                 else -> UnlockStatus.LOCKED
             }
             result.add(current.copy(status = computedStatus))

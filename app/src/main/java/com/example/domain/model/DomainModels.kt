@@ -10,6 +10,22 @@ enum class UnlockStatus {
 }
 
 /**
+ * Discrete Voice Activity Detection states representing speech activity:
+ * - [SILENCE]: Background silence or non-speech noise.
+ * - [SPEECH_BEGIN]: Transition frame where human speech onset is confirmed.
+ * - [ACTIVE_SPEECH]: Ongoing voiced/unvoiced human speech.
+ * - [PAUSE]: Brief inter-word pause during an utterance before endpoint timeout.
+ * - [SPEECH_END]: Confirmed end of speech utterance; triggers final STT decoding & submission.
+ */
+enum class VadState {
+    SILENCE,
+    SPEECH_BEGIN,
+    ACTIVE_SPEECH,
+    PAUSE,
+    SPEECH_END
+}
+
+/**
  * Represents the learning mastery status of a Vocabulary item or Grammar Rule.
  */
 enum class MasteryStatus {

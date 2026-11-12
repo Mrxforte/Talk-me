@@ -22,7 +22,7 @@ import javax.inject.Singleton
 
 /**
  * Hilt Dependency Injection Module providing Room Database, DAOs, DataStore Preferences,
- * LearningRepository, AI Learning Service, and SpeechRepository.
+ * LearningRepository, AI Learning Service, and local SpeechRepository.
  */
 @Module
 @InstallIn(SingletonComponent::class)
@@ -46,6 +46,14 @@ object DatabaseModule {
     @Singleton
     fun provideTalkMeDao(database: TalkMeDatabase): TalkMeDao {
         return database.talkMeDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSileroVadDetector(
+        modelManager: com.example.core.speech.SpeechModelManager
+    ): com.example.core.speech.SileroVadDetector {
+        return com.example.core.speech.SileroVadDetector(modelManager)
     }
 }
 

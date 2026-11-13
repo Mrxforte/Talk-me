@@ -33,7 +33,7 @@ She does her homework. — U uy vazifasini bajaradi.""",
             titleEnglish = "Do you like...? — “Do” savolda",
             titleUzbek = "2-Dars: Do you like...? — “Do” savolda",
             objectiveUzbek = "Birovdan nimani yoqtirishini so‘rash va qisqa javob berish.",
-            explanationUzbek = """Do‘stingiz olmalarni yoqtiradimi, deb so‘rang. Do + you + like? Uchinchi shaxsda Does + he yoki she + like? Does dan keyin like o‘zgarmaydi.
+            explanationUzbek = """Do‘stingizdan olmani yoqtirishini so‘rang: “Do you like apples?” Boshqa odam haqida “Does she like apples?” deb so‘rang. Does dan keyin like o‘zgarmaydi.
 
 Do you like apples? — Olmani yoqtirasizmi?
 Yes, I do. — Ha, yoqtiraman.""",
@@ -45,8 +45,8 @@ Yes, I do. — Ha, yoqtiraman.""",
             id = DARS_A1_3_SECTION_ID,
             topicId = CurriculumLevel.A1.topicId,
             orderIndex = 3,
-            titleEnglish = "I do not like... — “Do” inkorda",
-            titleUzbek = "3-Dars: I do not like... — “Do” inkorda",
+            titleEnglish = "I don’t like... — Do bilan inkor",
+            titleUzbek = "3-Dars: I don’t like... — Do bilan inkor",
             objectiveUzbek = "Yoqtirmaydigan narsani odobli va aniq aytish.",
             explanationUzbek = """Taklif qilingan ichimlikni yoqtirmasangiz, “I don’t like milk” deng. He yoki she bilan doesn’t ishlating. Doesn’t dan keyin like o‘zgarmaydi.
 
@@ -59,8 +59,8 @@ She doesn’t like milk. — U sutni yoqtirmaydi.""",
             id = DARS_A1_4_SECTION_ID,
             topicId = CurriculumLevel.A1.topicId,
             orderIndex = 4,
-            titleEnglish = "Modal fe'llar — Can, Must, May, Have to",
-            titleUzbek = "4-Dars: Modal fe'llar — Can, Must, May, Have to",
+            titleEnglish = "Modal fe’llar — Can, Must, May, Have to",
+            titleUzbek = "4-Dars: Modal fe’llar — Can, Must, May, Have to",
             objectiveUzbek = "Kutubxonada qobiliyat, ruxsat va majburiyatni ifodalash.",
             explanationUzbek = """Kutubxonadasiz. Can bilan nima qila olishingizni ayting. May I...? bilan ruxsat so‘rang. Must yoki have to bilan qoida yoki talabni ayting.
 
@@ -82,7 +82,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             englishWord = "do",
             uzbekTranslation = "qilmoq, bajarmoq",
             exampleEnglish = "I do my homework.",
-            exampleUzbek = "Men uy vazifamni qilaman."
+            exampleUzbek = "Men uy vazifamni bajaraman."
         ),
         VocabularyEntity(
             id = "v_a1_01_02",
@@ -90,8 +90,8 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             sectionId = DARS_A1_1_SECTION_ID,
             englishWord = "does",
             uzbekTranslation = "qiladi (he, she, it)",
-            exampleEnglish = "He does his work.",
-            exampleUzbek = "U ishini qiladi."
+            exampleEnglish = "He does his homework.",
+            exampleUzbek = "U uy vazifasini bajaradi."
         ),
         VocabularyEntity(
             id = "v_a1_01_03",
@@ -100,7 +100,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             englishWord = "homework",
             uzbekTranslation = "uy vazifasi",
             exampleEnglish = "I do my homework.",
-            exampleUzbek = "Men uy vazifamni qilaman."
+            exampleUzbek = "Men uy vazifamni bajaraman."
         ),
         VocabularyEntity(
             id = "v_a1_01_04",
@@ -109,7 +109,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             englishWord = "my homework",
             uzbekTranslation = "mening uy vazifam",
             exampleEnglish = "I do my homework.",
-            exampleUzbek = "Men uy vazifamni qilaman."
+            exampleUzbek = "Men uy vazifamni bajaraman."
         ),
         VocabularyEntity(
             id = "v_a1_01_05",
@@ -118,7 +118,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             englishWord = "his homework",
             uzbekTranslation = "uning uy vazifasi",
             exampleEnglish = "He does his homework.",
-            exampleUzbek = "U uy vazifasini qiladi."
+            exampleUzbek = "U uy vazifasini bajaradi."
         ),
         VocabularyEntity(
             id = "v_a1_01_06",
@@ -127,7 +127,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             englishWord = "our homework",
             uzbekTranslation = "bizning uy vazifamiz",
             exampleEnglish = "We do our homework.",
-            exampleUzbek = "Biz uy vazifamizni qilamiz."
+            exampleUzbek = "Biz uy vazifamizni bajaramiz."
         ),
         VocabularyEntity(
             id = "v_a1_01_07",
@@ -136,7 +136,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             englishWord = "her work",
             uzbekTranslation = "uning ishi",
             exampleEnglish = "She does her work.",
-            exampleUzbek = "U ishini qiladi."
+            exampleUzbek = "U uy vazifasini bajaradi."
         ),
         VocabularyEntity(
             id = "v_a1_02_01",
@@ -181,7 +181,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             englishWord = "no, i do not.",
             uzbekTranslation = "yo'q, yoqtirmayman.",
             exampleEnglish = "No, I do not like it.",
-            exampleUzbek = "Yo'q, men buni yoqtirmayman."
+            exampleUzbek = "Yo‘q, men buni yoqtirmayman."
         ),
         VocabularyEntity(
             id = "v_a1_02_06",
@@ -199,7 +199,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             englishWord = "no, he does not.",
             uzbekTranslation = "yo'q, u yoqtirmaydi.",
             exampleEnglish = "No, he does not like cats.",
-            exampleUzbek = "Yo'q, u mushuklarni yoqtirmaydi."
+            exampleUzbek = "Yo‘q, u mushuklarni yoqtirmaydi."
         ),
         VocabularyEntity(
             id = "v_a1_03_01",
@@ -270,35 +270,35 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             sectionId = DARS_A1_4_SECTION_ID,
             englishWord = "modal",
             uzbekTranslation = "modal fe'l turi",
-            exampleEnglish = "English modal verbs.",
-            exampleUzbek = "Ingliz tilidagi modal fe’llar."
+            exampleEnglish = "May I sit here?",
+            exampleUzbek = "Shu yerda o‘tirsam maylimi?"
         ),
         VocabularyEntity(
             id = "v_a1_04_02",
             topicId = CurriculumLevel.A1.topicId,
             sectionId = DARS_A1_4_SECTION_ID,
-            englishWord = "i can go",
-            uzbekTranslation = "men bora olaman",
-            exampleEnglish = "I can go to the park.",
-            exampleUzbek = "Men parkga bora olaman."
+            englishWord = "I can read this book",
+            uzbekTranslation = "bu kitobni o‘qiy olaman",
+            exampleEnglish = "I can read this book.",
+            exampleUzbek = "Bu kitobni o‘qiy olaman."
         ),
         VocabularyEntity(
             id = "v_a1_04_03",
             topicId = CurriculumLevel.A1.topicId,
             sectionId = DARS_A1_4_SECTION_ID,
-            englishWord = "i must go",
-            uzbekTranslation = "men borishim shart",
-            exampleEnglish = "I must go to school now.",
-            exampleUzbek = "Men hozir maktabga borishim shart."
+            englishWord = "I must show my card",
+            uzbekTranslation = "kartamni ko‘rsatishim shart",
+            exampleEnglish = "I must show my card.",
+            exampleUzbek = "Kartamni ko‘rsatishim shart."
         ),
         VocabularyEntity(
             id = "v_a1_04_04",
             topicId = CurriculumLevel.A1.topicId,
             sectionId = DARS_A1_4_SECTION_ID,
-            englishWord = "may i go?",
-            uzbekTranslation = "borsam maylimi?",
-            exampleEnglish = "May I go home?",
-            exampleUzbek = "Uyga borsam maylimi?"
+            englishWord = "May I sit here?",
+            uzbekTranslation = "o‘tirsam maylimi?",
+            exampleEnglish = "May I sit here?",
+            exampleUzbek = "Shu yerda o‘tirsam maylimi?"
         ),
         VocabularyEntity(
             id = "v_a1_04_05",
@@ -306,26 +306,26 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             sectionId = DARS_A1_4_SECTION_ID,
             englishWord = "have to",
             uzbekTranslation = "majbur bo'lmoq",
-            exampleEnglish = "I have to do homework.",
-            exampleUzbek = "Uy vazifamni bajarishim kerak."
+            exampleEnglish = "I have to return this book today.",
+            exampleUzbek = "Bu kitobni bugun qaytarishim kerak."
         ),
         VocabularyEntity(
             id = "v_a1_04_06",
             topicId = CurriculumLevel.A1.topicId,
             sectionId = DARS_A1_4_SECTION_ID,
-            englishWord = "you may go",
-            uzbekTranslation = "borishingiz mumkin",
-            exampleEnglish = "You may go now.",
-            exampleUzbek = "Hozir borishingiz mumkin."
+            englishWord = "You may sit here",
+            uzbekTranslation = "o‘tirishingiz mumkin",
+            exampleEnglish = "You may sit here.",
+            exampleUzbek = "Shu yerda o‘tirishingiz mumkin."
         ),
         VocabularyEntity(
             id = "v_a1_04_07",
             topicId = CurriculumLevel.A1.topicId,
             sectionId = DARS_A1_4_SECTION_ID,
-            englishWord = "he can go",
-            uzbekTranslation = "u bora oladi",
-            exampleEnglish = "He can go with us.",
-            exampleUzbek = "U biz bilan bora oladi."
+            englishWord = "He can read this book",
+            uzbekTranslation = "u bu kitobni o‘qiy oladi",
+            exampleEnglish = "He can read this book.",
+            exampleUzbek = "U bu kitobni o‘qiy oladi."
         )
     )
 
@@ -337,7 +337,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             titleUzbek = "Do va Does fe'li",
             explanationUzbek = """I/you/we/they bilan do, he/she/it bilan does ishlatiladi.""",
             exampleEnglish = "I do my homework.",
-            exampleUzbek = "Men uy vazifamni qilaman.",
+            exampleUzbek = "Men uy vazifamni bajaraman.",
             associatedVocabularyIdsCsv = "",
             isStudied = false,
             isMastered = false
@@ -359,7 +359,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             topicId = CurriculumLevel.A1.topicId,
             sectionId = DARS_A1_3_SECTION_ID,
             titleUzbek = "Do not va Does not",
-            explanationUzbek = """Inkor gapda not qo'shiladi: do not (don't), does not (doesn't).""",
+            explanationUzbek = """Inkor gapda not qo‘shiladi: do not (don't), does not (doesn't).""",
             exampleEnglish = "I do not like apples.",
             exampleUzbek = "Men olmani yoqtirmayman.",
             associatedVocabularyIdsCsv = "",
@@ -370,7 +370,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             id = "g_a1_04_01",
             topicId = CurriculumLevel.A1.topicId,
             sectionId = DARS_A1_4_SECTION_ID,
-            titleUzbek = "Modal fe'llar",
+            titleUzbek = "Modal fe’llar",
             explanationUzbek = """Can (imkoniyat), Must (majburiyat), May (ruxsat), Have to (zaruriyat).""",
             exampleEnglish = "I can go.",
             exampleUzbek = "Men bora olaman.",
@@ -404,12 +404,12 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "He bilan qaysi biri keladi?",
+            promptText = "U uy vazifasini bajaradi: He ___ his homework.",
             subPromptText = "To‘g‘ri javobni tanlang:",
             audioTextToSpeak = "He does his homework.",
             optionsPipeSeparated = "does|do|doing",
             correctAnswer = "does",
-            explanationUzbek = """He, she, it bilan does bo'ladi.""",
+            explanationUzbek = """He, she, it bilan does bo‘ladi.""",
             vocabularyIdsCsv = "v_a1_01_01",
             grammarRuleIdsCsv = "g_a1_01_01"
         ),
@@ -436,7 +436,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "Savolda “you” bilan qaysi so'z oldinga chiqadi?",
+            promptText = "Savolda “you” bilan qaysi so‘z oldinga chiqadi?",
             subPromptText = "To‘g‘ri javobni tanlang:",
             audioTextToSpeak = "Do you like apples?",
             optionsPipeSeparated = "Do|Does|Is",
@@ -468,7 +468,7 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "Do‘stingiz singlisidan so‘rab berdi. Savolni to‘ldiring: ___ she like apples?",
+            promptText = "Singlingiz olmani yoqtiradimi? Savolni to‘ldiring: ___ she like apples?",
             subPromptText = "To‘g‘ri javobni tanlang:",
             audioTextToSpeak = null,
             optionsPipeSeparated = "Does|Do|Is",
@@ -516,9 +516,9 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "Bo‘sh joy: He ______ not like cats.",
+            promptText = "Bo‘sh joy: He ______ not like bananas.",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "He does not like cats.",
+            audioTextToSpeak = "He does not like bananas.",
             optionsPipeSeparated = "does|do|is",
             correctAnswer = "does",
             explanationUzbek = """He bilan does ishlatiladi.""",
@@ -577,18 +577,18 @@ I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
 
     fun getMisollar(sectionId: String): List<CurriculumSeedData.LessonExampleSeed>? = when (sectionId) {
         DARS_A1_1_SECTION_ID -> listOf(
-            CurriculumSeedData.LessonExampleSeed("I do my homework.", "do", "homework", "Men uy vazifamni qilaman.", "uy vazifamni"),
-            CurriculumSeedData.LessonExampleSeed("He does his homework.", "does", "homework", "U uy vazifasini qiladi.", "uy vazifasini"),
-            CurriculumSeedData.LessonExampleSeed("We do our homework.", "do", "homework", "Biz uy vazifamizni qilamiz.", "uy vazifamizni")
+            CurriculumSeedData.LessonExampleSeed("I do my homework.", "do", "homework", "Men uy vazifamni bajaraman.", "uy vazifamni"),
+            CurriculumSeedData.LessonExampleSeed("He does his homework.", "does", "homework", "U uy vazifasini bajaradi.", "uy vazifasini"),
+            CurriculumSeedData.LessonExampleSeed("We do our homework.", "do", "homework", "Biz uy vazifamizni bajaramiz.", "uy vazifamizni")
         )
         DARS_A1_2_SECTION_ID -> listOf(
-            CurriculumSeedData.LessonExampleSeed("Do you like apples?", "Do", "apples", "Olmani yoqtirasizmi?", "olmalarni"),
+            CurriculumSeedData.LessonExampleSeed("Do you like apples?", "Do", "apples", "Olmani yoqtirasizmi?", "olmani"),
             CurriculumSeedData.LessonExampleSeed("Yes, I do.", "Yes", "I do", "Ha, yoqtiraman.", "yoqtiraman"),
-            CurriculumSeedData.LessonExampleSeed("Does he like cats?", "Does", "cats", "U mushuklarni yoqtiradimi?", "mushuklarni")
+            CurriculumSeedData.LessonExampleSeed("Does he like bananas?", "Does", "cats", "U bananni yoqtiradimi?", "bananni")
         )
         DARS_A1_3_SECTION_ID -> listOf(
-            CurriculumSeedData.LessonExampleSeed("I do not like apples.", "do not", "apples", "Men olmani yoqtirmayman.", "olmalarni"),
-            CurriculumSeedData.LessonExampleSeed("He does not like cats.", "does not", "cats", "U mushuklarni yoqtirmaydi.", "mushuklarni"),
+            CurriculumSeedData.LessonExampleSeed("I do not like apples.", "do not", "apples", "Men olmani yoqtirmayman.", "olmani"),
+            CurriculumSeedData.LessonExampleSeed("He does not like bananas.", "does not", "cats", "U bananni yoqtirmaydi.", "bananni"),
             CurriculumSeedData.LessonExampleSeed("They do not like milk.", "do not", "milk", "Ular sutni yoqtirmaydilar.", "sutni")
         )
         DARS_A1_4_SECTION_ID -> listOf(

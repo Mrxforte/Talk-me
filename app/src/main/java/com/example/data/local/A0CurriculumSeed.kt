@@ -67,7 +67,7 @@ object A0CurriculumSeed {
             titleEnglish = "Hello!",
             titleUzbek = "1-Dars: Hello!",
             objectiveUzbek = "Salomlashish mavzusini o‘rganish va amalda qo‘llash.",
-            explanationUzbek = """Sinfga kirdingiz va tanish odamni ko‘rdingiz. “Hello!” deb salom bering.
+            explanationUzbek = """Sinfga kirdingiz va do‘stingizni ko‘rdingiz. “Hello!” deb salom bering.
 
 Kimga murojaat qilayotganingizni aytsangiz, nomini qo‘shing: “Hello, Dad!”
 Misollarni tinglang va o‘zingiz takrorlang.""",
@@ -1138,7 +1138,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             englishWord = "hello, mom!",
             uzbekTranslation = "salom, ona!",
             exampleEnglish = "Hello, mom!",
-            exampleUzbek = "Salom, ona!"
+            exampleUzbek = "Salom, oyijon!"
         ),
         VocabularyEntity(
             id = "v_a0_01_03",
@@ -1345,7 +1345,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             englishWord = "dog",
             uzbekTranslation = "it",
             exampleEnglish = "Hello, dog!",
-            exampleUzbek = "Salom, it!"
+            exampleUzbek = "Salom, kuchuk!"
         ),
         VocabularyEntity(
             id = "v_a0_06_03",
@@ -1381,7 +1381,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             englishWord = "mom",
             uzbekTranslation = "ona",
             exampleEnglish = "Hello, mom!",
-            exampleUzbek = "Salom, ona!"
+            exampleUzbek = "Salom, oyijon!"
         ),
         VocabularyEntity(
             id = "v_a0_07_02",
@@ -1858,7 +1858,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             englishWord = "teacher",
             uzbekTranslation = "o'qituvchi",
             exampleEnglish = "Hello, teacher!",
-            exampleUzbek = "Salom, o'qituvchi!"
+            exampleUzbek = "Assalomu alaykum, ustoz!"
         ),
         VocabularyEntity(
             id = "v_a0_18_01",
@@ -6485,7 +6485,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
     fun getMisollar(sectionId: String): List<CurriculumSeedData.LessonExampleSeed>? = when (sectionId) {
         DARS_1_SECTION_ID -> listOf(
             CurriculumSeedData.LessonExampleSeed("Hello!", "Hello", "", "Salom!", "Salom"),
-            CurriculumSeedData.LessonExampleSeed("Hello, mom!", "Hello", "mom", "Salom, ona!", "ona"),
+            CurriculumSeedData.LessonExampleSeed("Hello, mom!", "Hello", "mom", "Salom, oyijon!", "oyijon"),
             CurriculumSeedData.LessonExampleSeed("Hello, Dad!", "Hello", "Dad", "Salom, dada!", "dada")
         )
         DARS_2_SECTION_ID -> listOf(
@@ -6510,11 +6510,11 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
         )
         DARS_6_SECTION_ID -> listOf(
             CurriculumSeedData.LessonExampleSeed("Hello, cat!", "Hello", "cat", "Salom, mushuk!", "mushuk"),
-            CurriculumSeedData.LessonExampleSeed("Hello, dog!", "Hello", "dog", "Salom, it!", "it"),
+            CurriculumSeedData.LessonExampleSeed("Hello, dog!", "Hello", "dog", "Salom, kuchuk!", "it"),
             CurriculumSeedData.LessonExampleSeed("Big elephant", "Big", "elephant", "Katta fil", "fil")
         )
         DARS_7_SECTION_ID -> listOf(
-            CurriculumSeedData.LessonExampleSeed("Hello, mom!", "Hello", "mom", "Salom, ona!", "ona"),
+            CurriculumSeedData.LessonExampleSeed("Hello, mom!", "Hello", "mom", "Salom, oyijon!", "oyijon"),
             CurriculumSeedData.LessonExampleSeed("Hello, dad!", "Hello", "dad", "Salom, dada!", "dada"),
             CurriculumSeedData.LessonExampleSeed("My sister", "My", "sister", "Mening singlim", "singlim")
         )
@@ -6565,7 +6565,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
         )
         DARS_17_SECTION_ID -> listOf(
             CurriculumSeedData.LessonExampleSeed("My school", "My", "school", "Mening maktabim", "maktabim"),
-            CurriculumSeedData.LessonExampleSeed("Hello, teacher!", "Hello", "teacher", "Salom, o'qituvchi!", "o'qituvchi"),
+            CurriculumSeedData.LessonExampleSeed("Hello, teacher!", "Hello", "teacher", "Assalomu alaykum, ustoz!", "o'qituvchi"),
             CurriculumSeedData.LessonExampleSeed("My bag", "My", "bag", "Mening sumkam", "sumkam")
         )
         DARS_18_SECTION_ID -> listOf(

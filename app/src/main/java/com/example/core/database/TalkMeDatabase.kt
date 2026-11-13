@@ -85,7 +85,7 @@ interface TalkMeDao {
         val savedWords = getAllVocabularyOnce().associateBy { it.id }
         updateVocabularyContent(vocabulary.filter { it.topicId in beginnerTopics }.mapNotNull { seed ->
             savedWords[seed.id]?.let { saved ->
-                saved.copy(uzbekTranslation = seed.uzbekTranslation, exampleEnglish = seed.exampleEnglish,
+                saved.copy(englishWord = seed.englishWord, uzbekTranslation = seed.uzbekTranslation, exampleEnglish = seed.exampleEnglish,
                     exampleUzbek = seed.exampleUzbek)
             }
         })
@@ -150,7 +150,7 @@ interface TalkMeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertVocabulary(items: List<VocabularyEntity>)
 
-    @androidx.room.Update
+    @androidx.room.Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun updateVocabularyContent(items: List<VocabularyEntity>)
 
     @Query("SELECT * FROM vocabulary WHERE sectionId = :sectionId")

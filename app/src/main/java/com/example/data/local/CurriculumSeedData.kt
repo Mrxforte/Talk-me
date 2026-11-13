@@ -95,8 +95,8 @@ Keling, ilk darsni boshlaymiz!"""
             titleEnglish = level.name,
             titleUzbek = level.name,
             descriptionUzbek = when (level) {
-                CurriculumLevel.A0 -> "A0: Boshlang'ich bolalar uchun ingliz tili (53 ta dars)"
-                CurriculumLevel.A1 -> "A1: Do fe'li va modal fe'llar (4 ta dars)"
+                CurriculumLevel.A0 -> "A0: Boshlang'ich bolalar uchun ingliz tili (60 ta dars)"
+                CurriculumLevel.A1 -> "A1: Kundalik muloqot va asosiy grammatika (60 ta dars)"
                 else -> ""
             },
             isUnlocked = level == CurriculumLevel.A0
@@ -104,16 +104,16 @@ Keling, ilk darsni boshlaymiz!"""
     }
 
     fun buildSections(): List<LessonSectionEntity> =
-        A0CurriculumSeed.buildSections() + A1CurriculumSeed.buildSections()
+        A0CurriculumSeed.buildSections() + A1CurriculumSeed.buildSections() + ContinuationCurriculum.buildSections()
 
     fun buildVocabulary(): List<VocabularyEntity> =
-        A0CurriculumSeed.buildVocabulary() + A1CurriculumSeed.buildVocabulary()
+        A0CurriculumSeed.buildVocabulary() + A1CurriculumSeed.buildVocabulary() + ContinuationCurriculum.buildVocabulary()
 
     fun buildGrammarRules(): List<GrammarRuleEntity> =
-        A0CurriculumSeed.buildGrammarRules() + A1CurriculumSeed.buildGrammarRules()
+        A0CurriculumSeed.buildGrammarRules() + A1CurriculumSeed.buildGrammarRules() + ContinuationCurriculum.buildGrammarRules()
 
     fun buildExercises(): List<ExerciseEntity> =
-        A0CurriculumSeed.buildExercises() + A1CurriculumSeed.buildExercises()
+        A0CurriculumSeed.buildExercises() + A1CurriculumSeed.buildExercises() + ContinuationCurriculum.buildExercises()
 
     fun getMisollarForSection(sectionId: String): List<LessonExampleSeed> =
         A0CurriculumSeed.getMisollar(sectionId) ?: A1CurriculumSeed.getMisollar(sectionId) ?: emptyList()

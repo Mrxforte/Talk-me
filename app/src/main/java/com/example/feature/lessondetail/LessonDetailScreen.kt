@@ -30,7 +30,9 @@ import com.example.core.ui.TopicVisualArtwork
 import com.example.core.ui.TypewriterTextAnimator
 import com.example.core.ui.VocabularyAdapter
 import com.example.databinding.FragmentLessonDetailBinding
+import com.example.domain.model.CurriculumLevel
 import com.example.domain.model.ExerciseModel
+import com.example.domain.model.ExerciseType
 import com.example.domain.model.GrammarRuleModel
 import com.example.domain.model.LessonSectionModel
 import com.example.domain.model.PracticeCategory
@@ -73,7 +75,7 @@ data class InLessonExerciseItem(
     val id: String = "",
     val promptSub: String,
     val promptSentenceWithBlank: String,
-    val fullAudioSentence: String,
+    val fullAudioSentence: String?,
     val options: List<String>,
     val correctOptionIndex: Int,
     val mode: LessonExerciseMode = LessonExerciseMode.STANDARD,
@@ -419,7 +421,7 @@ class LessonDetailFragment : Fragment() {
         // Mashqlar interactions
         binding.btnSpeakMashqPrompt.setOnClickListener {
             inLessonExercises.getOrNull(currentExerciseIndex)?.let { ex ->
-                viewModel.speakEnglish(ex.fullAudioSentence)
+                ex.fullAudioSentence?.let(viewModel::speakEnglish)
             }
         }
         binding.btnOption1.setOnClickListener { onExerciseOptionSelected(0) }
@@ -428,7 +430,7 @@ class LessonDetailFragment : Fragment() {
 
         binding.btnReadAloudListen.setOnClickListener {
             inLessonExercises.getOrNull(currentExerciseIndex)?.let { ex ->
-                viewModel.speakEnglish(ex.fullAudioSentence)
+                ex.fullAudioSentence?.let(viewModel::speakEnglish)
             }
         }
         binding.btnReadAloudTap.setOnClickListener {
@@ -438,7 +440,7 @@ class LessonDetailFragment : Fragment() {
                 if (readAloudTapCount >= 3) {
                     isCurrentExerciseSolved = true
                     selectedOptionIndex = ex.correctOptionIndex
-                    viewModel.speakEnglish(ex.fullAudioSentence)
+                    ex.fullAudioSentence?.let(viewModel::speakEnglish)
                 }
                 bindCurrentExercise()
             }
@@ -500,11 +502,6 @@ class LessonDetailFragment : Fragment() {
                     } else if (currentExerciseIndex < inLessonExercises.lastIndex) {
                         currentExerciseIndex++
                         resetExerciseInteractionState()
-                        val nextEx = inLessonExercises[currentExerciseIndex]
-                        if (isAutoPreselectLesson()) {
-                            selectedOptionIndex = nextEx.correctOptionIndex
-                            isCurrentExerciseSolved = true
-                        }
                         bindCurrentExercise()
                         updateTopProgressBar()
                     } else {
@@ -589,11 +586,6 @@ class LessonDetailFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun isAutoPreselectLesson(): Boolean {
-        val secId = lastLoadedSectionId ?: currentSectionId
-        return secId == com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID
     }
 
     private fun resetExerciseInteractionState() {
@@ -793,18 +785,19 @@ class LessonDetailFragment : Fragment() {
             if (currentExerciseIndex >= inLessonExercises.size) {
                 currentExerciseIndex = 0
             }
-            val activeEx = inLessonExercises[currentExerciseIndex]
-            if (isAutoPreselectLesson()) {
-                selectedOptionIndex = activeEx.correctOptionIndex
-                isCurrentExerciseSolved = true
-            } else {
-                selectedOptionIndex = -1
-                isCurrentExerciseSolved = false
-            }
+            resetExerciseInteractionState()
         }
         bindCurrentExercise()
 
         // 4. WRAP-UP DATA
+        val continuation = usesStructuredLessons(sec)
+        binding.tvWrapUpBullet2.visibility = if (continuation) View.GONE else View.VISIBLE
+        if (continuation) {
+            binding.tvWrapUpBullet1.text = cachedExamples.first().englishSentence
+            binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+            binding.tvWrapUpExtendedSummary.text = sec.wrapUpSummaryUzbek
+            return
+        }
         binding.tvWrapUpExtendedSummary.visibility = View.GONE
         val bullet1Rule = state.grammarRules.getOrNull(0)
         val bullet2Rule = state.grammarRules.getOrNull(1)
@@ -1863,6 +1856,14 @@ class LessonDetailFragment : Fragment() {
         }
 
         binding.tvMashqPromptSub.text = ex.promptSub
+        binding.tvMashqPromptSub.visibility = if (ex.promptSub.isBlank()) View.GONE else View.VISIBLE
+        val givesAwayAnswer = ex.mode == LessonExerciseMode.STANDARD &&
+            ex.promptSub != getString(R.string.lesson_continuation_listen) &&
+            ("___" in ex.promptSentenceWithBlank || ex.options.any {
+                it.equals(ex.fullAudioSentence, ignoreCase = true)
+            })
+        binding.btnSpeakMashqPrompt.visibility =
+            if (ex.fullAudioSentence == null || (givesAwayAnswer && !isCurrentExerciseSolved)) View.GONE else View.VISIBLE
         binding.tvMashqPromptMain.text = ex.promptSentenceWithBlank
 
         when (ex.mode) {
@@ -2363,7 +2364,7 @@ class LessonDetailFragment : Fragment() {
         selectedOptionIndex = optionIdx
         isCurrentExerciseSolved = (optionIdx == ex.correctOptionIndex)
         if (isCurrentExerciseSolved) {
-            viewModel.speakEnglish(ex.fullAudioSentence)
+            ex.fullAudioSentence?.let(viewModel::speakEnglish)
         }
         bindCurrentExercise()
     }
@@ -2826,6 +2827,14 @@ class LessonDetailFragment : Fragment() {
         return result.take(3)
     }
 
+    private fun usesStructuredLessons(section: LessonSectionModel): Boolean =
+        when (CurriculumLevel.forTopic(section.topicId)) {
+            CurriculumLevel.A0 -> section.orderIndex >= 54
+            CurriculumLevel.A1 -> section.orderIndex >= 5
+            null -> false
+            else -> true
+        }
+
     private fun buildInLessonExercises(
         repoExercises: List<ExerciseModel>,
         vocab: List<VocabularyModel>,
@@ -2862,16 +2871,25 @@ class LessonDetailFragment : Fragment() {
                 "ex_a0_17_10" -> LessonExerciseMode.SELF_WRITE_THERE_IS
                 else -> LessonExerciseMode.STANDARD
             }
-            val options = ex.options.filter { it.isNotBlank() }
-            if (options.size >= 2 || mode != LessonExerciseMode.STANDARD) {
-                val displayOptions = if (options.size > 3) options.take(3) else options
-                val finalCorrectIdx = displayOptions.indexOf(ex.correctAnswer).let { if (it >= 0) it else 0 }
+            val options = ex.options.filter { it.isNotBlank() }.distinct()
+            if (mode != LessonExerciseMode.STANDARD || (options.size >= 2 && ex.correctAnswer in options)) {
+                val displayOptions = if (mode == LessonExerciseMode.STANDARD) {
+                    (options.filterNot { it == ex.correctAnswer }.take(2) + ex.correctAnswer).shuffled()
+                } else {
+                    options.take(3)
+                }
+                val finalCorrectIdx = displayOptions.indexOf(ex.correctAnswer)
                 result.add(
                     InLessonExerciseItem(
                         id = ex.id,
-                        promptSub = ex.subPromptText.ifBlank { "Bo‘sh joyni to‘ldiring:" },
+                        promptSub = when {
+                            !usesStructuredLessons(sec) -> ex.subPromptText.ifBlank { "Bo‘sh joyni to‘ldiring:" }
+                            ex.exerciseType == ExerciseType.LISTENING_COMPREHENSION -> getString(R.string.lesson_continuation_listen)
+                            else -> ex.subPromptText
+                        },
                         promptSentenceWithBlank = ex.promptText,
-                        fullAudioSentence = ex.audioTextToSpeak?.takeIf { it.isNotBlank() } ?: ex.correctAnswer,
+                        fullAudioSentence = ex.audioTextToSpeak?.takeIf { it.isNotBlank() }
+                            ?: ex.correctAnswer.takeUnless { mode == LessonExerciseMode.STANDARD },
                         options = displayOptions,
                         correctOptionIndex = finalCorrectIdx,
                         mode = mode,

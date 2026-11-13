@@ -17,26 +17,12 @@ object A1CurriculumSeed {
             orderIndex = 1,
             titleEnglish = "I do my homework — “Do” (Qilmoq, bajarmoq)",
             titleUzbek = "1-Dars: I do my homework — “Do” (Qilmoq, bajarmoq)",
-            objectiveUzbek = "Do fe'li mavzusini o‘rganish va amalda qo‘llash.",
-            explanationUzbek = """Do — bu “qilmoq”, “bajarmoq” degani.
-Ya’ni biror ishni bajarish.
-Do — asosiy fe’l. O‘zi mustaqil ishlaydi. Boshqa fe’l kerak emas.
+            objectiveUzbek = "Uy vazifasi haqida odatiy ishni ayta olish.",
+            explanationUzbek = """Darsdan keyin uy vazifangizni bajarishingizni ayting. I, you, we va they bilan do ishlatiladi. He yoki she bilan does ishlatiladi.
 
-Qanday savolga javob beradi?
-“Nima qilasan?” — What do you do?
-Men uy vazifasini qilaman → I do my homework.
-
-Nega kerak?
-Har kuni ish qilamiz: uy vazifasi, ish, tozalash.
-Do — shu ishlarni aytish uchun. Eng ko‘p ishlatiladigan fe’llardan biri. Tamom.
-
-Do bilan he, she, it — does bo‘ladi.
-I do, you do, we do, they do — do.
-He does, she does, it does — does. Tamom.
-
-Topic: My Homework.
-I do my homework. — Men uy vazifamni qilaman.""",
-            wrapUpSummaryUzbek = """XULOSA: Do — qilmoq, bajarmoq. He, she, it bilan does bo'ladi. Tamom!""",
+I do my homework. — Men uy vazifamni bajaraman.
+She does her homework. — U uy vazifasini bajaradi.""",
+            wrapUpSummaryUzbek = """I do, she does. Uy vazifangiz haqida bitta gap tuzing. Bitta to‘g‘ri gap bilan boshlash kifoya.""",
             isUnlocked = false,
             isCompleted = false
         ),
@@ -46,15 +32,12 @@ I do my homework. — Men uy vazifamni qilaman.""",
             orderIndex = 2,
             titleEnglish = "Do you like...? — “Do” savolda",
             titleUzbek = "2-Dars: Do you like...? — “Do” savolda",
-            objectiveUzbek = "Do savolda mavzusini o‘rganish va amalda qo‘llash.",
-            explanationUzbek = """Do savolda — ingliz tilida savol tuzish uchun ishlatiladi.
-Do oldinga chiqadi: Do you like...? — Sen yoqtirasanmi?
-He, she, it uchun Does oldinga chiqadi: Does he like...? — U yoqtiradimi?
+            objectiveUzbek = "Birovdan nimani yoqtirishini so‘rash va qisqa javob berish.",
+            explanationUzbek = """Do‘stingiz olmalarni yoqtiradimi, deb so‘rang. Do + you + like? Uchinchi shaxsda Does + he yoki she + like? Does dan keyin like o‘zgarmaydi.
 
-Qisqa javoblar:
-Yes, I do. — Ha, yoqtiraman.
-No, I do not. — Yo'q, yoqtirmayman. Tamom.""",
-            wrapUpSummaryUzbek = """XULOSA: Savolda Do/Does oldinga chiqadi. Javob: Yes, I do / No, I do not.""",
+Do you like apples? — Olmani yoqtirasizmi?
+Yes, I do. — Ha, yoqtiraman.""",
+            wrapUpSummaryUzbek = """Do you like...? bilan do‘stingizdan nimani yoqtirishini so‘rang. Ha bo‘lsa Yes, I do. Yo‘q bo‘lsa No, I don’t.""",
             isUnlocked = false,
             isCompleted = false
         ),
@@ -64,15 +47,11 @@ No, I do not. — Yo'q, yoqtirmayman. Tamom.""",
             orderIndex = 3,
             titleEnglish = "I do not like... — “Do” inkorda",
             titleUzbek = "3-Dars: I do not like... — “Do” inkorda",
-            objectiveUzbek = "Do inkorda mavzusini o‘rganish va amalda qo‘llash.",
-            explanationUzbek = """Inkor shakli — “yo'q, qilmayman” degani.
-I do not like... — Men yoqtirmayman.
-He does not like... — U yoqtirmaydi.
+            objectiveUzbek = "Yoqtirmaydigan narsani odobli va aniq aytish.",
+            explanationUzbek = """Taklif qilingan ichimlikni yoqtirmasangiz, “I don’t like milk” deng. He yoki she bilan doesn’t ishlating. Doesn’t dan keyin like o‘zgarmaydi.
 
-Qisqartma shakli:
-do not = don't
-does not = doesn't Tamom.""",
-            wrapUpSummaryUzbek = """XULOSA: Inkor gapda do not (don't) va does not (doesn't) ishlatiladi.""",
+She doesn’t like milk. — U sutni yoqtirmaydi.""",
+            wrapUpSummaryUzbek = """I don’t like... bilan o‘zingiz haqingizda gapiring. Keyin He doesn’t like... qolipini sinab ko‘ring.""",
             isUnlocked = false,
             isCompleted = false
         ),
@@ -82,13 +61,14 @@ does not = doesn't Tamom.""",
             orderIndex = 4,
             titleEnglish = "Modal fe'llar — Can, Must, May, Have to",
             titleUzbek = "4-Dars: Modal fe'llar — Can, Must, May, Have to",
-            objectiveUzbek = "Modal fe'llar mavzusini o‘rganish va amalda qo‘llash.",
-            explanationUzbek = """Modal fe'llar — asosiy fe'lga qo'shimcha ma'no beruvchi fe'llar.
-Can — qila olmoq (imkoniyat).
-Must — shart, majbur (qat'iy qoida).
-May — ruxsat so'rash yoki berish.
-Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
-            wrapUpSummaryUzbek = """XULOSA: Can — qila olmoq, Must — shart, May — ruxsat, Have to — majburiyat.""",
+            objectiveUzbek = "Kutubxonada qobiliyat, ruxsat va majburiyatni ifodalash.",
+            explanationUzbek = """Kutubxonadasiz. Can bilan nima qila olishingizni ayting. May I...? bilan ruxsat so‘rang. Must yoki have to bilan qoida yoki talabni ayting.
+
+I can read this book. — Bu kitobni o‘qiy olaman.
+May I sit here? — Shu yerda o‘tirsam maylimi?
+You must show your card. — Kartangizni ko‘rsatishingiz shart.
+I have to return this book today. — Bu kitobni bugun qaytarishim kerak.""",
+            wrapUpSummaryUzbek = """May I sit here? bilan ruxsat so‘rang. Keyin I have to... bilan bitta majburiyatni ayting. Shu ikki gap kutubxonada asqatadi.""",
             isUnlocked = false,
             isCompleted = false
         )
@@ -291,7 +271,7 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             englishWord = "modal",
             uzbekTranslation = "modal fe'l turi",
             exampleEnglish = "English modal verbs.",
-            exampleUzbek = "Ingliz tili modal fe'llari."
+            exampleUzbek = "Ingliz tilidagi modal fe’llar."
         ),
         VocabularyEntity(
             id = "v_a1_04_02",
@@ -327,7 +307,7 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             englishWord = "have to",
             uzbekTranslation = "majbur bo'lmoq",
             exampleEnglish = "I have to do homework.",
-            exampleUzbek = "Men uy vazifasi qilishga majburman."
+            exampleUzbek = "Uy vazifamni bajarishim kerak."
         ),
         VocabularyEntity(
             id = "v_a1_04_06",
@@ -369,7 +349,7 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             titleUzbek = "Do va Does savol shakli",
             explanationUzbek = """Savolda Do yoki Does gapning eng boshiga chiqadi.""",
             exampleEnglish = "Do you like apples?",
-            exampleUzbek = "Siz olmalarni yoqtirasizmi?",
+            exampleUzbek = "Olmani yoqtirasizmi?",
             associatedVocabularyIdsCsv = "",
             isStudied = false,
             isMastered = false
@@ -381,7 +361,7 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             titleUzbek = "Do not va Does not",
             explanationUzbek = """Inkor gapda not qo'shiladi: do not (don't), does not (doesn't).""",
             exampleEnglish = "I do not like apples.",
-            exampleUzbek = "Men olmalarni yoqtirmayman.",
+            exampleUzbek = "Men olmani yoqtirmayman.",
             associatedVocabularyIdsCsv = "",
             isStudied = false,
             isMastered = false
@@ -408,12 +388,12 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "“Do” nima degani?",
+            promptText = "Men uy vazifamni bajaraman. Inglizcha gapni tanlang.",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "I do my homework.",
-            optionsPipeSeparated = "qilmoq, bajarmoq|bormoq|yemoq",
-            correctAnswer = "qilmoq, bajarmoq",
-            explanationUzbek = """Do — qilmoq, bajarmoq degani.""",
+            audioTextToSpeak = null,
+            optionsPipeSeparated = "I do my homework.|I does my homework.|I do her homework.",
+            correctAnswer = "I do my homework.",
+            explanationUzbek = "I bilan do, o‘z uy vazifangiz uchun my homework ishlatiladi.",
             vocabularyIdsCsv = "v_a1_01_01",
             grammarRuleIdsCsv = "g_a1_01_01"
         ),
@@ -488,12 +468,12 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "Bo‘sh joy: ______ he like cats?",
+            promptText = "Do‘stingiz singlisidan so‘rab berdi. Savolni to‘ldiring: ___ she like apples?",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "Does he like cats?",
-            optionsPipeSeparated = "Does|Do|Are",
+            audioTextToSpeak = null,
+            optionsPipeSeparated = "Does|Do|Is",
             correctAnswer = "Does",
-            explanationUzbek = """He bilan Does oldinga chiqadi.""",
+            explanationUzbek = "She bilan Does qo‘llanadi. Like oddiy shaklda qoladi.",
             vocabularyIdsCsv = "v_a1_02_01",
             grammarRuleIdsCsv = "g_a1_02_01"
         ),
@@ -552,12 +532,12 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "Imkoniyatni qaysi modal fe'l bildiradi?",
+            promptText = "«Bu kitobni o‘qiy olaman» degan gapni tanlang.",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "I can go.",
-            optionsPipeSeparated = "Can|Must|May",
-            correctAnswer = "Can",
-            explanationUzbek = """Can — imkoniyat bildiradi.""",
+            audioTextToSpeak = null,
+            optionsPipeSeparated = "I can read this book.|I must read this book.|May I read this book?",
+            correctAnswer = "I can read this book.",
+            explanationUzbek = "Bu yerda can qobiliyatni bildiradi.",
             vocabularyIdsCsv = "v_a1_04_01",
             grammarRuleIdsCsv = "g_a1_04_01"
         ),
@@ -568,12 +548,12 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "Qat'iy majburiyatni qaysi fe'l bildiradi?",
+            promptText = "Kutubxona qoidasi: kartangizni ko‘rsatishingiz shart.",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "I must go.",
-            optionsPipeSeparated = "Must|May|Can",
-            correctAnswer = "Must",
-            explanationUzbek = """Must — shart degani.""",
+            audioTextToSpeak = null,
+            optionsPipeSeparated = "You must show your card.|You may show your card.|You can show your card.",
+            correctAnswer = "You must show your card.",
+            explanationUzbek = "Bu yerda must majburiy qoidani bildiradi.",
             vocabularyIdsCsv = "v_a1_04_01",
             grammarRuleIdsCsv = "g_a1_04_01"
         ),
@@ -584,12 +564,12 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "Ruxsat so'rashda qaysi fe'l ishlatiladi?",
+            promptText = "Kutubxonada o‘tirishga ruxsat so‘rang.",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "May I go?",
-            optionsPipeSeparated = "May|Must|Do",
-            correctAnswer = "May",
-            explanationUzbek = """May — ruxsat so'rashda.""",
+            audioTextToSpeak = null,
+            optionsPipeSeparated = "May I sit here?|I must sit here.|You may sit here.",
+            correctAnswer = "May I sit here?",
+            explanationUzbek = "May I...? — muloyim ruxsat so‘rash shakli.",
             vocabularyIdsCsv = "v_a1_04_01",
             grammarRuleIdsCsv = "g_a1_04_01"
         )
@@ -602,19 +582,19 @@ Have to — majbur bo'lmoq (vaziyat taqozosi). Tamom.""",
             CurriculumSeedData.LessonExampleSeed("We do our homework.", "do", "homework", "Biz uy vazifamizni qilamiz.", "uy vazifamizni")
         )
         DARS_A1_2_SECTION_ID -> listOf(
-            CurriculumSeedData.LessonExampleSeed("Do you like apples?", "Do", "apples", "Siz olmalarni yoqtirasizmi?", "olmalarni"),
+            CurriculumSeedData.LessonExampleSeed("Do you like apples?", "Do", "apples", "Olmani yoqtirasizmi?", "olmalarni"),
             CurriculumSeedData.LessonExampleSeed("Yes, I do.", "Yes", "I do", "Ha, yoqtiraman.", "yoqtiraman"),
             CurriculumSeedData.LessonExampleSeed("Does he like cats?", "Does", "cats", "U mushuklarni yoqtiradimi?", "mushuklarni")
         )
         DARS_A1_3_SECTION_ID -> listOf(
-            CurriculumSeedData.LessonExampleSeed("I do not like apples.", "do not", "apples", "Men olmalarni yoqtirmayman.", "olmalarni"),
+            CurriculumSeedData.LessonExampleSeed("I do not like apples.", "do not", "apples", "Men olmani yoqtirmayman.", "olmalarni"),
             CurriculumSeedData.LessonExampleSeed("He does not like cats.", "does not", "cats", "U mushuklarni yoqtirmaydi.", "mushuklarni"),
             CurriculumSeedData.LessonExampleSeed("They do not like milk.", "do not", "milk", "Ular sutni yoqtirmaydilar.", "sutni")
         )
         DARS_A1_4_SECTION_ID -> listOf(
-            CurriculumSeedData.LessonExampleSeed("I can go.", "can", "go", "Men bora olaman.", "bora olaman"),
-            CurriculumSeedData.LessonExampleSeed("I must go.", "must", "go", "Men borishim shart.", "borishim shart"),
-            CurriculumSeedData.LessonExampleSeed("May I go?", "May", "go", "Borsam maylimi?", "Borsam maylimi")
+            CurriculumSeedData.LessonExampleSeed("I can read this book.", "can", "read", "Bu kitobni o‘qiy olaman.", "o‘qiy olaman"),
+            CurriculumSeedData.LessonExampleSeed("You must show your card.", "must", "card", "Kartangizni ko‘rsatishingiz shart.", "shart"),
+            CurriculumSeedData.LessonExampleSeed("May I sit here?", "May", "sit", "Shu yerda o‘tirsam maylimi?", "maylimi")
         )
         else -> null
     }

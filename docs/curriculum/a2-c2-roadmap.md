@@ -6,7 +6,7 @@ A2 follows the existing A0 and A1 lessons. Each unit uses **Qoida → Misollar �
 
 ## Implementation status
 
-This roadmap defines 300 lesson slots. The app seed implements all 60 lessons each for A2, B1 and B2, plus four sample lessons each for C1 and C2. The remaining 112 lesson slots still need full lesson copy, bilingual examples and interactive exercises. The coverage table tracks chapters. A subsection-by-subsection audit is still pending.
+This roadmap defines 300 lesson slots. The app seed implements all 60 lessons each for A2, B1, B2 and C1, plus four sample lessons for C2. The remaining 56 lesson slots still need full lesson copy, bilingual examples and interactive exercises. The coverage table tracks chapters. A subsection-by-subsection audit is still pending.
 
 ### Example lesson — Ordering and Shopping
 

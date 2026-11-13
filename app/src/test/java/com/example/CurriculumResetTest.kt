@@ -219,22 +219,22 @@ class CurriculumResetTest {
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
             val navController = navHost.navController
 
-            // 1. Home tab (start destination) — A0 with 36 lessons (232 vocab, 63 grammar)
+            // 1. Home tab (start destination) — A0 with 53 lessons (220 vocab, 53 grammar)
             val homeView = navHost.childFragmentManager.primaryNavigationFragment?.requireView()!!
             waitUntil {
                 homeView.findViewById<TextView>(R.id.tvHeroCourseName).text.toString() == "TalkMe English Course" &&
                     homeView.findViewById<View>(R.id.btnContinueLearning).isEnabled &&
-                    homeView.findViewById<TextView>(R.id.tvHomeVocabBadge).text.toString() == "+232"
+                    homeView.findViewById<TextView>(R.id.tvHomeVocabBadge).text.toString() == "+220"
             }
             assertEquals(
-                "1-Dars: Welcome to TalkMe",
+                "1-Dars: Hello!",
                 homeView.findViewById<TextView>(R.id.tvHeroSectionName).text.toString()
             )
             assertTrue(homeView.findViewById<View>(R.id.btnContinueLearning).isEnabled)
-            assertEquals("+232", homeView.findViewById<TextView>(R.id.tvHomeVocabBadge).text.toString())
-            assertEquals("+63", homeView.findViewById<TextView>(R.id.tvHomeGrammarBadge).text.toString())
+            assertEquals("+220", homeView.findViewById<TextView>(R.id.tvHomeVocabBadge).text.toString())
+            assertEquals("+53", homeView.findViewById<TextView>(R.id.tvHomeGrammarBadge).text.toString())
 
-            // 2. Lessons tab — only A0 unlocked, genuine 0/18 count, no filter chip row
+            // 2. Lessons tab — only A0 unlocked, genuine 0/53 count, no filter chip row
             navController.navigate(R.id.lessonsFragment)
             waitUntil {
                 val v = navHost.childFragmentManager.primaryNavigationFragment?.view
@@ -244,7 +244,7 @@ class CurriculumResetTest {
             val lessonsView = navHost.childFragmentManager.primaryNavigationFragment?.requireView()!!
             assertEquals("A0", lessonsView.findViewById<TextView>(R.id.tvHeroLevelBadge).text.toString())
             assertEquals(
-                activity.getString(R.string.curriculum_lesson_count, 0, 36),
+                activity.getString(R.string.curriculum_lesson_count, 0, 53),
                 lessonsView.findViewById<TextView>(R.id.tvHeroLessonCount).text.toString()
             )
             assertTrue(lessonsView.findViewById<View>(R.id.btnHeroContinue).isEnabled)
@@ -287,24 +287,23 @@ class CurriculumResetTest {
             )
             assertTrue(tasksView.findViewById<View>(R.id.btnTaskLesson).isEnabled)
 
-            // 5. Open DARS 1: WELCOME TO TALKME from Daily Tasks and walk through to completion
+            // 5. Open DARS 1: HELLO! from Daily Tasks and walk through to completion
             tasksView.findViewById<View>(R.id.btnTaskLesson).performClick()
             waitUntil {
                 val v = navHost.childFragmentManager.primaryNavigationFragment?.view
-                v?.findViewById<TextView>(R.id.tvLessonHeadingTitle)?.text?.toString() == "Welcome to TalkMe"
+                v?.findViewById<TextView>(R.id.tvLessonHeadingTitle)?.text?.toString() == "Hello!"
             }
             val lessonView = navHost.childFragmentManager.primaryNavigationFragment?.requireView()!!
-            assertEquals("1/36", lessonView.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
-            assertEquals("🤖 TalkMe (TTS matni)", lessonView.findViewById<TextView>(R.id.tvSituationTitle).text.toString())
+            assertEquals("1/53", lessonView.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
+            assertEquals("📘 1️⃣ TUSHUNTIRISH", lessonView.findViewById<TextView>(R.id.tvSituationTitle).text.toString())
             assertEquals(View.VISIBLE, lessonView.findViewById<View>(R.id.btnSpeakSituation).visibility)
-            assertEquals(
-                CurriculumSeedData.DARS_1_TALKME_TTS_TEXT,
-                lessonView.findViewById<TextView>(R.id.tvSituationBody).text.toString()
+            assertTrue(
+                lessonView.findViewById<TextView>(R.id.tvSituationBody).text.toString().contains("Hello — bu “Salom!” degani.")
             )
-            assertEquals("Welcome", lessonView.findViewById<TextView>(R.id.tvVocabWord1).text.toString())
-            assertEquals("Learn", lessonView.findViewById<TextView>(R.id.tvVocabWord2).text.toString())
-            assertEquals("Mistake", lessonView.findViewById<TextView>(R.id.tvVocabWord3).text.toString())
-            assertEquals(View.GONE, lessonView.findViewById<View>(R.id.layoutExtraQoidaVocab).visibility)
+            assertEquals("hello", lessonView.findViewById<TextView>(R.id.tvVocabWord1).text.toString())
+            assertEquals("hello, mom!", lessonView.findViewById<TextView>(R.id.tvVocabWord2).text.toString())
+            assertEquals("hello, dad!", lessonView.findViewById<TextView>(R.id.tvVocabWord3).text.toString())
+            assertEquals(View.VISIBLE, lessonView.findViewById<View>(R.id.layoutExtraQoidaVocab).visibility)
 
             // Qoida -> Misollar -> Mashqlar (1..3) -> Wrap-up -> Complete Dars 1
             val primaryCta = lessonView.findViewById<View>(R.id.btnLessonPrimaryCta)

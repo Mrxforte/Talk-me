@@ -60,36 +60,50 @@ object TopicVisualArtwork {
         return when {
             secLower == "sec_a0_01" || secLower == "sec_01_01" -> R.drawable.img_lesson_conversation_1794310851367
             secLower == "sec_a0_02" -> R.drawable.img_topic_morning_intro_1794316347713
-            secLower == "sec_a0_03" -> R.drawable.img_topic_articles_1794316349035
-            secLower == "sec_a0_04" -> R.drawable.img_lesson_objects_1794310854481
-            secLower == "sec_a0_05" || secLower == "sec_a0_06" -> R.drawable.img_topic_demonstratives_1794316348388
-            secLower == "sec_a0_07" || secLower == "sec_a0_08" || secLower == "sec_a0_09" ->
-                R.drawable.img_lesson_grammar_1794310851898
-            secLower == "sec_a0_10" ->
-                R.drawable.img_lesson_numbers_1794310853767
-            secLower == "sec_a0_11" ->
-                R.drawable.img_lesson_numbers_1794310853767
-            secLower == "sec_a0_12" ->
-                R.drawable.img_lesson_grammar_1794310851898
-            secLower == "sec_a0_13" ->
-                R.drawable.img_lesson_numbers_1794310853767
-            secLower == "sec_a0_14" ->
-                R.drawable.img_lesson_grammar_1794310851898
-            secLower == "sec_a0_15" || secLower == "sec_a0_16" ->
-                R.drawable.img_topic_demonstratives_1794316348388
-            secLower == "sec_a0_17" || secLower == "sec_a0_18" || secLower == "sec_a0_19" ->
-                R.drawable.img_lesson_places_1794310885756
-            secLower == "sec_a0_20" || secLower == "sec_a0_21" || secLower == "sec_a0_22" || secLower == "sec_a0_23" ->
-                R.drawable.img_topic_pronouns_1794316352550
-            secLower == "sec_a0_24" ->
-                R.drawable.img_lesson_conversation_1794310851367
-            secLower == "sec_a0_25" ->
+            secLower == "sec_a0_03" -> R.drawable.img_lesson_adjectives_1794310884758
+            secLower == "sec_a0_04" || secLower == "sec_a0_05" -> R.drawable.img_lesson_numbers_1794310853767
+            secLower == "sec_a0_06" -> R.drawable.img_lesson_adjectives_1794310884758
+            secLower == "sec_a0_07" -> R.drawable.img_topic_pronouns_1794316352550
+            secLower == "sec_a0_08" -> R.drawable.img_lesson_actions_1794310855917
+            secLower == "sec_a0_09" -> R.drawable.img_lesson_objects_1794310854481
+            secLower in listOf("sec_a0_10", "sec_a0_11", "sec_a0_12", "sec_a0_13") ->
+                R.drawable.img_topic_morning_intro_1794316347713
+            secLower == "sec_a0_14" -> R.drawable.img_lesson_objects_1794310854481
+            secLower == "sec_a0_15" || secLower == "sec_a0_16" -> R.drawable.img_lesson_places_1794310885756
+            secLower == "sec_a0_17" -> R.drawable.img_skill_vocabulary_1794316277453
+            secLower == "sec_a0_18" -> R.drawable.img_topic_morning_intro_1794316347713
+            secLower == "sec_a0_19" || secLower == "sec_a0_20" -> R.drawable.img_lesson_adjectives_1794310884758
+            secLower in listOf("sec_a0_21", "sec_a0_22", "sec_a0_23", "sec_a0_24", "sec_a0_25") ->
+                R.drawable.img_lesson_actions_1794310855917
+            secLower in listOf("sec_a0_26", "sec_a0_27", "sec_a0_28", "sec_a0_29", "sec_a0_30") ->
+                R.drawable.img_lesson_actions_1794310855917
+            secLower in listOf("sec_a0_31", "sec_a0_32", "sec_a0_33") ->
                 R.drawable.img_topic_articles_1794316349035
-            secLower == "sec_a0_26" || secLower == "sec_a0_27" || secLower == "sec_a0_28" || secLower == "sec_a0_29" || secLower == "sec_a0_30" ->
-                R.drawable.img_lesson_grammar_1794310851898
-            secLower == "sec_a0_31" || secLower == "sec_a0_32" || secLower == "sec_a0_33" ->
+            secLower == "sec_a0_34" || secLower == "sec_a0_35" ->
+                R.drawable.img_topic_demonstratives_1794316348388
+            secLower in listOf("sec_a0_36", "sec_a0_37", "sec_a0_38") ->
                 R.drawable.img_lesson_adjectives_1794310884758
-            secLower == "sec_a0_34" || secLower == "sec_a0_35" || secLower == "sec_a0_36" ->
+            secLower in listOf("sec_a0_39", "sec_a0_40", "sec_a0_41") ->
+                R.drawable.img_daily_tasks_banner_1794310886631
+            secLower == "sec_a0_42" || secLower == "sec_a0_43" ->
+                R.drawable.img_lesson_places_1794310885756
+            secLower == "sec_a0_44" ->
+                R.drawable.img_lesson_actions_1794310855917
+            secLower in listOf("sec_a0_45", "sec_a0_46", "sec_a0_47") ->
+                R.drawable.img_topic_morning_intro_1794316347713
+            secLower == "sec_a0_48" ->
+                R.drawable.img_lesson_adjectives_1794310884758
+            secLower == "sec_a0_49" ->
+                R.drawable.img_topic_morning_intro_1794316347713
+            secLower == "sec_a0_50" ->
+                R.drawable.img_topic_pronouns_1794316352550
+            secLower == "sec_a0_51" ->
+                R.drawable.img_lesson_objects_1794310854481
+            secLower == "sec_a0_52" ->
+                R.drawable.img_topic_pronouns_1794316352550
+            secLower == "sec_a0_53" ->
+                R.drawable.img_hero_learning_1794304411125
+            secLower.startsWith("sec_a1") ->
                 R.drawable.img_lesson_actions_1794310855917
             secLower == "sec_01_02" -> R.drawable.img_topic_morning_intro_1794316347713
             secLower == "sec_01_03" -> R.drawable.img_skill_speaking_1794316279625

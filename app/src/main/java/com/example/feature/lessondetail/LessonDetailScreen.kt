@@ -392,7 +392,7 @@ class LessonDetailFragment : Fragment() {
         }
         binding.btnSpeakSituation.setOnClickListener(playDars1WelcomeTts)
         binding.btnSpeakMisollarDialogue.setOnClickListener {
-            viewModel.speakEnglish(com.example.data.local.CurriculumSeedData.DARS_2_DIALOGUE_FULL_TTS)
+            cachedExamples.firstOrNull()?.let { viewModel.speakEnglish(it.englishSentence) }
         }
 
         binding.colVisual1.setOnClickListener(speakVocabWord1)
@@ -593,23 +593,7 @@ class LessonDetailFragment : Fragment() {
 
     private fun isAutoPreselectLesson(): Boolean {
         val secId = lastLoadedSectionId ?: currentSectionId
-        return secId != com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID &&
-            secId != com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID
+        return secId == com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID
     }
 
     private fun resetExerciseInteractionState() {
@@ -645,54 +629,16 @@ class LessonDetailFragment : Fragment() {
         binding.tvLessonTopCounter.text = "${sec.orderIndex}/$totalDisp"
 
         // 1. QOIDA DATA
-        val headingTitle = when (sec.id) {
-            com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID -> "Welcome to TalkMe"
-            com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID -> "Lera and talkme"
-            com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID -> "A cup, an apple"
-            com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID -> "A book and a cup"
-            com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID -> "This and that"
-            com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID -> "These and those"
-            com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID -> "I have a book"
-            com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID -> "Have I got a book?"
-            com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID -> "I have not got a book"
-            com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID -> "One, two, three"
-            com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID -> "I have three books"
-            com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID -> "I have a book, but I have no cups"
-            com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID -> "Counting the Tigers"
-            com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID -> "The first tiger"
-            com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID -> "Here is a boy"
-            com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID -> "Here are two boys"
-            com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID -> "There is a boy"
-            com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID -> "There are two boys"
-            "sec_01_01" -> "Xush kelibsiz!"
-            else -> sec.titleUzbek
+        val headingTitle = sec.titleEnglish.ifBlank {
+            sec.titleUzbek
                 .replace(Regex("^\\d+-Dars:\\s*", RegexOption.IGNORE_CASE), "")
                 .substringBefore("—")
                 .substringBefore("-")
                 .trim()
                 .ifBlank { "Dars qoidasi" }
         }
-        val headingSubtitle = when (sec.id) {
-            com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID -> "TalkMe ilovasiga xush kelibsiz!"
-            com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID -> "9 ta oddiy ibora va ilk suhbat"
-            com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID -> "a / an artikllari — bitta narsa"
-            com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID -> "and (“va”) bog‘lovchisi — ikkita narsa"
-            com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID -> "this (“bu”) va that (“o‘sha”) — bitta narsa"
-            com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID -> "these (“bular”) va those (“o‘shalar”) — ko‘p narsa (-s)"
-            com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID -> "have (“bor bo‘lmoq”) va I have (“menda bor”) — darak shakli"
-            com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID -> "Have I got ...? — savol shakli va qisqa javoblar"
-            com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID -> "I have not got / I haven’t got — inkor shakli"
-            com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID -> "1 dan 10 gacha sonlar va ko‘p narsa (-s)"
-            com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID -> "sonlar + I have — bitta va ko‘p narsani sanash"
-            com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID -> "but (“lekin”) va no (“yo‘q”) — bor va yo‘q juftligi"
-            com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID -> "sanoq sonlar (“nechta?”) — yo‘lbarslarni sanaymiz"
-            com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID -> "tartib sonlar (“nechanchi?”) — the first .. the tenth"
-            com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID -> "here (“mana / mana bu”) + is — bitta yaqin narsa"
-            com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID -> "here (“mana / mana bu”) + are — ko‘p yaqin narsa (-s)"
-            com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID -> "there (“u yerda / bor”) + is — bitta narsa bor"
-            com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID -> "there (“u yerda / bor”) + are — ko‘p narsa bor (-s)"
-            "sec_01_01" -> "TalkMe bilan ilk qadam"
-            else -> "TalkMe bilan bosqichma-bosqich o‘rganamiz"
+        val headingSubtitle = sec.objectiveUzbek.ifBlank {
+            "TalkMe bilan bosqichma-bosqich o‘rganamiz"
         }
         binding.tvLessonHeadingTitle.text = headingTitle
         binding.tvLessonHeadingSubtitle.text = headingSubtitle
@@ -859,307 +805,48 @@ class LessonDetailFragment : Fragment() {
         bindCurrentExercise()
 
         // 4. WRAP-UP DATA
-        when (sec.id) {
-            com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "Hello / Hi",
-                    middleText = " + tanishuv:\n    ",
-                    boldExample = "What’s your name? — My name is Lera."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Sorry / Thank you",
-                    middleText = " + xayrlashuv:\n    ",
-                    boldExample = "I love English! Good bye!"
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_2_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "Undosh harf",
-                    middleText = " oldidan → a:\n    ",
-                    boldExample = "a cup, a book, a cat, a pen, a dog."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Unli (a, e, i, o, u)",
-                    middleText = " oldidan → an:\n    ",
-                    boldExample = "an apple, an egg, an orange, an umbrella, an elephant."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_3_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "and bog‘lovchisi",
-                    middleText = " = va:\n    ",
-                    boldExample = "a book and a cup, an apple and an egg."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Har bir narsa",
-                    middleText = " o‘z a/an bilan:\n    ",
-                    boldExample = "Unli → an, undosh → a (hech qachon tushirib qoldirmang)."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_4_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "this / that",
-                    middleText = " (yaqin / uzoqroq):\n    ",
-                    boldExample = "this book (bu kitob), that cup (o‘sha piyola)."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "a / an qo‘yilmaydi",
-                    middleText = ":\n    ",
-                    boldExample = "this book ✅ (this a book ❌), that apple ✅ (that an apple ❌)."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_5_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "these / those",
-                    middleText = " (ko‘p narsa + -s):\n    ",
-                    boldExample = "these books (bular), those cups (o‘shalar)."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Ko‘plik va a/an",
-                    middleText = ":\n    ",
-                    boldExample = "Oxiriga -s qo‘shiladi (books, apples) va a/an qo‘yilmaydi!"
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_6_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "have / I have",
-                    middleText = ":\n    ",
-                    boldExample = "have — bor bo‘lmoq, I have — menda bor."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "I have + a/an + ot",
-                    middleText = ":\n    ",
-                    boldExample = "I have a book (undosh), I have an apple (unli)."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_7_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "Have I got ...?",
-                    middleText = " (savol):\n    ",
-                    boldExample = "Have I got a book? — Menda kitob bormi?"
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Qisqa javoblar",
-                    middleText = ":\n    ",
-                    boldExample = "Yes, I have. (Ha, bor.) · No, I have not. (Yo‘q, yo‘q.)"
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_8_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "I have not got",
-                    middleText = " (inkor):\n    ",
-                    boldExample = "I have not got a book / I haven’t got a book."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "3 ta shakl",
-                    middleText = ":\n    ",
-                    boldExample = "I have a book · Have I got a book? · I have not got a book."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_9_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "1 dan 10 gacha",
-                    middleText = ":\n    ",
-                    boldExample = "one, two, three, four, five, six, seven, eight, nine, ten."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Bitta / Ko‘p (-s)",
-                    middleText = ":\n    ",
-                    boldExample = "a book, an apple → two books, three apples (oxiriga -s)."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_10_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "Bitta / Ko‘p (-s)",
-                    middleText = ":\n    ",
-                    boldExample = "I have a book · I have two books (son + -s)."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "one bilan -s yo‘q",
-                    middleText = ":\n    ",
-                    boldExample = "I have one book ✅ (I have one books ❌)."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_11_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "but / no",
-                    middleText = ":\n    ",
-                    boldExample = "but — lekin · no — yo‘q (no dan keyin a/an yo‘q)."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Qolip",
-                    middleText = ":\n    ",
-                    boldExample = "I have a book, but I have no cups."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_12_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "Sanoq (nechta?)",
-                    middleText = ":\n    ",
-                    boldExample = "one tiger, two tigers, three tigers .. ten tigers."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Bitta / Ko‘p (-s)",
-                    middleText = ":\n    ",
-                    boldExample = "tiger (bitta) → tigers (2+ yo‘lbars)."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_13_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "Tartib (nechanchi?)",
-                    middleText = ":\n    ",
-                    boldExample = "the first, the second, the third, fourth..tenth tiger."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Sanoq vs Tartib",
-                    middleText = ":\n    ",
-                    boldExample = "three tigers (nechta?) · the third tiger (nechanchi?)."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_14_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "Here (yaqin)",
-                    middleText = ":\n    ",
-                    boldExample = "Here — mana / mana bu (qo‘lingizda, yoningizda)."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Bitta narsa",
-                    middleText = ":\n    ",
-                    boldExample = "Here is a boy. · Here is an apple."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_15_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "Ko‘p narsa",
-                    middleText = ":\n    ",
-                    boldExample = "Here are two boys. · Here are three girls."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Farqi",
-                    middleText = ":\n    ",
-                    boldExample = "Bitta → Here is a boy · Ko‘p → Here are two boys."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_16_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "There (uzoq/bor)",
-                    middleText = ":\n    ",
-                    boldExample = "There — u yerda / bor (bitta: There is a boy)."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "Here vs There",
-                    middleText = ":\n    ",
-                    boldExample = "Here is (mana, yaqin) · There is (u yerda bor)."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_17_WRAP_UP_UZBEK
-            }
-            com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID -> {
-                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                    highlightLead = "Ko‘p narsa bor",
-                    middleText = ":\n    ",
-                    boldExample = "There are two boys. · There are five tigers."
-                )
-                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                    highlightLead = "4 ta shakl",
-                    middleText = ":\n    ",
-                    boldExample = "Here is / Here are (yaqin) · There is / There are (bor)."
-                )
-                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
-                binding.tvWrapUpExtendedSummary.text =
-                    com.example.data.local.CurriculumSeedData.DARS_18_WRAP_UP_UZBEK
-            }
-            else -> {
-                binding.tvWrapUpExtendedSummary.visibility = View.GONE
-                val bullet1Rule = state.grammarRules.getOrNull(0)
-                val bullet2Rule = state.grammarRules.getOrNull(1)
-                if (bullet1Rule != null && bullet2Rule != null) {
-                    binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                        highlightLead = bullet1Rule.titleUzbek.substringBefore("—").trim().take(22),
-                        middleText = " + qoida:\n    ",
-                        boldExample = bullet1Rule.exampleEnglish
-                    )
-                    binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                        highlightLead = bullet2Rule.titleUzbek.substringBefore("—").trim().take(22),
-                        middleText = " + misol:\n    ",
-                        boldExample = bullet2Rule.exampleEnglish
-                    )
-                } else if (bullet1Rule != null) {
-                    binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                        highlightLead = bullet1Rule.titleUzbek.substringBefore("—").trim().take(22),
-                        middleText = " + qoida:\n    ",
-                        boldExample = bullet1Rule.exampleEnglish
-                    )
-                    val wrapSummary = sec.wrapUpSummaryUzbek.substringAfter("XULOSA:", "").substringBefore("Uyga vazifa:").trim()
-                        .ifBlank { sec.wrapUpSummaryUzbek.take(65) }
-                    binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                        highlightLead = "Xulosa",
-                        middleText = " va amaliyot:\n    ",
-                        boldExample = wrapSummary.take(55)
-                    )
-                } else {
-                    val wrapSummary = sec.wrapUpSummaryUzbek.substringAfter("XULOSA:", "").substringBefore("Uyga vazifa:").trim()
-                        .ifBlank { sec.objectiveUzbek.take(55) }
-                    val hw = sec.wrapUpSummaryUzbek.substringAfter("Uyga vazifa:", "").substringBefore("TalkMe yakuniy:").trim()
-                        .ifBlank { "Darsni ovoz chiqarib takrorlang." }
-                    binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                        highlightLead = "Dars xulosasi",
-                        middleText = ":\n    ",
-                        boldExample = wrapSummary.take(55)
-                    )
-                    binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                        highlightLead = "Uyga vazifa",
-                        middleText = ":\n    ",
-                        boldExample = hw.take(55)
-                    )
-                }
-            }
+        binding.tvWrapUpExtendedSummary.visibility = View.GONE
+        val bullet1Rule = state.grammarRules.getOrNull(0)
+        val bullet2Rule = state.grammarRules.getOrNull(1)
+        if (bullet1Rule != null && bullet2Rule != null) {
+            binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                highlightLead = bullet1Rule.titleUzbek.substringBefore("—").trim().take(22),
+                middleText = " + qoida:\n    ",
+                boldExample = bullet1Rule.exampleEnglish
+            )
+            binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                highlightLead = bullet2Rule.titleUzbek.substringBefore("—").trim().take(22),
+                middleText = " + misol:\n    ",
+                boldExample = bullet2Rule.exampleEnglish
+            )
+        } else if (bullet1Rule != null) {
+            binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                highlightLead = bullet1Rule.titleUzbek.substringBefore("—").trim().take(22),
+                middleText = " + qoida:\n    ",
+                boldExample = bullet1Rule.exampleEnglish
+            )
+            val wrapSummary = sec.wrapUpSummaryUzbek.substringAfter("XULOSA:", "").substringBefore("Uyga vazifa:").trim()
+                .ifBlank { sec.wrapUpSummaryUzbek.take(65) }
+            binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                highlightLead = "Xulosa",
+                middleText = " va amaliyot:\n    ",
+                boldExample = wrapSummary.take(55)
+            )
+        } else {
+            val wrapSummary = sec.wrapUpSummaryUzbek.substringAfter("XULOSA:", "").substringBefore("Uyga vazifa:").trim()
+                .ifBlank { sec.objectiveUzbek.take(55) }
+            val hw = sec.wrapUpSummaryUzbek.substringAfter("Uyga vazifa:", "").substringBefore("TalkMe yakuniy:").trim()
+                .ifBlank { "Darsni ovoz chiqarib takrorlang." }
+            binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                highlightLead = "Dars xulosasi",
+                middleText = ":\n    ",
+                boldExample = wrapSummary.take(55)
+            )
+            binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                highlightLead = "Uyga vazifa",
+                middleText = ":\n    ",
+                boldExample = hw.take(55)
+            )
         }
     }
 
@@ -1318,91 +1005,8 @@ class LessonDetailFragment : Fragment() {
     }
 
     private fun renderMisollarDialogue(sec: LessonSectionModel) {
-        val isDars2 = sec.id == com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID
-        if (!isDars2) {
-            binding.cardMisollarDialogue.visibility = View.GONE
-            binding.tvMisollarExamplesLabel.visibility =
-                if (sec.id == com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID ||
-                    sec.id == com.example.data.local.CurriculumSeedData.DARS_19_SECTION_ID
-                ) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
-            return
-        }
-        binding.cardMisollarDialogue.visibility = View.VISIBLE
+        binding.cardMisollarDialogue.visibility = View.GONE
         binding.tvMisollarExamplesLabel.visibility = View.VISIBLE
-        val container = binding.layoutDialogueLinesContainer
-        container.removeAllViews()
-        val density = resources.displayMetrics.density
-
-        com.example.data.local.CurriculumSeedData.DARS_2_DIALOGUE_LINES.forEach { line ->
-            val row = android.widget.LinearLayout(requireContext()).apply {
-                orientation = android.widget.LinearLayout.HORIZONTAL
-                gravity = android.view.Gravity.CENTER_VERTICAL
-                val padH = (10 * density).toInt()
-                val padV = (8 * density).toInt()
-                setPadding(padH, padV, padH, padV)
-                setBackgroundResource(
-                    if (line.isLearner) R.drawable.bg_lesson_feedback_success else R.drawable.bg_lesson_vocab_stacked_card
-                )
-                layoutParams = android.widget.LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    topMargin = (6 * density).toInt()
-                }
-                setOnClickListener {
-                    if (line.text.contains("tanishganimdan")) {
-                        viewModel.speakEnglish("Nice to meet you")
-                    } else {
-                        viewModel.speakEnglish(line.text)
-                    }
-                }
-            }
-            val tvSpeaker = android.widget.TextView(requireContext()).apply {
-                text = "${line.speaker}:"
-                setTextColor(if (line.isLearner) Color.parseColor("#4ADE80") else Color.parseColor("#38BDF8"))
-                textSize = 13f
-                setTypeface(null, android.graphics.Typeface.BOLD)
-                layoutParams = android.widget.LinearLayout.LayoutParams(
-                    (74 * density).toInt(),
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-            }
-            val tvLine = android.widget.TextView(requireContext()).apply {
-                text = line.text
-                setTextColor(Color.WHITE)
-                textSize = 14f
-                layoutParams = android.widget.LinearLayout.LayoutParams(
-                    0,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
-            }
-            row.addView(tvSpeaker)
-            row.addView(tvLine)
-            container.addView(row)
-        }
-        binding.tvMisollarDialogueNote.visibility = View.VISIBLE
-        binding.tvMisollarDialogueNote.text =
-            com.example.data.local.CurriculumSeedData.DARS_2_DIALOGUE_OUTRO_UZBEK
     }
 
     private fun renderExtraExampleCards(extraExamples: List<LessonExampleDisplayItem>) {
@@ -2813,70 +2417,11 @@ class LessonDetailFragment : Fragment() {
     }
 
     private fun getLessonSituationPhotoRes(sec: LessonSectionModel): Int? {
-        return when {
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID ->
-                R.drawable.img_lesson_conversation_1794310851367
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID ->
-                R.drawable.img_topic_morning_intro_1794316347713
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID ->
-                R.drawable.img_topic_articles_1794316349035
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID ->
-                R.drawable.img_lesson_objects_1794310854481
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID ->
-                R.drawable.img_topic_demonstratives_1794316348388
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID ->
-                R.drawable.img_lesson_grammar_1794310851898
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID ->
-                R.drawable.img_lesson_numbers_1794310853767
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID ->
-                R.drawable.img_lesson_grammar_1794310851898
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID ->
-                R.drawable.img_topic_demonstratives_1794316348388
-            sec.id == com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID ->
-                R.drawable.img_lesson_places_1794310885756
-            sec.id == "sec_01_01" -> R.drawable.img_lesson_conversation_1794310851367
-            sec.id == "sec_01_02" -> R.drawable.img_topic_morning_intro_1794316347713
-            sec.id == "sec_01_05" -> R.drawable.img_lesson_places_1794310885756
-            sec.id == "sec_03_01" -> R.drawable.img_lesson_numbers_1794310853767
-            sec.id == "sec_04_01" -> R.drawable.img_lesson_objects_1794310854481
-            sec.topicId == "topic_01_introduction" && sec.orderIndex == 1 -> R.drawable.img_lesson_conversation_1794310851367
-            else -> null
-        }
+        return com.example.core.ui.TopicVisualArtwork.getSectionImageRes(sec.topicId, sec.id, sec.orderIndex)
     }
 
     private fun getLessonSituationText(sec: LessonSectionModel): Pair<String, String> {
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID &&
-            sec.explanationUzbek.isNotBlank()
-        ) {
-            return Pair("🤖 TalkMe (TTS matni)", sec.explanationUzbek)
-        }
-        if ((sec.id == com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID ||
-                sec.id == com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID) &&
-            sec.explanationUzbek.isNotBlank()
-        ) {
+        if (sec.explanationUzbek.isNotBlank()) {
             return Pair("📘 1️⃣ TUSHUNTIRISH", sec.explanationUzbek)
         }
         val title = "Bugungi vaziyat"
@@ -3161,184 +2706,9 @@ class LessonDetailFragment : Fragment() {
         vocab: List<VocabularyModel>,
         grammar: List<GrammarRuleModel>
     ): List<LessonExampleDisplayItem> {
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_2_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_3_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_4_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_5_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_6_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_7_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_8_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_9_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_10_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_11_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_12_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_13_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_14_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_15_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_16_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_17_MISOLLAR.map {
-                LessonExampleDisplayItem(
-                    englishSentence = it.englishSentence,
-                    blueHighlightWord = it.blueHighlightWord,
-                    greenHighlightWord = it.greenHighlightWord,
-                    uzbekSentence = it.uzbekSentence,
-                    uzbekGreenWord = it.uzbekGreenWord
-                )
-            }
-        }
-        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID) {
-            return com.example.data.local.CurriculumSeedData.DARS_18_MISOLLAR.map {
+        val seedMisollar = com.example.data.local.CurriculumSeedData.getMisollarForSection(sec.id)
+        if (seedMisollar.isNotEmpty()) {
+            return seedMisollar.map {
                 LessonExampleDisplayItem(
                     englishSentence = it.englishSentence,
                     blueHighlightWord = it.blueHighlightWord,

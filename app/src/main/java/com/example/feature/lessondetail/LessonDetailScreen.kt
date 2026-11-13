@@ -790,7 +790,7 @@ class LessonDetailFragment : Fragment() {
         bindCurrentExercise()
 
         // 4. WRAP-UP DATA
-        val continuation = isContinuationLevel(sec.topicId)
+        val continuation = usesStructuredLessons(sec)
         binding.tvWrapUpBullet2.visibility = if (continuation) View.GONE else View.VISIBLE
         if (continuation) {
             binding.tvWrapUpBullet1.text = cachedExamples.first().englishSentence
@@ -2827,8 +2827,13 @@ class LessonDetailFragment : Fragment() {
         return result.take(3)
     }
 
-    private fun isContinuationLevel(topicId: String): Boolean =
-        CurriculumLevel.forTopic(topicId)?.let { it >= CurriculumLevel.A2 } == true
+    private fun usesStructuredLessons(section: LessonSectionModel): Boolean =
+        when (CurriculumLevel.forTopic(section.topicId)) {
+            CurriculumLevel.A0 -> section.orderIndex >= 54
+            CurriculumLevel.A1 -> section.orderIndex >= 5
+            null -> false
+            else -> true
+        }
 
     private fun buildInLessonExercises(
         repoExercises: List<ExerciseModel>,
@@ -2878,7 +2883,7 @@ class LessonDetailFragment : Fragment() {
                     InLessonExerciseItem(
                         id = ex.id,
                         promptSub = when {
-                            !isContinuationLevel(sec.topicId) -> ex.subPromptText.ifBlank { "Bo‘sh joyni to‘ldiring:" }
+                            !usesStructuredLessons(sec) -> ex.subPromptText.ifBlank { "Bo‘sh joyni to‘ldiring:" }
                             ex.exerciseType == ExerciseType.LISTENING_COMPREHENSION -> getString(R.string.lesson_continuation_listen)
                             else -> ex.subPromptText
                         },

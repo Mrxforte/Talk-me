@@ -55,14 +55,14 @@ class IntegrationFlowTest {
         val actual = CurriculumDomainLogic.computeTopicUnlockStatuses(initialModels)
         assertEquals(UnlockStatus.AVAILABLE, actual.first().status)
         assertTrue(actual.drop(1).all { it.status == UnlockStatus.LOCKED })
-        val expectedSections = (1..53).map { "sec_a0_%02d".format(it) } + (1..4).map { "sec_a1_%02d".format(it) }
-        assertEquals(expectedSections, sections.take(expectedSections.size).map { it.id })
+        val expectedSections = (1..60).map { "sec_a0_%02d".format(it) } + (1..60).map { "sec_a1_%02d".format(it) }
+        assertEquals(expectedSections, sections.filter { it.topicId in introductoryTopics }.map { it.id }.sorted())
         val vocab = CurriculumSeedData.buildVocabulary().filter { it.topicId in introductoryTopics }
-        assertEquals(248, vocab.size)
-        assertEquals(248, vocab.distinctBy { it.englishWord.lowercase() }.size)
-        assertEquals(57, CurriculumSeedData.buildGrammarRules().count { it.topicId in introductoryTopics })
+        assertEquals(437, vocab.size)
+        assertEquals(437, vocab.distinctBy { it.englishWord.lowercase() }.size)
+        assertEquals(120, CurriculumSeedData.buildGrammarRules().count { it.topicId in introductoryTopics })
         val exercises = CurriculumSeedData.buildExercises().filter { it.topicId in introductoryTopics }
-        assertEquals(183, exercises.size)
+        assertEquals(372, exercises.size)
         assertEquals(3, exercises.count { it.sectionId == CurriculumSeedData.DARS_1_SECTION_ID })
         assertEquals(3, exercises.count { it.sectionId == CurriculumSeedData.DARS_2_SECTION_ID })
         assertEquals(3, exercises.count { it.sectionId == CurriculumSeedData.DARS_3_SECTION_ID })

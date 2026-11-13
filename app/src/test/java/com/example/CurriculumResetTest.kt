@@ -219,22 +219,22 @@ class CurriculumResetTest {
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
             val navController = navHost.navController
 
-            // 1. Home tab (start destination) — A0 with 53 lessons (220 vocab, 53 grammar)
+            // 1. Home tab (start destination) — A0 with 60 lessons (241 vocab, 60 grammar)
             val homeView = navHost.childFragmentManager.primaryNavigationFragment?.requireView()!!
             waitUntil {
                 homeView.findViewById<TextView>(R.id.tvHeroCourseName).text.toString() == "TalkMe English Course" &&
                     homeView.findViewById<View>(R.id.btnContinueLearning).isEnabled &&
-                    homeView.findViewById<TextView>(R.id.tvHomeVocabBadge).text.toString() == "+220"
+                    homeView.findViewById<TextView>(R.id.tvHomeVocabBadge).text.toString() == "+241"
             }
             assertEquals(
                 "1-Dars: Hello!",
                 homeView.findViewById<TextView>(R.id.tvHeroSectionName).text.toString()
             )
             assertTrue(homeView.findViewById<View>(R.id.btnContinueLearning).isEnabled)
-            assertEquals("+220", homeView.findViewById<TextView>(R.id.tvHomeVocabBadge).text.toString())
-            assertEquals("+53", homeView.findViewById<TextView>(R.id.tvHomeGrammarBadge).text.toString())
+            assertEquals("+241", homeView.findViewById<TextView>(R.id.tvHomeVocabBadge).text.toString())
+            assertEquals("+60", homeView.findViewById<TextView>(R.id.tvHomeGrammarBadge).text.toString())
 
-            // 2. Lessons tab — only A0 unlocked, genuine 0/53 count, no filter chip row
+            // 2. Lessons tab — only A0 unlocked, genuine 0/60 count, no filter chip row
             navController.navigate(R.id.lessonsFragment)
             waitUntil {
                 val v = navHost.childFragmentManager.primaryNavigationFragment?.view
@@ -244,7 +244,7 @@ class CurriculumResetTest {
             val lessonsView = navHost.childFragmentManager.primaryNavigationFragment?.requireView()!!
             assertEquals("A0", lessonsView.findViewById<TextView>(R.id.tvHeroLevelBadge).text.toString())
             assertEquals(
-                activity.getString(R.string.curriculum_lesson_count, 0, 53),
+                activity.getString(R.string.curriculum_lesson_count, 0, 60),
                 lessonsView.findViewById<TextView>(R.id.tvHeroLessonCount).text.toString()
             )
             assertTrue(lessonsView.findViewById<View>(R.id.btnHeroContinue).isEnabled)
@@ -294,7 +294,7 @@ class CurriculumResetTest {
                 v?.findViewById<TextView>(R.id.tvLessonHeadingTitle)?.text?.toString() == "Hello!"
             }
             val lessonView = navHost.childFragmentManager.primaryNavigationFragment?.requireView()!!
-            assertEquals("1/53", lessonView.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
+            assertEquals("1/60", lessonView.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
             assertEquals("📘 1️⃣ TUSHUNTIRISH", lessonView.findViewById<TextView>(R.id.tvSituationTitle).text.toString())
             assertEquals(View.VISIBLE, lessonView.findViewById<View>(R.id.btnSpeakSituation).visibility)
             assertTrue(

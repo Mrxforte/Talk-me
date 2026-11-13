@@ -11,7 +11,12 @@ import com.example.domain.model.PracticeCategory
 /** Maps the continuation lessons onto the same offline seed tables as the A0 course. */
 internal object ContinuationCurriculum {
     private val lessons by lazy {
-        listOf(
+        val beginnerLessons = a0ExtraLessons.mapIndexed { index, lesson ->
+            SeedLesson(CurriculumLevel.A0, index + 54, lesson)
+        } + a1ExtraLessons.mapIndexed { index, lesson ->
+            SeedLesson(CurriculumLevel.A1, index + 5, lesson)
+        }
+        beginnerLessons + listOf(
             CurriculumLevel.A2 to a2Lessons,
             CurriculumLevel.B1 to b1Lessons,
             CurriculumLevel.B2 to b2Lessons,

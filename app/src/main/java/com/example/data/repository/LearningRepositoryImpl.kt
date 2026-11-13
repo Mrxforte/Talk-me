@@ -13,6 +13,7 @@ import com.example.core.database.UserProfileEntity
 import com.example.core.database.VocabularyEntity
 import com.example.data.local.CurriculumSeedData
 import com.example.data.local.TextbookReference
+import com.example.data.local.TextbookPractice
 import com.example.domain.model.ContinueLearningState
 import com.example.domain.model.DailyPlanDayRecord
 import com.example.domain.model.DailyTaskStepModel
@@ -89,7 +90,7 @@ class LearningRepositoryImpl @Inject constructor(
             sections = CurriculumSeedData.buildSections(),
             vocabulary = CurriculumSeedData.buildVocabulary(),
             grammarRules = CurriculumSeedData.buildGrammarRules(),
-            exercises = CurriculumSeedData.buildExercises(),
+            exercises = CurriculumSeedData.buildExercises() + TextbookPractice.exercises(),
             achievements = CurriculumSeedData.buildAchievements()
         )
         isSeedingChecked.set(true)
@@ -558,7 +559,11 @@ class LearningRepositoryImpl @Inject constructor(
     ): List<ExerciseModel> {
         ensureSeeded()
         if (!sectionIdFilter.isNullOrBlank()) {
-            val sectionExercises = dao.getExercisesBySection(sectionIdFilter)
+            val sectionCompleted = dao.getSectionById(sectionIdFilter)?.isCompleted == true
+            val sectionExercises = dao.getExercisesBySection(sectionIdFilter).filter {
+                if (it.id.startsWith("extra_")) sectionCompleted && it.practiceCategory == category.id
+                else category == PracticeCategory.SECTION_QUIZ || it.practiceCategory == category.id
+            }
             if (sectionExercises.isNotEmpty()) {
                 return sectionExercises.map { it.toDomain() }
             }
@@ -579,7 +584,11 @@ class LearningRepositoryImpl @Inject constructor(
             dao.getEligibleExercisesByCategory(category.id, targetTopicIds)
         }
 
-        val baseDomainExercises = entities.map { it.toDomain() }.toMutableList()
+        val completedSections = dao.getAllSectionsOnce().filter { it.isCompleted }.mapTo(hashSetOf()) { it.id }
+        val baseDomainExercises = entities.filter {
+            !it.id.startsWith("extra_") ||
+                (it.sectionId in completedSections && it.practiceCategory == category.id)
+        }.map { it.toDomain() }.toMutableList()
 
         val enrichmentTopics = if (!topicIdFilter.isNullOrBlank()) {
             listOf(topicIdFilter)

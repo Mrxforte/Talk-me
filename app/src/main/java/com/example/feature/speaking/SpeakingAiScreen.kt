@@ -149,7 +149,11 @@ class SpeakingAiViewModel @Inject constructor(
             val allowedGrammar = grammarModels.map { "${it.titleUzbek}: ${it.exampleEnglish}" }
 
             val sampleWords = allowedWords.take(3).joinToString(", ").ifEmpty { "hello, name, student" }
-            val welcomeEnglish = "Hello! Let's practice speaking about $title. Try using words like $sampleWords. How can you introduce yourself?"
+            val extra = withContext(Dispatchers.IO) {
+                learningRepository.getEligibleExercises(PracticeCategory.SPEAKING, null, topicId)
+                    .filter { it.id.startsWith("extra_") }.randomOrNull()
+            }
+            val welcomeEnglish = extra?.promptText ?: "Hello! Let's practice speaking about $title. Try using words like $sampleWords. How can you introduce yourself?"
             val welcomeMessage = ConversationMessage(
                 id = UUID.randomUUID().toString(),
                 turnId = "welcome_turn",
@@ -159,7 +163,7 @@ class SpeakingAiViewModel @Inject constructor(
 
             coordinator.configureLessonContext(
                 topicId = topicId,
-                topicTitle = title,
+                topicTitle = extra?.promptText ?: title,
                 learnerLevel = learnerLevel,
                 vocabulary = allowedWords,
                 grammarSummaries = allowedGrammar,

@@ -384,3 +384,7 @@ The app seed implements 60 lessons per level across A2, B1, B2, C1 and C2. Each 
 | Commas, semicolons, colons, quotations, end punctuation, apostrophes and hyphens | B1 34, C2 29 and 48–58 |
 
 The lesson explanations include all 65 base verbs from the appendix (pp. 331–332), with past and past-participle forms in A2 lessons 6 and 13. A2 lesson 44, B1 lesson 57, B2 lesson 46, and C1 lesson 52 include additional preposition references and practice. The references cover common meanings and group prepositions. A one-to-one map of every numbered meaning and set phrase in the book remains unverified.
+
+### Post-lesson practice
+
+Completing A1.04, A2.44, B1.57, B2.46, C1.52 or C2.60 unlocks a corresponding Reading passage, Writing prompt, Listening passage and Speaking scenario through the existing Practice Center. These six scenarios reinforce the textbook's prepositions in context. The individual textbook senses have not all been mapped to exercises.

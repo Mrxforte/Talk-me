@@ -38,6 +38,8 @@ import java.util.Locale
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -54,13 +56,14 @@ class LearningRepositoryImpl @Inject constructor(
 ) : LearningRepository {
 
     private val isSeedingChecked = AtomicBoolean(false)
+    private val seedMutex = Mutex()
 
     private fun todayDateKey(): String {
         return SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
     }
 
-    override suspend fun ensureSeeded() {
-        if (isSeedingChecked.get()) return
+    override suspend fun ensureSeeded() = seedMutex.withLock {
+        if (isSeedingChecked.get()) return@withLock
         val now = System.currentTimeMillis()
 
         if (dao.getUserProfileOnce() == null) {
@@ -78,148 +81,16 @@ class LearningRepositoryImpl @Inject constructor(
             )
         }
 
-        val seedTopics = CurriculumSeedData.buildTopics()
-        val seedSections = CurriculumSeedData.buildSections()
-        val seedVocab = CurriculumSeedData.buildVocabulary()
-        val seedGrammar = CurriculumSeedData.buildGrammarRules()
-
-        val existingTopicsMap = dao.getAllTopicsOnce().associateBy { it.id }
-        val existingSectionsMap = dao.getAllSectionsOnce().associateBy { it.id }
-        val existingVocabMap = dao.getAllVocabularyOnce().associateBy { it.id }
-
-        val mergedTopics = seedTopics.map { seed ->
-            val existing = existingTopicsMap[seed.id]
-            if (existing != null) {
-                seed.copy(
-                    isUnlocked = seed.isUnlocked || existing.isUnlocked,
-                    isCompleted = existing.isCompleted
-                )
-            } else {
-                seed
-            }
+        if (dao.initializeEmptyCurriculum(CurriculumSeedData.buildTopics())) {
+            preferencesRepository.updateLastLearningBookmark(AppConstants.INITIAL_TOPIC_ID, "", 0)
         }
-
-        val mergedSections = seedSections.map { seed ->
-            val existing = existingSectionsMap[seed.id]
-            if (existing != null) {
-                seed.copy(
-                    isUnlocked = seed.isUnlocked || existing.isUnlocked,
-                    isCompleted = existing.isCompleted
-                )
-            } else {
-                seed
-            }
-        }
-
-        val mergedVocab = seedVocab.map { seed ->
-            val existing = existingVocabMap[seed.id]
-            if (existing != null) {
-                seed.copy(
-                    isStudied = seed.isStudied || existing.isStudied,
-                    isMemorized = existing.isMemorized,
-                    reviewCount = existing.reviewCount,
-                    nextReviewTimestamp = existing.nextReviewTimestamp
-                )
-            } else {
-                seed
-            }
-        }
-
-        dao.insertTopics(mergedTopics)
-        dao.insertSections(mergedSections)
-        dao.insertVocabulary(mergedVocab)
-        dao.insertGrammarRules(seedGrammar)
-        dao.insertExercises(CurriculumSeedData.buildExercises())
-        dao.insertAchievements(CurriculumSeedData.buildAchievements())
-
-        val todayKey = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
-        if (dao.getDailyTaskLogByDate(todayKey) == null) {
-            val cal = Calendar.getInstance()
-            val keyFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-            val calTodayKey = keyFormat.format(cal.time)
-            cal.add(Calendar.DAY_OF_YEAR, -1)
-            val yesterdayKey = keyFormat.format(cal.time)
-            cal.add(Calendar.DAY_OF_YEAR, -1)
-            val twoDaysAgoKey = keyFormat.format(cal.time)
-
-            dao.insertDailyTaskLogs(
-                listOf(
-                    DailyTaskLogEntity(
-                        dateKey = calTodayKey,
-                        displayDateLabel = "Bugun ($calTodayKey)",
-                        topicId = AppConstants.INITIAL_TOPIC_ID,
-                        grammarDone = false,
-                        vocabularyDone = false,
-                        readingDone = false,
-                        writingDone = false,
-                        listeningDone = false,
-                        speakingDone = false,
-                        updatedTimestamp = now
-                    ),
-                    DailyTaskLogEntity(
-                        dateKey = yesterdayKey,
-                        displayDateLabel = "Kecha ($yesterdayKey)",
-                        topicId = AppConstants.INITIAL_TOPIC_ID,
-                        grammarDone = true,
-                        vocabularyDone = true,
-                        readingDone = true,
-                        writingDone = false,
-                        listeningDone = false,
-                        speakingDone = false,
-                        updatedTimestamp = now - AppConstants.ONE_DAY_MS
-                    ),
-                    DailyTaskLogEntity(
-                        dateKey = twoDaysAgoKey,
-                        displayDateLabel = "2 kun oldin ($twoDaysAgoKey)",
-                        topicId = AppConstants.INITIAL_TOPIC_ID,
-                        grammarDone = true,
-                        vocabularyDone = true,
-                        readingDone = true,
-                        writingDone = true,
-                        listeningDone = true,
-                        speakingDone = true,
-                        updatedTimestamp = now - 2 * AppConstants.ONE_DAY_MS
-                    )
-                )
-            )
-
-            dao.insertUserMistakes(
-                listOf(
-                    UserMistakeEntity(
-                        id = "mistake_topic_01_introduction_WRITING_name",
-                        topicId = AppConstants.INITIAL_TOPIC_ID,
-                        skillCategory = PracticeCategory.WRITING.id,
-                        itemPrompt = "'ism' so'zini ingliz tilida yozing",
-                        userWrongAnswer = "neme",
-                        correctAnswer = "name",
-                        explanationUzbek = "'name' — ism (My name is ... — Mening ismim ...). Harflarni to'liq yozishga e'tibor bering.",
-                        mistakeCount = 1,
-                        isResolved = false,
-                        timestamp = now - 300_000L
-                    ),
-                    UserMistakeEntity(
-                        id = "mistake_topic_01_introduction_VOCABULARY_friend",
-                        topicId = AppConstants.INITIAL_TOPIC_ID,
-                        skillCategory = PracticeCategory.VOCABULARY.id,
-                        itemPrompt = "'friend' so'zining ma'nosi va ishlatilishi",
-                        userWrongAnswer = "dushman",
-                        correctAnswer = "do'st",
-                        explanationUzbek = "'friend' — do'st (Hello, my friend — Salom, mening do'stim).",
-                        mistakeCount = 1,
-                        isResolved = false,
-                        timestamp = now - 600_000L
-                    )
-                )
-            )
-
-            dao.insertLearningActivity(
-                LearningActivityEntity(
-                    title = "Welcome to TalkMe!",
-                    subtitle = "Topic 1: Introduction — Kirish is unlocked and ready.",
-                    timestamp = now
-                )
-            )
-        }
+        dao.syncTextbookCurriculum(
+            sections = CurriculumSeedData.buildSections(),
+            vocabulary = CurriculumSeedData.buildVocabulary(),
+            grammarRules = CurriculumSeedData.buildGrammarRules(),
+            exercises = CurriculumSeedData.buildExercises(),
+            achievements = CurriculumSeedData.buildAchievements()
+        )
         isSeedingChecked.set(true)
     }
 
@@ -269,13 +140,22 @@ class LearningRepositoryImpl @Inject constructor(
                 courseName = "TalkMe English Course",
                 currentTopicId = currentTopic?.id ?: AppConstants.INITIAL_TOPIC_ID,
                 currentTopicTitle = if (currentTopic != null) {
-                    "${currentTopic.orderIndex}. ${currentTopic.titleEnglish} — ${currentTopic.titleUzbek}"
+                    if (currentTopic.titleEnglish.equals(currentTopic.titleUzbek, ignoreCase = true)) {
+                        "${currentTopic.orderIndex}. ${currentTopic.titleEnglish}"
+                    } else {
+                        "${currentTopic.orderIndex}. ${currentTopic.titleEnglish} — ${currentTopic.titleUzbek}"
+                    }
                 } else {
-                    "1. Introduction — Kirish"
+                    "1. A0"
                 },
                 currentSectionId = currentSection?.id ?: AppConstants.INITIAL_SECTION_ID,
-                currentSectionTitle = currentSection?.let { "${it.titleEnglish} (${it.titleUzbek})" }
-                    ?: "Greetings & First Words",
+                currentSectionTitle = currentSection?.let {
+                    if (it.titleUzbek.contains(it.titleEnglish, ignoreCase = true)) {
+                        it.titleUzbek
+                    } else {
+                        "${it.titleEnglish} (${it.titleUzbek})"
+                    }
+                } ?: "",
                 lastScrollPosition = prefs.lastScrollOffset,
                 progressPercent = currentTopic?.progressPercent ?: 0
             )
@@ -335,13 +215,15 @@ class LearningRepositoryImpl @Inject constructor(
     }
 
     override fun observeTopicSections(topicId: String): Flow<List<LessonSectionModel>> {
-        return dao.observeSectionsByTopic(topicId).map { entities ->
+        return combine(dao.observeSectionsByTopic(topicId), observeTopics()) { entities, topics ->
+            val topicLocked = topics.firstOrNull { it.id == topicId }?.status == UnlockStatus.LOCKED
             val sorted = entities.sortedBy { it.orderIndex }
             val result = mutableListOf<LessonSectionModel>()
             for (i in sorted.indices) {
                 val sec = sorted[i]
                 val prevCompleted = if (i == 0) true else (result[i - 1].status == UnlockStatus.COMPLETED)
                 val status = when {
+                    topicLocked || !prevCompleted -> UnlockStatus.LOCKED
                     sec.isCompleted -> UnlockStatus.COMPLETED
                     prevCompleted -> UnlockStatus.AVAILABLE
                     else -> UnlockStatus.LOCKED
@@ -357,10 +239,11 @@ class LearningRepositoryImpl @Inject constructor(
         val entity = dao.getSectionById(sectionId) ?: return null
         val topicSecs = dao.getSectionsByTopicOnce(entity.topicId).sortedBy { it.orderIndex }
         val idx = topicSecs.indexOfFirst { it.id == sectionId }
-        val prevCompleted = if (idx <= 0) true else topicSecs[idx - 1].isCompleted
+        val prevCompleted = idx >= 0 && topicSecs.take(idx).all { it.isCompleted }
         val status = when {
+            getTopicById(entity.topicId)?.status == UnlockStatus.LOCKED || !prevCompleted -> UnlockStatus.LOCKED
             entity.isCompleted -> UnlockStatus.COMPLETED
-            entity.isUnlocked || prevCompleted -> UnlockStatus.AVAILABLE
+            prevCompleted -> UnlockStatus.AVAILABLE
             else -> UnlockStatus.LOCKED
         }
         return entity.toDomain(status)
@@ -368,24 +251,13 @@ class LearningRepositoryImpl @Inject constructor(
 
     override suspend fun getTopicById(topicId: String): TopicModel? {
         ensureSeeded()
-        val topic = dao.getTopicById(topicId) ?: return null
-        val sections = dao.getSectionsByTopicOnce(topicId)
-        val completedCount = sections.count { it.isCompleted }
-        val status = when {
-            topic.isCompleted || (sections.isNotEmpty() && completedCount == sections.size) -> UnlockStatus.COMPLETED
-            topic.isUnlocked -> UnlockStatus.AVAILABLE
-            else -> UnlockStatus.LOCKED
+        val sections = dao.getAllSectionsOnce().groupBy { it.topicId }
+        val topics = dao.getAllTopicsOnce().map { topic ->
+            val rows = sections[topic.id].orEmpty()
+            TopicModel(topic.id, topic.orderIndex, topic.titleEnglish, topic.titleUzbek,
+                topic.descriptionUzbek, rows.size, rows.count { it.isCompleted }, UnlockStatus.LOCKED)
         }
-        return TopicModel(
-            id = topic.id,
-            orderIndex = topic.orderIndex,
-            titleEnglish = topic.titleEnglish,
-            titleUzbek = topic.titleUzbek,
-            descriptionUzbek = topic.descriptionUzbek,
-            totalSections = sections.size,
-            completedSections = completedCount,
-            status = status
-        )
+        return CurriculumDomainLogic.computeTopicUnlockStatuses(topics).firstOrNull { it.id == topicId }
     }
 
     override fun observeSectionVocabulary(sectionId: String): Flow<List<VocabularyModel>> {
@@ -423,6 +295,11 @@ class LearningRepositoryImpl @Inject constructor(
 
     override suspend fun completeLessonSection(topicId: String, sectionId: String) {
         ensureSeeded()
+        // Stale navigation and locked lessons must not advance the curriculum.
+        val topic = getTopicById(topicId) ?: return
+        val section = getSectionById(sectionId) ?: return
+        if (topic.status == UnlockStatus.LOCKED || section.topicId != topicId ||
+            section.status != UnlockStatus.AVAILABLE) return
         val now = System.currentTimeMillis()
         dao.updateSectionStatus(sectionId = sectionId, unlocked = true, completed = true)
         dao.markSectionVocabularyStudied(sectionId)
@@ -438,9 +315,8 @@ class LearningRepositoryImpl @Inject constructor(
 
         if (nextSection != null) {
             dao.updateSectionStatus(nextSection.id, unlocked = true, completed = nextSection.isCompleted)
-            dao.markSectionVocabularyStudied(nextSection.id)
             saveLastLearningPosition(topicId, nextSection.id, 0)
-        } else {
+        } else if (topicSections.isNotEmpty() && topicSections.all { it.isCompleted }) {
             // All sections in this topic are completed -> Mark topic completed and unlock next topic!
             dao.updateTopicStatus(topicId = topicId, unlocked = true, completed = true)
             dao.unlockAchievement("ach_first_topic", now)
@@ -459,7 +335,6 @@ class LearningRepositoryImpl @Inject constructor(
                 val firstNextSec = nextTopicSections.firstOrNull()
                 if (firstNextSec != null) {
                     dao.updateSectionStatus(firstNextSec.id, unlocked = true, completed = firstNextSec.isCompleted)
-                    dao.markSectionVocabularyStudied(firstNextSec.id)
                     saveLastLearningPosition(nextTopic.id, firstNextSec.id, 0)
                 }
             }
@@ -705,10 +580,15 @@ class LearningRepositoryImpl @Inject constructor(
 
         val baseDomainExercises = entities.map { it.toDomain() }.toMutableList()
 
-        // When scoped to a specific topic, enrich with additional exercises strictly from that topic's own words & grammar
-        if (!topicIdFilter.isNullOrBlank()) {
-            val topicWords = dao.getVocabularyByTopicOnce(topicIdFilter)
-            val topicGrammar = dao.getGrammarRulesByTopicOnce(topicIdFilter)
+        val enrichmentTopics = if (!topicIdFilter.isNullOrBlank()) {
+            listOf(topicIdFilter)
+        } else {
+            targetTopicIds
+        }
+
+        enrichmentTopics.forEach { effectiveTopicId ->
+            val topicWords = dao.getVocabularyByTopicOnce(effectiveTopicId)
+            val topicGrammar = dao.getGrammarRulesByTopicOnce(effectiveTopicId)
             val distractorPool = topicWords.map { it.uzbekTranslation }.distinct()
 
             when (category) {
@@ -717,12 +597,12 @@ class LearningRepositoryImpl @Inject constructor(
                         val options = (listOf(word.uzbekTranslation) + distractorPool.filter { it != word.uzbekTranslation })
                             .distinct()
                             .take(4)
-                        val exId = "dyn_vocab_${topicIdFilter}_$idx"
+                        val exId = "dyn_vocab_${effectiveTopicId}_$idx"
                         if (baseDomainExercises.none { it.correctAnswer == word.uzbekTranslation }) {
                             baseDomainExercises.add(
                                 ExerciseModel(
                                     id = exId,
-                                    topicId = topicIdFilter,
+                                    topicId = effectiveTopicId,
                                     sectionId = word.sectionId,
                                     practiceCategory = PracticeCategory.VOCABULARY,
                                     exerciseType = ExerciseType.MULTIPLE_CHOICE,
@@ -742,12 +622,12 @@ class LearningRepositoryImpl @Inject constructor(
                 }
                 PracticeCategory.WRITING -> {
                     topicWords.forEachIndexed { idx, word ->
-                        val exId = "dyn_writing_${topicIdFilter}_$idx"
+                        val exId = "dyn_writing_${effectiveTopicId}_$idx"
                         if (baseDomainExercises.none { it.correctAnswer.equals(word.englishWord, ignoreCase = true) }) {
                             baseDomainExercises.add(
                                 ExerciseModel(
                                     id = exId,
-                                    topicId = topicIdFilter,
+                                    topicId = effectiveTopicId,
                                     sectionId = word.sectionId,
                                     practiceCategory = PracticeCategory.WRITING,
                                     exerciseType = ExerciseType.TRANSLATION,
@@ -771,12 +651,12 @@ class LearningRepositoryImpl @Inject constructor(
                         val options = (listOf(word.exampleEnglish) + sentencePool.filter { it != word.exampleEnglish })
                             .distinct()
                             .take(4)
-                        val exId = "dyn_listening_${topicIdFilter}_$idx"
+                        val exId = "dyn_listening_${effectiveTopicId}_$idx"
                         if (baseDomainExercises.none { it.correctAnswer == word.exampleEnglish }) {
                             baseDomainExercises.add(
                                 ExerciseModel(
                                     id = exId,
-                                    topicId = topicIdFilter,
+                                    topicId = effectiveTopicId,
                                     sectionId = word.sectionId,
                                     practiceCategory = PracticeCategory.LISTENING,
                                     exerciseType = ExerciseType.LISTENING_COMPREHENSION,
@@ -799,12 +679,12 @@ class LearningRepositoryImpl @Inject constructor(
                         val options = (listOf(word.uzbekTranslation) + distractorPool.filter { it != word.uzbekTranslation })
                             .distinct()
                             .take(4)
-                        val exId = "dyn_reading_${topicIdFilter}_$idx"
+                        val exId = "dyn_reading_${effectiveTopicId}_$idx"
                         if (baseDomainExercises.none { it.correctAnswer == word.uzbekTranslation }) {
                             baseDomainExercises.add(
                                 ExerciseModel(
                                     id = exId,
-                                    topicId = topicIdFilter,
+                                    topicId = effectiveTopicId,
                                     sectionId = word.sectionId,
                                     practiceCategory = PracticeCategory.READING,
                                     exerciseType = ExerciseType.READING_COMPREHENSION,
@@ -828,12 +708,12 @@ class LearningRepositoryImpl @Inject constructor(
                         val options = (listOf(rule.exampleEnglish) + otherExamples + topicWords.map { it.exampleEnglish })
                             .distinct()
                             .take(3)
-                        val exId = "dyn_grammar_${topicIdFilter}_$idx"
+                        val exId = "dyn_grammar_${effectiveTopicId}_$idx"
                         if (baseDomainExercises.none { it.correctAnswer == rule.exampleEnglish }) {
                             baseDomainExercises.add(
                                 ExerciseModel(
                                     id = exId,
-                                    topicId = topicIdFilter,
+                                    topicId = effectiveTopicId,
                                     sectionId = rule.sectionId,
                                     practiceCategory = PracticeCategory.GRAMMAR,
                                     exerciseType = ExerciseType.GRAMMAR_CORRECTION,
@@ -1017,10 +897,10 @@ class LearningRepositoryImpl @Inject constructor(
                         writingSessionsCount = writingSessions,
                         listeningSessionsCount = listeningSessions,
                         speakingSessionsCount = speakingSessions,
-                        readingNewBadgeCount = if (readingSessions == 0) newWordsBadge.coerceAtLeast(1) else newWordsBadge,
-                        writingNewBadgeCount = if (writingSessions == 0) newWordsBadge.coerceAtLeast(1) else newWordsBadge,
-                        listeningNewBadgeCount = if (listeningSessions == 0) newWordsBadge.coerceAtLeast(1) else newWordsBadge,
-                        speakingNewBadgeCount = if (speakingSessions == 0) newWordsBadge.coerceAtLeast(1) else newWordsBadge
+                        readingNewBadgeCount = newWordsBadge,
+                        writingNewBadgeCount = newWordsBadge,
+                        listeningNewBadgeCount = newWordsBadge,
+                        speakingNewBadgeCount = newWordsBadge
                     )
                 }
         }

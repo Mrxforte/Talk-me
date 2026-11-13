@@ -1,5 +1,6 @@
 package com.example.core.ui
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -12,6 +13,7 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.example.R
 import com.example.domain.model.ChartPeriodFilter
 import com.example.domain.model.PracticeSessionRecord
@@ -48,6 +50,60 @@ class SkillAnalyticsChartView @JvmOverloads constructor(
     private var xLabels: List<String> = YEARLY_LABELS
     private var series1Values: List<Float> = YEARLY_SERIES_1
     private var series2Values: List<Float> = YEARLY_SERIES_2
+    private var revealFraction: Float = 0f
+    private var chartAnimator: ValueAnimator? = null
+    private var hasPlayedOpenAnimation: Boolean = false
+
+    fun replayOpenAnimation(ignoreRunningGuard: Boolean = false) {
+        val running = chartAnimator
+        if (!ignoreRunningGuard &&
+            running?.isRunning == true &&
+            running.currentPlayTime < 80L &&
+            revealFraction < 0.05f
+        ) {
+            return
+        }
+        chartAnimator?.cancel()
+        hasPlayedOpenAnimation = true
+        revealFraction = 0f
+        chartAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 850L
+            interpolator = FastOutSlowInInterpolator()
+            addUpdateListener {
+                revealFraction = it.animatedValue as Float
+                invalidate()
+            }
+            start()
+        }
+    }
+
+    fun getRevealFraction(): Float = revealFraction
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (isShown) {
+            replayOpenAnimation()
+        }
+    }
+
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+        if (visibility == VISIBLE && isAttachedToWindow && isShown) {
+            replayOpenAnimation()
+        }
+    }
+
+    override fun onWindowVisibilityChanged(visibility: Int) {
+        super.onWindowVisibilityChanged(visibility)
+        if (visibility == VISIBLE && isAttachedToWindow && isShown) {
+            replayOpenAnimation()
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        chartAnimator?.cancel()
+    }
 
     private val density = resources.displayMetrics.density
     private val scaledDensity = resources.displayMetrics.scaledDensity
@@ -160,17 +216,27 @@ class SkillAnalyticsChartView @JvmOverloads constructor(
     fun setSkillData(newEntries: List<SkillBarEntry>) {
         this.entries = newEntries
         recalculateSeriesData()
-        invalidate()
+        if (newEntries.isNotEmpty() || !hasPlayedOpenAnimation) {
+            replayOpenAnimation(ignoreRunningGuard = true)
+        } else {
+            invalidate()
+        }
     }
 
     fun setChartConfig(
         filter: ChartPeriodFilter,
         records: List<PracticeSessionRecord> = this.sessionRecords
     ) {
+        val filterChanged = this.currentFilter != filter
         this.currentFilter = filter
         this.sessionRecords = records
         recalculateSeriesData()
-        invalidate()
+        if (!hasPlayedOpenAnimation || filterChanged) {
+            hasPlayedOpenAnimation = true
+            replayOpenAnimation()
+        } else {
+            invalidate()
+        }
     }
 
     fun getCurrentFilter(): ChartPeriodFilter = currentFilter
@@ -303,7 +369,7 @@ class SkillAnalyticsChartView @JvmOverloads constructor(
 
         // Helper to convert Y value (0..5.6) to canvas Y coordinate
         fun valueToY(v: Float): Float {
-            val ratio = (v / maxY).coerceIn(0f, 1f)
+            val ratio = ((v * revealFraction) / maxY).coerceIn(0f, 1f)
             return gridBottom - ratio * gridHeight
         }
 

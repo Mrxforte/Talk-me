@@ -263,6 +263,9 @@ data class UserPreferencesModel(
     val speechSpeed: Float = 1.0f,
     val isPremiumSubscribed: Boolean = false,
     val preferredTtsProvider: String = "NATIVE", // NATIVE or GEMINI
+    val voiceGender: String = "MALE", // MALE or FEMALE
+    val offlineAudioEnabled: Boolean = false,
+    val lessonRemindersEnabled: Boolean = true,
     val dailyGoalMinutes: Int = 15,
     val lastActiveTopicId: String = "topic_01_introduction",
     val lastActiveSectionId: String = "sec_01_01",

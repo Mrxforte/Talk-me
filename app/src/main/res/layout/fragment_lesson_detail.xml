@@ -454,6 +454,17 @@
                                 android:textColor="#CBD5E1"
                                 android:textSize="12.5sp" />
                         </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btnSpeakSituation"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_lesson_speaker_btn"
+                            android:contentDescription="@string/lesson_btn_listen"
+                            android:padding="12dp"
+                            android:src="@drawable/ic_volume_up"
+                            app:tint="@color/white" />
                     </LinearLayout>
 
                     <!-- D. Section Heading (Tinglang va tushuning) -->
@@ -902,6 +913,14 @@
                         </LinearLayout>
                     </LinearLayout>
 
+                    <!-- Dynamic extra vocabulary / phrase cards (04..N) -->
+                    <LinearLayout
+                        android:id="@+id/layoutExtraQoidaVocab"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone" />
+
                     <!-- F. Optional Short Learning Hint (Headphones + Text) -->
                     <LinearLayout
                         android:id="@+id/layoutLessonHint"
@@ -1025,6 +1044,81 @@
                     android:orientation="vertical"
                     android:paddingHorizontal="14dp"
                     android:visibility="gone">
+
+                    <!-- Interactive Dialogue Card (used in Dars 2: Lera and talkme) -->
+                    <LinearLayout
+                        android:id="@+id/cardMisollarDialogue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:background="@drawable/bg_lesson_visual_box"
+                        android:orientation="vertical"
+                        android:padding="14dp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:contentDescription="@string/lesson_dialogue_title"
+                                android:src="@drawable/ic_lesson_info_outline"
+                                app:tint="@color/color_neon_cyan" />
+
+                            <TextView
+                                android:id="@+id/tvMisollarDialogueTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_weight="1"
+                                android:text="@string/lesson_dialogue_title"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <ImageButton
+                                android:id="@+id/btnSpeakMisollarDialogue"
+                                android:layout_width="@dimen/touch_target_min"
+                                android:layout_height="@dimen/touch_target_min"
+                                android:background="@drawable/bg_lesson_speaker_btn"
+                                android:contentDescription="@string/lesson_dialogue_listen_all"
+                                android:padding="12dp"
+                                android:src="@drawable/ic_volume_up"
+                                app:tint="@color/white" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutDialogueLinesContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical" />
+
+                        <TextView
+                            android:id="@+id/tvMisollarDialogueNote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:lineSpacingExtra="3dp"
+                            android:textColor="@color/color_cosmic_text_secondary"
+                            android:textSize="13sp"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvMisollarExamplesLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/lesson_examples_list_title"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                     <!-- Example Card 1 -->
                     <LinearLayout
@@ -1240,6 +1334,14 @@
                                 android:textSize="14.5sp" />
                         </LinearLayout>
                     </LinearLayout>
+
+                    <!-- Dynamic extra examples (04..N) -->
+                    <LinearLayout
+                        android:id="@+id/layoutExtraExamples"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <!-- ========================================================= -->
@@ -1310,7 +1412,7 @@
                             app:tint="#FFFFFF" />
                     </LinearLayout>
 
-                    <!-- 3 Horizontal Answer Option Chips -->
+                    <!-- Answer Option Chips (Adaptive Horizontal / Vertical) -->
                     <LinearLayout
                         android:id="@+id/rowMashqOptions"
                         android:layout_width="match_parent"
@@ -1323,22 +1425,25 @@
                         <LinearLayout
                             android:id="@+id/btnOption1"
                             android:layout_width="0dp"
-                            android:layout_height="46dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/touch_target_min"
                             android:layout_weight="1"
                             android:background="@drawable/bg_lesson_option_default"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="6dp">
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="10dp">
 
                             <TextView
                                 android:id="@+id/tvOption1Text"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:maxLines="1"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:maxLines="4"
                                 android:text="one"
-                                android:textColor="#FFFFFF"
-                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <ImageView
@@ -1349,30 +1454,33 @@
                                 android:contentDescription="Selected"
                                 android:src="@drawable/ic_check_circle"
                                 android:visibility="gone"
-                                app:tint="#FFFFFF" />
+                                app:tint="@color/white" />
                         </LinearLayout>
 
                         <!-- Option 2 -->
                         <LinearLayout
                             android:id="@+id/btnOption2"
                             android:layout_width="0dp"
-                            android:layout_height="46dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/touch_target_min"
                             android:layout_marginHorizontal="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_lesson_option_correct"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="6dp">
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="10dp">
 
                             <TextView
                                 android:id="@+id/tvOption2Text"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:maxLines="1"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:maxLines="4"
                                 android:text="two"
-                                android:textColor="#FFFFFF"
-                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <ImageView
@@ -1383,29 +1491,32 @@
                                 android:contentDescription="Selected"
                                 android:src="@drawable/ic_check_circle"
                                 android:visibility="visible"
-                                app:tint="#FFFFFF" />
+                                app:tint="@color/white" />
                         </LinearLayout>
 
                         <!-- Option 3 -->
                         <LinearLayout
                             android:id="@+id/btnOption3"
                             android:layout_width="0dp"
-                            android:layout_height="46dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/touch_target_min"
                             android:layout_weight="1"
                             android:background="@drawable/bg_lesson_option_default"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="6dp">
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="10dp">
 
                             <TextView
                                 android:id="@+id/tvOption3Text"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:maxLines="1"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:maxLines="4"
                                 android:text="three"
-                                android:textColor="#FFFFFF"
-                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <ImageView
@@ -1416,8 +1527,194 @@
                                 android:contentDescription="Selected"
                                 android:src="@drawable/ic_check_circle"
                                 android:visibility="gone"
-                                app:tint="#FFFFFF" />
+                                app:tint="@color/white" />
                         </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Interactive Read-Aloud Mode (3x repetition) -->
+                    <LinearLayout
+                        android:id="@+id/layoutMashqReadAloud"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_lesson_visual_box"
+                        android:orientation="vertical"
+                        android:padding="14dp"
+                        android:visibility="gone">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnReadAloudListen"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:text="@string/lesson_read_aloud_listen"
+                            android:textColor="@color/color_neon_cyan"
+                            app:strokeColor="@color/color_neon_cyan" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnReadAloudTap"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:text="🗣️ Men ovoz chiqarib o‘qidim (0 / 3)"
+                            android:textColor="@color/white"
+                            app:backgroundTint="@color/color_primary_variant" />
+                    </LinearLayout>
+
+                    <!-- Interactive Self-Write Mode (Dars 2 Lera Dialogue) -->
+                    <LinearLayout
+                        android:id="@+id/layoutMashqSelfWrite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_lesson_visual_box"
+                        android:orientation="vertical"
+                        android:padding="14dp"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/etSelfWelcome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:background="@drawable/bg_studio_input_glow"
+                            android:hint="@string/lesson_self_write_hint_welcome"
+                            android:inputType="text"
+                            android:paddingHorizontal="12dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/color_text_muted"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/etSelfWhats"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:background="@drawable/bg_studio_input_glow"
+                            android:hint="@string/lesson_self_write_hint_whats"
+                            android:inputType="text"
+                            android:paddingHorizontal="12dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/color_text_muted"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/etSelfMy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:background="@drawable/bg_studio_input_glow"
+                            android:hint="@string/lesson_self_write_hint_my"
+                            android:inputType="text"
+                            android:paddingHorizontal="12dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/color_text_muted"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/etSelfName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:background="@drawable/bg_studio_input_glow"
+                            android:hint="@string/lesson_self_write_hint_name"
+                            android:inputType="textPersonName"
+                            android:paddingHorizontal="12dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/color_text_muted"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/etSelfBye"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:background="@drawable/bg_studio_input_glow"
+                            android:hint="@string/lesson_self_write_hint_bye"
+                            android:inputType="text"
+                            android:paddingHorizontal="12dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/color_text_muted"
+                            android:textSize="14sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCheckSelfWrite"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:text="@string/lesson_self_write_check"
+                            android:textColor="@color/white"
+                            app:backgroundTint="@color/color_primary_variant" />
+                    </LinearLayout>
+
+                    <!-- Interactive Self-Write Mode (Lesson 3: 3 items at home with a/an) -->
+                    <LinearLayout
+                        android:id="@+id/layoutMashqSelfWriteArticles"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_lesson_visual_box"
+                        android:orientation="vertical"
+                        android:padding="14dp"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/etArticleItem1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:background="@drawable/bg_studio_input_glow"
+                            android:hint="@string/lesson_self_write_article_1_hint"
+                            android:inputType="text"
+                            android:paddingHorizontal="12dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/color_text_muted"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/etArticleItem2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:background="@drawable/bg_studio_input_glow"
+                            android:hint="@string/lesson_self_write_article_2_hint"
+                            android:inputType="text"
+                            android:paddingHorizontal="12dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/color_text_muted"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/etArticleItem3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:background="@drawable/bg_studio_input_glow"
+                            android:hint="@string/lesson_self_write_article_3_hint"
+                            android:inputType="text"
+                            android:paddingHorizontal="12dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/color_text_muted"
+                            android:textSize="14sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCheckSelfWriteArticles"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:minHeight="@dimen/touch_target_min"
+                            android:text="@string/lesson_self_write_check"
+                            android:textColor="@color/white"
+                            app:backgroundTint="@color/color_primary_variant" />
                     </LinearLayout>
 
                     <!-- Feedback Pill Banner (✓ To'g'ri! Keyingi mashq ochildi.) -->
@@ -1527,6 +1824,16 @@
                             android:textColor="#FFFFFF"
                             android:textSize="16.5sp"
                             android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvWrapUpExtendedSummary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:lineSpacingExtra="4dp"
+                            android:textColor="@color/color_cosmic_text_secondary"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <!-- Golden Celebration Star with Sparkle Rays -->

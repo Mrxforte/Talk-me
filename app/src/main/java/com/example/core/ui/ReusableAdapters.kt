@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.R
+import com.example.core.ui.ProgressAnimator.animateProgressTo
 import com.example.databinding.ItemActivityHistoryBinding
 import com.example.databinding.ItemChatMessageBinding
 import com.example.databinding.ItemGrammarRuleCardBinding
@@ -98,14 +99,17 @@ class TopicAdapter(
                     binding.tvCompletedTitle.text = if (item.orderIndex == 1 && !item.titleUzbek.startsWith("A0")) "A0 • ${item.titleUzbek}" else item.titleUzbek
                     binding.tvCompletedBadge.text = "✓ Bajarildi"
                     binding.tvCompletedRangePill.text =
-                        if (item.orderIndex == 1) "A0 • 1–10-dars" else "${item.totalSections} ta dars"
+                        binding.root.context.getString(R.string.curriculum_lesson_count, item.completedSections, item.totalSections)
 
-                    val shownCompleted = if (item.orderIndex == 1 && item.completedSections < 4) 4 else item.completedSections
-                    val shownTotal = if (item.totalSections <= 0) 10 else item.totalSections
+                    val shownCompleted = item.completedSections
+                    val shownTotal = item.totalSections.coerceAtLeast(1)
                     binding.tvCompletedProgressCount.text = "$shownCompleted/$shownTotal dars"
-                    binding.progressCompletedBar.max = 100
-                    binding.progressCompletedBar.progress =
-                        ((shownCompleted * 100) / shownTotal).coerceIn(42, 100)
+                    binding.progressCompletedBar.animateProgressTo(
+                        targetProgress = ((shownCompleted * 100) / shownTotal).coerceIn(0, 100),
+                        maxValue = 100,
+                        durationMs = 700L,
+                        forceReplayFromZero = true
+                    )
 
                     binding.cardTopic.setOnClickListener { onTopicClick(item) }
                     binding.layoutCardCompleted.setOnClickListener { onTopicClick(item) }
@@ -128,14 +132,7 @@ class TopicAdapter(
                     )
                     binding.tvActiveTitle.text = if (item.orderIndex == 1 && !item.titleUzbek.startsWith("A0")) "A0 • ${item.titleUzbek}" else item.titleUzbek
 
-                    val cefrCode = when (item.orderIndex) {
-                        1 -> "A0"
-                        in 2..9 -> "A1"
-                        10 -> "A2"
-                        11 -> "B1"
-                        12 -> "B2"
-                        else -> "C1–C2"
-                    }
+                    val cefrCode = com.example.domain.model.CurriculumLevel.forTopic(item.id)?.name.orEmpty()
                     binding.tvActiveModulePill.text =
                         String.format("%s • %02d-modul", cefrCode, item.orderIndex)
 
@@ -230,6 +227,29 @@ class SectionAdapter(
             binding.ivSectionArtwork.setImageResource(bannerRes)
 
             val cleanLessonTitle = when {
+                item.id == "sec_a0_01" -> "Welcome to TalkMe"
+                item.id == "sec_a0_02" -> "Lera and talkme"
+                item.id == "sec_a0_03" -> "A cup, an apple"
+                item.id == "sec_a0_04" -> "A book and a cup"
+                item.id == "sec_a0_05" -> "This and that"
+                item.id == "sec_a0_06" -> "These and those"
+                item.id == "sec_a0_07" -> "I have a book"
+                item.id == "sec_a0_08" -> "Have I got a book?"
+                item.id == "sec_a0_09" -> "I have not got a book"
+                item.id == "sec_a0_10" -> "One, two, three — 1 dan 10 gacha"
+                item.id == "sec_a0_11" -> "I have three books"
+                item.id == "sec_a0_12" -> "I have a book, but I have no cups"
+                item.id == "sec_a0_13" -> "Counting the Tigers — Sanoq sonlar"
+                item.id == "sec_a0_14" -> "The first tiger — Tartib sonlar"
+                item.id == "sec_a0_15" -> "Here is a boy"
+                item.id == "sec_a0_16" -> "Here are two boys"
+                item.id == "sec_a0_17" -> "There is a boy"
+                item.id == "sec_a0_18" -> "There are two boys"
+                item.id == "sec_a0_19" -> "My room"
+                item.id == "sec_a0_20" -> "I am a boy"
+                item.id == "sec_a0_21" -> "He is a boy, she is a girl"
+                item.id == "sec_a0_22" -> "Am I a boy?"
+                item.id == "sec_a0_23" -> "I am not a boy"
                 item.id == "sec_01_01" || (item.topicId == "topic_01_introduction" && item.orderIndex == 1) ->
                     "Welcome to TalkMe"
                 item.id == "sec_01_02" || (item.topicId == "topic_01_introduction" && item.orderIndex == 2) ->
@@ -242,6 +262,16 @@ class SectionAdapter(
             }
 
             val lessonDurationText = when {
+                item.id == "sec_a0_02" || item.id == "sec_a0_03" || item.id == "sec_a0_04" ||
+                    item.id == "sec_a0_05" || item.id == "sec_a0_06" ||
+                    item.id == "sec_a0_07" || item.id == "sec_a0_08" || item.id == "sec_a0_09" ||
+                    item.id == "sec_a0_10" || item.id == "sec_a0_11" || item.id == "sec_a0_12" ||
+                    item.id == "sec_a0_13" || item.id == "sec_a0_14" ||
+                    item.id == "sec_a0_15" || item.id == "sec_a0_16" ||
+                    item.id == "sec_a0_17" || item.id == "sec_a0_18" ||
+                    item.id == "sec_a0_19" || item.id == "sec_a0_20" ||
+                    item.id == "sec_a0_21" || item.id == "sec_a0_22" ||
+                    item.id == "sec_a0_23" -> "5 min"
                 item.id == "sec_01_01" || item.orderIndex == 1 -> "4 min"
                 item.id == "sec_01_02" || item.orderIndex == 2 -> "4 min"
                 item.id == "sec_01_03" || item.orderIndex == 3 -> "3 min"
@@ -457,6 +487,18 @@ class AiChatTranscriptAdapter(
     private val onSpeakMessage: (String) -> Unit
 ) : ListAdapter<AiTutorMessage, AiChatTranscriptAdapter.MessageViewHolder>(DiffCallback) {
 
+    private var studentDisplayName: String = "Azamat"
+
+    fun updateStudentName(name: String) {
+        val clean = name.trim().ifBlank { "Azamat" }
+        if (clean != studentDisplayName) {
+            studentDisplayName = clean
+            if (itemCount > 0) {
+                notifyItemRangeChanged(0, itemCount)
+            }
+        }
+    }
+
     object DiffCallback : DiffUtil.ItemCallback<AiTutorMessage>() {
         override fun areItemsTheSame(oldItem: AiTutorMessage, newItem: AiTutorMessage): Boolean = oldItem.id == newItem.id
         override fun areContentsTheSame(oldItem: AiTutorMessage, newItem: AiTutorMessage): Boolean = oldItem == newItem
@@ -466,42 +508,30 @@ class AiChatTranscriptAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: AiTutorMessage) {
-            val context = binding.root.context
-            val density = context.resources.displayMetrics.density
             val isStudent = item.senderRole == "STUDENT"
 
-            val params = binding.cardMessage.layoutParams as? android.widget.FrameLayout.LayoutParams
-                ?: android.widget.FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-
             if (isStudent) {
-                params.gravity = android.view.Gravity.END
-                params.marginStart = (56 * density).toInt()
-                params.marginEnd = (4 * density).toInt()
-                binding.cardMessage.layoutParams = params
-                binding.cardMessage.setBackgroundResource(R.drawable.bg_chat_bubble_student)
+                binding.cardTutorAvatar.visibility = View.GONE
+                binding.tvStudentAvatarBadge.visibility = View.VISIBLE
+                binding.tvStudentAvatarBadge.text = studentDisplayName.firstOrNull()?.uppercaseChar()?.toString() ?: "A"
 
-                binding.tvSenderRole.text = "🔥 Siz (Student)"
-                binding.tvSenderRole.setTextColor(ContextCompat.getColor(context, R.color.color_primary))
-                binding.tvMessageContent.setTextColor(ContextCompat.getColor(context, R.color.color_text_primary))
-                binding.tvCorrectionFeedback.setTextColor(ContextCompat.getColor(context, R.color.color_text_secondary))
-                binding.tvListenActionLabel.setTextColor(ContextCompat.getColor(context, R.color.color_primary))
-                binding.btnSpeakMessage.setColorFilter(ContextCompat.getColor(context, R.color.color_primary))
+                binding.colBubbleContainer.gravity = android.view.Gravity.END
+                binding.tvSenderRole.text = studentDisplayName
+                binding.cardMessage.setBackgroundResource(R.drawable.bg_speaking_bubble_student)
+                binding.btnSpeakMessage.visibility = View.GONE
+                binding.rowStudentAudioBadge.visibility = View.VISIBLE
+                binding.waveformStudentBubble.setMode(CosmicWaveformView.Mode.BARS)
+                binding.waveformStudentBubble.setActive(false)
+                binding.waveformStudentBubble.setAmplitude(0.75f)
             } else {
-                params.gravity = android.view.Gravity.START
-                params.marginStart = (4 * density).toInt()
-                params.marginEnd = (48 * density).toInt()
-                binding.cardMessage.layoutParams = params
-                binding.cardMessage.setBackgroundResource(R.drawable.bg_chat_bubble_tutor)
+                binding.cardTutorAvatar.visibility = View.VISIBLE
+                binding.tvStudentAvatarBadge.visibility = View.GONE
 
-                binding.tvSenderRole.text = "✨ AI Tutor"
-                binding.tvSenderRole.setTextColor(android.graphics.Color.parseColor("#BFDBFE"))
-                binding.tvMessageContent.setTextColor(android.graphics.Color.WHITE)
-                binding.tvCorrectionFeedback.setTextColor(android.graphics.Color.parseColor("#DBEAFE"))
-                binding.tvListenActionLabel.setTextColor(android.graphics.Color.parseColor("#E0F2FE"))
-                binding.btnSpeakMessage.setColorFilter(android.graphics.Color.WHITE)
+                binding.colBubbleContainer.gravity = android.view.Gravity.START
+                binding.tvSenderRole.text = binding.root.context.getString(R.string.speaking_ai_tutor_badge)
+                binding.cardMessage.setBackgroundResource(R.drawable.bg_speaking_bubble_tutor)
+                binding.btnSpeakMessage.visibility = View.VISIBLE
+                binding.rowStudentAudioBadge.visibility = View.GONE
             }
 
             binding.tvMessageContent.text = item.englishText
@@ -516,7 +546,6 @@ class AiChatTranscriptAdapter(
                 onSpeakMessage(item.englishText)
             }
             binding.btnSpeakMessage.setOnClickListener(speakClickListener)
-            binding.rowMessageActions.setOnClickListener(speakClickListener)
             binding.cardMessage.setOnClickListener(speakClickListener)
         }
     }

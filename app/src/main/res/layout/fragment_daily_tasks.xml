@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_cosmic_background"
+    android:background="@drawable/bg_curriculum_screen"
     android:clipToPadding="false"
     android:fillViewport="true"
     android:paddingBottom="90dp">
@@ -24,9 +24,11 @@
 
             <FrameLayout
                 android:id="@+id/btnCalendarPicker"
-                android:layout_width="46dp"
-                android:layout_height="46dp"
-                android:background="@drawable/bg_tasks_header_calendar">
+                android:layout_width="@dimen/touch_target_min"
+                android:layout_height="@dimen/touch_target_min"
+                android:background="@drawable/bg_tasks_header_calendar"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:layout_width="22dp"
@@ -68,7 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_tasks_streak_pill"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
+                android:minHeight="36dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -83,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="@string/daily_tasks_streak_format"
-                    android:textColor="#FFA726"
+                    android:textColor="@color/color_accent"
                     android:textSize="@dimen/text_size_body_small"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -104,17 +109,23 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/spacing_medium">
 
-                <!-- Circular Progress Ring (2/4) -->
+                <!-- Circular Progress Ring -->
                 <com.example.feature.dailytasks.TasksCircularProgressView
                     android:id="@+id/circleTasksProgress"
                     android:layout_width="76dp"
                     android:layout_height="76dp" />
 
+                <!-- Subtle Vertical Divider -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="58dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:background="@color/color_cosmic_divider" />
+
                 <!-- Text & Bar Info -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -150,19 +161,19 @@
                     <ProgressBar
                         android:id="@+id/progressHeroXp"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="120dp"
+                        android:layout_width="116dp"
                         android:layout_height="7dp"
                         android:layout_marginTop="4dp"
-                        android:max="300"
-                        android:progress="120"
+                        android:max="200"
+                        android:progress="0"
                         android:progressDrawable="@drawable/progress_bar_cyan" />
                 </LinearLayout>
 
                 <!-- Glowing Golden Chest Illustration -->
                 <ImageView
                     android:id="@+id/ivHeroChest"
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"
+                    android:layout_width="96dp"
+                    android:layout_height="78dp"
                     android:contentDescription="@string/daily_tasks_reward_banner_text"
                     android:scaleType="fitCenter"
                     android:src="@drawable/img_tasks_hero_chest" />
@@ -202,7 +213,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_tasks_card_vocab"
-            android:padding="12dp">
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -210,12 +222,33 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
+                <FrameLayout
                     android:layout_width="74dp"
-                    android:layout_height="56dp"
-                    android:contentDescription="@string/daily_tasks_task_vocab_title"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/img_tasks_vocab" />
+                    android:layout_height="58dp">
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="54dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/daily_tasks_task_vocab_title"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/img_tasks_vocab" />
+
+                    <ImageView
+                        android:id="@+id/ivVocabDoneBadge"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="bottom|end"
+                        android:contentDescription="@string/topic_status_completed"
+                        android:src="@drawable/ic_check_green_badge"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/color_cosmic_divider" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -251,10 +284,10 @@
                         <ProgressBar
                             android:id="@+id/progressVocab"
                             style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="70dp"
+                            android:layout_width="68dp"
                             android:layout_height="6dp"
                             android:max="5"
-                            android:progress="3"
+                            android:progress="0"
                             android:progressDrawable="@drawable/progress_bar_cyan" />
 
                         <TextView
@@ -262,7 +295,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="3/5"
+                            android:text="0/5"
                             android:textColor="@color/color_slate_subtitle"
                             android:textSize="@dimen/text_size_caption"
                             android:textStyle="bold" />
@@ -279,16 +312,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_tasks_xp_pill"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
                         android:text="@string/daily_tasks_xp_badge_50"
                         android:textColor="@color/color_gold_accent"
                         android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@drawable/ic_sparkle_star" />
 
                     <TextView
                         android:id="@+id/btnTaskVocab"
                         android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_height="@dimen/touch_target_min"
+                        android:layout_marginTop="2dp"
                         android:background="@drawable/bg_tasks_btn_purple"
                         android:clickable="true"
                         android:focusable="true"
@@ -309,7 +345,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_tasks_card_listening"
-            android:padding="12dp">
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -317,12 +354,33 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
+                <FrameLayout
                     android:layout_width="74dp"
-                    android:layout_height="56dp"
-                    android:contentDescription="@string/daily_tasks_task_listening_title"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/img_tasks_listening" />
+                    android:layout_height="58dp">
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="54dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/daily_tasks_task_listening_title"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/img_tasks_listening" />
+
+                    <ImageView
+                        android:id="@+id/ivListeningDoneBadge"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="bottom|end"
+                        android:contentDescription="@string/topic_status_completed"
+                        android:src="@drawable/ic_check_green_badge"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/color_cosmic_divider" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -358,10 +416,10 @@
                         <ProgressBar
                             android:id="@+id/progressListening"
                             style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="70dp"
+                            android:layout_width="68dp"
                             android:layout_height="6dp"
                             android:max="3"
-                            android:progress="1"
+                            android:progress="0"
                             android:progressDrawable="@drawable/progress_bar_cyan" />
 
                         <TextView
@@ -369,7 +427,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="1/3 daq"
+                            android:text="0/3 daq"
                             android:textColor="@color/color_slate_subtitle"
                             android:textSize="@dimen/text_size_caption"
                             android:textStyle="bold" />
@@ -386,23 +444,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_tasks_xp_pill"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
                         android:text="@string/daily_tasks_xp_badge_50"
                         android:textColor="@color/color_gold_accent"
                         android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@drawable/ic_sparkle_star" />
 
                     <TextView
                         android:id="@+id/btnTaskListening"
                         android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_height="@dimen/touch_target_min"
+                        android:layout_marginTop="2dp"
                         android:background="@drawable/bg_tasks_btn_cyan"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center"
                         android:paddingHorizontal="14dp"
                         android:text="@string/daily_tasks_btn_start_play"
-                        android:textColor="#060D1A"
+                        android:textColor="@color/color_cosmic_background"
                         android:textSize="@dimen/text_size_caption"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -416,7 +477,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_tasks_card_speaking"
-            android:padding="12dp">
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -424,12 +486,33 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
+                <FrameLayout
                     android:layout_width="74dp"
-                    android:layout_height="56dp"
-                    android:contentDescription="@string/daily_tasks_task_speaking_title"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/img_tasks_speaking" />
+                    android:layout_height="58dp">
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="54dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/daily_tasks_task_speaking_title"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/img_tasks_speaking" />
+
+                    <ImageView
+                        android:id="@+id/ivSpeakingDoneBadge"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="bottom|end"
+                        android:contentDescription="@string/topic_status_completed"
+                        android:src="@drawable/ic_check_green_badge"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/color_cosmic_divider" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -465,10 +548,10 @@
                         <ProgressBar
                             android:id="@+id/progressSpeaking"
                             style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="70dp"
+                            android:layout_width="68dp"
                             android:layout_height="6dp"
                             android:max="3"
-                            android:progress="1"
+                            android:progress="0"
                             android:progressDrawable="@drawable/progress_bar_cyan" />
 
                         <TextView
@@ -476,7 +559,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="1/3 gap"
+                            android:text="0/3 gap"
                             android:textColor="@color/color_slate_subtitle"
                             android:textSize="@dimen/text_size_caption"
                             android:textStyle="bold" />
@@ -493,16 +576,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_tasks_xp_pill"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
                         android:text="@string/daily_tasks_xp_badge_50"
                         android:textColor="@color/color_gold_accent"
                         android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@drawable/ic_sparkle_star" />
 
                     <TextView
                         android:id="@+id/btnTaskSpeaking"
                         android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_height="@dimen/touch_target_min"
+                        android:layout_marginTop="2dp"
                         android:background="@drawable/bg_tasks_btn_purple"
                         android:clickable="true"
                         android:focusable="true"
@@ -523,7 +609,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_tasks_card_lesson"
-            android:padding="12dp">
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -531,12 +618,33 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
+                <FrameLayout
                     android:layout_width="74dp"
-                    android:layout_height="56dp"
-                    android:contentDescription="@string/daily_tasks_task_lesson_title"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/img_tasks_lesson" />
+                    android:layout_height="58dp">
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="54dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/daily_tasks_task_lesson_title"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/img_tasks_lesson" />
+
+                    <ImageView
+                        android:id="@+id/ivLessonDoneBadge"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="bottom|end"
+                        android:contentDescription="@string/topic_status_completed"
+                        android:src="@drawable/ic_check_green_badge"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/color_cosmic_divider" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -572,7 +680,7 @@
                         <ProgressBar
                             android:id="@+id/progressLesson"
                             style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="70dp"
+                            android:layout_width="68dp"
                             android:layout_height="6dp"
                             android:max="1"
                             android:progress="0"
@@ -600,16 +708,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_tasks_xp_pill"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
                         android:text="@string/daily_tasks_xp_badge_50"
                         android:textColor="@color/color_gold_accent"
                         android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@drawable/ic_sparkle_star" />
 
                     <TextView
                         android:id="@+id/btnTaskLesson"
                         android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_height="@dimen/touch_target_min"
+                        android:layout_marginTop="2dp"
                         android:background="@drawable/bg_tasks_btn_teal"
                         android:clickable="true"
                         android:focusable="true"
@@ -623,37 +734,47 @@
             </LinearLayout>
         </FrameLayout>
 
-        <!-- Bottom Locked Reward Banner -->
-        <LinearLayout
+        <!-- Bottom Locked Reward Banner with Overhanging Golden Chest -->
+        <FrameLayout
             android:id="@+id/layoutRewardBanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="24dp"
-            android:background="@drawable/bg_tasks_reward_banner"
             android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="10dp">
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/bg_tasks_reward_banner"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/touch_target_min"
+                android:orientation="horizontal"
+                android:paddingStart="48dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/daily_tasks_reward_banner_text"
+                    android:textColor="@color/color_cosmic_text_secondary"
+                    android:textSize="@dimen/text_size_body_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="54dp"
-                android:layout_height="38dp"
+                android:layout_width="64dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical|start"
                 android:contentDescription="@string/daily_tasks_reward_banner_text"
+                android:elevation="4dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/img_tasks_reward_chest" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:text="@string/daily_tasks_reward_banner_text"
-                android:textColor="#EDE7F6"
-                android:textSize="@dimen/text_size_body_small"
-                android:textStyle="bold" />
-        </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

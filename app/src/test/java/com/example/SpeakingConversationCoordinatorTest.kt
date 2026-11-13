@@ -261,6 +261,9 @@ class FakeUserPreferencesRepository(
     override suspend fun updateSpeechSpeed(speed: Float) = Unit
     override suspend fun updatePremiumSubscribed(subscribed: Boolean) = Unit
     override suspend fun updatePreferredTtsProvider(provider: String) = Unit
+    override suspend fun updateVoiceGender(voiceGender: String) = Unit
+    override suspend fun updateOfflineAudioEnabled(enabled: Boolean) = Unit
+    override suspend fun updateLessonRemindersEnabled(enabled: Boolean) = Unit
     override suspend fun updateLastLearningBookmark(topicId: String, sectionId: String, scrollOffset: Int) = Unit
 }
 

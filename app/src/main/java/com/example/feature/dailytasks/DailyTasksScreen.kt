@@ -15,6 +15,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.R
 import com.example.core.common.AppConstants
+import com.example.core.ui.ProgressAnimator.animateProgressTo
+import com.example.core.ui.ProgressAnimator.replayAllProgressFromZero
 import com.example.databinding.FragmentDailyTasksBinding
 import com.example.domain.model.PracticeCategory
 import com.example.domain.repository.LearningRepository
@@ -26,25 +28,26 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 data class DailyTasksUiState(
     val streakDays: Int = 1,
-    val completedCount: Int = 2,
+    val completedCount: Int = 0,
     val totalCount: Int = 4,
-    val xpEarned: Int = 120,
-    val xpGoal: Int = 300,
-    val vocabProgress: Int = 3,
+    val xpEarned: Int = 0,
+    val xpGoal: Int = 200,
+    val vocabProgress: Int = 0,
     val vocabMax: Int = 5,
-    val listeningProgress: Int = 1,
+    val listeningProgress: Int = 0,
     val listeningMax: Int = 3,
-    val speakingProgress: Int = 1,
+    val speakingProgress: Int = 0,
     val speakingMax: Int = 3,
     val lessonProgress: Int = 0,
     val lessonMax: Int = 1,
     val activeTopicId: String = AppConstants.INITIAL_TOPIC_ID,
-    val activeSectionId: String = "sec_01_03",
+    val activeSectionId: String = "",
     val isRewardClaimed: Boolean = false
 )
 
@@ -63,38 +66,50 @@ class DailyTasksViewModel @Inject constructor(
 
     val uiState: StateFlow<DailyTasksUiState> = combine(
         learningRepository.observeDashboardStats(),
-        learningRepository.observeTopics(),
-        isRewardClaimedFlow
-    ) { stats, topics, isClaimed ->
-        val streak = stats.currentStreakDays.coerceAtLeast(1)
+        learningRepository.observeTopics()
+    ) { stats, topics ->
         val activeTopicId = stats.continueLearning.currentTopicId.ifBlank {
             topics.firstOrNull()?.id ?: AppConstants.INITIAL_TOPIC_ID
         }
-        val activeSectionId = stats.continueLearning.currentSectionId.ifBlank { "sec_01_03" }
+        stats to activeTopicId
+    }.flatMapLatest { (stats, activeTopicId) ->
+        combine(
+            learningRepository.observeTodayTaskSteps(activeTopicId),
+            isRewardClaimedFlow
+        ) { steps, isClaimed ->
+            val streak = stats.currentStreakDays.coerceAtLeast(1)
+            val activeSectionId = stats.continueLearning.currentSectionId
+            val vocabDone = steps.any { it.category == PracticeCategory.VOCABULARY && it.isCompletedToday }
+            val listeningDone = steps.any { it.category == PracticeCategory.LISTENING && it.isCompletedToday }
+            val speakingDone = steps.any { it.category == PracticeCategory.SPEAKING && it.isCompletedToday }
+            val lessonDone = stats.totalSectionsCount > 0 && stats.completedSectionsCount > 0
 
-        val completed = 2
-        val total = 4
-        val xp = 120
-        val xpGoal = 300
+            val vocabProg = if (vocabDone) 5 else 0
+            val listeningProg = if (listeningDone) 3 else 0
+            val speakingProg = if (speakingDone) 3 else 0
+            val lessonProg = if (lessonDone) 1 else 0
+            val completed = listOf(vocabDone, listeningDone, speakingDone, lessonDone).count { it }
+            val xp = completed * 50
 
-        DailyTasksUiState(
-            streakDays = streak,
-            completedCount = completed,
-            totalCount = total,
-            xpEarned = xp,
-            xpGoal = xpGoal,
-            vocabProgress = 3,
-            vocabMax = 5,
-            listeningProgress = 1,
-            listeningMax = 3,
-            speakingProgress = 1,
-            speakingMax = 3,
-            lessonProgress = 0,
-            lessonMax = 1,
-            activeTopicId = activeTopicId,
-            activeSectionId = activeSectionId,
-            isRewardClaimed = isClaimed
-        )
+            DailyTasksUiState(
+                streakDays = streak,
+                completedCount = completed,
+                totalCount = 4,
+                xpEarned = xp,
+                xpGoal = 200,
+                vocabProgress = vocabProg,
+                vocabMax = 5,
+                listeningProgress = listeningProg,
+                listeningMax = 3,
+                speakingProgress = speakingProg,
+                speakingMax = 3,
+                lessonProgress = lessonProg,
+                lessonMax = 1,
+                activeTopicId = activeTopicId,
+                activeSectionId = activeSectionId,
+                isRewardClaimed = isClaimed
+            )
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -125,6 +140,7 @@ class DailyTasksFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: DailyTasksViewModel by viewModels()
+    private var wasStopped = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -187,6 +203,10 @@ class DailyTasksFragment : Fragment() {
         // Lesson Task: Darsga o'tish
         val openLessonAction = View.OnClickListener {
             val state = viewModel.uiState.value
+            if (state.activeSectionId.isBlank()) {
+                Snackbar.make(view, getString(R.string.curriculum_empty), Snackbar.LENGTH_SHORT).show()
+                return@OnClickListener
+            }
             findNavController().navigate(
                 R.id.lessonDetailFragment,
                 bundleOf(
@@ -230,32 +250,57 @@ class DailyTasksFragment : Fragment() {
         binding.circleTasksProgress.setProgress(state.completedCount, state.totalCount)
         binding.tvHeroCompletedCount.text = getString(R.string.daily_tasks_hero_completed_format, state.completedCount)
         binding.tvHeroXpProgress.text = getString(R.string.daily_tasks_hero_xp_format, state.xpEarned, state.xpGoal)
-        binding.progressHeroXp.max = state.xpGoal
-        binding.progressHeroXp.progress = state.xpEarned
+        binding.progressHeroXp.animateProgressTo(state.xpEarned, state.xpGoal)
 
         // Task 1: Vocabulary
-        binding.progressVocab.max = state.vocabMax
-        binding.progressVocab.progress = state.vocabProgress
+        binding.progressVocab.animateProgressTo(state.vocabProgress, state.vocabMax)
         binding.tvVocabCount.text = "${state.vocabProgress}/${state.vocabMax}"
+        binding.ivVocabDoneBadge.visibility =
+            if (state.vocabProgress >= state.vocabMax) View.VISIBLE else View.GONE
 
         // Task 2: Listening
-        binding.progressListening.max = state.listeningMax
-        binding.progressListening.progress = state.listeningProgress
+        binding.progressListening.animateProgressTo(state.listeningProgress, state.listeningMax)
         binding.tvListeningCount.text = "${state.listeningProgress}/${state.listeningMax} daq"
+        binding.ivListeningDoneBadge.visibility =
+            if (state.listeningProgress >= state.listeningMax) View.VISIBLE else View.GONE
 
         // Task 3: Speaking
-        binding.progressSpeaking.max = state.speakingMax
-        binding.progressSpeaking.progress = state.speakingProgress
+        binding.progressSpeaking.animateProgressTo(state.speakingProgress, state.speakingMax)
         binding.tvSpeakingCount.text = "${state.speakingProgress}/${state.speakingMax} gap"
+        binding.ivSpeakingDoneBadge.visibility =
+            if (state.speakingProgress >= state.speakingMax) View.VISIBLE else View.GONE
 
         // Task 4: Lesson
-        binding.progressLesson.max = state.lessonMax
-        binding.progressLesson.progress = state.lessonProgress
+        val hasLesson = state.activeSectionId.isNotBlank()
+        binding.progressLesson.animateProgressTo(state.lessonProgress, state.lessonMax)
         binding.tvLessonCount.text = "${state.lessonProgress}/${state.lessonMax}"
+        binding.ivLessonDoneBadge.visibility =
+            if (state.lessonProgress >= state.lessonMax) View.VISIBLE else View.GONE
+        binding.tvLessonSubtitle.text = if (hasLesson) {
+            getString(R.string.daily_tasks_task_lesson_subtitle)
+        } else {
+            getString(R.string.curriculum_empty)
+        }
+        binding.btnTaskLesson.isEnabled = hasLesson
+        binding.btnTaskLesson.alpha = if (hasLesson) 1.0f else 0.5f
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (wasStopped) {
+            wasStopped = false
+            _binding?.root?.replayAllProgressFromZero()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        wasStopped = true
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        wasStopped = false
         _binding = null
     }
 }

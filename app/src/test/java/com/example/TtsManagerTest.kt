@@ -52,4 +52,58 @@ class TtsManagerTest {
 
         assertEquals(originalText, decryptedText)
     }
+
+    @Test
+    fun `speakUzbek routes TalkMe welcome script with uz language code while speakEnglish keeps uz guard`() =
+        kotlinx.coroutines.runBlocking {
+            val recordedCalls = mutableListOf<Pair<String, String>>()
+            val fakeProvider = object : com.example.domain.repository.TtsProvider {
+                override val providerName: String = "FAKE"
+                override suspend fun speak(text: String, speechRate: Float): Result<Unit> {
+                    recordedCalls.add("en" to text)
+                    return Result.success(Unit)
+                }
+                override suspend fun speakWithLanguage(
+                    text: String,
+                    speechRate: Float,
+                    languageCode: String
+                ): Result<Unit> {
+                    recordedCalls.add(languageCode to text)
+                    return Result.success(Unit)
+                }
+                override fun stop() = Unit
+                override fun clearCache(): Long = 0L
+                override fun getCacheSizeBytes(): Long = 0L
+            }
+            val prefsRepo = object : com.example.domain.repository.UserPreferencesRepository {
+                override val userPreferencesFlow = kotlinx.coroutines.flow.flowOf(
+                    com.example.domain.model.UserPreferencesModel(soundEnabled = true)
+                )
+                override suspend fun updateUserName(name: String) = Unit
+                override suspend fun updateThemeMode(themeMode: String) = Unit
+                override suspend fun updateSoundEnabled(enabled: Boolean) = Unit
+                override suspend fun updateSpeechSpeed(speed: Float) = Unit
+                override suspend fun updatePremiumSubscribed(subscribed: Boolean) = Unit
+                override suspend fun updatePreferredTtsProvider(provider: String) = Unit
+                override suspend fun updateVoiceGender(voiceGender: String) = Unit
+                override suspend fun updateOfflineAudioEnabled(enabled: Boolean) = Unit
+                override suspend fun updateLessonRemindersEnabled(enabled: Boolean) = Unit
+                override suspend fun updateLastLearningBookmark(topicId: String, sectionId: String, scrollOffset: Int) = Unit
+            }
+
+            val manager = com.example.core.audio.TtsManager(fakeProvider, fakeProvider, prefsRepo)
+
+            // Guarded English call with languageCode = "uz" skips silently
+            manager.speakEnglish("O'zbekcha izoh", languageCode = "uz")
+            assertTrue(recordedCalls.isEmpty())
+
+            // Explicit speakUzbek call plays the Dars 1 TalkMe TTS script verbatim
+            val script = com.example.data.local.CurriculumSeedData.DARS_1_TALKME_TTS_TEXT
+            manager.speakUzbek(script)
+            assertEquals(1, recordedCalls.size)
+            assertEquals("uz", recordedCalls.first().first)
+            assertEquals(script, recordedCalls.first().second)
+            assertTrue(script.contains("Salom, aziz do‘stim!"))
+            assertTrue(script.contains("Har bir xato — bu o‘rganishning bir qismi."))
+        }
 }

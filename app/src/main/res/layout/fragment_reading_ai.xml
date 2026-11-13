@@ -3,12 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
+    android:background="@drawable/bg_curriculum_screen"
     android:orientation="vertical">
 
-    <include
+    <!-- Dark Cosmic Header -->
+    <LinearLayout
         android:id="@+id/headerReadingAi"
-        layout="@layout/view_screen_header" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingTop="12dp"
+        android:paddingBottom="10dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min"
+            android:background="@drawable/bg_cosmic_circle_btn"
+            android:contentDescription="@string/action_back"
+            android:padding="13dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvHeaderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reading_ai_title"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvHeaderSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_slate_subtitle"
+                android:textSize="12.5sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -20,130 +63,176 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/spacing_medium">
+            android:paddingHorizontal="@dimen/spacing_medium"
+            android:paddingBottom="@dimen/spacing_large">
 
-            <!-- Topic & Controls -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                app:cardBackgroundColor="@color/color_cosmic_card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/color_neon_cyan"
+                app:strokeWidth="1.2dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/reading_ai_title"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_reading_studio_hero_1794555591721" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Topic & AI Passage Generator -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvReadingCurrentTopic"
-                    style="@style/TextAppearance.TalkMe.Subtitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/color_primary" />
+                    android:textColor="@color/color_neon_cyan"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-                <com.google.android.material.button.MaterialButton
+                <TextView
                     android:id="@+id/btnGeneratePassage"
-                    style="@style/Widget.TalkMe.OutlinedButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reading_ai_generate_btn" />
+                    android:layout_height="@dimen/touch_target_min"
+                    android:background="@drawable/bg_studio_pill_outline"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:paddingHorizontal="14dp"
+                    android:text="@string/reading_ai_generate_btn"
+                    android:textColor="@color/white"
+                    android:textSize="12.5sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Reading Passage Card -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.TalkMe.Card"
+            <!-- Chalkboard Reading Passage Card -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_medium">
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_studio_chalkboard"
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_medium">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvPassageTitle"
-                            style="@style/TextAppearance.TalkMe.Title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <ImageButton
-                            android:id="@+id/btnSpeakPassage"
-                            android:layout_width="@dimen/touch_target_min"
-                            android:layout_height="@dimen/touch_target_min"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:contentDescription="@string/reading_ai_listen_passage"
-                            android:src="@drawable/ic_speaker" />
-                    </LinearLayout>
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tvPassageBody"
-                        style="@style/TextAppearance.TalkMe.Body"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvPassageTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_small"
-                        android:lineSpacingExtra="4dp" />
+                        android:layout_weight="1"
+                        android:fontFamily="serif"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvPassageUzbekNotes"
-                        style="@style/TextAppearance.TalkMe.BodySecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_medium" />
+                    <ImageButton
+                        android:id="@+id/btnSpeakPassage"
+                        android:layout_width="@dimen/touch_target_min"
+                        android:layout_height="@dimen/touch_target_min"
+                        android:background="@drawable/bg_studio_speaker_btn"
+                        android:contentDescription="@string/reading_ai_listen_passage"
+                        android:padding="12dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_speaker"
+                        app:tint="@color/color_neon_cyan" />
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+
+                <View
+                    android:layout_width="28dp"
+                    android:layout_height="2.5dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/color_neon_cyan" />
+
+                <TextView
+                    android:id="@+id/tvPassageBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="15.5sp" />
+
+                <TextView
+                    android:id="@+id/tvPassageUzbekNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/color_cosmic_text_secondary"
+                    android:textSize="13sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
 
             <!-- Comprehension Question Card -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.TalkMe.Card"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_medium">
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_studio_question_card"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tvReadingQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_medium">
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvReadingQuestion"
-                        style="@style/TextAppearance.TalkMe.Subtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/color_secondary" />
+                <EditText
+                    android:id="@+id/etReadingUserQuery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:autofillHints=""
+                    android:background="@drawable/bg_studio_input_glow"
+                    android:hint="@string/reading_ai_ask_tutor_hint"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:minHeight="64dp"
+                    android:padding="14dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/color_slate_subtitle"
+                    android:textSize="14.5sp" />
 
-                    <EditText
-                        android:id="@+id/etReadingUserQuery"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_small"
-                        android:autofillHints=""
-                        android:hint="@string/reading_ai_ask_tutor_hint"
-                        android:inputType="textCapSentences|textMultiLine"
-                        android:minHeight="@dimen/touch_target_min" />
+                <TextView
+                    android:id="@+id/btnEvaluateReading"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height_primary"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_studio_cta_cyan"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="@string/reading_ai_evaluate_btn"
+                    android:textColor="@color/white"
+                    android:textSize="15.5sp"
+                    android:textStyle="bold" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnEvaluateReading"
-                        style="@style/Widget.TalkMe.PrimaryButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_small"
-                        android:text="@string/reading_ai_evaluate_btn" />
-
-                    <TextView
-                        android:id="@+id/tvReadingAiFeedback"
-                        style="@style/TextAppearance.TalkMe.Body"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_medium"
-                        android:visibility="gone" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:id="@+id/tvReadingAiFeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@color/color_neon_cyan_variant"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

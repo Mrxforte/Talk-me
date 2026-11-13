@@ -69,4 +69,9 @@
         android:name="com.example.feature.profile.ProfileFragment"
         android:label="@string/nav_profile" />
 
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.feature.profile.SettingsFragment"
+        android:label="@string/settings_title_uz" />
+
 </navigation>

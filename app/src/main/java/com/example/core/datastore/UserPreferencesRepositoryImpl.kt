@@ -35,6 +35,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         val SPEECH_SPEED = floatPreferencesKey("speech_speed")
         val PREMIUM_SUBSCRIBED = booleanPreferencesKey("premium_subscribed")
         val PREFERRED_TTS = stringPreferencesKey("preferred_tts_provider")
+        val VOICE_GENDER = stringPreferencesKey("voice_gender")
+        val OFFLINE_AUDIO = booleanPreferencesKey("offline_audio_enabled")
+        val LESSON_REMINDERS = booleanPreferencesKey("lesson_reminders_enabled")
         val DAILY_GOAL_MINUTES = intPreferencesKey("daily_goal_minutes")
         val LAST_TOPIC_ID = stringPreferencesKey("last_topic_id")
         val LAST_SECTION_ID = stringPreferencesKey("last_section_id")
@@ -51,6 +54,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 speechSpeed = prefs[Keys.SPEECH_SPEED] ?: 1.0f,
                 isPremiumSubscribed = prefs[Keys.PREMIUM_SUBSCRIBED] ?: false,
                 preferredTtsProvider = prefs[Keys.PREFERRED_TTS] ?: "NATIVE",
+                voiceGender = prefs[Keys.VOICE_GENDER] ?: "MALE",
+                offlineAudioEnabled = prefs[Keys.OFFLINE_AUDIO] ?: false,
+                lessonRemindersEnabled = prefs[Keys.LESSON_REMINDERS] ?: true,
                 dailyGoalMinutes = prefs[Keys.DAILY_GOAL_MINUTES] ?: 15,
                 lastActiveTopicId = prefs[Keys.LAST_TOPIC_ID] ?: AppConstants.INITIAL_TOPIC_ID,
                 lastActiveSectionId = prefs[Keys.LAST_SECTION_ID] ?: AppConstants.INITIAL_SECTION_ID,
@@ -81,6 +87,20 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun updatePreferredTtsProvider(provider: String) {
         context.talkMeDataStore.edit { it[Keys.PREFERRED_TTS] = provider }
+    }
+
+    override suspend fun updateVoiceGender(voiceGender: String) {
+        context.talkMeDataStore.edit {
+            it[Keys.VOICE_GENDER] = if (voiceGender.equals("FEMALE", ignoreCase = true)) "FEMALE" else "MALE"
+        }
+    }
+
+    override suspend fun updateOfflineAudioEnabled(enabled: Boolean) {
+        context.talkMeDataStore.edit { it[Keys.OFFLINE_AUDIO] = enabled }
+    }
+
+    override suspend fun updateLessonRemindersEnabled(enabled: Boolean) {
+        context.talkMeDataStore.edit { it[Keys.LESSON_REMINDERS] = enabled }
     }
 
     override suspend fun updateLastLearningBookmark(

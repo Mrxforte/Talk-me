@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_progress_animator" type="id" />
+    <item name="tag_progress_logical_target" type="id" />
+    <item name="tag_progress_logical_max" type="id" />
+    <item name="tag_progress_has_animated" type="id" />
+    <item name="tag_progress_detach_hooked" type="id" />
+</resources>

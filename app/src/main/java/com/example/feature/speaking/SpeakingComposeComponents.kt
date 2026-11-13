@@ -79,9 +79,11 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 
-private val TalkMeRoyalBlue = Color(0xFF2563EB)
+private val TalkMeRoyalBlue = Color(0xFF0EA5E9)
 private val TalkMeDarkSlate = Color(0xFF0F172A)
-private val TalkMeErrorRed = Color(0xFFDC2626)
+private val TalkMeCosmicNavy = Color(0xFF101D36)
+private val TalkMeNeonCyan = Color(0xFF00E5FF)
+private val TalkMeErrorRed = Color(0xFFEF4444)
 
 /**
  * Runtime Permission Gate for `Manifest.permission.RECORD_AUDIO`.
@@ -418,8 +420,8 @@ fun SpeakingAuxiliaryControlsBar(
                         .testTag("stop_conversation_button"),
                     shape = RoundedCornerShape(19.dp),
                     colors = ButtonDefaults.filledTonalButtonColors(
-                        containerColor = Color(0xFFFEE2E2),
-                        contentColor = TalkMeErrorRed
+                        containerColor = Color(0xFF331522),
+                        contentColor = Color(0xFFFCA5A5)
                     )
                 ) {
                     Icon(
@@ -443,8 +445,8 @@ fun SpeakingAuxiliaryControlsBar(
                         .testTag("mute_microphone_button"),
                     shape = RoundedCornerShape(19.dp),
                     colors = ButtonDefaults.filledTonalButtonColors(
-                        containerColor = if (uiState.isMuted) Color(0xFFFEF3C7) else Color(0xFFEFF6FF),
-                        contentColor = if (uiState.isMuted) Color(0xFFB45309) else TalkMeRoyalBlue
+                        containerColor = if (uiState.isMuted) Color(0xFF2B2111) else TalkMeCosmicNavy,
+                        contentColor = if (uiState.isMuted) Color(0xFFFBBF24) else TalkMeNeonCyan
                     )
                 ) {
                     Icon(
@@ -470,8 +472,8 @@ fun SpeakingAuxiliaryControlsBar(
                         .testTag("cancel_turn_button"),
                     shape = RoundedCornerShape(19.dp),
                     colors = ButtonDefaults.filledTonalButtonColors(
-                        containerColor = Color(0xFFEFF6FF),
-                        contentColor = TalkMeRoyalBlue
+                        containerColor = TalkMeCosmicNavy,
+                        contentColor = TalkMeNeonCyan
                     )
                 ) {
                     Icon(
@@ -495,8 +497,8 @@ fun SpeakingAuxiliaryControlsBar(
                     .testTag("toggle_keyboard_input_button"),
                 shape = RoundedCornerShape(19.dp),
                 colors = ButtonDefaults.filledTonalButtonColors(
-                    containerColor = Color(0xFFF1F5F9),
-                    contentColor = TalkMeDarkSlate
+                    containerColor = TalkMeCosmicNavy,
+                    contentColor = Color(0xFFCBD5E1)
                 )
             ) {
                 Icon(
@@ -531,7 +533,8 @@ fun SpeakingAuxiliaryControlsBar(
                     placeholder = {
                         Text(
                             text = "Ingliz tilida xabar yozing...",
-                            fontSize = 13.5.sp
+                            fontSize = 13.5.sp,
+                            color = Color(0xFF8E9CAE)
                         )
                     },
                     singleLine = false,
@@ -549,10 +552,13 @@ fun SpeakingAuxiliaryControlsBar(
                         }
                     ),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = TalkMeRoyalBlue,
-                        unfocusedBorderColor = Color(0xFFCBD5E1),
-                        focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.White
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = TalkMeNeonCyan,
+                        unfocusedBorderColor = Color(0xFF28436E),
+                        focusedContainerColor = Color(0xFF09142B),
+                        unfocusedContainerColor = Color(0xFF09142B),
+                        cursorColor = TalkMeNeonCyan
                     )
                 )
 

@@ -4,6 +4,9 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +25,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.R
 import com.example.core.audio.TtsManager
 import com.example.core.common.AppConstants
 import com.example.core.ui.AiChatTranscriptAdapter
+import com.example.core.ui.CosmicWaveformView
+import com.example.core.ui.ProgressAnimator.animateProgressTo
 import com.example.databinding.FragmentSpeakingAiBinding
 import com.example.domain.model.PracticeCategory
 import com.example.domain.model.UnlockStatus
@@ -44,6 +50,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -77,6 +84,14 @@ class SpeakingAiViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = ConversationUiState()
     )
+
+    val studentName: StateFlow<String> = preferencesRepository.userPreferencesFlow
+        .map { prefs -> prefs.userName.ifBlank { "Azamat" } }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = "Azamat"
+        )
 
     private var hasInitializedSession = false
 
@@ -278,6 +293,8 @@ class SpeakingAiFragment : Fragment() {
 
         binding.rvSpeakingTranscript.layoutManager = LinearLayoutManager(requireContext())
         binding.rvSpeakingTranscript.adapter = transcriptAdapter
+        binding.waveformTutorHero.setMode(CosmicWaveformView.Mode.BARS)
+        binding.waveformUserLive.setMode(CosmicWaveformView.Mode.BARS)
 
         // 1. Setup Jetpack Compose Runtime Permission Gate
         binding.composePermissionGate.apply {
@@ -360,50 +377,40 @@ class SpeakingAiFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-                    binding.tvSpeakingCurrentTopic.text = state.topicTitle
-                    binding.tvSpeakingConnectionState.text = state.statusMessage
-
-                    val mins = state.durationSeconds / 60
-                    val secs = state.durationSeconds % 60
-                    binding.tvSpeakingDuration.text = String.format(Locale.US, "%02d:%02d", mins, secs)
-
-                    updateMicrophoneVisualState(state)
-
-                    when (val convState = state.conversationState) {
-                        is ConversationState.LISTENING -> {
-                            if (state.isAudioCaptureActuallyRunning) {
-                                binding.tvLiveInterimSpeech.visibility = View.VISIBLE
-                                binding.tvLiveInterimSpeech.text = if (state.isMuted) {
-                                    "🔇 Mikrofon ovozsiz (Mute)"
-                                } else {
-                                    "🎙️ Ingliz tilida gapiring..."
-                                }
-                            } else {
-                                binding.tvLiveInterimSpeech.visibility = View.GONE
-                            }
-                        }
-                        is ConversationState.USER_SPEAKING -> {
-                            binding.tvLiveInterimSpeech.visibility = View.VISIBLE
-                            binding.tvLiveInterimSpeech.text = convState.provisionalTranscript
-                                .ifBlank { "🎙️ Eshitilmoqda..." }
-                        }
-                        is ConversationState.FINALIZING -> {
-                            binding.tvLiveInterimSpeech.visibility = View.VISIBLE
-                            binding.tvLiveInterimSpeech.text = "⏳ Nutq yakunlandi, matn aniqlanmoqda..."
-                        }
-                        is ConversationState.AI_THINKING -> {
-                            binding.tvLiveInterimSpeech.visibility = View.VISIBLE
-                            binding.tvLiveInterimSpeech.text = "✨ AI Tutor javob tayyorlamoqda..."
-                        }
-                        else -> {
-                            binding.tvLiveInterimSpeech.visibility = View.GONE
-                        }
+                launch {
+                    viewModel.studentName.collect { name ->
+                        transcriptAdapter.updateStudentName(name)
                     }
+                }
+                launch {
+                    viewModel.uiState.collect { state ->
+                        val shortTopic = extractShortTopicTitle(state.topicTitle)
+                        binding.tvSpeakingCurrentTopic.text = getString(R.string.speaking_header_format, shortTopic)
+                        binding.tvSpeakingConnectionState.text = state.statusMessage
 
-                    transcriptAdapter.submitList(state.transcript) {
-                        if (state.transcript.isNotEmpty()) {
-                            binding.rvSpeakingTranscript.scrollToPosition(state.transcript.size - 1)
+                        val targetTurns = 3
+                        val completedTurns = state.messages.count { it.role == ConversationRole.USER }
+                        binding.progressSpeakingTurn.animateProgressTo(
+                            completedTurns.coerceIn(0, targetTurns),
+                            maxValue = targetTurns
+                        )
+                        binding.tvSpeakingTurnCounter.text = getString(
+                            R.string.speaking_turn_progress_format,
+                            completedTurns.coerceAtMost(targetTurns),
+                            targetTurns
+                        )
+
+                        val mins = state.durationSeconds / 60
+                        val secs = state.durationSeconds % 60
+                        binding.tvSpeakingDuration.text = String.format(Locale.US, "%02d:%02d", mins, secs)
+
+                        updateMicrophoneVisualState(state)
+                        updateLiveSpeechCard(state)
+
+                        transcriptAdapter.submitList(state.transcript) {
+                            if (state.transcript.isNotEmpty()) {
+                                binding.rvSpeakingTranscript.scrollToPosition(state.transcript.size - 1)
+                            }
                         }
                     }
                 }
@@ -411,27 +418,79 @@ class SpeakingAiFragment : Fragment() {
         }
     }
 
+    private fun extractShortTopicTitle(rawTitle: String): String {
+        val withoutOrder = rawTitle.substringAfter(". ", rawTitle)
+        val withoutParens = withoutOrder.substringBefore(" (").trim()
+        return withoutParens.ifBlank { "Introduction" }
+    }
+
+    private fun updateLiveSpeechCard(state: ConversationUiState) {
+        val cyanColor = ContextCompat.getColor(requireContext(), R.color.color_neon_cyan)
+        val isUserCapturing = state.isListeningOrSpeakingUser && !state.isMuted
+        binding.waveformUserLive.setActive(isUserCapturing)
+        binding.waveformUserLive.setAmplitude(if (state.isMuted) 0f else state.audioAmplitude)
+
+        binding.waveformTutorHero.setActive(state.isAiSpeaking)
+        binding.waveformTutorHero.setAmplitude(if (state.isAiSpeaking) 0.85f else 0.15f)
+
+        val liveText = when (val convState = state.conversationState) {
+            is ConversationState.LISTENING -> {
+                if (state.isAudioCaptureActuallyRunning) {
+                    if (state.isMuted) {
+                        getString(R.string.speaking_idle_live_hint)
+                    } else {
+                        getString(R.string.speaking_listening_prompt)
+                    }
+                } else {
+                    getString(R.string.speaking_idle_live_hint)
+                }
+            }
+            is ConversationState.USER_SPEAKING -> {
+                convState.provisionalTranscript.ifBlank { getString(R.string.speaking_listening_prompt) }
+            }
+            is ConversationState.FINALIZING -> "⏳ Nutq yakunlandi, matn aniqlanmoqda…"
+            is ConversationState.AI_THINKING -> "✨ AI Tutor javob tayyorlamoqda…"
+            else -> getString(R.string.speaking_idle_live_hint)
+        }
+
+        val showCursor = state.conversationState is ConversationState.USER_SPEAKING ||
+            (state.conversationState is ConversationState.LISTENING && state.isAudioCaptureActuallyRunning && !state.isMuted)
+
+        if (showCursor) {
+            val builder = SpannableStringBuilder(liveText).append(" |")
+            builder.setSpan(
+                ForegroundColorSpan(cyanColor),
+                builder.length - 1,
+                builder.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            binding.tvLiveInterimSpeech.text = builder
+        } else {
+            binding.tvLiveInterimSpeech.text = liveText
+        }
+    }
+
     private fun updateMicrophoneVisualState(state: ConversationUiState) {
         binding.btnMicrophoneSpeak.isEnabled = !state.isLoading
         if (state.isListeningOrSpeakingUser) {
             binding.btnMicrophoneSpeak.setColorFilter(
-                if (state.isMuted) Color.parseColor("#B45309") else Color.parseColor("#2563EB")
+                if (state.isMuted) Color.parseColor("#FBBF24") else Color.WHITE
             )
             val amp = if (state.isMuted) 0f else state.audioAmplitude.coerceIn(0f, 1f)
-            val auraScale = 1.08f + amp * 0.42f
+            val auraScale = 1.08f + amp * 0.36f
             binding.ivAiCharacterAura.scaleX = auraScale
             binding.ivAiCharacterAura.scaleY = auraScale
-            binding.btnMicrophoneSpeak.scaleX = 1.10f
-            binding.btnMicrophoneSpeak.scaleY = 1.10f
+            binding.btnMicrophoneSpeak.scaleX = 1.08f
+            binding.btnMicrophoneSpeak.scaleY = 1.08f
         } else if (state.isAiSpeaking) {
-            binding.btnMicrophoneSpeak.setColorFilter(Color.parseColor("#F59E0B"))
-            binding.ivAiCharacterAura.scaleX = 1.06f
-            binding.ivAiCharacterAura.scaleY = 1.06f
+            binding.btnMicrophoneSpeak.setColorFilter(Color.parseColor("#00E5FF"))
+            binding.ivAiCharacterAura.scaleX = 1.05f
+            binding.ivAiCharacterAura.scaleY = 1.05f
             binding.viewTutorSpeakingBar.scaleX = 1.35f
             binding.btnMicrophoneSpeak.scaleX = 1.0f
             binding.btnMicrophoneSpeak.scaleY = 1.0f
         } else {
-            binding.btnMicrophoneSpeak.setColorFilter(Color.parseColor("#0F172A"))
+            binding.btnMicrophoneSpeak.setColorFilter(Color.WHITE)
             binding.ivAiCharacterAura.scaleX = 1.0f
             binding.ivAiCharacterAura.scaleY = 1.0f
             binding.viewTutorSpeakingBar.scaleX = 1.0f

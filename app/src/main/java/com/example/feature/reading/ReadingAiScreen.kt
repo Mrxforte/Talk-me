@@ -173,6 +173,15 @@ class ReadingAiViewModel @Inject constructor(
             }
         }
     }
+
+    fun stopAudio() {
+        ttsManager.stop()
+    }
+
+    override fun onCleared() {
+        ttsManager.stop()
+        super.onCleared()
+    }
 }
 
 /**
@@ -202,9 +211,10 @@ class ReadingAiFragment : Fragment() {
         val requestedTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
         viewModel.loadTopicAndGenerateInitialPassage(requestedTopicId)
 
-        binding.headerReadingAi.tvHeaderTitle.text = getString(R.string.reading_ai_title)
-        binding.headerReadingAi.tvHeaderSubtitle.text = "Independent Reading Comprehension AI Session"
-        binding.headerReadingAi.btnBack.setOnClickListener {
+        binding.tvHeaderTitle.text = getString(R.string.reading_ai_title)
+        binding.tvHeaderSubtitle.text = "Independent Reading Comprehension AI Session"
+        binding.btnBack.setOnClickListener {
+            viewModel.stopAudio()
             val nav = findNavController()
             if (!nav.popBackStack()) {
                 nav.navigateUp()
@@ -244,6 +254,11 @@ class ReadingAiFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onPause() {
+        viewModel.stopAudio()
+        super.onPause()
     }
 
     override fun onDestroyView() {

@@ -51,7 +51,13 @@ class NativeTtsProvider @Inject constructor(
     @Volatile
     private var isReady: Boolean = false
     @Volatile
+    private var preferredPitch: Float = 1.0f
+    @Volatile
     private var initDeferred = CompletableDeferred<Boolean>()
+
+    fun applyVoiceGender(voiceGender: String) {
+        preferredPitch = if (voiceGender.equals("FEMALE", ignoreCase = true)) 1.08f else 0.92f
+    }
 
     private val pendingUtterances = ConcurrentHashMap<String, CompletableDeferred<Result<Unit>>>()
 
@@ -118,21 +124,37 @@ class NativeTtsProvider @Inject constructor(
                 }
             })
 
-            var langResult = engine?.setLanguage(Locale.US)
-            if (langResult == TextToSpeech.LANG_MISSING_DATA || langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
-                langResult = engine?.setLanguage(Locale.UK)
-            }
-            if (langResult == TextToSpeech.LANG_MISSING_DATA || langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
-                langResult = engine?.setLanguage(Locale.ENGLISH)
-            }
-            if (langResult == TextToSpeech.LANG_MISSING_DATA || langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
-                runCatching { engine?.setLanguage(Locale.getDefault()) }
-            }
+            applyEngineLanguage(engine, "en")
             isReady = true
             initDeferred.complete(true)
         } else {
             isReady = false
             initDeferred.complete(false)
+        }
+    }
+
+    private fun applyEngineLanguage(engine: TextToSpeech?, languageCode: String) {
+        if (engine == null) return
+        if (languageCode.equals("uz", ignoreCase = true)) {
+            var uzResult = engine.setLanguage(Locale("uz", "UZ"))
+            if (uzResult == TextToSpeech.LANG_MISSING_DATA || uzResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+                uzResult = engine.setLanguage(Locale("uz"))
+            }
+            if (uzResult == TextToSpeech.LANG_MISSING_DATA || uzResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.w(TAG, "System TTS engine lacks dedicated uz-UZ voice; using default engine voice")
+                runCatching { engine.setLanguage(Locale.getDefault()) }
+            }
+            return
+        }
+        var langResult = engine.setLanguage(Locale.US)
+        if (langResult == TextToSpeech.LANG_MISSING_DATA || langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+            langResult = engine.setLanguage(Locale.UK)
+        }
+        if (langResult == TextToSpeech.LANG_MISSING_DATA || langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+            langResult = engine.setLanguage(Locale.ENGLISH)
+        }
+        if (langResult == TextToSpeech.LANG_MISSING_DATA || langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
+            runCatching { engine.setLanguage(Locale.getDefault()) }
         }
     }
 
@@ -187,7 +209,14 @@ class NativeTtsProvider @Inject constructor(
         }
     }
 
-    override suspend fun speak(text: String, speechRate: Float): Result<Unit> {
+    override suspend fun speak(text: String, speechRate: Float): Result<Unit> =
+        speakWithLanguage(text, speechRate, languageCode = "en")
+
+    override suspend fun speakWithLanguage(
+        text: String,
+        speechRate: Float,
+        languageCode: String
+    ): Result<Unit> {
         if (text.isBlank()) return Result.success(Unit)
         val utteranceId = "talkme_utt_${UUID.randomUUID()}"
         val completionDeferred = CompletableDeferred<Result<Unit>>()
@@ -201,7 +230,9 @@ class NativeTtsProvider @Inject constructor(
                 requestTransientAudioFocus()
 
                 val speakResult = withContext(Dispatchers.Main) {
+                    applyEngineLanguage(engine, languageCode)
                     engine.setSpeechRate(speechRate.coerceIn(0.5f, 1.75f))
+                    engine.setPitch(preferredPitch)
                     val params = Bundle().apply {
                         putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, 1.0f)
                     }
@@ -287,23 +318,30 @@ class GeminiTtsProvider @Inject constructor(
         }
     }
 
-    override suspend fun speak(text: String, speechRate: Float): Result<Unit> {
+    override suspend fun speak(text: String, speechRate: Float): Result<Unit> =
+        speakWithLanguage(text, speechRate, languageCode = "en")
+
+    override suspend fun speakWithLanguage(
+        text: String,
+        speechRate: Float,
+        languageCode: String
+    ): Result<Unit> {
         if (text.isBlank()) return Result.success(Unit)
         return withContext(Dispatchers.IO) {
             try {
                 autoPruneStaleCache()
-                val cacheKey = text.trim().lowercase().hashCode().toString()
+                val cacheKey = "${languageCode.lowercase()}_${text.trim().lowercase().hashCode()}"
                 val cacheFile = File(ttsCacheDir, "tts_$cacheKey.enc")
                 if (!cacheFile.exists()) {
                     writeObfuscatedText(cacheFile, text)
                 }
                 // Never modify the tutor's intended response text during TTS preparation (Section 12)
-                nativeFallback.speak(text, speechRate)
+                nativeFallback.speakWithLanguage(text, speechRate, languageCode)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
                 Log.w(TAG, "TTS cache notice, delegating directly to NativeTtsProvider", e)
-                nativeFallback.speak(text, speechRate)
+                nativeFallback.speakWithLanguage(text, speechRate, languageCode)
             }
         }
     }
@@ -418,21 +456,52 @@ open class TtsManager(
     suspend fun speakEnglish(
         text: String,
         overrideSpeed: Float? = null,
-        languageCode: String = "en"
+        languageCode: String = "en",
+        overrideVoiceGender: String? = null
+    ): Result<Unit> {
+        if (languageCode.equals("uz", ignoreCase = true)) {
+            runCatching { Log.d(TAG, "Skipping speakEnglish for Uzbek explanation text: ${text.trim()}") }
+            return Result.success(Unit)
+        }
+        return speakInternal(
+            text = text,
+            overrideSpeed = overrideSpeed,
+            languageCode = languageCode,
+            overrideVoiceGender = overrideVoiceGender
+        )
+    }
+
+    /**
+     * Speaks TalkMe Uzbek guidance/welcome scripts explicitly when requested by UI controls.
+     */
+    suspend fun speakUzbek(
+        text: String,
+        overrideSpeed: Float? = null,
+        overrideVoiceGender: String? = null
+    ): Result<Unit> = speakInternal(
+        text = text,
+        overrideSpeed = overrideSpeed,
+        languageCode = "uz",
+        overrideVoiceGender = overrideVoiceGender
+    )
+
+    private suspend fun speakInternal(
+        text: String,
+        overrideSpeed: Float? = null,
+        languageCode: String = "en",
+        overrideVoiceGender: String? = null
     ): Result<Unit> {
         val cleanText = text.trim()
         if (cleanText.isEmpty()) return Result.success(Unit)
-
-        if (languageCode.equals("uz", ignoreCase = true)) {
-            Log.d(TAG, "Skipping TTS for Uzbek explanation text: $cleanText")
-            return Result.success(Unit)
-        }
 
         val prefs = preferencesRepository.userPreferencesFlow.first()
         if (!prefs.soundEnabled) {
             _playbackState.value = TtsPlaybackState.Idle
             return Result.success(Unit)
         }
+
+        val resolvedGender = overrideVoiceGender ?: prefs.voiceGender
+        (nativeTtsProvider as? NativeTtsProvider)?.applyVoiceGender(resolvedGender)
 
         // Stop any currently playing utterance immediately before starting the new one
         nativeTtsProvider.stop()
@@ -459,7 +528,7 @@ open class TtsManager(
 
             _playbackState.value = TtsPlaybackState.Playing(cleanText)
             try {
-                val result = activeProvider.speak(cleanText, speed)
+                val result = activeProvider.speakWithLanguage(cleanText, speed, languageCode)
                 if (activeUtteranceToken == token) {
                     result.fold(
                         onSuccess = {

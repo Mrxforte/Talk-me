@@ -1,5 +1,6 @@
 package com.example.feature.dailytasks
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -9,6 +10,7 @@ import android.graphics.SweepGradient
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 
 class TasksCircularProgressView @JvmOverloads constructor(
     context: Context,
@@ -34,14 +36,95 @@ class TasksCircularProgressView @JvmOverloads constructor(
     }
 
     private val rectF = RectF()
-    private var progressRatio = 0.5f
-    private var textValue = "2/4"
+    private var targetRatio = 0f
+    private var animatedRatio = 0f
+    private var lastSetCompleted = -1
+    private var lastSetTotal = -1
+    private var hasAnimatedNonZero = false
+    private var textValue = "0/4"
+    private var progressAnimator: ValueAnimator? = null
 
-    fun setProgress(completed: Int, total: Int) {
+    fun setProgress(completed: Int, total: Int, forceReplayFromZero: Boolean = false) {
         val safeTotal = if (total > 0) total else 4
-        progressRatio = (completed.toFloat() / safeTotal.toFloat()).coerceIn(0f, 1f)
+        val newRatio = (completed.toFloat() / safeTotal.toFloat()).coerceIn(0f, 1f)
+        val isSameTarget = lastSetCompleted == completed && lastSetTotal == safeTotal
         textValue = "$completed/$safeTotal"
-        invalidate()
+        lastSetCompleted = completed
+        lastSetTotal = safeTotal
+        targetRatio = newRatio
+
+        if (!forceReplayFromZero && hasAnimatedNonZero && isSameTarget) {
+            return
+        }
+
+        if (newRatio <= 0f) {
+            progressAnimator?.cancel()
+            animatedRatio = 0f
+            invalidate()
+            return
+        }
+
+        val startRatio = if (forceReplayFromZero || !hasAnimatedNonZero) 0f else animatedRatio
+        hasAnimatedNonZero = true
+        startValueAnimator(startRatio, newRatio)
+    }
+
+    fun replayAnimationFromZero() {
+        if (targetRatio <= 0f) {
+            progressAnimator?.cancel()
+            animatedRatio = 0f
+            invalidate()
+            return
+        }
+        val running = progressAnimator
+        if (running?.isRunning == true && running.currentPlayTime < 80L && animatedRatio < 0.05f) {
+            return
+        }
+        hasAnimatedNonZero = true
+        startValueAnimator(0f, targetRatio)
+    }
+
+    private fun startValueAnimator(startRatio: Float, endRatio: Float) {
+        progressAnimator?.cancel()
+        animatedRatio = startRatio
+        progressAnimator = ValueAnimator.ofFloat(startRatio, endRatio).apply {
+            duration = 900L
+            interpolator = FastOutSlowInInterpolator()
+            addUpdateListener { anim ->
+                animatedRatio = anim.animatedValue as Float
+                invalidate()
+            }
+            start()
+        }
+    }
+
+    fun getAnimatedRatio(): Float = animatedRatio
+    fun getTargetRatio(): Float = targetRatio
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (isShown && targetRatio > 0f) {
+            replayAnimationFromZero()
+        }
+    }
+
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+        if (visibility == VISIBLE && isAttachedToWindow && isShown && targetRatio > 0f) {
+            replayAnimationFromZero()
+        }
+    }
+
+    override fun onWindowVisibilityChanged(visibility: Int) {
+        super.onWindowVisibilityChanged(visibility)
+        if (visibility == VISIBLE && isAttachedToWindow && isShown && targetRatio > 0f) {
+            replayAnimationFromZero()
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        progressAnimator?.cancel()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -68,7 +151,7 @@ class TasksCircularProgressView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawOval(rectF, trackPaint)
-        val sweepAngle = progressRatio * 360f
+        val sweepAngle = animatedRatio * 360f
         if (sweepAngle > 0f) {
             canvas.save()
             canvas.rotate(-90f, width / 2f, height / 2f)

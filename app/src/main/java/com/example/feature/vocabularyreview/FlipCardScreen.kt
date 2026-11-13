@@ -184,12 +184,16 @@ private class VocabularyTopicsAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: VocabularyTopicCardModel) {
-            val cefrBadge = when (item.orderIndex) {
-                in 1..9 -> "🟢 A1"
-                10 -> "🟡 A2"
-                11 -> "🟠 B1"
-                12 -> "🔵 B2"
-                else -> "🟣 C1–C2"
+            val level = com.example.domain.model.CurriculumLevel.forTopic(item.topicId)
+            val cefrBadge = when (level) {
+                com.example.domain.model.CurriculumLevel.A0 -> "⚪ A0"
+                com.example.domain.model.CurriculumLevel.A1 -> "🟢 A1"
+                com.example.domain.model.CurriculumLevel.A2 -> "🟡 A2"
+                com.example.domain.model.CurriculumLevel.B1 -> "🟠 B1"
+                com.example.domain.model.CurriculumLevel.B2 -> "🔵 B2"
+                com.example.domain.model.CurriculumLevel.C1 -> "🟣 C1"
+                com.example.domain.model.CurriculumLevel.C2 -> "🟣 C2"
+                null -> item.titleEnglish
             }
             binding.tvVocabTopicOrder.text = String.format("%s • %02d-MAVZU", cefrBadge, item.orderIndex)
             binding.ivVocabTopicArtwork.setImageResource(

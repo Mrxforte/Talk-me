@@ -15,6 +15,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.R
 import com.example.core.common.AppConstants
+import com.example.core.ui.ProgressAnimator.animateProgressTo
+import com.example.core.ui.ProgressAnimator.replayAllProgressFromZero
 import com.example.databinding.FragmentHomeBinding
 import com.example.databinding.ViewStatisticCardBinding
 import com.example.domain.model.LearningDashboardStats
@@ -94,6 +96,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by viewModels()
+    private var wasStopped = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -137,15 +140,19 @@ class HomeFragment : Fragment() {
                         }
                     binding.ivHeroIllustration.setImageResource(R.drawable.img_home_hero_thumb)
 
-                    binding.tvHeroSectionName.text = if (cont.hasStarted && cont.currentSectionTitle.isNotBlank()) {
+                    binding.tvHeroSectionName.text = if (cont.currentSectionTitle.isNotBlank()) {
                         cont.currentSectionTitle
                     } else {
-                        "1-Dars: Welcome to TalkMe\n(Xush kelibsiz — TalkMe bilan tanishuv)"
+                        getString(R.string.curriculum_empty)
                     }
-                    binding.progressHero.progress = cont.progressPercent
+                    binding.progressHero.animateProgressTo(cont.progressPercent, maxValue = 100)
                     binding.tvHeroProgressPercent.text = "${cont.progressPercent}% completed"
 
+                    val hasLesson = cont.currentSectionId.isNotBlank()
+                    binding.btnContinueLearning.isEnabled = hasLesson
+                    binding.cardHeroBanner.isClickable = hasLesson
                     val openContinueLesson = View.OnClickListener {
+                        if (!hasLesson) return@OnClickListener
                         findNavController().navigate(
                             R.id.lessonDetailFragment,
                             bundleOf(
@@ -162,10 +169,8 @@ class HomeFragment : Fragment() {
                     wireSkillAndToolCards(resolvedTopicId)
 
                     if (activeTopic != null) {
-                        val vocabCount = activeTopic.totalWordsCount.takeIf { it >= 36 } ?: 36
-                        val grammarCount = activeTopic.totalGrammarCount.takeIf { it >= 10 } ?: 10
-                        binding.tvHomeVocabBadge.text = "+$vocabCount"
-                        binding.tvHomeGrammarBadge.text = "+$grammarCount"
+                        binding.tvHomeVocabBadge.text = "+${activeTopic.totalWordsCount}"
+                        binding.tvHomeGrammarBadge.text = "+${activeTopic.totalGrammarCount}"
 
                         // Keep hidden legacy views updated for any existing unit tests
                         bindHomeCard(
@@ -299,8 +304,22 @@ class HomeFragment : Fragment() {
         )
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (wasStopped) {
+            wasStopped = false
+            _binding?.root?.replayAllProgressFromZero()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        wasStopped = true
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        wasStopped = false
         _binding = null
     }
 }

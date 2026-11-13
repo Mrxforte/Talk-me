@@ -98,17 +98,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="Bugungi maqsad • 2/5"
+                    android:text="Bugungi maqsad • 0/5"
                     android:textColor="#F1F5F9"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressPracticeDailyGoal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:max="5"
-                    android:progress="2"
+                    android:progress="0"
                     app:indicatorColor="#22D3EE"
                     app:indicatorSize="20dp"
                     app:trackColor="#263B5E"

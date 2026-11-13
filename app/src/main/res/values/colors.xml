@@ -68,4 +68,41 @@
     <color name="color_pill_streak_bg">#211718</color>
     <color name="color_pill_banner_bg">#1A1033</color>
     <color name="color_pill_banner_stroke">#4D2A87</color>
+    <color name="color_cosmic_studio_top">#0A1324</color>
+    <color name="color_cosmic_bubble_tutor">#132344</color>
+    <color name="color_cosmic_bubble_student">#162A52</color>
+    <color name="color_cosmic_bubble_stroke">#243E6E</color>
+    <color name="color_cosmic_chalkboard">#181C22</color>
+    <color name="color_cosmic_chalkboard_border">#2E3642</color>
+    <color name="color_cosmic_note_card">#1B2841</color>
+    <color name="color_cosmic_note_stroke">#3B527A</color>
+    <color name="color_cosmic_live_box">#09142B</color>
+    <color name="color_cosmic_divider">#263B5E</color>
+    <color name="color_cosmic_circle_btn">#101D36</color>
+    <color name="color_cosmic_circle_stroke">#28436E</color>
+    <color name="color_cosmic_track">#1B2B4B</color>
+    <color name="color_cosmic_text_secondary">#CBD5E1</color>
+    <color name="color_cosmic_success_bg">#0B2E26</color>
+    <color name="color_cosmic_error_bg">#331522</color>
+    <color name="color_studio_cta_start">#00E5FF</color>
+    <color name="color_studio_cta_center">#0EA5E9</color>
+    <color name="color_studio_cta_end">#1D4ED8</color>
+
+    <!-- Profile Cosmic Semantic Colors -->
+    <color name="color_profile_card_bg">#0A1429</color>
+    <color name="color_profile_card_stroke">#1D375E</color>
+    <color name="color_profile_purple_pill_bg">#1A1638</color>
+    <color name="color_profile_purple_pill_stroke">#7C3AED</color>
+    <color name="color_profile_delta_bg">#092E32</color>
+    <color name="color_profile_delta_stroke">#115E59</color>
+    <color name="color_profile_ach_gold_start">#272115</color>
+    <color name="color_profile_ach_gold_end">#171923</color>
+    <color name="color_profile_ach_gold_stroke">#8B6C2A</color>
+    <color name="color_profile_ach_blue_start">#0E2744</color>
+    <color name="color_profile_ach_blue_end">#0B1A33</color>
+    <color name="color_profile_ach_blue_stroke">#2161A6</color>
+    <color name="color_profile_voice_selected_bg">#0C213D</color>
+    <color name="color_profile_voice_unselected_bg">#0D162C</color>
+    <color name="color_profile_voice_unselected_stroke">#21375B</color>
+    <color name="color_skill_pink">#EC4899</color>
 </resources>

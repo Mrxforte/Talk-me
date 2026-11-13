@@ -25,6 +25,7 @@ import com.example.R
 import com.example.core.audio.TtsManager
 import com.example.core.common.AppConstants
 import com.example.core.ui.GrammarRuleAdapter
+import com.example.core.ui.ProgressAnimator.animateProgressTo
 import com.example.core.ui.TopicVisualArtwork
 import com.example.core.ui.TypewriterTextAnimator
 import com.example.core.ui.VocabularyAdapter
@@ -46,12 +47,37 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+enum class LessonExerciseMode {
+    STANDARD,
+    READ_ALOUD,
+    SELF_WRITE,
+    SELF_WRITE_ARTICLES,
+    SELF_WRITE_PAIRS,
+    SELF_WRITE_THIS_THAT,
+    SELF_WRITE_THESE_THOSE,
+    SELF_WRITE_I_HAVE,
+    SELF_WRITE_HAVE_I_GOT,
+    SELF_WRITE_I_HAVE_NOT_GOT,
+    SELF_WRITE_NUMBERS,
+    SELF_WRITE_I_HAVE_NUMBERS,
+    SELF_WRITE_BUT_NO,
+    SELF_WRITE_TIGERS_COUNT,
+    SELF_WRITE_ORDINALS,
+    SELF_WRITE_HERE_IS,
+    SELF_WRITE_HERE_ARE,
+    SELF_WRITE_THERE_IS,
+    SELF_WRITE_MY_ROOM
+}
+
 data class InLessonExerciseItem(
+    val id: String = "",
     val promptSub: String,
     val promptSentenceWithBlank: String,
     val fullAudioSentence: String,
     val options: List<String>,
-    val correctOptionIndex: Int
+    val correctOptionIndex: Int,
+    val mode: LessonExerciseMode = LessonExerciseMode.STANDARD,
+    val explanationUzbek: String = ""
 )
 
 data class LessonExampleDisplayItem(
@@ -125,7 +151,7 @@ class LessonDetailViewModel @Inject constructor(
             ) { vocab, grammar, prefs ->
                 LessonDetailUiState(
                     topicTitleUzbek = topic?.titleUzbek ?: "Ingliz tili",
-                    totalSectionsInTopic = (topic?.totalSections ?: 10).coerceAtLeast(10),
+                    totalSectionsInTopic = (topic?.totalSections ?: 1).coerceAtLeast(1),
                     section = section,
                     vocabulary = vocab,
                     grammarRules = grammar,
@@ -142,6 +168,12 @@ class LessonDetailViewModel @Inject constructor(
     fun speakEnglish(text: String) {
         viewModelScope.launch {
             ttsManager.speakEnglish(text)
+        }
+    }
+
+    fun speakUzbek(text: String) {
+        viewModelScope.launch {
+            ttsManager.speakUzbek(text)
         }
     }
 
@@ -215,16 +247,18 @@ class LessonDetailFragment : Fragment() {
     private var currentStepIndex: Int = 0
     private var maxUnlockedStepIndex: Int = 2 // Qoida, Misollar, Mashqlar accessible; Wrap-up unlocks after Mashqlar
 
-    // In-lesson 3-exercise state
+    // In-lesson exercise state
     private var inLessonExercises: List<InLessonExerciseItem> = emptyList()
     private var currentExerciseIndex: Int = 0
     private var selectedOptionIndex: Int = -1
     private var isCurrentExerciseSolved: Boolean = false
+    private var readAloudTapCount: Int = 0
 
     private var cachedExamples: List<LessonExampleDisplayItem> = emptyList()
     private var cachedVisualColumns: List<LessonVisualColumnItem> = emptyList()
     private var cachedVocabCards: List<LessonVocabCardItem> = emptyList()
     private var lastLoadedSectionId: String? = null
+    private var lastBoundSectionKey: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -348,16 +382,19 @@ class LessonDetailFragment : Fragment() {
         binding.btnSpeakVocabExample3.setOnClickListener(speakVocabExample3)
         binding.layoutVocabExample3.setOnClickListener(speakVocabExample3)
 
-        binding.layoutLessonHint.setOnClickListener {
-            viewModel.speakEnglish("Audioni tinglang, keyin birga takrorlaymiz.")
+        val playDars1WelcomeTts = View.OnClickListener {
+            val sec = viewModel.uiState.value.section
+            if (sec?.id == com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID &&
+                sec.explanationUzbek.isNotBlank()
+            ) {
+                viewModel.speakUzbek(sec.explanationUzbek)
+            }
         }
-        binding.layoutLessonSituation.setOnClickListener {
-            viewModel.speakCurrentLessonHighlights()
+        binding.btnSpeakSituation.setOnClickListener(playDars1WelcomeTts)
+        binding.btnSpeakMisollarDialogue.setOnClickListener {
+            viewModel.speakEnglish(com.example.data.local.CurriculumSeedData.DARS_2_DIALOGUE_FULL_TTS)
         }
 
-        binding.btnSpeakQoidaRule.setOnClickListener {
-            viewModel.speakCurrentLessonHighlights()
-        }
         binding.colVisual1.setOnClickListener(speakVocabWord1)
         binding.colVisual2.setOnClickListener(speakVocabWord2)
         binding.colVisual3.setOnClickListener(speakVocabWord3)
@@ -389,23 +426,87 @@ class LessonDetailFragment : Fragment() {
         binding.btnOption2.setOnClickListener { onExerciseOptionSelected(1) }
         binding.btnOption3.setOnClickListener { onExerciseOptionSelected(2) }
 
+        binding.btnReadAloudListen.setOnClickListener {
+            inLessonExercises.getOrNull(currentExerciseIndex)?.let { ex ->
+                viewModel.speakEnglish(ex.fullAudioSentence)
+            }
+        }
+        binding.btnReadAloudTap.setOnClickListener {
+            val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return@setOnClickListener
+            if (ex.mode == LessonExerciseMode.READ_ALOUD) {
+                readAloudTapCount = (readAloudTapCount + 1).coerceAtMost(3)
+                if (readAloudTapCount >= 3) {
+                    isCurrentExerciseSolved = true
+                    selectedOptionIndex = ex.correctOptionIndex
+                    viewModel.speakEnglish(ex.fullAudioSentence)
+                }
+                bindCurrentExercise()
+            }
+        }
+        binding.btnCheckSelfWrite.setOnClickListener { validateSelfWriteExercise() }
+        binding.btnCheckSelfWriteArticles.setOnClickListener {
+            when (inLessonExercises.getOrNull(currentExerciseIndex)?.mode) {
+                LessonExerciseMode.SELF_WRITE_PAIRS -> validatePairSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_THIS_THAT -> validateThisThatSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_THESE_THOSE -> validateTheseThoseSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_I_HAVE -> validateIHaveSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_HAVE_I_GOT -> validateHaveIGotSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_I_HAVE_NOT_GOT -> validateIHaveNotGotSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_NUMBERS -> validateNumbersSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_I_HAVE_NUMBERS -> validateIHaveNumbersSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_BUT_NO -> validateButNoSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_TIGERS_COUNT -> validateTigersCountSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_ORDINALS -> validateOrdinalsSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_HERE_IS -> validateHereIsSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_HERE_ARE -> validateHereAreSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_THERE_IS -> validateThereIsSelfWriteExercise()
+                LessonExerciseMode.SELF_WRITE_MY_ROOM -> validateMyRoomSelfWriteExercise()
+                else -> validateArticleSelfWriteExercise()
+            }
+        }
+
         // Primary Bottom CTA Button
         binding.btnLessonPrimaryCta.setOnClickListener {
             when (currentStepIndex) {
                 0 -> setLessonStep(1)
                 1 -> setLessonStep(2)
                 2 -> {
+                    val currentEx = inLessonExercises.getOrNull(currentExerciseIndex)
                     if (!isCurrentExerciseSolved) {
-                        val currentEx = inLessonExercises.getOrNull(currentExerciseIndex)
-                        if (currentEx != null) {
-                            onExerciseOptionSelected(currentEx.correctOptionIndex)
+                        when (currentEx?.mode) {
+                            LessonExerciseMode.SELF_WRITE -> validateSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_ARTICLES -> validateArticleSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_PAIRS -> validatePairSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_THIS_THAT -> validateThisThatSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_THESE_THOSE -> validateTheseThoseSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_I_HAVE -> validateIHaveSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_HAVE_I_GOT -> validateHaveIGotSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_I_HAVE_NOT_GOT -> validateIHaveNotGotSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_NUMBERS -> validateNumbersSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_I_HAVE_NUMBERS -> validateIHaveNumbersSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_BUT_NO -> validateButNoSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_TIGERS_COUNT -> validateTigersCountSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_ORDINALS -> validateOrdinalsSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_HERE_IS -> validateHereIsSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_HERE_ARE -> validateHereAreSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_THERE_IS -> validateThereIsSelfWriteExercise()
+                            LessonExerciseMode.SELF_WRITE_MY_ROOM -> validateMyRoomSelfWriteExercise()
+                            else -> Toast.makeText(
+                                requireContext(),
+                                getString(R.string.lesson_select_answer_first),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     } else if (currentExerciseIndex < inLessonExercises.lastIndex) {
                         currentExerciseIndex++
+                        resetExerciseInteractionState()
                         val nextEx = inLessonExercises[currentExerciseIndex]
-                        selectedOptionIndex = nextEx.correctOptionIndex
-                        isCurrentExerciseSolved = true
+                        if (isAutoPreselectLesson()) {
+                            selectedOptionIndex = nextEx.correctOptionIndex
+                            isCurrentExerciseSolved = true
+                        }
                         bindCurrentExercise()
+                        updateTopProgressBar()
                     } else {
                         maxUnlockedStepIndex = 3
                         setLessonStep(3)
@@ -429,14 +530,19 @@ class LessonDetailFragment : Fragment() {
                 viewModel.uiState.collect { state ->
                     val sec = state.section
                     if (sec != null) {
-                        if (lastLoadedSectionId != sec.id) {
+                        val isNewSection = lastLoadedSectionId != sec.id
+                        if (isNewSection) {
                             lastLoadedSectionId = sec.id
+                            lastBoundSectionKey = null
                             currentStepIndex = 0
                             maxUnlockedStepIndex = 2
                             currentExerciseIndex = 0
+                            resetExerciseInteractionState()
                         }
-                        bindLessonDataToSteps(state, sec)
-                        setLessonStep(currentStepIndex)
+                        bindLessonDataToSteps(state, sec, isNewSection)
+                        if (isNewSection) {
+                            setLessonStep(currentStepIndex)
+                        }
 
                         // Update legacy views for compatibility
                         binding.headerLessonDetail.tvHeaderTitle.text = sec.titleEnglish
@@ -485,7 +591,46 @@ class LessonDetailFragment : Fragment() {
         }
     }
 
-    private fun bindLessonDataToSteps(state: LessonDetailUiState, sec: LessonSectionModel) {
+    private fun isAutoPreselectLesson(): Boolean {
+        val secId = lastLoadedSectionId ?: currentSectionId
+        return secId != com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID &&
+            secId != com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID
+    }
+
+    private fun resetExerciseInteractionState() {
+        selectedOptionIndex = -1
+        isCurrentExerciseSolved = false
+        readAloudTapCount = 0
+        binding.etSelfWelcome.text?.clear()
+        binding.etSelfWhats.text?.clear()
+        binding.etSelfMy.text?.clear()
+        binding.etSelfName.text?.clear()
+        binding.etSelfBye.text?.clear()
+        binding.etArticleItem1.text?.clear()
+        binding.etArticleItem2.text?.clear()
+        binding.etArticleItem3.text?.clear()
+    }
+
+    private fun bindLessonDataToSteps(
+        state: LessonDetailUiState,
+        sec: LessonSectionModel,
+        isNewSection: Boolean
+    ) {
         val cleanTopicName = when {
             sec.topicId == "topic_01_introduction" && sec.orderIndex == 11 -> "Sonlar"
             sec.topicId == "topic_01_introduction" -> "Kirish"
@@ -499,9 +644,27 @@ class LessonDetailFragment : Fragment() {
         val totalDisp = state.totalSectionsInTopic.coerceAtLeast(sec.orderIndex)
         binding.tvLessonTopCounter.text = "${sec.orderIndex}/$totalDisp"
 
-        // 1. QOIDA DATA (Pixel-Perfect Reference UI)
-        val headingTitle = when {
-            sec.id == "sec_01_01" -> "Xush kelibsiz!"
+        // 1. QOIDA DATA
+        val headingTitle = when (sec.id) {
+            com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID -> "Welcome to TalkMe"
+            com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID -> "Lera and talkme"
+            com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID -> "A cup, an apple"
+            com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID -> "A book and a cup"
+            com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID -> "This and that"
+            com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID -> "These and those"
+            com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID -> "I have a book"
+            com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID -> "Have I got a book?"
+            com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID -> "I have not got a book"
+            com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID -> "One, two, three"
+            com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID -> "I have three books"
+            com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID -> "I have a book, but I have no cups"
+            com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID -> "Counting the Tigers"
+            com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID -> "The first tiger"
+            com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID -> "Here is a boy"
+            com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID -> "Here are two boys"
+            com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID -> "There is a boy"
+            com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID -> "There are two boys"
+            "sec_01_01" -> "Xush kelibsiz!"
             else -> sec.titleUzbek
                 .replace(Regex("^\\d+-Dars:\\s*", RegexOption.IGNORE_CASE), "")
                 .substringBefore("—")
@@ -509,14 +672,32 @@ class LessonDetailFragment : Fragment() {
                 .trim()
                 .ifBlank { "Dars qoidasi" }
         }
-        val headingSubtitle = when {
-            sec.id == "sec_01_01" -> "TalkMe bilan ilk qadam"
+        val headingSubtitle = when (sec.id) {
+            com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID -> "TalkMe ilovasiga xush kelibsiz!"
+            com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID -> "9 ta oddiy ibora va ilk suhbat"
+            com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID -> "a / an artikllari — bitta narsa"
+            com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID -> "and (“va”) bog‘lovchisi — ikkita narsa"
+            com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID -> "this (“bu”) va that (“o‘sha”) — bitta narsa"
+            com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID -> "these (“bular”) va those (“o‘shalar”) — ko‘p narsa (-s)"
+            com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID -> "have (“bor bo‘lmoq”) va I have (“menda bor”) — darak shakli"
+            com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID -> "Have I got ...? — savol shakli va qisqa javoblar"
+            com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID -> "I have not got / I haven’t got — inkor shakli"
+            com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID -> "1 dan 10 gacha sonlar va ko‘p narsa (-s)"
+            com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID -> "sonlar + I have — bitta va ko‘p narsani sanash"
+            com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID -> "but (“lekin”) va no (“yo‘q”) — bor va yo‘q juftligi"
+            com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID -> "sanoq sonlar (“nechta?”) — yo‘lbarslarni sanaymiz"
+            com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID -> "tartib sonlar (“nechanchi?”) — the first .. the tenth"
+            com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID -> "here (“mana / mana bu”) + is — bitta yaqin narsa"
+            com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID -> "here (“mana / mana bu”) + are — ko‘p yaqin narsa (-s)"
+            com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID -> "there (“u yerda / bor”) + is — bitta narsa bor"
+            com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID -> "there (“u yerda / bor”) + are — ko‘p narsa bor (-s)"
+            "sec_01_01" -> "TalkMe bilan ilk qadam"
             else -> "TalkMe bilan bosqichma-bosqich o‘rganamiz"
         }
         binding.tvLessonHeadingTitle.text = headingTitle
         binding.tvLessonHeadingSubtitle.text = headingSubtitle
 
-        // Optional Contextual Photograph (Content-driven: collapses cleanly if null)
+        // Optional Contextual Photograph
         val photoRes = getLessonSituationPhotoRes(sec)
         if (photoRes != null) {
             binding.cardLessonHeroPhoto.visibility = View.VISIBLE
@@ -525,16 +706,68 @@ class LessonDetailFragment : Fragment() {
             binding.cardLessonHeroPhoto.visibility = View.GONE
         }
 
-        // Context Panel: Bugungi vaziyat
+        // Context Panel: Bugungi vaziyat / Tushuntirish (TTS faqat Dars 1 TalkMe kirish matni uchun; o‘zbekcha qoida va wrap-upda TTS ishlatilmaydi)
         val (sitTitle, sitBody) = getLessonSituationText(sec)
         binding.tvSituationTitle.text = sitTitle
         binding.tvSituationBody.text = sitBody
+        val isTalkMeWelcomeScript = sec.id == com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID
+        binding.btnSpeakSituation.visibility = if (isTalkMeWelcomeScript) View.VISIBLE else View.GONE
+        binding.layoutLessonHint.isClickable = false
+        if (isTalkMeWelcomeScript) {
+            binding.layoutLessonSituation.setOnClickListener {
+                if (sec.explanationUzbek.isNotBlank()) {
+                    viewModel.speakUzbek(sec.explanationUzbek)
+                }
+            }
+            binding.layoutLessonSituation.isClickable = true
+        } else {
+            binding.layoutLessonSituation.setOnClickListener(null)
+            binding.layoutLessonSituation.isClickable = false
+        }
 
         // Section Heading
-        binding.tvQoidaSectionHeading.text = "Tinglang va tushuning"
-        binding.tvQoidaSectionSubheading.text = "So‘zlarni vaziyat bilan eslab qoling."
+        binding.tvQoidaSectionHeading.text = when (sec.id) {
+            com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID -> "9 ta oddiy ibora"
+            com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID -> "a va an — 10 ta asosiy so‘z"
+            com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID -> "and + 7 ta asosiy juftlik"
+            com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID -> "this / that + 6 ta asosiy misol"
+            com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID -> "these / those + 6 ta ko‘plik misoli"
+            com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID -> "I have + 8 ta asosiy gap"
+            com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID -> "Have I got + 7 ta savol va javob"
+            com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID -> "I have not got + 7 ta inkor shakli"
+            com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID -> "1 dan 10 gacha sonlar"
+            com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID -> "I have + son + ot"
+            com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID -> "but (“lekin”) va no (“yo‘q”)"
+            com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID -> "one tiger .. ten tigers"
+            com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID -> "the first .. the tenth tiger"
+            com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID -> "Here is + a/an + ot"
+            com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID -> "Here are + son + ot(-s)"
+            com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID -> "There is + a/an + ot"
+            com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID -> "There are + son + ot(-s)"
+            else -> "Tinglang va tushuning"
+        }
+        binding.tvQoidaSectionSubheading.text = when (sec.id) {
+            com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID -> "Har bir iborani tinglab eslab qoling."
+            com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID -> "Undosh bilan a, unli (a, e, i, o, u) bilan an qo‘yiladi."
+            com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID -> "Har bir narsa oldida o‘zining a yoki an artikli saqlanadi."
+            com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID -> "Yaqin uchun this, uzoqroq uchun that. A/an qo‘yilmaydi."
+            com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID -> "Yaqin ko‘p uchun these, uzoq ko‘p uchun those. Oxiriga -s qo‘shiladi."
+            com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID -> "“have” — bor bo‘lmoq, “I have” — menda bor. Bitta narsa oldidan a/an qo‘yiladi."
+            com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID -> "Savol uchun Have I got + a/an + ot? Qisqa javob: Yes, I have. / No, I have not."
+            com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID -> "Inkor uchun have dan keyin not va got qo‘yiladi: I have not got / I haven’t got."
+            com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID -> "Har bir sonni bosib talaffuzini tinglang. Ko‘p narsa oxiriga -s qo‘shiladi."
+            com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID -> "Bitta → a/an/one (-s yo‘q). Ko‘p → son + -s (I have two books)."
+            com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID -> "Biri bor, biri yo‘q: I have ___, but I have no ___ (no bilan a/an qo‘yilmaydi)."
+            com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID -> "Sanoq — “nechta?” Bitta bo‘lsa tiger, ko‘p bo‘lsa oxiriga -s (tigers)."
+            com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID -> "Tartib — “nechanchi?” Oldida the qo‘yiladi (the first, the second, the third, -th)."
+            com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID -> "Here — “mana / mana bu” (yaqin). Bitta narsa uchun Here is + a/an."
+            com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID -> "Ko‘p yaqin narsa uchun Here are + son + ot(-s) ishlatiladi."
+            com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID -> "There — “u yerda / bor”. Bitta narsa borligini aytishda There is + a/an."
+            com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID -> "Ko‘p narsa borligini aytishda There are + son + ot(-s) ishlatiladi."
+            else -> "So‘zlarni vaziyat bilan eslab qoling."
+        }
 
-        // Stacked Vocabulary Cards (01, 02, 03)
+        // Stacked Vocabulary Cards (01..03 static + 04..N dynamic)
         cachedVocabCards = buildVocabCardItems(sec, state.vocabulary, state.grammarRules)
         val vc1 = cachedVocabCards[0]
         val vc2 = cachedVocabCards[1]
@@ -558,10 +791,13 @@ class LessonDetailFragment : Fragment() {
         binding.tvVocabExampleEn3.text = vc3.exampleEnglish
         binding.tvVocabExampleUz3.text = vc3.exampleUzbek
 
+        renderExtraQoidaVocabCards(cachedVocabCards.drop(3))
+
         binding.tvLessonHintText.text = "Audioni tinglang, keyin birga takrorlaymiz."
 
-        // 2. MISOLLAR DATA
+        // 2. MISOLLAR DATA (including Dialogue for Dars 2 & dynamic examples)
         cachedExamples = buildExampleItems(sec, state.vocabulary, state.grammarRules)
+        renderMisollarDialogue(sec)
         val ex1 = cachedExamples[0]
         val ex2 = cachedExamples[1]
         val ex3 = cachedExamples[2]
@@ -595,62 +831,1279 @@ class LessonDetailFragment : Fragment() {
             ex3.uzbekSentence,
             ex3.uzbekGreenWord
         )
+        renderExtraExampleCards(cachedExamples.drop(3))
 
-        // 3. MASHQLAR DATA (3 interactive exercises)
-        inLessonExercises = buildInLessonExercises(state.exercises, state.vocabulary, state.grammarRules, sec, cachedExamples)
-        if (currentExerciseIndex >= inLessonExercises.size) {
-            currentExerciseIndex = 0
+        // 3. MASHQLAR DATA — rebuild only when section or dataset changes so shuffled options remain stable during interactions
+        val bindKey = "${sec.id}:${state.exercises.size}:${state.vocabulary.size}:${state.grammarRules.size}"
+        if (isNewSection || lastBoundSectionKey != bindKey) {
+            lastBoundSectionKey = bindKey
+            inLessonExercises = buildInLessonExercises(
+                state.exercises,
+                state.vocabulary,
+                state.grammarRules,
+                sec,
+                cachedExamples
+            )
+            if (currentExerciseIndex >= inLessonExercises.size) {
+                currentExerciseIndex = 0
+            }
+            val activeEx = inLessonExercises[currentExerciseIndex]
+            if (isAutoPreselectLesson()) {
+                selectedOptionIndex = activeEx.correctOptionIndex
+                isCurrentExerciseSolved = true
+            } else {
+                selectedOptionIndex = -1
+                isCurrentExerciseSolved = false
+            }
         }
-        val activeEx = inLessonExercises[currentExerciseIndex]
-        // Pre-select the correct option on initial display so it matches the reference visual state immediately,
-        // while still allowing the student to tap any option and advance through all 3 exercises!
-        selectedOptionIndex = activeEx.correctOptionIndex
-        isCurrentExerciseSolved = true
         bindCurrentExercise()
 
-        // 4. WRAP-UP DATA (Strictly synchronized with the current lesson)
-        val bullet1Rule = state.grammarRules.getOrNull(0)
-        val bullet2Rule = state.grammarRules.getOrNull(1)
-        if (bullet1Rule != null && bullet2Rule != null) {
-            binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                highlightLead = bullet1Rule.titleUzbek.substringBefore("—").trim().take(22),
-                middleText = " + qoida:\n    ",
-                boldExample = bullet1Rule.exampleEnglish
-            )
-            binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                highlightLead = bullet2Rule.titleUzbek.substringBefore("—").trim().take(22),
-                middleText = " + misol:\n    ",
-                boldExample = bullet2Rule.exampleEnglish
-            )
-        } else if (bullet1Rule != null) {
-            binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                highlightLead = bullet1Rule.titleUzbek.substringBefore("—").trim().take(22),
-                middleText = " + qoida:\n    ",
-                boldExample = bullet1Rule.exampleEnglish
-            )
-            val wrapSummary = sec.wrapUpSummaryUzbek.substringAfter("XULOSA:", "").substringBefore("Uyga vazifa:").trim()
-                .ifBlank { sec.wrapUpSummaryUzbek.take(65) }
-            binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                highlightLead = "Xulosa",
-                middleText = " va amaliyot:\n    ",
-                boldExample = wrapSummary.take(55)
-            )
-        } else {
-            val wrapSummary = sec.wrapUpSummaryUzbek.substringAfter("XULOSA:", "").substringBefore("Uyga vazifa:").trim()
-                .ifBlank { sec.objectiveUzbek.take(55) }
-            val hw = sec.wrapUpSummaryUzbek.substringAfter("Uyga vazifa:", "").substringBefore("TalkMe yakuniy:").trim()
-                .ifBlank { "Darsni ovoz chiqarib takrorlang." }
-            binding.tvWrapUpBullet1.text = formatWrapUpBullet(
-                highlightLead = "Dars xulosasi",
-                middleText = ":\n    ",
-                boldExample = wrapSummary.take(55)
-            )
-            binding.tvWrapUpBullet2.text = formatWrapUpBullet(
-                highlightLead = "Uyga vazifa",
-                middleText = ":\n    ",
-                boldExample = hw.take(55)
-            )
+        // 4. WRAP-UP DATA
+        when (sec.id) {
+            com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "Hello / Hi",
+                    middleText = " + tanishuv:\n    ",
+                    boldExample = "What’s your name? — My name is Lera."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Sorry / Thank you",
+                    middleText = " + xayrlashuv:\n    ",
+                    boldExample = "I love English! Good bye!"
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_2_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "Undosh harf",
+                    middleText = " oldidan → a:\n    ",
+                    boldExample = "a cup, a book, a cat, a pen, a dog."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Unli (a, e, i, o, u)",
+                    middleText = " oldidan → an:\n    ",
+                    boldExample = "an apple, an egg, an orange, an umbrella, an elephant."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_3_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "and bog‘lovchisi",
+                    middleText = " = va:\n    ",
+                    boldExample = "a book and a cup, an apple and an egg."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Har bir narsa",
+                    middleText = " o‘z a/an bilan:\n    ",
+                    boldExample = "Unli → an, undosh → a (hech qachon tushirib qoldirmang)."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_4_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "this / that",
+                    middleText = " (yaqin / uzoqroq):\n    ",
+                    boldExample = "this book (bu kitob), that cup (o‘sha piyola)."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "a / an qo‘yilmaydi",
+                    middleText = ":\n    ",
+                    boldExample = "this book ✅ (this a book ❌), that apple ✅ (that an apple ❌)."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_5_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "these / those",
+                    middleText = " (ko‘p narsa + -s):\n    ",
+                    boldExample = "these books (bular), those cups (o‘shalar)."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Ko‘plik va a/an",
+                    middleText = ":\n    ",
+                    boldExample = "Oxiriga -s qo‘shiladi (books, apples) va a/an qo‘yilmaydi!"
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_6_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "have / I have",
+                    middleText = ":\n    ",
+                    boldExample = "have — bor bo‘lmoq, I have — menda bor."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "I have + a/an + ot",
+                    middleText = ":\n    ",
+                    boldExample = "I have a book (undosh), I have an apple (unli)."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_7_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "Have I got ...?",
+                    middleText = " (savol):\n    ",
+                    boldExample = "Have I got a book? — Menda kitob bormi?"
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Qisqa javoblar",
+                    middleText = ":\n    ",
+                    boldExample = "Yes, I have. (Ha, bor.) · No, I have not. (Yo‘q, yo‘q.)"
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_8_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "I have not got",
+                    middleText = " (inkor):\n    ",
+                    boldExample = "I have not got a book / I haven’t got a book."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "3 ta shakl",
+                    middleText = ":\n    ",
+                    boldExample = "I have a book · Have I got a book? · I have not got a book."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_9_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "1 dan 10 gacha",
+                    middleText = ":\n    ",
+                    boldExample = "one, two, three, four, five, six, seven, eight, nine, ten."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Bitta / Ko‘p (-s)",
+                    middleText = ":\n    ",
+                    boldExample = "a book, an apple → two books, three apples (oxiriga -s)."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_10_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "Bitta / Ko‘p (-s)",
+                    middleText = ":\n    ",
+                    boldExample = "I have a book · I have two books (son + -s)."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "one bilan -s yo‘q",
+                    middleText = ":\n    ",
+                    boldExample = "I have one book ✅ (I have one books ❌)."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_11_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "but / no",
+                    middleText = ":\n    ",
+                    boldExample = "but — lekin · no — yo‘q (no dan keyin a/an yo‘q)."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Qolip",
+                    middleText = ":\n    ",
+                    boldExample = "I have a book, but I have no cups."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_12_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "Sanoq (nechta?)",
+                    middleText = ":\n    ",
+                    boldExample = "one tiger, two tigers, three tigers .. ten tigers."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Bitta / Ko‘p (-s)",
+                    middleText = ":\n    ",
+                    boldExample = "tiger (bitta) → tigers (2+ yo‘lbars)."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_13_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "Tartib (nechanchi?)",
+                    middleText = ":\n    ",
+                    boldExample = "the first, the second, the third, fourth..tenth tiger."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Sanoq vs Tartib",
+                    middleText = ":\n    ",
+                    boldExample = "three tigers (nechta?) · the third tiger (nechanchi?)."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_14_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "Here (yaqin)",
+                    middleText = ":\n    ",
+                    boldExample = "Here — mana / mana bu (qo‘lingizda, yoningizda)."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Bitta narsa",
+                    middleText = ":\n    ",
+                    boldExample = "Here is a boy. · Here is an apple."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_15_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "Ko‘p narsa",
+                    middleText = ":\n    ",
+                    boldExample = "Here are two boys. · Here are three girls."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Farqi",
+                    middleText = ":\n    ",
+                    boldExample = "Bitta → Here is a boy · Ko‘p → Here are two boys."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_16_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "There (uzoq/bor)",
+                    middleText = ":\n    ",
+                    boldExample = "There — u yerda / bor (bitta: There is a boy)."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "Here vs There",
+                    middleText = ":\n    ",
+                    boldExample = "Here is (mana, yaqin) · There is (u yerda bor)."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_17_WRAP_UP_UZBEK
+            }
+            com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID -> {
+                binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                    highlightLead = "Ko‘p narsa bor",
+                    middleText = ":\n    ",
+                    boldExample = "There are two boys. · There are five tigers."
+                )
+                binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                    highlightLead = "4 ta shakl",
+                    middleText = ":\n    ",
+                    boldExample = "Here is / Here are (yaqin) · There is / There are (bor)."
+                )
+                binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+                binding.tvWrapUpExtendedSummary.text =
+                    com.example.data.local.CurriculumSeedData.DARS_18_WRAP_UP_UZBEK
+            }
+            else -> {
+                binding.tvWrapUpExtendedSummary.visibility = View.GONE
+                val bullet1Rule = state.grammarRules.getOrNull(0)
+                val bullet2Rule = state.grammarRules.getOrNull(1)
+                if (bullet1Rule != null && bullet2Rule != null) {
+                    binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                        highlightLead = bullet1Rule.titleUzbek.substringBefore("—").trim().take(22),
+                        middleText = " + qoida:\n    ",
+                        boldExample = bullet1Rule.exampleEnglish
+                    )
+                    binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                        highlightLead = bullet2Rule.titleUzbek.substringBefore("—").trim().take(22),
+                        middleText = " + misol:\n    ",
+                        boldExample = bullet2Rule.exampleEnglish
+                    )
+                } else if (bullet1Rule != null) {
+                    binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                        highlightLead = bullet1Rule.titleUzbek.substringBefore("—").trim().take(22),
+                        middleText = " + qoida:\n    ",
+                        boldExample = bullet1Rule.exampleEnglish
+                    )
+                    val wrapSummary = sec.wrapUpSummaryUzbek.substringAfter("XULOSA:", "").substringBefore("Uyga vazifa:").trim()
+                        .ifBlank { sec.wrapUpSummaryUzbek.take(65) }
+                    binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                        highlightLead = "Xulosa",
+                        middleText = " va amaliyot:\n    ",
+                        boldExample = wrapSummary.take(55)
+                    )
+                } else {
+                    val wrapSummary = sec.wrapUpSummaryUzbek.substringAfter("XULOSA:", "").substringBefore("Uyga vazifa:").trim()
+                        .ifBlank { sec.objectiveUzbek.take(55) }
+                    val hw = sec.wrapUpSummaryUzbek.substringAfter("Uyga vazifa:", "").substringBefore("TalkMe yakuniy:").trim()
+                        .ifBlank { "Darsni ovoz chiqarib takrorlang." }
+                    binding.tvWrapUpBullet1.text = formatWrapUpBullet(
+                        highlightLead = "Dars xulosasi",
+                        middleText = ":\n    ",
+                        boldExample = wrapSummary.take(55)
+                    )
+                    binding.tvWrapUpBullet2.text = formatWrapUpBullet(
+                        highlightLead = "Uyga vazifa",
+                        middleText = ":\n    ",
+                        boldExample = hw.take(55)
+                    )
+                }
+            }
         }
+    }
+
+    private fun renderExtraQoidaVocabCards(extraItems: List<LessonVocabCardItem>) {
+        val container = binding.layoutExtraQoidaVocab
+        container.removeAllViews()
+        if (extraItems.isEmpty()) {
+            container.visibility = View.GONE
+            return
+        }
+        container.visibility = View.VISIBLE
+        val density = resources.displayMetrics.density
+        val cardTemplate = binding.cardVocabItem1
+        val inflater = LayoutInflater.from(requireContext())
+        extraItems.forEach { item ->
+            val card = android.widget.LinearLayout(requireContext()).apply {
+                orientation = android.widget.LinearLayout.VERTICAL
+                setBackgroundResource(R.drawable.bg_lesson_vocab_stacked_card)
+                val pad = (13 * density).toInt()
+                setPadding(pad, pad, pad, pad)
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    topMargin = (10 * density).toInt()
+                }
+            }
+
+            val topRow = android.widget.LinearLayout(requireContext()).apply {
+                orientation = android.widget.LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+            }
+            val badgeFrame = android.widget.FrameLayout(requireContext()).apply {
+                setBackgroundResource(R.drawable.bg_lesson_vocab_badge)
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    (34 * density).toInt(),
+                    (34 * density).toInt()
+                )
+            }
+            val badgeTv = android.widget.TextView(requireContext()).apply {
+                text = item.badge
+                gravity = android.view.Gravity.CENTER
+                setTextColor(Color.parseColor("#38BDF8"))
+                textSize = 14f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+            }
+            badgeFrame.addView(badgeTv)
+            topRow.addView(badgeFrame)
+
+            val sep = View(requireContext()).apply {
+                setBackgroundColor(Color.parseColor("#1E3A8A"))
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    (1 * density).toInt(),
+                    (28 * density).toInt()
+                ).apply {
+                    marginStart = (10 * density).toInt()
+                    marginEnd = (10 * density).toInt()
+                }
+            }
+            topRow.addView(sep)
+
+            val textCol = android.widget.LinearLayout(requireContext()).apply {
+                orientation = android.widget.LinearLayout.VERTICAL
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+            }
+            textCol.addView(android.widget.TextView(requireContext()).apply {
+                text = item.englishWord
+                setTextColor(Color.WHITE)
+                textSize = 16.5f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+            })
+            textCol.addView(android.widget.TextView(requireContext()).apply {
+                text = item.uzbekMeaning
+                setTextColor(Color.parseColor("#94A3B8"))
+                textSize = 13f
+            })
+            topRow.addView(textCol)
+
+            val speakWordBtn = android.widget.ImageButton(requireContext()).apply {
+                setBackgroundResource(R.drawable.bg_lesson_speaker_btn)
+                setImageResource(R.drawable.ic_volume_up)
+                setColorFilter(Color.WHITE)
+                contentDescription = "Speak ${item.englishWord}"
+                val p = (10 * density).toInt()
+                setPadding(p, p, p, p)
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    (48 * density).toInt(),
+                    (48 * density).toInt()
+                )
+                setOnClickListener { viewModel.speakEnglish(item.wordAudioText) }
+            }
+            topRow.addView(speakWordBtn)
+            card.addView(topRow)
+
+            val hDiv = View(requireContext()).apply {
+                setBackgroundColor(Color.parseColor("#162847"))
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    (1 * density).toInt()
+                ).apply {
+                    topMargin = (10 * density).toInt()
+                    bottomMargin = (10 * density).toInt()
+                }
+            }
+            card.addView(hDiv)
+
+            val exRow = android.widget.LinearLayout(requireContext()).apply {
+                orientation = android.widget.LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                setOnClickListener { viewModel.speakEnglish(item.exampleAudioText) }
+            }
+            val exCol = android.widget.LinearLayout(requireContext()).apply {
+                orientation = android.widget.LinearLayout.VERTICAL
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+            }
+            exCol.addView(android.widget.TextView(requireContext()).apply {
+                text = item.exampleEnglish
+                setTextColor(Color.parseColor("#E2E8F0"))
+                textSize = 13.5f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+            })
+            exCol.addView(android.widget.TextView(requireContext()).apply {
+                text = item.exampleUzbek
+                setTextColor(Color.parseColor("#94A3B8"))
+                textSize = 12.5f
+            })
+            exRow.addView(exCol)
+            val speakExIcon = android.widget.ImageView(requireContext()).apply {
+                setImageResource(R.drawable.ic_volume_up)
+                setColorFilter(Color.parseColor("#60A5FA"))
+                contentDescription = "Speak example"
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    (22 * density).toInt(),
+                    (22 * density).toInt()
+                )
+            }
+            exRow.addView(speakExIcon)
+            card.addView(exRow)
+
+            card.setOnClickListener { viewModel.speakEnglish(item.wordAudioText) }
+            container.addView(card)
+        }
+        // Keep unused parameters cleanly scoped
+        if (false) {
+            inflater.hashCode()
+            cardTemplate.hashCode()
+        }
+    }
+
+    private fun renderMisollarDialogue(sec: LessonSectionModel) {
+        val isDars2 = sec.id == com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID
+        if (!isDars2) {
+            binding.cardMisollarDialogue.visibility = View.GONE
+            binding.tvMisollarExamplesLabel.visibility =
+                if (sec.id == com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID ||
+                    sec.id == com.example.data.local.CurriculumSeedData.DARS_19_SECTION_ID
+                ) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            return
+        }
+        binding.cardMisollarDialogue.visibility = View.VISIBLE
+        binding.tvMisollarExamplesLabel.visibility = View.VISIBLE
+        val container = binding.layoutDialogueLinesContainer
+        container.removeAllViews()
+        val density = resources.displayMetrics.density
+
+        com.example.data.local.CurriculumSeedData.DARS_2_DIALOGUE_LINES.forEach { line ->
+            val row = android.widget.LinearLayout(requireContext()).apply {
+                orientation = android.widget.LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                val padH = (10 * density).toInt()
+                val padV = (8 * density).toInt()
+                setPadding(padH, padV, padH, padV)
+                setBackgroundResource(
+                    if (line.isLearner) R.drawable.bg_lesson_feedback_success else R.drawable.bg_lesson_vocab_stacked_card
+                )
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    topMargin = (6 * density).toInt()
+                }
+                setOnClickListener {
+                    if (line.text.contains("tanishganimdan")) {
+                        viewModel.speakEnglish("Nice to meet you")
+                    } else {
+                        viewModel.speakEnglish(line.text)
+                    }
+                }
+            }
+            val tvSpeaker = android.widget.TextView(requireContext()).apply {
+                text = "${line.speaker}:"
+                setTextColor(if (line.isLearner) Color.parseColor("#4ADE80") else Color.parseColor("#38BDF8"))
+                textSize = 13f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    (74 * density).toInt(),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
+            val tvLine = android.widget.TextView(requireContext()).apply {
+                text = line.text
+                setTextColor(Color.WHITE)
+                textSize = 14f
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+            }
+            row.addView(tvSpeaker)
+            row.addView(tvLine)
+            container.addView(row)
+        }
+        binding.tvMisollarDialogueNote.visibility = View.VISIBLE
+        binding.tvMisollarDialogueNote.text =
+            com.example.data.local.CurriculumSeedData.DARS_2_DIALOGUE_OUTRO_UZBEK
+    }
+
+    private fun renderExtraExampleCards(extraExamples: List<LessonExampleDisplayItem>) {
+        val container = binding.layoutExtraExamples
+        container.removeAllViews()
+        if (extraExamples.isEmpty()) {
+            container.visibility = View.GONE
+            return
+        }
+        container.visibility = View.VISIBLE
+        val density = resources.displayMetrics.density
+        extraExamples.forEachIndexed { idx, ex ->
+            val card = android.widget.LinearLayout(requireContext()).apply {
+                orientation = android.widget.LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                setBackgroundResource(R.drawable.bg_lesson_ice_card)
+                val padH = (12 * density).toInt()
+                val padV = (12 * density).toInt()
+                setPadding(padH, padV, padH, padV)
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    topMargin = (12 * density).toInt()
+                }
+                setOnClickListener { viewModel.speakEnglish(ex.englishSentence) }
+            }
+
+            val icon = android.widget.ImageView(requireContext()).apply {
+                setImageResource(R.drawable.ic_lesson_book_cyan)
+                setColorFilter(Color.parseColor("#0F172A"))
+                contentDescription = "Example ${idx + 4}"
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    (30 * density).toInt(),
+                    (30 * density).toInt()
+                )
+            }
+            card.addView(icon)
+
+            val contentCol = android.widget.LinearLayout(requireContext()).apply {
+                orientation = android.widget.LinearLayout.VERTICAL
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    1f
+                ).apply {
+                    marginStart = (12 * density).toInt()
+                }
+            }
+
+            val topRow = android.widget.LinearLayout(requireContext()).apply {
+                orientation = android.widget.LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+            }
+            val tvEn = android.widget.TextView(requireContext()).apply {
+                text = formatHighlightedEnglishExample(ex.englishSentence, ex.blueHighlightWord, ex.greenHighlightWord)
+                setTextColor(Color.parseColor("#0F172A"))
+                textSize = 16f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+            }
+            val speakBtn = android.widget.ImageButton(requireContext()).apply {
+                setBackgroundResource(R.drawable.bg_lesson_speaker_btn)
+                setImageResource(R.drawable.ic_volume_up)
+                setColorFilter(Color.WHITE)
+                contentDescription = "Speak example ${idx + 4}"
+                val p = (10 * density).toInt()
+                setPadding(p, p, p, p)
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    (48 * density).toInt(),
+                    (48 * density).toInt()
+                ).apply {
+                    marginStart = (8 * density).toInt()
+                }
+                setOnClickListener { viewModel.speakEnglish(ex.englishSentence) }
+            }
+            topRow.addView(tvEn)
+            topRow.addView(speakBtn)
+            contentCol.addView(topRow)
+
+            val divider = View(requireContext()).apply {
+                setBackgroundColor(Color.parseColor("#B4D2F0"))
+                layoutParams = android.widget.LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    (1 * density).toInt()
+                ).apply {
+                    topMargin = (7 * density).toInt()
+                    bottomMargin = (7 * density).toInt()
+                }
+            }
+            contentCol.addView(divider)
+
+            val tvUz = android.widget.TextView(requireContext()).apply {
+                text = formatHighlightedUzbekExample(ex.uzbekSentence, ex.uzbekGreenWord)
+                setTextColor(Color.parseColor("#0F172A"))
+                textSize = 14.5f
+            }
+            contentCol.addView(tvUz)
+
+            card.addView(contentCol)
+            container.addView(card)
+        }
+    }
+
+    private fun validateSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val w1 = binding.etSelfWelcome.text.toString().trim()
+        val w2 = binding.etSelfWhats.text.toString().trim()
+        val w3 = binding.etSelfMy.text.toString().trim()
+        val w4 = binding.etSelfName.text.toString().trim()
+        val w5 = binding.etSelfBye.text.toString().trim()
+
+        val okWelcome = w1.equals("welcome", ignoreCase = true)
+        val normWhats = w2.lowercase().replace("’", "'").replace("'", "")
+        val okWhats = normWhats == "whats"
+        val okMy = w3.equals("my", ignoreCase = true)
+        val okName = w4.length >= 2 && w4.any { it.isLetter() }
+        val okBye = w5.equals("bye", ignoreCase = true)
+
+        if (okWelcome && okWhats && okMy && okName && okBye) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish("Welcome to TalkMe! What's your name? My name is $w4. Good bye!")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0 // triggers red feedback banner cleanly
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text =
+                "Bo‘sh joylarni to‘g‘ri kiriting: Welcome · What’s · My · [Ismingiz] · bye"
+        }
+    }
+
+    private fun validateArticleSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val inputs = listOf(
+            binding.etArticleItem1.text.toString().trim(),
+            binding.etArticleItem2.text.toString().trim(),
+            binding.etArticleItem3.text.toString().trim()
+        )
+        val phraseRegex = Regex("^(a|an)\\s+([a-zA-Z]{2,})$", RegexOption.IGNORE_CASE)
+        val allValid = inputs.all { raw ->
+            val match = phraseRegex.matchEntire(raw) ?: return@all false
+            val article = match.groupValues[1].lowercase()
+            val noun = match.groupValues[2].lowercase()
+            val startsWithVowel = noun.first() in setOf('a', 'e', 'i', 'o', 'u')
+            if (startsWithVowel) article == "an" else article == "a"
+        }
+
+        if (allValid) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish(inputs.joinToString(". "))
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_article_error)
+        }
+    }
+
+    private fun validatePairSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val inputs = listOf(
+            binding.etArticleItem1.text.toString().trim().replace(Regex("\\s+"), " "),
+            binding.etArticleItem2.text.toString().trim().replace(Regex("\\s+"), " ")
+        )
+        val pairRegex = Regex("^(a|an)\\s+([a-zA-Z]{2,})\\s+and\\s+(a|an)\\s+([a-zA-Z]{2,})$", RegexOption.IGNORE_CASE)
+        val vowels = setOf('a', 'e', 'i', 'o', 'u')
+        val allValid = inputs.all { raw ->
+            val match = pairRegex.matchEntire(raw) ?: return@all false
+            val art1 = match.groupValues[1].lowercase()
+            val noun1 = match.groupValues[2].lowercase()
+            val art2 = match.groupValues[3].lowercase()
+            val noun2 = match.groupValues[4].lowercase()
+            val ok1 = if (noun1.first() in vowels) art1 == "an" else art1 == "a"
+            val ok2 = if (noun2.first() in vowels) art2 == "an" else art2 == "a"
+            ok1 && ok2
+        }
+
+        if (allValid) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish(inputs.joinToString(". "))
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_pair_error)
+        }
+    }
+
+    private fun validateThisThatSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val input1 = binding.etArticleItem1.text.toString().trim().replace(Regex("\\s+"), " ")
+        val input2 = binding.etArticleItem2.text.toString().trim().replace(Regex("\\s+"), " ")
+        val thisRegex = Regex("^this\\s+(?!a\\s+|an\\s+)([a-zA-Z]{2,})$", RegexOption.IGNORE_CASE)
+        val thatRegex = Regex("^that\\s+(?!a\\s+|an\\s+)([a-zA-Z]{2,})$", RegexOption.IGNORE_CASE)
+        val allValid = thisRegex.matches(input1) && thatRegex.matches(input2)
+
+        if (allValid) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish("$input1. $input2.")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_this_that_error)
+        }
+    }
+
+    private fun validateTheseThoseSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val input1 = binding.etArticleItem1.text.toString().trim().replace(Regex("\\s+"), " ")
+        val input2 = binding.etArticleItem2.text.toString().trim().replace(Regex("\\s+"), " ")
+        val theseRegex = Regex("^these\\s+(?!a\\s+|an\\s+)([a-zA-Z]{2,}s)$", RegexOption.IGNORE_CASE)
+        val thoseRegex = Regex("^those\\s+(?!a\\s+|an\\s+)([a-zA-Z]{2,}s)$", RegexOption.IGNORE_CASE)
+        val allValid = theseRegex.matches(input1) && thoseRegex.matches(input2)
+
+        if (allValid) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish("$input1. $input2.")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_these_those_error)
+        }
+    }
+
+    private fun validateIHaveSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val inputs = listOf(
+            binding.etArticleItem1.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.'),
+            binding.etArticleItem2.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.'),
+            binding.etArticleItem3.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.')
+        )
+        val phraseRegex = Regex("^i\\s+have\\s+(a|an)\\s+([a-zA-Z]{2,})$", RegexOption.IGNORE_CASE)
+        val vowels = setOf('a', 'e', 'i', 'o', 'u')
+        val allValid = inputs.all { raw ->
+            val match = phraseRegex.matchEntire(raw) ?: return@all false
+            val article = match.groupValues[1].lowercase()
+            val noun = match.groupValues[2].lowercase()
+            if (noun.first() in vowels) article == "an" else article == "a"
+        }
+
+        if (allValid) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish(inputs.joinToString(". ") + ".")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_error)
+        }
+    }
+
+    private fun validateHaveIGotSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val inputs = listOf(
+            binding.etArticleItem1.text.toString().trim().replace(Regex("\\s+"), " "),
+            binding.etArticleItem2.text.toString().trim().replace(Regex("\\s+"), " ")
+        )
+        val questionRegex = Regex("^have\\s+i\\s+got\\s+(a|an)\\s+([a-zA-Z]{2,})\\??$", RegexOption.IGNORE_CASE)
+        val vowels = setOf('a', 'e', 'i', 'o', 'u')
+        val allValid = inputs.all { raw ->
+            val match = questionRegex.matchEntire(raw) ?: return@all false
+            val article = match.groupValues[1].lowercase()
+            val noun = match.groupValues[2].lowercase()
+            if (noun.first() in vowels) article == "an" else article == "a"
+        }
+
+        if (allValid) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            val spoken = inputs.joinToString(" ") { q ->
+                val clean = q.trimEnd('?')
+                "$clean?"
+            }
+            viewModel.speakEnglish(spoken)
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_have_i_got_error)
+        }
+    }
+
+    private fun validateIHaveNotGotSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val inputs = listOf(
+            binding.etArticleItem1.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.'),
+            binding.etArticleItem2.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.'),
+            binding.etArticleItem3.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.')
+        )
+        val negRegex = Regex("^(?:i\\s+have\\s+not\\s+got|i\\s+haven['’]t\\s+got)\\s+(a|an)\\s+([a-zA-Z]{2,})$", RegexOption.IGNORE_CASE)
+        val vowels = setOf('a', 'e', 'i', 'o', 'u')
+        val allValid = inputs.all { raw ->
+            val match = negRegex.matchEntire(raw) ?: return@all false
+            val article = match.groupValues[1].lowercase()
+            val noun = match.groupValues[2].lowercase()
+            if (noun.first() in vowels) article == "an" else article == "a"
+        }
+
+        if (allValid) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish(inputs.joinToString(". ") + ".")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_not_got_error)
+        }
+    }
+
+    private fun validateNumbersSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val expectedNouns = listOf("books", "cups", "pens")
+        val numberMap = mapOf(
+            "2" to "two", "two" to "two",
+            "3" to "three", "three" to "three",
+            "4" to "four", "four" to "four",
+            "5" to "five", "five" to "five",
+            "6" to "six", "six" to "six",
+            "7" to "seven", "seven" to "seven",
+            "8" to "eight", "eight" to "eight",
+            "9" to "nine", "nine" to "nine",
+            "10" to "ten", "ten" to "ten"
+        )
+        val rawInputs = listOf(
+            binding.etArticleItem1.text.toString().trim().lowercase().replace(Regex("\\s+"), " "),
+            binding.etArticleItem2.text.toString().trim().lowercase().replace(Regex("\\s+"), " "),
+            binding.etArticleItem3.text.toString().trim().lowercase().replace(Regex("\\s+"), " ")
+        )
+        val resolvedPhrases = rawInputs.mapIndexedNotNull { idx, raw ->
+            val expectedNoun = expectedNouns[idx]
+            val tokens = raw.split(" ").filter { it.isNotBlank() }
+            val numWord = tokens.firstOrNull()?.let { numberMap[it] } ?: return@mapIndexedNotNull null
+            val validTokenCount = tokens.size == 1 || (tokens.size == 2 && tokens[1] == expectedNoun)
+            if (validTokenCount) "$numWord $expectedNoun" else null
+        }
+
+        if (resolvedPhrases.size == 3) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish(resolvedPhrases.joinToString(". ") + ".")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_numbers_error)
+        }
+    }
+
+    private fun validateIHaveNumbersSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val inputs = listOf(
+            binding.etArticleItem1.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.'),
+            binding.etArticleItem2.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.'),
+            binding.etArticleItem3.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.')
+        )
+        val vowels = setOf('a', 'e', 'i', 'o', 'u')
+        val pluralNumbers = setOf("2", "two", "3", "three", "4", "four", "5", "five", "6", "six", "7", "seven", "8", "eight", "9", "nine", "10", "ten")
+        val regex = Regex("^i\\s+have\\s+(a|an|one|1|two|2|three|3|four|4|five|5|six|6|seven|7|eight|8|nine|9|ten|10)\\s+([a-zA-Z]{2,})$", RegexOption.IGNORE_CASE)
+        val allValid = inputs.all { raw ->
+            val match = regex.matchEntire(raw) ?: return@all false
+            val qty = match.groupValues[1].lowercase()
+            val noun = match.groupValues[2].lowercase()
+            when (qty) {
+                "a" -> noun.first() !in vowels && !noun.endsWith("s")
+                "an" -> noun.first() in vowels && !noun.endsWith("s")
+                "one", "1" -> !noun.endsWith("s")
+                in pluralNumbers -> noun.endsWith("s") && noun.length >= 3
+                else -> false
+            }
+        }
+
+        if (allValid) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish(inputs.joinToString(". ") + ".")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_num_error)
+        }
+    }
+
+    private fun validateButNoSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val inputs = listOf(
+            binding.etArticleItem1.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.'),
+            binding.etArticleItem2.text.toString().trim().replace(Regex("\\s+"), " ").trimEnd('.')
+        )
+        val vowels = setOf('a', 'e', 'i', 'o', 'u')
+        val pluralNumbers = setOf("2", "two", "3", "three", "4", "four", "5", "five", "6", "six", "7", "seven", "8", "eight", "9", "nine", "10", "ten")
+        val regex = Regex(
+            "^i\\s+have\\s+(a|an|one|1|two|2|three|3|four|4|five|5|six|6|seven|7|eight|8|nine|9|ten|10)\\s+([a-zA-Z]{2,})\\s*,?\\s+but\\s+i\\s+have\\s+no\\s+(?!a\\s+|an\\s+)([a-zA-Z]{2,})$",
+            RegexOption.IGNORE_CASE
+        )
+        val allValid = inputs.all { raw ->
+            val match = regex.matchEntire(raw) ?: return@all false
+            val qty = match.groupValues[1].lowercase()
+            val posNoun = match.groupValues[2].lowercase()
+            val negNoun = match.groupValues[3].lowercase()
+            val posOk = when (qty) {
+                "a" -> posNoun.first() !in vowels && !posNoun.endsWith("s")
+                "an" -> posNoun.first() in vowels && !posNoun.endsWith("s")
+                "one", "1" -> !posNoun.endsWith("s")
+                in pluralNumbers -> posNoun.endsWith("s") && posNoun.length >= 3
+                else -> false
+            }
+            val negOk = negNoun.endsWith("s") && negNoun.length >= 3
+            posOk && negOk
+        }
+
+        if (allValid) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish(inputs.joinToString(". ") + ".")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_but_no_error)
+        }
+    }
+
+    private fun validateTigersCountSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val pluralMap = mapOf(
+            "2" to "two", "two" to "two",
+            "3" to "three", "three" to "three",
+            "4" to "four", "four" to "four",
+            "5" to "five", "five" to "five",
+            "6" to "six", "six" to "six",
+            "7" to "seven", "seven" to "seven",
+            "8" to "eight", "eight" to "eight",
+            "9" to "nine", "nine" to "nine",
+            "10" to "ten", "ten" to "ten"
+        )
+        val raw1 = binding.etArticleItem1.text.toString().trim().lowercase().replace(Regex("\\s+"), " ").trimEnd('.')
+        val raw2 = binding.etArticleItem2.text.toString().trim().lowercase().replace(Regex("\\s+"), " ").trimEnd('.')
+        val raw3 = binding.etArticleItem3.text.toString().trim().lowercase().replace(Regex("\\s+"), " ").trimEnd('.')
+
+        fun parsePluralTigers(raw: String): String? {
+            val tokens = raw.split(" ").filter { it.isNotBlank() }
+            val num = tokens.firstOrNull()?.let { pluralMap[it] } ?: return null
+            val ok = tokens.size == 1 || (tokens.size == 2 && tokens[1] == "tigers")
+            return if (ok) "$num tigers" else null
+        }
+
+        fun parseSingleTiger(raw: String): String? {
+            val tokens = raw.split(" ").filter { it.isNotBlank() }
+            val first = tokens.firstOrNull() ?: return null
+            if (first !in setOf("one", "1", "a")) return null
+            val word = if (first == "a") "a" else "one"
+            val ok = tokens.size == 1 || (tokens.size == 2 && tokens[1] == "tiger")
+            return if (ok) "$word tiger" else null
+        }
+
+        val p1 = parsePluralTigers(raw1)
+        val p2 = parsePluralTigers(raw2)
+        val p3 = parseSingleTiger(raw3)
+
+        if (p1 != null && p2 != null && p3 != null) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish("$p1. $p2. $p3.")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_tigers_error)
+        }
+    }
+
+    private fun validateOrdinalsSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val raw1 = binding.etArticleItem1.text.toString().trim().lowercase().replace(Regex("\\s+"), " ").trimEnd('.')
+        val raw2 = binding.etArticleItem2.text.toString().trim().lowercase().replace(Regex("\\s+"), " ").trimEnd('.')
+        val raw3 = binding.etArticleItem3.text.toString().trim().lowercase().replace(Regex("\\s+"), " ").trimEnd('.')
+
+        val ok1 = raw1 == "first" || raw1 == "the first tiger"
+        val ok2 = raw2 == "second" || raw2 == "the second tiger"
+        val ok3 = raw3 == "third" || raw3 == "the third tiger"
+
+        if (ok1 && ok2 && ok3) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish("The first tiger. The second tiger. The third tiger.")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_ordinal_error)
+        }
+    }
+
+    private fun parseSingularArticlePhrase(
+        rawInput: String,
+        requiredPrefix: String,
+        forbiddenPrefix: String
+    ): String? {
+        val cleaned = rawInput.trim().lowercase().replace(Regex("\\s+"), " ").trimEnd('.', '!')
+        if (cleaned.isBlank() || cleaned.startsWith(forbiddenPrefix)) return null
+        val rest = if (cleaned.startsWith("$requiredPrefix ")) {
+            cleaned.removePrefix("$requiredPrefix ").trim()
+        } else if (cleaned.startsWith("here ") || cleaned.startsWith("there ")) {
+            return null
+        } else {
+            cleaned
+        }
+        val tokens = rest.split(" ").filter { it.isNotBlank() }
+        if (tokens.size != 2) return null
+        val article = tokens[0]
+        val noun = tokens[1]
+        if (article != "a" && article != "an") return null
+        if (noun.length < 2 || !noun.all { it.isLetter() }) return null
+        if (noun in setOf("boys", "girls", "tigers", "books", "cups", "apples", "pens", "cats", "dogs", "eggs")) return null
+        val startsWithVowel = noun.first() in setOf('a', 'e', 'i', 'o', 'u')
+        val validArticle = if (startsWithVowel) article == "an" else article == "a"
+        return if (validArticle) "$requiredPrefix $article $noun" else null
+    }
+
+    private fun parsePluralArePhrase(
+        rawInput: String,
+        requiredPrefix: String,
+        forbiddenPrefix: String
+    ): String? {
+        val cleaned = rawInput.trim().lowercase().replace(Regex("\\s+"), " ").trimEnd('.', '!')
+        if (cleaned.isBlank() || cleaned.startsWith(forbiddenPrefix)) return null
+        val rest = if (cleaned.startsWith("$requiredPrefix ")) {
+            cleaned.removePrefix("$requiredPrefix ").trim()
+        } else if (cleaned.startsWith("here ") || cleaned.startsWith("there ")) {
+            return null
+        } else {
+            cleaned
+        }
+        val tokens = rest.split(" ").filter { it.isNotBlank() }
+        if (tokens.size != 2) return null
+        val countWord = tokens[0]
+        val noun = tokens[1]
+        val validPluralCounts = setOf(
+            "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+            "2", "3", "4", "5", "6", "7", "8", "9", "10", "many", "some"
+        )
+        if (countWord !in validPluralCounts) return null
+        if (noun.length < 3 || !noun.all { it.isLetter() } || !noun.endsWith("s")) return null
+        return "$requiredPrefix $countWord $noun"
+    }
+
+    private fun validateHereIsSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val s1 = parseSingularArticlePhrase(binding.etArticleItem1.text.toString(), "here is", "here are")
+        val s2 = parseSingularArticlePhrase(binding.etArticleItem2.text.toString(), "here is", "here are")
+        val s3 = parseSingularArticlePhrase(binding.etArticleItem3.text.toString(), "here is", "here are")
+        if (s1 != null && s2 != null && s3 != null) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish("$s1. $s2. $s3.")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_here_is_error)
+        }
+    }
+
+    private fun validateHereAreSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val s1 = parsePluralArePhrase(binding.etArticleItem1.text.toString(), "here are", "here is")
+        val s2 = parsePluralArePhrase(binding.etArticleItem2.text.toString(), "here are", "here is")
+        val s3 = parsePluralArePhrase(binding.etArticleItem3.text.toString(), "here are", "here is")
+        if (s1 != null && s2 != null && s3 != null) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish("$s1. $s2. $s3.")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_here_are_error)
+        }
+    }
+
+    private fun validateThereIsSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val s1 = parseSingularArticlePhrase(binding.etArticleItem1.text.toString(), "there is", "there are")
+        val s2 = parseSingularArticlePhrase(binding.etArticleItem2.text.toString(), "there is", "there are")
+        val s3 = parseSingularArticlePhrase(binding.etArticleItem3.text.toString(), "there is", "there are")
+        if (s1 != null && s2 != null && s3 != null) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish("$s1. $s2. $s3.")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_there_is_error)
+        }
+    }
+
+    private fun validateMyRoomSelfWriteExercise() {
+        val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        val t1 = binding.etArticleItem1.text.toString().trim().lowercase()
+        val t2 = binding.etArticleItem2.text.toString().trim().lowercase()
+        val t3 = binding.etArticleItem3.text.toString().trim().lowercase()
+
+        val valid1 = (t1.startsWith("there is ") || t1.startsWith("a ") || t1.startsWith("an ")) &&
+            t1.contains("in my room") && (t1.contains(" a ") || t1.contains(" an ") || t1.startsWith("a ") || t1.startsWith("an "))
+        val valid2 = (t2.startsWith("there are ") || t2.contains(" in my room")) &&
+            t2.contains("in my room") &&
+            (t2.contains("two") || t2.contains("three") || t2.contains("four") || t2.contains("five") ||
+             t2.contains("six") || t2.contains("seven") || t2.contains("eight") || t2.contains("nine") ||
+             t2.contains("ten") || t2.contains("many") || t2.contains("some") || t2.contains("s "))
+        val valid3 = t3.startsWith("i see ") && t3.length > 6
+
+        if (valid1 && valid2 && valid3) {
+            isCurrentExerciseSolved = true
+            selectedOptionIndex = ex.correctOptionIndex
+            viewModel.speakEnglish("There is a bed in my room. There are two chairs in my room. I see a window.")
+            bindCurrentExercise()
+        } else {
+            isCurrentExerciseSolved = false
+            selectedOptionIndex = 0
+            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_my_room_error)
+        }
+    }
+
+    private fun updateTopProgressBar() {
+        val totalEx = inLessonExercises.size.coerceAtLeast(1)
+        val targetProgress = when (currentStepIndex) {
+            0 -> 22
+            1 -> 48
+            2 -> {
+                val frac = (currentExerciseIndex + 1).toFloat() / totalEx.toFloat()
+                (62 + (frac * 32f)).toInt().coerceIn(65, 95)
+            }
+            else -> 100
+        }
+        binding.progressLessonTopBar.animateProgressTo(targetProgress, maxValue = 100, durationMs = 650L)
     }
 
     private fun setLessonStep(stepIndex: Int) {
@@ -666,12 +2119,7 @@ class LessonDetailFragment : Fragment() {
         binding.layoutStageWrapUp.visibility = if (currentStepIndex == 3) View.VISIBLE else View.GONE
 
         // Update Top ProgressBar
-        binding.progressLessonTopBar.progress = when (currentStepIndex) {
-            0 -> 22
-            1 -> 48
-            2 -> 68 + (currentExerciseIndex * 8)
-            else -> 100
-        }
+        updateTopProgressBar()
 
         // Update Stepper Pills (Qoida, Misollar, Mashqlar, Wrap-up)
         styleStepPill(
@@ -802,7 +2250,7 @@ class LessonDetailFragment : Fragment() {
 
     private fun bindCurrentExercise() {
         val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
-        val totalEx = inLessonExercises.size.coerceAtLeast(3)
+        val totalEx = inLessonExercises.size.coerceAtLeast(1)
         val dispIdx = (currentExerciseIndex + 1).coerceIn(1, totalEx)
 
         if (currentStepIndex == 2) {
@@ -813,33 +2261,474 @@ class LessonDetailFragment : Fragment() {
         binding.tvMashqPromptSub.text = ex.promptSub
         binding.tvMashqPromptMain.text = ex.promptSentenceWithBlank
 
-        val opt0 = ex.options.getOrElse(0) { "one" }
-        val opt1 = ex.options.getOrElse(1) { "two" }
-        val opt2 = ex.options.getOrElse(2) { "three" }
-
-        binding.tvOption1Text.text = opt0
-        binding.tvOption2Text.text = opt1
-        binding.tvOption3Text.text = opt2
-
-        styleExerciseOption(binding.btnOption1, binding.ivOption1Check, 0, ex.correctOptionIndex)
-        styleExerciseOption(binding.btnOption2, binding.ivOption2Check, 1, ex.correctOptionIndex)
-        styleExerciseOption(binding.btnOption3, binding.ivOption3Check, 2, ex.correctOptionIndex)
-
-        if (selectedOptionIndex == ex.correctOptionIndex) {
-            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
-            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
-            binding.tvMashqFeedbackText.text =
-                if (currentExerciseIndex < inLessonExercises.lastIndex) {
-                    "To‘g‘ri! Keyingi mashq ochildi."
+        when (ex.mode) {
+            LessonExerciseMode.READ_ALOUD -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.VISIBLE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.GONE
+                binding.btnReadAloudTap.text = getString(R.string.lesson_read_aloud_tap_format, readAloudTapCount)
+                binding.btnReadAloudTap.isEnabled = readAloudTapCount < 3
+                if (readAloudTapCount >= 3 || isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_read_aloud_done)
                 } else {
-                    "Barakalla! Barcha mashqlar bajarildi."
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text =
+                        "Matnni ovoz chiqarib 3 marta o‘qing va har safar tugmani bosing."
                 }
-        } else if (selectedOptionIndex >= 0) {
-            binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
-            binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
-            binding.tvMashqFeedbackText.text = "Noto‘g‘ri javob. Yana bir bor urinib ko‘ring!"
+            }
+            LessonExerciseMode.SELF_WRITE -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.VISIBLE
+                binding.layoutMashqSelfWriteArticles.visibility = View.GONE
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text =
+                        "Lera o‘rnida o‘zingiz yozib chiqing va 'Tekshirish' tugmasini bosing."
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_ARTICLES -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_article_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_article_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_article_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text =
+                        "3 ta narsani a yoki an bilan yozing va 'Tekshirish' tugmasini bosing."
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_PAIRS -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_pair_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_pair_2_hint)
+                binding.etArticleItem3.visibility = View.GONE
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_pair_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_THIS_THAT -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_this_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_that_hint)
+                binding.etArticleItem3.visibility = View.GONE
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_this_that_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_THESE_THOSE -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_these_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_those_hint)
+                binding.etArticleItem3.visibility = View.GONE
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_these_those_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_I_HAVE -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_i_have_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_i_have_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_i_have_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_HAVE_I_GOT -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_have_i_got_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_have_i_got_2_hint)
+                binding.etArticleItem3.visibility = View.GONE
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_have_i_got_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_I_HAVE_NOT_GOT -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_i_have_not_got_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_i_have_not_got_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_i_have_not_got_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_not_got_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_NUMBERS -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_numbers_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_numbers_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_numbers_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_numbers_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_I_HAVE_NUMBERS -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_i_have_num_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_i_have_num_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_i_have_num_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_num_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_BUT_NO -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_but_no_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_but_no_2_hint)
+                binding.etArticleItem3.visibility = View.GONE
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_but_no_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_TIGERS_COUNT -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_tigers_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_tigers_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_tigers_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_tigers_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_ORDINALS -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_ordinal_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_ordinal_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_ordinal_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_ordinal_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_HERE_IS -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_here_is_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_here_is_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_here_is_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_here_is_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_HERE_ARE -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_here_are_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_here_are_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_here_are_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_here_are_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_THERE_IS -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_there_is_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_there_is_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_there_is_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_there_is_helper)
+                }
+            }
+            LessonExerciseMode.SELF_WRITE_MY_ROOM -> {
+                binding.rowMashqOptions.visibility = View.GONE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.VISIBLE
+                binding.etArticleItem1.setHint(R.string.lesson_self_write_my_room_1_hint)
+                binding.etArticleItem2.setHint(R.string.lesson_self_write_my_room_2_hint)
+                binding.etArticleItem3.visibility = View.VISIBLE
+                binding.etArticleItem3.setHint(R.string.lesson_self_write_my_room_3_hint)
+                if (isCurrentExerciseSolved) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_my_room_helper)
+                }
+            }
+            LessonExerciseMode.STANDARD -> {
+                binding.rowMashqOptions.visibility = View.VISIBLE
+                binding.layoutMashqReadAloud.visibility = View.GONE
+                binding.layoutMashqSelfWrite.visibility = View.GONE
+                binding.layoutMashqSelfWriteArticles.visibility = View.GONE
+
+                configureOptionLayoutOrientation(ex.options)
+
+                binding.btnOption1.visibility = if (ex.options.isNotEmpty()) View.VISIBLE else View.GONE
+                binding.btnOption2.visibility = if (ex.options.size >= 2) View.VISIBLE else View.GONE
+                binding.btnOption3.visibility = if (ex.options.size >= 3) View.VISIBLE else View.GONE
+
+                val opt0 = ex.options.getOrElse(0) { "" }
+                val opt1 = ex.options.getOrElse(1) { "" }
+                val opt2 = ex.options.getOrElse(2) { "" }
+
+                binding.tvOption1Text.text = opt0
+                binding.tvOption2Text.text = opt1
+                binding.tvOption3Text.text = opt2
+
+                styleExerciseOption(binding.btnOption1, binding.ivOption1Check, 0, ex.correctOptionIndex)
+                styleExerciseOption(binding.btnOption2, binding.ivOption2Check, 1, ex.correctOptionIndex)
+                styleExerciseOption(binding.btnOption3, binding.ivOption3Check, 2, ex.correctOptionIndex)
+
+                if (selectedOptionIndex == ex.correctOptionIndex) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.tvMashqFeedbackText.text =
+                        if (ex.explanationUzbek.isNotBlank()) {
+                            ex.explanationUzbek
+                        } else if (currentExerciseIndex < inLessonExercises.lastIndex) {
+                            "To‘g‘ri! Keyingi mashq ochildi."
+                        } else {
+                            "Barakalla! Barcha mashqlar bajarildi."
+                        }
+                } else if (selectedOptionIndex >= 0) {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+                    binding.tvMashqFeedbackText.text = "Noto‘g‘ri javob. Yana bir bor urinib ko‘ring!"
+                } else {
+                    binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
+                    binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
+                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.tvMashqFeedbackText.text = "To‘g‘ri variantlardan birini tanlang."
+                }
+            }
+        }
+    }
+
+    private fun configureOptionLayoutOrientation(options: List<String>) {
+        val useVertical = options.any { it.length > 12 }
+        val density = resources.displayMetrics.density
+        val row = binding.rowMashqOptions
+        row.orientation = if (useVertical) {
+            android.widget.LinearLayout.VERTICAL
+        } else {
+            android.widget.LinearLayout.HORIZONTAL
+        }
+        val optionButtons = listOf(binding.btnOption1, binding.btnOption2, binding.btnOption3)
+        optionButtons.forEachIndexed { idx, btn ->
+            val lp = btn.layoutParams as android.widget.LinearLayout.LayoutParams
+            if (useVertical) {
+                lp.width = ViewGroup.LayoutParams.MATCH_PARENT
+                lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                lp.weight = 0f
+                lp.marginStart = 0
+                lp.marginEnd = 0
+                lp.bottomMargin = if (idx < optionButtons.lastIndex) (8 * density).toInt() else 0
+            } else {
+                lp.width = 0
+                lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                lp.weight = 1f
+                lp.bottomMargin = 0
+                val side = (8 * density).toInt()
+                lp.marginStart = if (idx == 1) side else 0
+                lp.marginEnd = if (idx == 1 && options.size >= 3) side else 0
+            }
+            btn.layoutParams = lp
         }
     }
 
@@ -890,6 +2779,7 @@ class LessonDetailFragment : Fragment() {
             lower.contains("pen") || lower.contains("pencil") || lower.contains("ruchka") || lower.contains("write") || lower.contains("yoz") -> "✏️"
             lower.contains("table") || lower.contains("stol") || lower.contains("desk") -> "🪑"
             lower.contains("chair") || lower.contains("stul") -> "🪑"
+            lower.contains("tiger") || lower.contains("yo'lbars") || lower.contains("yo‘lbars") -> "🐯"
             lower.contains("cat") || lower.contains("mushuk") -> "🐱"
             lower.contains("dog") || lower.contains("kuchuk") || lower.contains("it") -> "🐶"
             lower.contains("car") || lower.contains("mashina") -> "🚗"
@@ -924,6 +2814,34 @@ class LessonDetailFragment : Fragment() {
 
     private fun getLessonSituationPhotoRes(sec: LessonSectionModel): Int? {
         return when {
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID ->
+                R.drawable.img_lesson_conversation_1794310851367
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID ->
+                R.drawable.img_topic_morning_intro_1794316347713
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID ->
+                R.drawable.img_topic_articles_1794316349035
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID ->
+                R.drawable.img_lesson_objects_1794310854481
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID ->
+                R.drawable.img_topic_demonstratives_1794316348388
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID ->
+                R.drawable.img_lesson_grammar_1794310851898
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID ->
+                R.drawable.img_lesson_numbers_1794310853767
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID ->
+                R.drawable.img_lesson_grammar_1794310851898
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID ->
+                R.drawable.img_topic_demonstratives_1794316348388
+            sec.id == com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID ->
+                R.drawable.img_lesson_places_1794310885756
             sec.id == "sec_01_01" -> R.drawable.img_lesson_conversation_1794310851367
             sec.id == "sec_01_02" -> R.drawable.img_topic_morning_intro_1794316347713
             sec.id == "sec_01_05" -> R.drawable.img_lesson_places_1794310885756
@@ -935,6 +2853,32 @@ class LessonDetailFragment : Fragment() {
     }
 
     private fun getLessonSituationText(sec: LessonSectionModel): Pair<String, String> {
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID &&
+            sec.explanationUzbek.isNotBlank()
+        ) {
+            return Pair("🤖 TalkMe (TTS matni)", sec.explanationUzbek)
+        }
+        if ((sec.id == com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID ||
+                sec.id == com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID) &&
+            sec.explanationUzbek.isNotBlank()
+        ) {
+            return Pair("📘 1️⃣ TUSHUNTIRISH", sec.explanationUzbek)
+        }
         val title = "Bugungi vaziyat"
         val body = when {
             sec.id == "sec_01_01" -> "Til klubidagi ilk kun. Tanishamiz va birga boshlaymiz."
@@ -995,8 +2939,10 @@ class LessonDetailFragment : Fragment() {
             return result
         }
 
-        // For other lessons: build from vocabList
-        vocabList.take(3).forEachIndexed { idx, v ->
+        // For other lessons: sort deterministically by id and build all cards
+        val orderedVocab = vocabList.sortedBy { it.id }
+        val limit = if (orderedVocab.size > 3) orderedVocab.size else 3
+        orderedVocab.take(limit).forEachIndexed { idx, v ->
             val numStr = String.format("%02d", idx + 1)
             val enWord = v.englishWord.trim()
             val uzMeaning = v.uzbekTranslation.substringBefore(",").trim().ifBlank { "Ma’nosi" }
@@ -1059,7 +3005,7 @@ class LessonDetailFragment : Fragment() {
             )
         }
 
-        return result.take(3)
+        return if (result.size > 3) result else result.take(3)
     }
 
     private fun buildVisualColumns(
@@ -1215,6 +3161,194 @@ class LessonDetailFragment : Fragment() {
         vocab: List<VocabularyModel>,
         grammar: List<GrammarRuleModel>
     ): List<LessonExampleDisplayItem> {
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_2_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_2_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_3_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_3_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_4_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_4_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_5_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_5_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_6_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_6_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_7_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_7_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_8_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_8_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_9_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_9_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_10_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_10_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_11_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_11_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_12_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_12_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_13_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_13_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_14_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_14_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_15_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_15_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_16_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_16_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_17_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_17_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+        if (sec.id == com.example.data.local.CurriculumSeedData.DARS_18_SECTION_ID) {
+            return com.example.data.local.CurriculumSeedData.DARS_18_MISOLLAR.map {
+                LessonExampleDisplayItem(
+                    englishSentence = it.englishSentence,
+                    blueHighlightWord = it.blueHighlightWord,
+                    greenHighlightWord = it.greenHighlightWord,
+                    uzbekSentence = it.uzbekSentence,
+                    uzbekGreenWord = it.uzbekGreenWord
+                )
+            }
+        }
+
         val result = mutableListOf<LessonExampleDisplayItem>()
 
         // 1. From vocabulary examples
@@ -1331,20 +3465,47 @@ class LessonDetailFragment : Fragment() {
     ): List<InLessonExerciseItem> {
         val result = mutableListOf<InLessonExerciseItem>()
 
-        // 1. From repository exercises if available for this lesson
-        repoExercises.forEach { ex ->
-            if (result.size >= 3) return@forEach
+        // 1. From repository exercises (sorted deterministically by ID; no 3-item cap so 10-exercise lessons show all 10)
+        repoExercises.sortedBy { it.id }.forEach { ex ->
+            val mode = when (ex.id) {
+                "ex_a0_02_09", "ex_a0_03_09", "ex_a0_04_09", "ex_a0_05_09",
+                "ex_a0_06_10", "ex_a0_07_08", "ex_a0_08_08", "ex_a0_09_09",
+                "ex_a0_10_08", "ex_a0_11_09", "ex_a0_12_08",
+                "ex_a0_13_08", "ex_a0_14_08",
+                "ex_a0_15_08", "ex_a0_16_08", "ex_a0_17_09", "ex_a0_18_09" ->
+                    LessonExerciseMode.READ_ALOUD
+                "ex_a0_02_10" -> LessonExerciseMode.SELF_WRITE
+                "ex_a0_03_10" -> LessonExerciseMode.SELF_WRITE_ARTICLES
+                "ex_a0_04_10" -> LessonExerciseMode.SELF_WRITE_PAIRS
+                "ex_a0_05_10" -> LessonExerciseMode.SELF_WRITE_THIS_THAT
+                "ex_a0_06_11" -> LessonExerciseMode.SELF_WRITE_THESE_THOSE
+                "ex_a0_07_09" -> LessonExerciseMode.SELF_WRITE_I_HAVE
+                "ex_a0_08_09" -> LessonExerciseMode.SELF_WRITE_HAVE_I_GOT
+                "ex_a0_09_10" -> LessonExerciseMode.SELF_WRITE_I_HAVE_NOT_GOT
+                "ex_a0_10_09" -> LessonExerciseMode.SELF_WRITE_NUMBERS
+                "ex_a0_11_10" -> LessonExerciseMode.SELF_WRITE_I_HAVE_NUMBERS
+                "ex_a0_12_09" -> LessonExerciseMode.SELF_WRITE_BUT_NO
+                "ex_a0_13_09" -> LessonExerciseMode.SELF_WRITE_TIGERS_COUNT
+                "ex_a0_14_09" -> LessonExerciseMode.SELF_WRITE_ORDINALS
+                "ex_a0_15_09" -> LessonExerciseMode.SELF_WRITE_HERE_IS
+                "ex_a0_16_09" -> LessonExerciseMode.SELF_WRITE_HERE_ARE
+                "ex_a0_17_10" -> LessonExerciseMode.SELF_WRITE_THERE_IS
+                else -> LessonExerciseMode.STANDARD
+            }
             val options = ex.options.filter { it.isNotBlank() }
-            if (options.size >= 2) {
+            if (options.size >= 2 || mode != LessonExerciseMode.STANDARD) {
                 val displayOptions = if (options.size > 3) options.take(3) else options
                 val finalCorrectIdx = displayOptions.indexOf(ex.correctAnswer).let { if (it >= 0) it else 0 }
                 result.add(
                     InLessonExerciseItem(
+                        id = ex.id,
                         promptSub = ex.subPromptText.ifBlank { "Bo‘sh joyni to‘ldiring:" },
                         promptSentenceWithBlank = ex.promptText,
                         fullAudioSentence = ex.audioTextToSpeak?.takeIf { it.isNotBlank() } ?: ex.correctAnswer,
                         options = displayOptions,
-                        correctOptionIndex = finalCorrectIdx
+                        correctOptionIndex = finalCorrectIdx,
+                        mode = mode,
+                        explanationUzbek = ex.explanationUzbek
                     )
                 )
             }
@@ -1430,7 +3591,7 @@ class LessonDetailFragment : Fragment() {
             )
         }
 
-        return result.take(3)
+        return result
     }
 
     private fun formatVisualWordPill(fullLabel: String, highlightPart: String): CharSequence {

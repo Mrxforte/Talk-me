@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var preferencesRepository: UserPreferencesRepository
 
     private lateinit var binding: ActivityMainBinding
+    private var latestTopInset: Int = 0
+    private var latestBottomInset: Int = 0
+    private var isBottomNavVisible: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +60,9 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
             )
-            binding.root.setPadding(0, systemBars.top, 0, 0)
-            binding.bottomNavigation.setPadding(0, 0, 0, systemBars.bottom)
+            latestTopInset = systemBars.top
+            latestBottomInset = systemBars.bottom
+            applyRootAndBottomBarInsets()
             insets
         }
 
@@ -77,8 +81,10 @@ class MainActivity : AppCompatActivity() {
             R.id.profileFragment
         )
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            isBottomNavVisible = destination.id in topLevelDestinations
             binding.bottomNavigation.visibility =
-                if (destination.id in topLevelDestinations) View.VISIBLE else View.GONE
+                if (isBottomNavVisible) View.VISIBLE else View.GONE
+            applyRootAndBottomBarInsets()
         }
 
         lifecycleScope.launch {
@@ -102,6 +108,16 @@ class MainActivity : AppCompatActivity() {
                     }
             }
         }
+    }
+
+    private fun applyRootAndBottomBarInsets() {
+        binding.root.setPadding(
+            0,
+            latestTopInset,
+            0,
+            if (isBottomNavVisible) 0 else latestBottomInset
+        )
+        binding.bottomNavigation.setPadding(0, 0, 0, latestBottomInset)
     }
 
     override fun onSupportNavigateUp(): Boolean {

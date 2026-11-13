@@ -163,6 +163,9 @@ interface UserPreferencesRepository {
     suspend fun updateSpeechSpeed(speed: Float)
     suspend fun updatePremiumSubscribed(subscribed: Boolean)
     suspend fun updatePreferredTtsProvider(provider: String)
+    suspend fun updateVoiceGender(voiceGender: String)
+    suspend fun updateOfflineAudioEnabled(enabled: Boolean)
+    suspend fun updateLessonRemindersEnabled(enabled: Boolean)
     suspend fun updateLastLearningBookmark(topicId: String, sectionId: String, scrollOffset: Int)
 }
 
@@ -174,6 +177,11 @@ interface UserPreferencesRepository {
 interface TtsProvider {
     val providerName: String
     suspend fun speak(text: String, speechRate: Float = 1.0f): Result<Unit>
+    suspend fun speakWithLanguage(
+        text: String,
+        speechRate: Float = 1.0f,
+        languageCode: String = "en"
+    ): Result<Unit> = speak(text, speechRate)
     fun stop()
     fun clearCache(): Long
     fun getCacheSizeBytes(): Long

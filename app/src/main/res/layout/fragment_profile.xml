@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollProfileRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
+    android:background="@color/color_cosmic_background"
     android:clipToPadding="false"
     android:fillViewport="true"
-    android:paddingBottom="24dp">
+    android:paddingBottom="32dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_medium">
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingTop="@dimen/spacing_medium"
+        android:paddingBottom="@dimen/spacing_large">
 
-        <!-- 1. TELEGRAM-STYLE PROFILE HERO HEADER (Tap Avatar to Edit Profile) -->
+        <!-- 1. COSMIC PROFILE HERO HEADER -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardTelegramProfileHeader"
+            android:id="@+id/cardProfileHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/color_surface"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="2dp"
-            app:strokeColor="@color/color_card_stroke"
+            app:cardBackgroundColor="@color/color_profile_card_bg"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/color_profile_card_stroke"
             app:strokeWidth="1dp">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="16dp">
 
-                <!-- Tappable Avatar with Telegram Edit Badge -->
+                <!-- Avatar with glowing cyan ring & green pencil edit badge -->
                 <FrameLayout
                     android:id="@+id/containerProfileAvatarTap"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?attr/selectableItemBackgroundBorderless">
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="92dp"
-                        android:layout_height="92dp"
+                        android:layout_width="74dp"
+                        android:layout_height="74dp"
                         android:layout_gravity="center"
-                        app:cardCornerRadius="46dp"
-                        app:cardElevation="3dp"
-                        app:strokeColor="@color/color_primary"
+                        app:cardCornerRadius="37dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/color_neon_cyan"
                         app:strokeWidth="2dp">
 
                         <ImageView
@@ -59,72 +63,143 @@
                             android:src="@drawable/img_ai_tutor_avatar_1794304412196" />
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Floating Telegram-style Edit Avatar Pill -->
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                    <FrameLayout
+                        android:id="@+id/badgeEditAvatar"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:layout_gravity="bottom|end"
                         android:background="@drawable/bg_telegram_green_badge"
-                        android:elevation="4dp"
-                        android:gravity="center"
-                        android:text="✎"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:elevation="4dp">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/settings_user_name_label"
+                            android:src="@drawable/ic_lesson_pencil"
+                            app:tint="@color/white" />
+                    </FrameLayout>
                 </FrameLayout>
 
                 <TextView
                     android:id="@+id/tvProfileName"
-                    style="@style/TextAppearance.TalkMe.Heading"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="@string/default_user_name"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/white"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/btnScrollToSettings"
+                    app:layout_constraintStart_toEndOf="@id/containerProfileAvatarTap"
+                    app:layout_constraintTop_toTopOf="@id/containerProfileAvatarTap" />
 
                 <TextView
-                    android:id="@+id/tvProfileAccountTier"
-                    style="@style/TextAppearance.TalkMe.BodySecondary"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvProfileHandle"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:text="online • @talkme_student"
-                    android:textColor="@color/color_primary"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="1dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="\@azamat_talkme"
+                    android:textColor="@color/color_slate_subtitle"
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toEndOf="@id/tvProfileName"
+                    app:layout_constraintStart_toStartOf="@id/tvProfileName"
+                    app:layout_constraintTop_toBottomOf="@id/tvProfileName" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/layoutProfileMetaRow"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Profilni tahrirlash uchun rasm ustiga bosing"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="11sp" />
-            </LinearLayout>
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvProfileName"
+                    app:layout_constraintTop_toBottomOf="@id/tvProfileHandle">
+
+                    <LinearLayout
+                        android:id="@+id/pillProfileLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_profile_level_pill"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_graduation_cap" />
+
+                        <TextView
+                            android:id="@+id/tvProfileLevelBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="A0 Foundation"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="16dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:background="@color/color_cosmic_divider" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_flame" />
+
+                    <TextView
+                        android:id="@+id/tvProfileStreak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="1 kun"
+                        android:textColor="@color/color_gold_accent"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnScrollToSettings"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/profile_scroll_to_settings_cd"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_settings"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/color_slate_subtitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 2. APPEARANCE SETTINGS: SEGMENTED 3-MODE BUTTON (SYSTEM | LIGHT | DARK) -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="6dp"
-            android:letterSpacing="0.05"
-            android:text="KO'RINISH VA MAVZU (APPEARANCE)"
-            android:textColor="@color/color_primary"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
+        <!-- 2. DYNAMIC LEARNING ROADMAP CARD ("O'quv yo'li") -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardLearningRoadmap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/color_surface"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="1dp"
-            app:strokeColor="@color/color_card_stroke"
+            android:layout_marginTop="14dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/color_profile_card_bg"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/color_profile_card_stroke"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -133,401 +208,743 @@
                 android:orientation="vertical"
                 android:padding="14dp">
 
-                <TextView
-                    android:id="@+id/tvCurrentThemeStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mavzuni tanlang (Theme Selection)"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <!-- Segmented 3-Mode Selector (System | Light | Dark) -->
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/toggleThemeMode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:checkedButton="@id/btnThemeSystem"
-                    app:selectionRequired="true"
-                    app:singleSelection="true">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnThemeSystem"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_weight="1"
-                        android:text="⚡ System"
-                        android:textAllCaps="false"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnThemeLight"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_weight="1"
-                        android:text="☀️ Light"
-                        android:textAllCaps="false"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnThemeDark"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_weight="1"
-                        android:text="🌙 Dark"
-                        android:textAllCaps="false"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- 3. AUDIO, VOICE & AI TTS SETTINGS GROUP -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="6dp"
-            android:letterSpacing="0.05"
-            android:text="OVOZ VA TALAFFUZ SOZLAMALARI (AUDIO &amp; TTS)"
-            android:textColor="@color/color_primary"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/color_surface"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="1dp"
-            app:strokeColor="@color/color_card_stroke"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="14dp">
-
-                <!-- Sound Enabled Row -->
+                <!-- Header -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_telegram_icon_green">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/settings_sound_enabled"
-                            android:src="@drawable/ic_speaker"
-                            app:tint="@color/white" />
-                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_roadmap_mountain" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings_sound_enabled"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="So'z va gaplarni audio orqali eshitish"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switchSoundEnabled"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="@color/color_divider" />
-
-                <!-- Speech Speed Slider -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/settings_tts_speed_label"
-                        android:textColor="@color/color_text_primary"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvSpeechSpeedValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_badge_pill"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="2dp"
-                        android:text="1.00x"
-                        android:textColor="@color/color_primary"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <SeekBar
-                    android:id="@+id/seekSpeechSpeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:max="150"
-                    android:progress="100" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="@color/color_divider" />
-
-                <!-- Premium & Gemini TTS -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_telegram_icon_purple">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="★"
+                            android:text="@string/profile_roadmap_title"
                             android:textColor="@color/white"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="TalkMe Premium (Gemini AI Ovoz)"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="15sp"
+                            android:textSize="17sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tabiiy neyron talaffuz va AI imkoniyatlari"
-                            android:textColor="@color/color_text_secondary"
+                            android:text="@string/profile_roadmap_subtitle"
+                            android:textColor="@color/color_slate_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switchPremiumEnabled"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
-                <RadioGroup
-                    android:id="@+id/rgTtsProvider"
+                <!-- Mountain backdrop + Interactive LearningRoadmapView -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardRoadmapScene"
+                    android:layout_width="match_parent"
+                    android:layout_height="156dp"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="@color/color_cosmic_live_box"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/color_cosmic_bubble_stroke"
+                    app:strokeWidth="1dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/profile_roadmap_title"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_profile_roadmap_mountains_1794557023568" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_image_scrim" />
+
+                        <com.example.core.ui.LearningRoadmapView
+                            android:id="@+id/viewLearningRoadmap"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Bottom Summary Pill inside Roadmap Card -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_cosmic_live_box"
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
-                    <RadioButton
-                        android:id="@+id/rbTtsNative"
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Android Native"
-                        android:textSize="13sp" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/rbTtsGemini"
-                        android:layout_width="0dp"
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_lesson_book_cyan" />
+
+                        <TextView
+                            android:id="@+id/tvRoadmapCompletedLessons"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:text="0 dars yakunlandi"
+                            android:textColor="@color/white"
+                            android:textSize="13.5sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="14dp"
+                            android:layout_marginHorizontal="8dp"
+                            android:background="@color/color_cosmic_divider" />
+
+                        <TextView
+                            android:id="@+id/tvRoadmapLevelStage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A0 bosqichi"
+                            android:textColor="@color/color_cosmic_text_secondary"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Gemini AI Voice"
-                        android:textSize="13sp" />
-                </RadioGroup>
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progressRoadmap"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="8dp"
+                            android:layout_weight="1"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/progress_bar_cyan" />
+
+                        <TextView
+                            android:id="@+id/tvRoadmapPercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="0%"
+                            android:textColor="@color/color_neon_cyan"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 4. PERFORMANCE ANALYTICS CHART (Hafta | Oy | Yillik) -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="6dp"
-            android:letterSpacing="0.05"
-            android:text="O'ZLASHTIRISH STATISTIKASI (ANALYTICS)"
-            android:textColor="@color/color_primary"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
+        <!-- 3. WEEKLY GROWTH LINE CHART CARD ("Haftalik o'sish") -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.TalkMe.Card"
+            android:id="@+id/cardWeeklyGrowth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="18dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_medium">
-
-                <TextView
-                    style="@style/TextAppearance.TalkMe.Subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_charts_title" />
-
-                <TextView
-                    style="@style/TextAppearance.TalkMe.Caption"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_chart_subtitle" />
-
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/toggleChartPeriod"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    app:checkedButton="@id/btnFilterYearly"
-                    app:selectionRequired="true"
-                    app:singleSelection="true">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnFilterWeekly"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/touch_target_min"
-                        android:layout_weight="1"
-                        android:text="@string/chart_filter_weekly"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnFilterMonthly"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/touch_target_min"
-                        android:layout_weight="1"
-                        android:text="@string/chart_filter_monthly"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnFilterYearly"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/touch_target_min"
-                        android:layout_weight="1"
-                        android:text="@string/chart_filter_yearly"
-                        android:textStyle="bold" />
-                </com.google.android.material.button.MaterialButtonToggleGroup>
-
-                <com.example.core.ui.SkillAnalyticsChartView
-                    android:id="@+id/chartSkillPerformance"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/chart_height"
-                    android:layout_marginTop="@dimen/spacing_small" />
-
-                <TextView
-                    android:id="@+id/tvSkillBreakdownSummary"
-                    style="@style/TextAppearance.TalkMe.BodySecondary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_small" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- 5. APP VERSION & ENCRYPTED STORAGE INFO -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="6dp"
-            android:letterSpacing="0.05"
-            android:text="MA'LUMOT (ABOUT)"
-            android:textColor="@color/color_primary"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_large"
-            app:cardBackgroundColor="@color/color_surface"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="1dp"
-            app:strokeColor="@color/color_card_stroke"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/color_profile_card_bg"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/color_profile_card_stroke"
             app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="14dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="🔒 Barcha audio va matnlar 100% Shifrlangan va Avtomatik tozalanadi"
-                    android:textColor="@color/color_secondary"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_bar_chart_cyan" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_weekly_growth_title"
+                            android:textColor="@color/white"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_weekly_growth_subtitle"
+                            android:textColor="@color/color_slate_subtitle"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleGrowthPeriod"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:checkedButton="@id/btnGrowthWeekly"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnGrowthWeekly"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="38dp"
+                            android:minWidth="62dp"
+                            android:paddingHorizontal="12dp"
+                            android:text="@string/chart_filter_weekly"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="18dp"
+                            app:strokeColor="@color/color_cosmic_bubble_stroke" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnGrowthMonthly"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="38dp"
+                            android:minWidth="56dp"
+                            android:paddingHorizontal="12dp"
+                            android:text="@string/chart_filter_monthly"
+                            android:textAllCaps="false"
+                            android:textColor="@color/color_slate_subtitle"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="18dp"
+                            app:strokeColor="@color/color_cosmic_bubble_stroke" />
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
+
+                <!-- Study Time & Comparison Pill -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_clock_small"
+                        app:tint="@color/color_neon_cyan" />
+
+                    <TextView
+                        android:id="@+id/tvGrowthPeriodPrefix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@string/profile_this_week_prefix"
+                        android:textColor="@color/white"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvGrowthTotalTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:text="0 daqiqa"
+                        android:textColor="@color/color_neon_cyan"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvGrowthDeltaBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_profile_delta_pill"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="2dp"
+                            android:text="↗ 0%"
+                            android:textColor="@color/color_neon_green"
+                            android:textSize="11.5sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvGrowthDeltaCaption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/profile_vs_last_week"
+                            android:textColor="@color/color_slate_subtitle"
+                            android:textSize="10.5sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.example.core.ui.WeeklyGrowthChartView
+                    android:id="@+id/chartWeeklyGrowth"
+                    android:layout_width="match_parent"
+                    android:layout_height="205dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 4. FOUR SKILLS CARD ("4 ko'nikma") -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardFourSkills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/color_profile_card_bg"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/color_profile_card_stroke"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_layers_blue" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/profile_four_skills_title"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="@string/profile_four_skills_subtitle"
+                        android:textColor="@color/color_slate_subtitle"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- Skill 1: Reading -->
+                <LinearLayout
+                    android:id="@+id/rowSkillReading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="44dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_telegram_icon_purple">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_skill_reading"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="116dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/profile_skill_reading_uz"
+                        android:textColor="@color/white"
+                        android:textSize="12.5sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressSkillReading"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="9dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/progress_bar_purple" />
+
+                    <TextView
+                        android:id="@+id/tvSkillReadingPercent"
+                        android:layout_width="38dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Skill 2: Listening -->
+                <LinearLayout
+                    android:id="@+id/rowSkillListening"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/settings_about_version"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="12sp" />
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="44dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_telegram_icon_blue">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_skill_listening"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="116dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/profile_skill_listening_uz"
+                        android:textColor="@color/white"
+                        android:textSize="12.5sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressSkillListening"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="9dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/progress_bar_cyan" />
+
+                    <TextView
+                        android:id="@+id/tvSkillListeningPercent"
+                        android:layout_width="38dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Skill 3: Writing -->
+                <LinearLayout
+                    android:id="@+id/rowSkillWriting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="44dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_telegram_icon_orange">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_skill_writing"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="116dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/profile_skill_writing_uz"
+                        android:textColor="@color/white"
+                        android:textSize="12.5sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressSkillWriting"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="9dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/progress_bar_amber" />
+
+                    <TextView
+                        android:id="@+id/tvSkillWritingPercent"
+                        android:layout_width="38dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Skill 4: Speaking -->
+                <LinearLayout
+                    android:id="@+id/rowSkillSpeaking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="44dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_tasks_btn_purple">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_skill_speaking"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="116dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/profile_skill_speaking_uz"
+                        android:textColor="@color/white"
+                        android:textSize="12.5sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressSkillSpeaking"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="9dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/progress_bar_pink" />
+
+                    <TextView
+                        android:id="@+id/tvSkillSpeakingPercent"
+                        android:layout_width="38dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="0%"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 5. ACHIEVEMENTS CARD ("Yutuqlarim") -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardAchievements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/color_profile_card_bg"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="3dp"
+            app:strokeColor="@color/color_profile_card_stroke"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_trophy" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/profile_achievements_uz_title"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <!-- Streak Achievement -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_profile_ach_gold"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_flame" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvAchievementStreakTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="1 kunlik seriya"
+                                android:textColor="@color/white"
+                                android:textSize="12.5sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/profile_ach_streak_sub"
+                                android:textColor="@color/color_cosmic_text_secondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Vocabulary Achievement -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_profile_ach_blue"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_lesson_book_cyan" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvAchievementWordsTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="0 ta yangi so‘z"
+                                android:textColor="@color/white"
+                                android:textSize="12.5sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/profile_ach_words_sub"
+                                android:textColor="@color/color_cosmic_text_secondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

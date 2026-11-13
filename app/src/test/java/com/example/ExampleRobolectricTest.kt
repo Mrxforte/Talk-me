@@ -17,27 +17,6 @@ import org.junit.Test
 class ExampleRobolectricTest {
 
     @Test
-    fun `vocabulary and grammar entries contain no phonetic transcriptions`() {
-        val topics = CurriculumSeedData.buildTopics()
-        assertTrue(topics.isNotEmpty())
-        assertEquals("Introduction", topics[0].titleEnglish)
-
-        val vocabulary = CurriculumSeedData.buildVocabulary()
-        assertFalse(vocabulary.isEmpty())
-        vocabulary.forEach { item ->
-            assertFalse(item.englishWord.contains("["))
-            assertFalse(item.englishWord.contains("/"))
-            assertFalse(item.uzbekTranslation.contains("["))
-        }
-
-        val sections = CurriculumSeedData.buildSections()
-        assertTrue(sections.size >= 40)
-        sections.forEach { sec ->
-            assertTrueSectionWrapUp(sec.wrapUpSummaryUzbek)
-        }
-    }
-
-    @Test
     fun `yearly monthly and weekly chart series match reference specification`() {
         assertEquals(
             listOf("Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"),
@@ -66,28 +45,4 @@ class ExampleRobolectricTest {
         assertTrue(good.second < easy.second)
     }
 
-    @Test
-    fun `vocabulary and exercises cover Partiya 1 and Partiya 2 topics accurately`() {
-        val allVocab = CurriculumSeedData.buildVocabulary()
-        val introVocab = allVocab.filter { it.topicId == "topic_01_introduction" }
-        val numbersVocab = allVocab.filter { it.topicId == "topic_02_numbers" }
-        val nounsVocab = allVocab.filter { it.topicId == "topic_03_nouns" }
-        val adjVocab = allVocab.filter { it.topicId == "topic_04_adjectives" }
-
-        assertTrue(introVocab.size >= 35)
-        assertEquals(40, numbersVocab.size)
-        assertTrue(nounsVocab.isNotEmpty())
-        assertTrue(adjVocab.isNotEmpty())
-
-        val allExercises = CurriculumSeedData.buildExercises()
-        val introExercises = allExercises.filter { it.topicId == "topic_01_introduction" }
-        assertTrue(introExercises.size >= 5)
-        introExercises.forEach { ex ->
-            assertEquals("topic_01_introduction", ex.topicId)
-        }
-    }
-
-    private fun assertTrueSectionWrapUp(wrapUpText: String) {
-        assertEquals(true, wrapUpText.startsWith("Wrap-up:"))
-    }
 }

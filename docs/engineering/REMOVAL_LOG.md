@@ -47,3 +47,21 @@ The following candidates were audited and intentionally retained:
    - *Reason*: While the application is XML-first, `SpeakingAiFragment` embeds a focused `ComposeView` (`binding.composePermissionGate` and `binding.composeAuxiliaryControls`) using `MicrophonePermissionGate` to handle Android 14+ runtime microphone permissions and auxiliary controls cleanly. Retained for active runtime voice interaction.
 3. **Database Entities and Dao Methods**:
    - *Reason*: Retained to protect existing user progress, streak days, memorized word statistics, and offline review logs.
+
+
+## 2026-11-13 — User-requested curriculum replacement
+
+Removed all rejected lesson, vocabulary, grammar and exercise seeds, including
+CurriculumPartiya*SeedData files. Kept XML screens, navigation and lesson engine.
+Seven empty level containers replace the curriculum; C1 and C2 are independent.
+Removed CEFR filter chips, fake completion rows and hardcoded lesson totals.
+The transactional first-launch reset clears retired curriculum content and its
+mistakes on existing installs; profile, streak and activity/session history remain.
+The A0 container marks initialization, so later authored lessons survive relaunch.
+Empty levels do not complete; only finishing every lesson unlocks the next level.
+Removed seed-generated sample mistakes and fabricated daily-task history.
+
+Verification: source references and navigation/manifest inspected; XML parsing and
+whitespace checks run. Full compilation and Gradle tests are unavailable in this
+workspace (no compile_applet or Gradle executable, and no Gradle wrapper in repo).
+This change requires Android build and device validation before merge.

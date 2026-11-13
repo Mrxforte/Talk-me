@@ -1,5 +1,6 @@
 package com.example.core.database
 
+import androidx.room.Transaction
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Insert
@@ -13,6 +14,37 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface TalkMeDao {
+    @Query("DELETE FROM exercises")
+    suspend fun clearCurriculumExercises()
+    @Query("DELETE FROM grammar_rules")
+    suspend fun clearCurriculumGrammar()
+    @Query("DELETE FROM vocabulary")
+    suspend fun clearCurriculumVocabulary()
+    @Query("DELETE FROM lesson_sections")
+    suspend fun clearCurriculumSections()
+    @Query("DELETE FROM topics")
+    suspend fun clearCurriculumTopics()
+    @Query("DELETE FROM user_mistakes")
+    suspend fun clearRetiredLessonMistakes()
+
+    /** User-requested one-time reset; retains profile, streak and activity history. */
+    @Transaction
+    suspend fun initializeEmptyCurriculum(topics: List<TopicEntity>): Boolean {
+        if (getTopicById(topics.first().id) != null) return false
+        clearRetiredLessonMistakes()
+        clearCurriculumExercises()
+        clearCurriculumGrammar()
+        clearCurriculumVocabulary()
+        clearCurriculumSections()
+        clearCurriculumTopics()
+        insertTopics(topics)
+        getUserProfileOnce()?.let { profile ->
+            insertUserProfile(profile.copy(currentTopicId = topics.first().id,
+                currentSectionId = "", lastScrollPosition = 0, hasStartedLearning = false))
+        }
+        return true
+    }
+
 
     @Query("SELECT COUNT(*) FROM topics")
     suspend fun getTopicCount(): Int

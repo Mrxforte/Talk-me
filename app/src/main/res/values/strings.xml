@@ -205,4 +205,6 @@
     <string name="daily_tasks_reward_banner_text">Vazifalar bajarilganda mukofot ochiladi</string>
     <string name="daily_tasks_reward_claimed_msg">&#x1F389; Mukofot ochildi! +100 XP va maxsus yulduz berildi!</string>
     <string name="daily_tasks_reward_remaining_format">Yana %1$d ta vazifani bajaring va mukofot sandig‘i ochiladi! &#x2728;</string>
+    <string name="curriculum_empty">Darslar hozircha mavjud emas</string>
+    <string name="curriculum_lesson_count">%1$d / %2$d dars</string>
 </resources>

@@ -11,8 +11,8 @@ object AppConstants {
     const val ARG_SEQUENTIAL_DAILY_PLAN = "arg_sequential_daily_plan"
 
     const val DEFAULT_COURSE_ID = "course_talkme_english_v1"
-    const val INITIAL_TOPIC_ID = "topic_01_introduction"
-    const val INITIAL_SECTION_ID = "sec_01_01"
+    const val INITIAL_TOPIC_ID = "level_a0"
+    const val INITIAL_SECTION_ID = ""
 
     // Spaced Repetition Review intervals in milliseconds (4-button rating system: Again, Hard, Good, Easy)
     const val TEN_MINUTES_MS = 600_000L

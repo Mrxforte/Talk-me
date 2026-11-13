@@ -28,8 +28,8 @@ class ExampleUnitTest {
     fun `curriculum seed contains Introduction as Topic 1`() {
         val topics = CurriculumSeedData.buildTopics()
         assertTrue(topics.isNotEmpty())
-        assertEquals("Introduction", topics[0].titleEnglish)
-        assertEquals("Kirish", topics[0].titleUzbek)
+        assertEquals("A0", topics[0].titleEnglish)
+        assertEquals("A0", topics[0].titleUzbek)
         assertTrue(topics[0].isUnlocked)
     }
 

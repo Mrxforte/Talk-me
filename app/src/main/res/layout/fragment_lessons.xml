@@ -179,12 +179,16 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Hidden CEFR Filter Chips kept for compatibility -->
+    <!-- Visible CEFR Filter Chips Bar -->
     <HorizontalScrollView
         android:id="@+id/scrollCefrLevels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        android:scrollbars="none"
+        android:visibility="visible">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupCefrLevel"
@@ -196,40 +200,60 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipLevelAll"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Barchasi" />
+                android:text="Barchasi (400 dars)"
+                android:textColor="#FFFFFF" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLevelA0"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A0 Kirish"
+                android:textColor="#FFFFFF" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipLevelA1"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="A1" />
+                android:text="A1"
+                android:textColor="#FFFFFF" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipLevelA2"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="A2" />
+                android:text="A2"
+                android:textColor="#FFFFFF" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipLevelB1"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="B1" />
+                android:text="B1"
+                android:textColor="#FFFFFF" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipLevelB2"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="B2" />
+                android:text="B2"
+                android:textColor="#FFFFFF" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipLevelC1C2"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="C1–C2" />
+                android:text="C1–C2"
+                android:textColor="#FFFFFF" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 

@@ -39,8 +39,8 @@ object CurriculumSeedData {
         TopicEntity(
             id = "topic_02_numbers",
             orderIndex = 2,
-            titleEnglish = "A1.2 • Numbers 1–20 & Ordinals",
-            titleUzbek = "Sonlar 1–20 va Tartib sonlar (11–20 dars)",
+            titleEnglish = "A1.1 • Numbers 1–20 & Ordinals",
+            titleUzbek = "A1 • Sonlar 1–20 va Tartib sonlar (11–20 dars)",
             descriptionUzbek = "Misollar: \"one book, two books\", \"thirteen students\", \"the first lesson, the second day, the twentieth century\".",
             isUnlocked = false,
             isCompleted = false
@@ -48,8 +48,8 @@ object CurriculumSeedData {
         TopicEntity(
             id = "topic_03_nouns",
             orderIndex = 3,
-            titleEnglish = "A1.3 • Nouns & Plurals",
-            titleUzbek = "Otlar va Ko'plik (21–32 dars)",
+            titleEnglish = "A1.2 • Nouns & Plurals",
+            titleUzbek = "A1 • Otlar va Ko'plik (21–32 dars)",
             descriptionUzbek = "Misollar: \"a book → two books\", \"a box → boxes\", \"a baby → babies\", \"man → men, child → children\", \"water, milk\".",
             isUnlocked = false,
             isCompleted = false
@@ -57,8 +57,8 @@ object CurriculumSeedData {
         TopicEntity(
             id = "topic_04_adjectives",
             orderIndex = 4,
-            titleEnglish = "A1.4 • Adjectives, Colors & Size",
-            titleUzbek = "Sifatlar, Ranglar va Hajm (33–40 dars)",
+            titleEnglish = "A1.3 • Adjectives, Colors & Size",
+            titleUzbek = "A1 • Sifatlar, Ranglar va Hajm (33–40 dars)",
             descriptionUzbek = "Misollar: \"a red car\", \"a big house\", \"hot tea, cold water\", \"The book is new.\" (ot oldida va to be dan keyin).",
             isUnlocked = false,
             isCompleted = false
@@ -66,8 +66,8 @@ object CurriculumSeedData {
         TopicEntity(
             id = "topic_05_pronouns",
             orderIndex = 5,
-            titleEnglish = "A1.5 • Pronouns & Demonstratives",
-            titleUzbek = "Olmoshlar va Ko'rsatish (41–50 dars)",
+            titleEnglish = "A1.4 • Pronouns & Demonstratives",
+            titleUzbek = "A1 • Olmoshlar va Ko'rsatish (41–50 dars)",
             descriptionUzbek = "Misollar: \"I am a student\", \"Give me the book\", \"my car, your house\", \"This is a book / Those are trees\".",
             isUnlocked = false,
             isCompleted = false
@@ -75,8 +75,8 @@ object CurriculumSeedData {
         TopicEntity(
             id = "topic_06_adverbs",
             orderIndex = 6,
-            titleEnglish = "A1.6 • Adverbs & Frequency",
-            titleUzbek = "Ravishlar va Takrorlanish (51–60 dars)",
+            titleEnglish = "A1.5 • Adverbs & Frequency",
+            titleUzbek = "A1 • Ravishlar va Takrorlanish (51–60 dars)",
             descriptionUzbek = "Misollar: \"He walks slowly\", \"She speaks English well\", \"I always get up early\", \"He is never late\".",
             isUnlocked = false,
             isCompleted = false
@@ -84,8 +84,8 @@ object CurriculumSeedData {
         TopicEntity(
             id = "topic_07_verbs_a1",
             orderIndex = 7,
-            titleEnglish = "A1.7 • To Be, Have & Simple Tenses",
-            titleUzbek = "Fe'llar va Oddiy Zamonlar (61–80 dars)",
+            titleEnglish = "A1.6 • To Be, Have & Simple Tenses",
+            titleUzbek = "A1 • Fe'llar va Oddiy Zamonlar (61–80 dars)",
             descriptionUzbek = "Misollar: \"I am / He is / They are\", \"She has a car\", \"He works every day\", \"I went yesterday\", \"I will help you\".",
             isUnlocked = false,
             isCompleted = false
@@ -93,8 +93,8 @@ object CurriculumSeedData {
         TopicEntity(
             id = "topic_08_articles_prepositions",
             orderIndex = 8,
-            titleEnglish = "A1.8 • Articles, Prepositions & Conjunctions",
-            titleUzbek = "Artikl, Predlog va Bog'lovchi (81–100 dars)",
+            titleEnglish = "A1.7 • Articles, Prepositions & Conjunctions",
+            titleUzbek = "A1 • Artikl, Predlog va Bog'lovchi (81–100 dars)",
             descriptionUzbek = "Misollar: \"a book, an apple, the sun\", \"in the room, on the table, at school\", \"tea and coffee, tired but happy\".",
             isUnlocked = false,
             isCompleted = false
@@ -102,8 +102,8 @@ object CurriculumSeedData {
         TopicEntity(
             id = "topic_09_sentences_a1",
             orderIndex = 9,
-            titleEnglish = "A1.9 • Sentence Structure & There Is/Are",
-            titleUzbek = "Gap Tuzilishi va So'roqlar (101–110 dars)",
+            titleEnglish = "A1.8 • Sentence Structure & There Is/Are",
+            titleUzbek = "A1 • Gap Tuzilishi va So'roqlar (101–110 dars)",
             descriptionUzbek = "Misollar: \"The boy reads a book\", \"Where do you live?\", \"Open the book, please!\", \"There is a book on the table\".",
             isUnlocked = false,
             isCompleted = false
@@ -112,7 +112,7 @@ object CurriculumSeedData {
             id = "topic_10_a2_grammar",
             orderIndex = 10,
             titleEnglish = "A2 • Continuous, Degrees & Quantifiers",
-            titleUzbek = "A2 Grammatika va Hozirgi Davom (111–190 dars)",
+            titleUzbek = "A2 • Grammatika va Hozirgi Davom (111–190 dars)",
             descriptionUzbek = "Misollar: \"bigger than, the most interesting\", \"some water, any questions\", \"I am reading now\", \"When I came home...\".",
             isUnlocked = false,
             isCompleted = false
@@ -121,7 +121,7 @@ object CurriculumSeedData {
             id = "topic_11_b1_perfect_passive",
             orderIndex = 11,
             titleEnglish = "B1 • Perfect Tenses, Passive & Reported",
-            titleUzbek = "B1 Tugallangan Zamonlar va Majhul Nisbat (191–270 dars)",
+            titleUzbek = "B1 • Tugallangan Zamonlar va Majhul Nisbat (191–270 dars)",
             descriptionUzbek = "Misollar: \"I have finished\", \"She had already left\", \"The book was written\", \"He said that he was busy\".",
             isUnlocked = false,
             isCompleted = false
@@ -130,7 +130,7 @@ object CurriculumSeedData {
             id = "topic_12_b2_modals_nonfinite",
             orderIndex = 12,
             titleEnglish = "B2 • Modals, Infinitive, Gerund & Participle",
-            titleUzbek = "B2 Davom Zamonlar, Modallar va Gerund (271–336 dars)",
+            titleUzbek = "B2 • Davom Zamonlar, Modallar va Gerund (271–336 dars)",
             descriptionUzbek = "Misollar: \"I have been waiting\", \"You should study\", \"I enjoy reading\", \"I want you to know\", \"Having finished...\".",
             isUnlocked = false,
             isCompleted = false
@@ -139,7 +139,7 @@ object CurriculumSeedData {
             id = "topic_13_c1_c2_mastery",
             orderIndex = 13,
             titleEnglish = "C1–C2 • Nominative, Conditionals & Inversion",
-            titleUzbek = "C1–C2 Nominativ, Shart, Wish va Inversiya (337–400 dars)",
+            titleUzbek = "C1–C2 • Shart, Inversiya, Stilistika va Bitiruv (337–400 dars)",
             descriptionUzbek = "Misollar: \"He is said to live in London\", \"If I had known...\", \"I wish I knew\", \"Never have I seen such a thing\".",
             isUnlocked = false,
             isCompleted = false

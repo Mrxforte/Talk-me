@@ -266,15 +266,17 @@
                 android:orientation="vertical"
                 android:paddingBottom="16dp">
 
-                <!-- Stage Header (Icon + Title + Optional Counter Badge) -->
+                <!-- Stage Header for Steps 1, 2, 3 (Icon + Title + Optional Counter Badge) -->
                 <LinearLayout
+                    android:id="@+id/layoutStageHeaderRow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
                     android:paddingTop="15dp"
-                    android:paddingBottom="13dp">
+                    android:paddingBottom="13dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/ivStageHeaderIcon"
@@ -311,227 +313,706 @@
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/dividerStageHeader"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="14dp"
-                    android:background="#1E3A63" />
+                    android:background="#1E3A63"
+                    android:visibility="gone" />
 
                 <!-- ========================================================= -->
-                <!-- STEP 0: QOIDA (Rule Explanation + 1-2-3 Visual Showcase)  -->
+                <!-- STEP 0: QOIDA (Pixel-Perfect Reference UI)                -->
                 <!-- ========================================================= -->
                 <LinearLayout
                     android:id="@+id/layoutStageQoida"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="14dp"
+                    android:paddingHorizontal="6dp"
                     android:visibility="visible">
 
-                    <!-- Ice-Blue Rule Card -->
+                    <!-- A. Lesson Heading (Book Icon + Title + Subtitle) -->
                     <LinearLayout
-                        android:id="@+id/cardQoidaRuleBox"
+                        android:id="@+id/layoutLessonHeading"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_lesson_ice_card"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="14dp"
-                        android:paddingVertical="15dp">
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
 
                         <ImageView
-                            android:layout_width="26dp"
-                            android:layout_height="26dp"
-                            android:contentDescription="Info"
-                            android:src="@drawable/ic_lesson_info_outline" />
+                            android:id="@+id/ivLessonHeadingIcon"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="Lesson Icon"
+                            android:src="@drawable/ic_lesson_book_cyan"
+                            app:tint="#38BDF8" />
 
-                        <TextView
-                            android:id="@+id/tvQoidaRuleText"
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="10dp"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="2dp"
-                            android:text="One = bitta. Two va three dan keyin ot ko‘plikda keladi: -s."
-                            android:textColor="#0F172A"
-                            android:textSize="16.5sp"
-                            android:textStyle="bold" />
+                            android:orientation="vertical">
 
-                        <ImageButton
-                            android:id="@+id/btnSpeakQoidaRule"
-                            android:layout_width="38dp"
-                            android:layout_height="34dp"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_lesson_speaker_btn"
-                            android:contentDescription="Speak rule"
-                            android:padding="6dp"
-                            android:src="@drawable/ic_volume_up"
-                            app:tint="#FFFFFF" />
+                            <TextView
+                                android:id="@+id/tvLessonHeadingTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="Xush kelibsiz!"
+                                android:textColor="#FFFFFF"
+                                android:textSize="21sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvLessonHeadingSubtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="TalkMe bilan ilk qadam"
+                                android:textColor="#94A3B8"
+                                android:textSize="13.5sp" />
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <!-- 3-Column Visual Concept Showcase Box -->
-                    <LinearLayout
-                        android:id="@+id/cardQoidaVisualShowcase"
+                    <!-- B. Optional Contextual Photograph (Wide card with rounded corners) -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardLessonHeroPhoto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
-                        android:background="@drawable/bg_lesson_visual_box"
+                        app:cardBackgroundColor="#0B172E"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="#1E3A8A"
+                        app:strokeWidth="1dp">
+
+                        <ImageView
+                            android:id="@+id/ivLessonHeroPhoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="175dp"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="Bugungi vaziyat surati"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_lesson_conversation_1794310851367" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- C. Context Panel (Bugungi vaziyat) -->
+                    <LinearLayout
+                        android:id="@+id/layoutLessonSituation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_lesson_situation_panel"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingVertical="14dp"
-                        android:paddingHorizontal="6dp">
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="12dp">
 
-                        <!-- Column 1 -->
-                        <LinearLayout
-                            android:id="@+id/colVisual1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="4dp">
-
-                            <TextView
-                                android:id="@+id/tvVisualBadge1"
-                                android:layout_width="46dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/bg_lesson_num_chip"
-                                android:gravity="center"
-                                android:text="1"
-                                android:textColor="#FFFFFF"
-                                android:textSize="21sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvVisualEmoji1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="76dp"
-                                android:layout_marginTop="8dp"
-                                android:gravity="center"
-                                android:text="🍎"
-                                android:textSize="42sp" />
-
-                            <TextView
-                                android:id="@+id/tvVisualWordPill1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:background="@drawable/bg_lesson_word_pill"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxLines="2"
-                                android:paddingHorizontal="6dp"
-                                android:paddingVertical="6dp"
-                                android:text="one apple"
-                                android:textColor="#FFFFFF"
-                                android:textSize="12.5sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/ivSituationIcon"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="Bugungi vaziyat"
+                            android:src="@drawable/ic_lesson_info_outline"
+                            app:tint="#38BDF8" />
 
                         <View
                             android:layout_width="1dp"
-                            android:layout_height="156dp"
-                            android:background="#204270" />
+                            android:layout_height="36dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
+                            android:background="#1E3A8A" />
 
-                        <!-- Column 2 -->
                         <LinearLayout
-                            android:id="@+id/colVisual2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="4dp">
+                            android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tvVisualBadge2"
-                                android:layout_width="46dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/bg_lesson_num_chip"
-                                android:gravity="center"
-                                android:text="2"
-                                android:textColor="#FFFFFF"
-                                android:textSize="21sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvVisualEmoji2"
+                                android:id="@+id/tvSituationTitle"
                                 android:layout_width="wrap_content"
-                                android:layout_height="76dp"
-                                android:layout_marginTop="8dp"
-                                android:gravity="center"
-                                android:text="🍎🍎"
-                                android:textSize="32sp" />
-
-                            <TextView
-                                android:id="@+id/tvVisualWordPill2"
-                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:background="@drawable/bg_lesson_word_pill"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxLines="2"
-                                android:paddingHorizontal="6dp"
-                                android:paddingVertical="6dp"
-                                android:text="two apples"
+                                android:text="Bugungi vaziyat"
                                 android:textColor="#FFFFFF"
-                                android:textSize="12.5sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="156dp"
-                            android:background="#204270" />
-
-                        <!-- Column 3 -->
-                        <LinearLayout
-                            android:id="@+id/colVisual3"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="4dp">
-
-                            <TextView
-                                android:id="@+id/tvVisualBadge3"
-                                android:layout_width="46dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/bg_lesson_num_chip"
-                                android:gravity="center"
-                                android:text="3"
-                                android:textColor="#FFFFFF"
-                                android:textSize="21sp"
+                                android:textSize="13.5sp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/tvVisualEmoji3"
+                                android:id="@+id/tvSituationBody"
                                 android:layout_width="wrap_content"
-                                android:layout_height="76dp"
-                                android:layout_marginTop="8dp"
-                                android:gravity="center"
-                                android:lineSpacingMultiplier="0.85"
-                                android:text="🍎\n🍎🍎"
-                                android:textSize="25sp" />
-
-                            <TextView
-                                android:id="@+id/tvVisualWordPill3"
-                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:background="@drawable/bg_lesson_word_pill"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxLines="2"
-                                android:paddingHorizontal="6dp"
-                                android:paddingVertical="6dp"
-                                android:text="three apples"
-                                android:textColor="#FFFFFF"
-                                android:textSize="12.5sp"
-                                android:textStyle="bold" />
+                                android:layout_marginTop="2dp"
+                                android:lineSpacingExtra="2dp"
+                                android:text="Til klubidagi ilk kun. Tanishamiz va birga boshlaymiz."
+                                android:textColor="#CBD5E1"
+                                android:textSize="12.5sp" />
                         </LinearLayout>
                     </LinearLayout>
+
+                    <!-- D. Section Heading (Tinglang va tushuning) -->
+                    <LinearLayout
+                        android:id="@+id/layoutQoidaSectionHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvQoidaSectionHeading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tinglang va tushuning"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18.5sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvQoidaSectionSubheading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="So‘zlarni vaziyat bilan eslab qoling."
+                            android:textColor="#94A3B8"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <!-- E. Vertically Stacked Vocabulary/Example Cards (01, 02, 03) -->
+
+                    <!-- Card 01 -->
+                    <LinearLayout
+                        android:id="@+id/cardVocabItem1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_lesson_vocab_stacked_card"
+                        android:orientation="vertical"
+                        android:padding="13dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:background="@drawable/bg_lesson_vocab_badge">
+
+                                <TextView
+                                    android:id="@+id/tvVocabBadge1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="01"
+                                    android:textColor="#38BDF8"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="28dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="#1E3A8A" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvVocabWord1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="Welcome"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="16.5sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvVocabMeaning1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="1dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="Xush kelibsiz"
+                                    android:textColor="#94A3B8"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+
+                            <ImageButton
+                                android:id="@+id/btnSpeakVocabWord1"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_lesson_speaker_btn"
+                                android:contentDescription="Speak word"
+                                android:padding="8dp"
+                                android:src="@drawable/ic_volume_up"
+                                app:tint="#FFFFFF" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#162847" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutVocabExample1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvVocabExampleEn1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    android:text="Welcome to TalkMe!"
+                                    android:textColor="#E2E8F0"
+                                    android:textSize="13.5sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvVocabExampleUz1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="1dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    android:text="TalkMe’ga xush kelibsiz!"
+                                    android:textColor="#94A3B8"
+                                    android:textSize="12.5sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/btnSpeakVocabExample1"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_marginStart="6dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="Speak example"
+                                android:padding="4dp"
+                                android:src="@drawable/ic_volume_up"
+                                app:tint="#60A5FA" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Card 02 -->
+                    <LinearLayout
+                        android:id="@+id/cardVocabItem2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_lesson_vocab_stacked_card"
+                        android:orientation="vertical"
+                        android:padding="13dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:background="@drawable/bg_lesson_vocab_badge">
+
+                                <TextView
+                                    android:id="@+id/tvVocabBadge2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="02"
+                                    android:textColor="#38BDF8"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="28dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="#1E3A8A" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvVocabWord2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="Learn"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="16.5sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvVocabMeaning2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="1dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="O‘rganmoq"
+                                    android:textColor="#94A3B8"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+
+                            <ImageButton
+                                android:id="@+id/btnSpeakVocabWord2"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_lesson_speaker_btn"
+                                android:contentDescription="Speak word"
+                                android:padding="8dp"
+                                android:src="@drawable/ic_volume_up"
+                                app:tint="#FFFFFF" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#162847" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutVocabExample2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvVocabExampleEn2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    android:text="Learn English."
+                                    android:textColor="#E2E8F0"
+                                    android:textSize="13.5sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvVocabExampleUz2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="1dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    android:text="Ingliz tilini o‘rganing."
+                                    android:textColor="#94A3B8"
+                                    android:textSize="12.5sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/btnSpeakVocabExample2"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_marginStart="6dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="Speak example"
+                                android:padding="4dp"
+                                android:src="@drawable/ic_volume_up"
+                                app:tint="#60A5FA" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Card 03 -->
+                    <LinearLayout
+                        android:id="@+id/cardVocabItem3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_lesson_vocab_stacked_card"
+                        android:orientation="vertical"
+                        android:padding="13dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:background="@drawable/bg_lesson_vocab_badge">
+
+                                <TextView
+                                    android:id="@+id/tvVocabBadge3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="03"
+                                    android:textColor="#38BDF8"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="28dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="#1E3A8A" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvVocabWord3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="Start"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="16.5sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvVocabMeaning3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="1dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="Boshlamoq"
+                                    android:textColor="#94A3B8"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+
+                            <ImageButton
+                                android:id="@+id/btnSpeakVocabWord3"
+                                android:layout_width="38dp"
+                                android:layout_height="38dp"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_lesson_speaker_btn"
+                                android:contentDescription="Speak word"
+                                android:padding="8dp"
+                                android:src="@drawable/ic_volume_up"
+                                app:tint="#FFFFFF" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#162847" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutVocabExample3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvVocabExampleEn3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    android:text="Let’s start!"
+                                    android:textColor="#E2E8F0"
+                                    android:textSize="13.5sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvVocabExampleUz3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="1dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    android:text="Boshlaymiz!"
+                                    android:textColor="#94A3B8"
+                                    android:textSize="12.5sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/btnSpeakVocabExample3"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_marginStart="6dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="Speak example"
+                                android:padding="4dp"
+                                android:src="@drawable/ic_volume_up"
+                                app:tint="#60A5FA" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- F. Optional Short Learning Hint (Headphones + Text) -->
+                    <LinearLayout
+                        android:id="@+id/layoutLessonHint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="4dp"
+                        android:paddingBottom="6dp">
+
+                        <ImageView
+                            android:id="@+id/ivLessonHintIcon"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:contentDescription="Hint"
+                            android:src="@drawable/ic_skill_listening"
+                            app:tint="#60A5FA" />
+
+                        <TextView
+                            android:id="@+id/tvLessonHintText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Audioni tinglang, keyin birga takrorlaymiz."
+                            android:textColor="#94A3B8"
+                            android:textSize="12.5sp"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+
+                    <!-- Hidden legacy views for safe backward compatibility -->
+                    <View
+                        android:id="@+id/cardQoidaRuleBox"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvQoidaRuleText"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <ImageButton
+                        android:id="@+id/btnSpeakQoidaRule"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <View
+                        android:id="@+id/cardQoidaVisualShowcase"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <View
+                        android:id="@+id/colVisual1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvVisualBadge1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvVisualEmoji1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvVisualWordPill1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <View
+                        android:id="@+id/colVisual2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvVisualBadge2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvVisualEmoji2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvVisualWordPill2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <View
+                        android:id="@+id/colVisual3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvVisualBadge3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvVisualEmoji3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/tvVisualWordPill3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <!-- ========================================================= -->
@@ -1167,7 +1648,7 @@
                 android:id="@+id/tvLessonPrimaryCtaText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Misollar ko‘rish  →"
+                android:text="Misollarni ko‘rish  →"
                 android:textColor="#FFFFFF"
                 android:textSize="17sp"
                 android:textStyle="bold" />

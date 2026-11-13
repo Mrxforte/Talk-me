@@ -70,6 +70,16 @@ data class LessonVisualColumnItem(
     val audioText: String
 )
 
+data class LessonVocabCardItem(
+    val badge: String,
+    val englishWord: String,
+    val uzbekMeaning: String,
+    val exampleEnglish: String,
+    val exampleUzbek: String,
+    val wordAudioText: String,
+    val exampleAudioText: String
+)
+
 data class LessonDetailUiState(
     val topicTitleUzbek: String = "Sonlar",
     val totalSectionsInTopic: Int = 10,
@@ -213,6 +223,7 @@ class LessonDetailFragment : Fragment() {
 
     private var cachedExamples: List<LessonExampleDisplayItem> = emptyList()
     private var cachedVisualColumns: List<LessonVisualColumnItem> = emptyList()
+    private var cachedVocabCards: List<LessonVocabCardItem> = emptyList()
     private var lastLoadedSectionId: String? = null
 
     override fun onCreateView(
@@ -303,19 +314,53 @@ class LessonDetailFragment : Fragment() {
             }
         }
 
-        // Audio buttons in Qoida
+        // Audio buttons in Qoida (Pixel-Perfect Reference UI)
+        val speakVocabWord1 = View.OnClickListener {
+            cachedVocabCards.getOrNull(0)?.let { viewModel.speakEnglish(it.wordAudioText) }
+        }
+        val speakVocabExample1 = View.OnClickListener {
+            cachedVocabCards.getOrNull(0)?.let { viewModel.speakEnglish(it.exampleAudioText) }
+        }
+        binding.btnSpeakVocabWord1.setOnClickListener(speakVocabWord1)
+        binding.cardVocabItem1.setOnClickListener(speakVocabWord1)
+        binding.btnSpeakVocabExample1.setOnClickListener(speakVocabExample1)
+        binding.layoutVocabExample1.setOnClickListener(speakVocabExample1)
+
+        val speakVocabWord2 = View.OnClickListener {
+            cachedVocabCards.getOrNull(1)?.let { viewModel.speakEnglish(it.wordAudioText) }
+        }
+        val speakVocabExample2 = View.OnClickListener {
+            cachedVocabCards.getOrNull(1)?.let { viewModel.speakEnglish(it.exampleAudioText) }
+        }
+        binding.btnSpeakVocabWord2.setOnClickListener(speakVocabWord2)
+        binding.cardVocabItem2.setOnClickListener(speakVocabWord2)
+        binding.btnSpeakVocabExample2.setOnClickListener(speakVocabExample2)
+        binding.layoutVocabExample2.setOnClickListener(speakVocabExample2)
+
+        val speakVocabWord3 = View.OnClickListener {
+            cachedVocabCards.getOrNull(2)?.let { viewModel.speakEnglish(it.wordAudioText) }
+        }
+        val speakVocabExample3 = View.OnClickListener {
+            cachedVocabCards.getOrNull(2)?.let { viewModel.speakEnglish(it.exampleAudioText) }
+        }
+        binding.btnSpeakVocabWord3.setOnClickListener(speakVocabWord3)
+        binding.cardVocabItem3.setOnClickListener(speakVocabWord3)
+        binding.btnSpeakVocabExample3.setOnClickListener(speakVocabExample3)
+        binding.layoutVocabExample3.setOnClickListener(speakVocabExample3)
+
+        binding.layoutLessonHint.setOnClickListener {
+            viewModel.speakEnglish("Audioni tinglang, keyin birga takrorlaymiz.")
+        }
+        binding.layoutLessonSituation.setOnClickListener {
+            viewModel.speakCurrentLessonHighlights()
+        }
+
         binding.btnSpeakQoidaRule.setOnClickListener {
             viewModel.speakCurrentLessonHighlights()
         }
-        binding.colVisual1.setOnClickListener {
-            cachedVisualColumns.getOrNull(0)?.let { viewModel.speakEnglish(it.audioText) }
-        }
-        binding.colVisual2.setOnClickListener {
-            cachedVisualColumns.getOrNull(1)?.let { viewModel.speakEnglish(it.audioText) }
-        }
-        binding.colVisual3.setOnClickListener {
-            cachedVisualColumns.getOrNull(2)?.let { viewModel.speakEnglish(it.audioText) }
-        }
+        binding.colVisual1.setOnClickListener(speakVocabWord1)
+        binding.colVisual2.setOnClickListener(speakVocabWord2)
+        binding.colVisual3.setOnClickListener(speakVocabWord3)
 
         // Audio buttons in Misollar
         val speakEx1 = View.OnClickListener {
@@ -454,32 +499,66 @@ class LessonDetailFragment : Fragment() {
         val totalDisp = state.totalSectionsInTopic.coerceAtLeast(sec.orderIndex)
         binding.tvLessonTopCounter.text = "${sec.orderIndex}/$totalDisp"
 
-        // 1. QOIDA DATA
-        val firstRule = state.grammarRules.firstOrNull()
-        val rawRuleText = firstRule?.explanationUzbek?.takeIf { it.isNotBlank() }
-            ?: sec.explanationUzbek.takeIf { it.isNotBlank() }
-            ?: "Dars qoidasini diqqat bilan o‘rganing va mashqlarni bajaring."
-        val conciseRuleText = rawRuleText
-            .replace("\n", " ")
-            .let { if (it.length > 130) it.take(127).trimEnd() + "..." else it }
-        binding.tvQoidaRuleText.text = conciseRuleText
+        // 1. QOIDA DATA (Pixel-Perfect Reference UI)
+        val headingTitle = when {
+            sec.id == "sec_01_01" -> "Xush kelibsiz!"
+            else -> sec.titleUzbek
+                .replace(Regex("^\\d+-Dars:\\s*", RegexOption.IGNORE_CASE), "")
+                .substringBefore("—")
+                .substringBefore("-")
+                .trim()
+                .ifBlank { "Dars qoidasi" }
+        }
+        val headingSubtitle = when {
+            sec.id == "sec_01_01" -> "TalkMe bilan ilk qadam"
+            else -> "TalkMe bilan bosqichma-bosqich o‘rganamiz"
+        }
+        binding.tvLessonHeadingTitle.text = headingTitle
+        binding.tvLessonHeadingSubtitle.text = headingSubtitle
 
-        cachedVisualColumns = buildVisualColumns(sec, state.vocabulary, state.grammarRules)
-        val col1 = cachedVisualColumns[0]
-        val col2 = cachedVisualColumns[1]
-        val col3 = cachedVisualColumns[2]
+        // Optional Contextual Photograph (Content-driven: collapses cleanly if null)
+        val photoRes = getLessonSituationPhotoRes(sec)
+        if (photoRes != null) {
+            binding.cardLessonHeroPhoto.visibility = View.VISIBLE
+            binding.ivLessonHeroPhoto.setImageResource(photoRes)
+        } else {
+            binding.cardLessonHeroPhoto.visibility = View.GONE
+        }
 
-        binding.tvVisualBadge1.text = col1.badge
-        binding.tvVisualEmoji1.text = col1.emoji
-        binding.tvVisualWordPill1.text = formatVisualWordPill(col1.wordLabel, col1.highlightPart)
+        // Context Panel: Bugungi vaziyat
+        val (sitTitle, sitBody) = getLessonSituationText(sec)
+        binding.tvSituationTitle.text = sitTitle
+        binding.tvSituationBody.text = sitBody
 
-        binding.tvVisualBadge2.text = col2.badge
-        binding.tvVisualEmoji2.text = col2.emoji
-        binding.tvVisualWordPill2.text = formatVisualWordPill(col2.wordLabel, col2.highlightPart)
+        // Section Heading
+        binding.tvQoidaSectionHeading.text = "Tinglang va tushuning"
+        binding.tvQoidaSectionSubheading.text = "So‘zlarni vaziyat bilan eslab qoling."
 
-        binding.tvVisualBadge3.text = col3.badge
-        binding.tvVisualEmoji3.text = col3.emoji
-        binding.tvVisualWordPill3.text = formatVisualWordPill(col3.wordLabel, col3.highlightPart)
+        // Stacked Vocabulary Cards (01, 02, 03)
+        cachedVocabCards = buildVocabCardItems(sec, state.vocabulary, state.grammarRules)
+        val vc1 = cachedVocabCards[0]
+        val vc2 = cachedVocabCards[1]
+        val vc3 = cachedVocabCards[2]
+
+        binding.tvVocabBadge1.text = vc1.badge
+        binding.tvVocabWord1.text = vc1.englishWord
+        binding.tvVocabMeaning1.text = vc1.uzbekMeaning
+        binding.tvVocabExampleEn1.text = vc1.exampleEnglish
+        binding.tvVocabExampleUz1.text = vc1.exampleUzbek
+
+        binding.tvVocabBadge2.text = vc2.badge
+        binding.tvVocabWord2.text = vc2.englishWord
+        binding.tvVocabMeaning2.text = vc2.uzbekMeaning
+        binding.tvVocabExampleEn2.text = vc2.exampleEnglish
+        binding.tvVocabExampleUz2.text = vc2.exampleUzbek
+
+        binding.tvVocabBadge3.text = vc3.badge
+        binding.tvVocabWord3.text = vc3.englishWord
+        binding.tvVocabMeaning3.text = vc3.uzbekMeaning
+        binding.tvVocabExampleEn3.text = vc3.exampleEnglish
+        binding.tvVocabExampleUz3.text = vc3.exampleUzbek
+
+        binding.tvLessonHintText.text = "Audioni tinglang, keyin birga takrorlaymiz."
 
         // 2. MISOLLAR DATA
         cachedExamples = buildExampleItems(sec, state.vocabulary, state.grammarRules)
@@ -635,6 +714,16 @@ class LessonDetailFragment : Fragment() {
         )
 
         // Update Stage Card Header & Bottom Primary CTA Button
+        if (currentStepIndex == 0) {
+            binding.layoutStageHeaderRow.visibility = View.GONE
+            binding.dividerStageHeader.visibility = View.GONE
+            binding.cardLessonStageContainer.setBackgroundResource(android.R.color.transparent)
+        } else {
+            binding.layoutStageHeaderRow.visibility = View.VISIBLE
+            binding.dividerStageHeader.visibility = View.VISIBLE
+            binding.cardLessonStageContainer.setBackgroundResource(R.drawable.bg_lesson_stage_card)
+        }
+
         val sec = viewModel.uiState.value.section
         val cleanRuleHeader = sec?.titleUzbek
             ?.replace(Regex("^\\d+-Dars:\\s*", RegexOption.IGNORE_CASE), "")
@@ -647,7 +736,7 @@ class LessonDetailFragment : Fragment() {
                 binding.ivStageHeaderIcon.setImageResource(R.drawable.ic_lesson_book_cyan)
                 binding.tvStageHeaderTitle.text = cleanRuleHeader
                 binding.tvStageHeaderBadge.visibility = View.GONE
-                binding.tvLessonPrimaryCtaText.text = "Misollar ko‘rish  →"
+                binding.tvLessonPrimaryCtaText.text = "Misollarni ko‘rish  →"
             }
             1 -> {
                 binding.ivStageHeaderIcon.setImageResource(R.drawable.ic_lesson_list_cyan)
@@ -831,6 +920,146 @@ class LessonDetailFragment : Fragment() {
             lower.contains("five") || lower.contains("beshta") -> "5️⃣"
             else -> "✨"
         }
+    }
+
+    private fun getLessonSituationPhotoRes(sec: LessonSectionModel): Int? {
+        return when {
+            sec.id == "sec_01_01" -> R.drawable.img_lesson_conversation_1794310851367
+            sec.id == "sec_01_02" -> R.drawable.img_topic_morning_intro_1794316347713
+            sec.id == "sec_01_05" -> R.drawable.img_lesson_places_1794310885756
+            sec.id == "sec_03_01" -> R.drawable.img_lesson_numbers_1794310853767
+            sec.id == "sec_04_01" -> R.drawable.img_lesson_objects_1794310854481
+            sec.topicId == "topic_01_introduction" && sec.orderIndex == 1 -> R.drawable.img_lesson_conversation_1794310851367
+            else -> null
+        }
+    }
+
+    private fun getLessonSituationText(sec: LessonSectionModel): Pair<String, String> {
+        val title = "Bugungi vaziyat"
+        val body = when {
+            sec.id == "sec_01_01" -> "Til klubidagi ilk kun. Tanishamiz va birga boshlaymiz."
+            sec.id == "sec_01_02" -> "TalkMe ilovasi bilan qulay va samarali o‘rganish usuli."
+            sec.topicId == "topic_01_introduction" -> "Yangi do‘stlar bilan tanishish va salomlashish vaziyati."
+            sec.topicId == "topic_03_numbers" -> "Do‘konda yoki bozorda hisob-kitob qilish vaziyati."
+            sec.topicId == "topic_04_objects" -> "Xonadagi va ish stolidagi narsalarni nomlash vaziyati."
+            else -> sec.objectiveUzbek.takeIf { it.isNotBlank() }
+                ?.replace(Regex("[🤖🚀👋💬🎯📖]"), "")
+                ?.trim()
+                ?.take(80)
+                ?: "Bugungi dars mavzusi va kundalik muloqot vaziyati."
+        }
+        return Pair(title, body)
+    }
+
+    private fun buildVocabCardItems(
+        sec: LessonSectionModel,
+        vocabList: List<VocabularyModel>,
+        grammarList: List<GrammarRuleModel>
+    ): List<LessonVocabCardItem> {
+        val result = mutableListOf<LessonVocabCardItem>()
+
+        if (sec.id == "sec_01_01") {
+            result.add(
+                LessonVocabCardItem(
+                    badge = "01",
+                    englishWord = "Welcome",
+                    uzbekMeaning = "Xush kelibsiz",
+                    exampleEnglish = "Welcome to TalkMe!",
+                    exampleUzbek = "TalkMe’ga xush kelibsiz!",
+                    wordAudioText = "Welcome",
+                    exampleAudioText = "Welcome to TalkMe!"
+                )
+            )
+            result.add(
+                LessonVocabCardItem(
+                    badge = "02",
+                    englishWord = "Learn",
+                    uzbekMeaning = "O‘rganmoq",
+                    exampleEnglish = "Learn English.",
+                    exampleUzbek = "Ingliz tilini o‘rganing.",
+                    wordAudioText = "Learn",
+                    exampleAudioText = "Learn English."
+                )
+            )
+            result.add(
+                LessonVocabCardItem(
+                    badge = "03",
+                    englishWord = "Start",
+                    uzbekMeaning = "Boshlamoq",
+                    exampleEnglish = "Let’s start!",
+                    exampleUzbek = "Boshlaymiz!",
+                    wordAudioText = "Start",
+                    exampleAudioText = "Let’s start!"
+                )
+            )
+            return result
+        }
+
+        // For other lessons: build from vocabList
+        vocabList.take(3).forEachIndexed { idx, v ->
+            val numStr = String.format("%02d", idx + 1)
+            val enWord = v.englishWord.trim()
+            val uzMeaning = v.uzbekTranslation.substringBefore(",").trim().ifBlank { "Ma’nosi" }
+            val exEn = v.exampleEnglish.trim().ifBlank { "$enWord is useful." }
+            val exUz = v.exampleUzbek.trim().ifBlank { "$uzMeaning ma’nosi." }
+            result.add(
+                LessonVocabCardItem(
+                    badge = numStr,
+                    englishWord = enWord,
+                    uzbekMeaning = uzMeaning,
+                    exampleEnglish = exEn,
+                    exampleUzbek = exUz,
+                    wordAudioText = enWord,
+                    exampleAudioText = exEn
+                )
+            )
+        }
+
+        // If fewer than 3 vocab items, supplement from grammar rules or default
+        if (result.size < 3) {
+            grammarList.forEach { gr ->
+                if (result.size >= 3) return@forEach
+                val numStr = String.format("%02d", result.size + 1)
+                val word = gr.exampleEnglish.split(" ").firstOrNull().orEmpty().ifBlank { "Grammar" }
+                val meaning = gr.titleUzbek.substringBefore("—").substringBefore("-").trim().ifBlank { "Qoida" }
+                val exEn = gr.exampleEnglish.ifBlank { "$word." }
+                val exUz = gr.exampleUzbek.ifBlank { "$meaning misoli." }
+                result.add(
+                    LessonVocabCardItem(
+                        badge = numStr,
+                        englishWord = word,
+                        uzbekMeaning = meaning,
+                        exampleEnglish = exEn,
+                        exampleUzbek = exUz,
+                        wordAudioText = word,
+                        exampleAudioText = exEn
+                    )
+                )
+            }
+        }
+
+        while (result.size < 3) {
+            val numStr = String.format("%02d", result.size + 1)
+            val fallbackWords = listOf(
+                Triple("Listen", "Tinglamoq", "Listen carefully to the audio."),
+                Triple("Practice", "Mashq qilmoq", "Practice English every day."),
+                Triple("Speak", "Gapirmoq", "Speak confidently with TalkMe.")
+            )
+            val (w, m, ex) = fallbackWords[result.size % fallbackWords.size]
+            result.add(
+                LessonVocabCardItem(
+                    badge = numStr,
+                    englishWord = w,
+                    uzbekMeaning = m,
+                    exampleEnglish = ex,
+                    exampleUzbek = "$m bilan mashq.",
+                    wordAudioText = w,
+                    exampleAudioText = ex
+                )
+            )
+        }
+
+        return result.take(3)
     }
 
     private fun buildVisualColumns(

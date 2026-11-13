@@ -1,0 +1,62 @@
+[
+  {
+    "scene_id": 1,
+    "start_sec": 0.0,
+    "end_sec": 6.0,
+    "badge": "TALKME • 1-DARS",
+    "main_title": "Kundalik 3 Ta Muhim Ibora",
+    "sub_title": "Ingliz tilida erkin gapiring",
+    "phonetic": "",
+    "uzbek_translation": "Salomlashish va hol-ahvol so'rash",
+    "example_en": "",
+    "example_uz": ""
+  },
+  {
+    "scene_id": 2,
+    "start_sec": 6.0,
+    "end_sec": 22.0,
+    "badge": "IBORA 01",
+    "main_title": "How's it going?",
+    "sub_title": "Ishlar qalay? / Ahvoling qanday?",
+    "phonetic": "[ haʊz ɪt ˈɡoʊɪŋ ]",
+    "uzbek_translation": "Norasmiy do'stona salomlashish",
+    "example_en": "Hey Azamat, how's it going?",
+    "example_uz": "Salom Azamat, ishlar qalay?"
+  },
+  {
+    "scene_id": 3,
+    "start_sec": 22.0,
+    "end_sec": 38.0,
+    "badge": "IBORA 02",
+    "main_title": "Long time no see!",
+    "sub_title": "Ko'rishmaganimizga ancha bo'ldi!",
+    "phonetic": "[ lɔːŋ taɪm noʊ siː ]",
+    "uzbek_translation": "Uzoq vaqt ko'rishmagan do'stni uchratganda",
+    "example_en": "Long time no see, my friend!",
+    "example_uz": "Ko'rishmaganimizga ancha bo'libdi, do'stim!"
+  },
+  {
+    "scene_id": 4,
+    "start_sec": 38.0,
+    "end_sec": 54.0,
+    "badge": "IBORA 03",
+    "main_title": "Catch you later!",
+    "sub_title": "Keyinroq ko'rishamiz! / Xayr!",
+    "phonetic": "[ kætʃ juː ˈleɪtər ]",
+    "uzbek_translation": "Xayrlashishda ishlatiladigan zamonaviy ibora",
+    "example_en": "I have to run. Catch you later!",
+    "example_uz": "Men shoshishim kerak. Keyinroq ko'rishamiz!"
+  },
+  {
+    "scene_id": 5,
+    "start_sec": 54.0,
+    "end_sec": 60.0,
+    "badge": "AMALIYOT",
+    "main_title": "TalkMe bilan mashq qiling!",
+    "sub_title": "AI Tutor bilan jonli suhbat",
+    "phonetic": "",
+    "uzbek_translation": "Ilovani yuklab oling va talaffuzni sinang",
+    "example_en": "Practice every day with TalkMe!",
+    "example_uz": "TalkMe bilan har kuni mashq qiling!"
+  }
+]

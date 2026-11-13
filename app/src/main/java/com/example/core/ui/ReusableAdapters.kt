@@ -95,10 +95,10 @@ class TopicAdapter(
                         if (item.orderIndex == 1) R.drawable.img_curriculum_kirish
                         else TopicVisualArtwork.getTopicImageRes(item.id, item.orderIndex)
                     )
-                    binding.tvCompletedTitle.text = item.titleUzbek
+                    binding.tvCompletedTitle.text = if (item.orderIndex == 1 && !item.titleUzbek.startsWith("A0")) "A0 • ${item.titleUzbek}" else item.titleUzbek
                     binding.tvCompletedBadge.text = "✓ Bajarildi"
                     binding.tvCompletedRangePill.text =
-                        if (item.orderIndex == 1) "1–10-dars" else "${item.totalSections} ta dars"
+                        if (item.orderIndex == 1) "A0 • 1–10-dars" else "${item.totalSections} ta dars"
 
                     val shownCompleted = if (item.orderIndex == 1 && item.completedSections < 4) 4 else item.completedSections
                     val shownTotal = if (item.totalSections <= 0) 10 else item.totalSections
@@ -126,10 +126,11 @@ class TopicAdapter(
                         if (item.orderIndex <= 2) R.drawable.img_curriculum_salomlashish
                         else TopicVisualArtwork.getTopicImageRes(item.id, item.orderIndex)
                     )
-                    binding.tvActiveTitle.text = item.titleUzbek
+                    binding.tvActiveTitle.text = if (item.orderIndex == 1 && !item.titleUzbek.startsWith("A0")) "A0 • ${item.titleUzbek}" else item.titleUzbek
 
                     val cefrCode = when (item.orderIndex) {
-                        in 1..9 -> "A1"
+                        1 -> "A0"
+                        in 2..9 -> "A1"
                         10 -> "A2"
                         11 -> "B1"
                         12 -> "B2"

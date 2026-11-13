@@ -127,11 +127,11 @@ class HomeFragment : Fragment() {
                     binding.tvStreakBadge.text = "$streakDays Day Streak"
 
                     val cont = stats.continueLearning
-                    binding.tvHeroCourseName.text = cont.courseName.ifBlank { "TALKME ENGLISH COURSE" }
-                    val topicHeader = cont.currentTopicTitle.ifBlank { "1. Introduction — Kirish" }
+                    binding.tvHeroCourseName.text = cont.courseName.ifBlank { "TALKME ENGLISH COURSE (A0–C2)" }
+                    val topicHeader = cont.currentTopicTitle.ifBlank { "1. A0 • Kirish (Alifbo va Tanishuv)" }
                     binding.tvHeroTopicName.text =
                         if (topicHeader.contains("Introduction") || topicHeader.contains("Kirish")) {
-                            "1. Introduction — Kirish"
+                            "1. A0 • Kirish (Alifbo va Tanishuv)"
                         } else {
                             topicHeader
                         }

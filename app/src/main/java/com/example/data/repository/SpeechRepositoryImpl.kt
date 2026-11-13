@@ -83,6 +83,7 @@ class SpeechRepositoryImpl @Inject constructor(
 
     private var audioCollectJob: Job? = null
     private var timerJob: Job? = null
+    private var engineStartupJob: Job? = null
     private var startTimestamp = 0L
 
     @Volatile
@@ -114,11 +115,6 @@ class SpeechRepositoryImpl @Inject constructor(
         }
 
         _speechState.value = SpeechRecognitionState.LISTENING_PASS_1
-
-        scope.launch {
-            streamingEngine.startStream()
-            offlineEngine.initialize()
-        }
 
         audioCollectJob?.cancel()
         audioCollectJob = scope.launch {
@@ -159,6 +155,31 @@ class SpeechRepositoryImpl @Inject constructor(
             while (isActive && _speechState.value == SpeechRecognitionState.LISTENING_PASS_1) {
                 delay(1000L)
                 _recordingDurationSeconds.value += 1
+            }
+        }
+
+        engineStartupJob?.cancel()
+        engineStartupJob = scope.launch {
+            val streamingReady = streamingEngine.startStream()
+            val offlineReady = offlineEngine.initialize()
+            if (!streamingReady && !offlineReady &&
+                _speechState.value == SpeechRecognitionState.LISTENING_PASS_1 &&
+                isFinalizingAtomic.compareAndSet(false, true)
+            ) {
+                _speechState.value = SpeechRecognitionState.ERROR
+                timerJob?.cancel()
+                audioCollectJob?.cancel()
+                audioRecordManager.cancelRecording()
+                _utteranceFinalizedEvents.emit(
+                    SpeechRecognitionResult(
+                        recognizedText = "",
+                        isFinal = true,
+                        recordingDurationMs = 0,
+                        processingDurationMs = 0,
+                        hadSpeechDetectedByVad = false,
+                        sttErrorReason = "Nutqni tanish moduli ishga tushmadi. Ilova paketida Sherpa-ONNX kutubxonasi va nutq modellari borligini tekshiring."
+                    )
+                )
             }
         }
 
@@ -231,6 +252,8 @@ class SpeechRepositoryImpl @Inject constructor(
     }
 
     override fun cancelListening() {
+        engineStartupJob?.cancel()
+        engineStartupJob = null
         isFinalizingAtomic.set(false)
         speechDetectedInCurrentTurn = false
         timerJob?.cancel()

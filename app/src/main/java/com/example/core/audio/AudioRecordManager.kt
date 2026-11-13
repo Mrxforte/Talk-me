@@ -152,27 +152,34 @@ class AudioRecordManager @Inject constructor(
                     AUDIO_FORMAT,
                     bufferSize
                 )
-                if (candidate.state == AudioRecord.STATE_INITIALIZED) {
-                    audioRecord = candidate
-                    attachAudioEffects(candidate.audioSessionId)
-                    Log.d(TAG, "AudioRecord initialized with source=$source, sessionId=${candidate.audioSessionId}")
-                    break
-                } else {
-                    candidate.release()
+                val started = try {
+                    if (candidate.state == AudioRecord.STATE_INITIALIZED) {
+                        candidate.startRecording()
+                    }
+                    candidate.recordingState == AudioRecord.RECORDSTATE_RECORDING
+                } catch (e: Exception) {
+                    Log.w(TAG, "AudioRecord could not start for source=$source", e)
+                    false
                 }
+                if (started) {
+                    audioRecord = candidate
+                    runCatching { attachAudioEffects(candidate.audioSessionId) }
+                    break
+                }
+                candidate.release()
             } catch (e: Exception) {
-                Log.w(TAG, "AudioRecord init notice for source=$source", e)
+                Log.w(TAG, "AudioRecord initialization failed for source=$source", e)
             }
+        }
+
+        if (audioRecord == null) {
+            _amplitude.value = 0f
+            _recordingState.value = AudioRecordingState.ERROR
+            return false
         }
 
         synchronized(rawPcmOutputStream) {
             rawPcmOutputStream.reset()
-        }
-
-        try {
-            audioRecord?.startRecording()
-        } catch (e: Exception) {
-            Log.w(TAG, "AudioRecord.startRecording notice", e)
         }
 
         _recordingState.value = AudioRecordingState.RECORDING

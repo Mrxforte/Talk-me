@@ -11,8 +11,8 @@ import org.junit.Test
 class IntegrationFlowTest {
     private val introductoryTopics = setOf(CurriculumLevel.A0.topicId, CurriculumLevel.A1.topicId)
 
-    @Test fun a2ThroughC1HaveSixtyCompleteSeededLessonsEach() {
-        val topics = setOf(CurriculumLevel.A2.topicId, CurriculumLevel.B1.topicId, CurriculumLevel.B2.topicId, CurriculumLevel.C1.topicId)
+    @Test fun a2ThroughC2HaveSixtyCompleteSeededLessonsEach() {
+        val topics = setOf(CurriculumLevel.A2.topicId, CurriculumLevel.B1.topicId, CurriculumLevel.B2.topicId, CurriculumLevel.C1.topicId, CurriculumLevel.C2.topicId)
         val sections = CurriculumSeedData.buildSections().filter { it.topicId in topics }
         val allWords = CurriculumSeedData.buildVocabulary()
         val words = allWords.groupBy { it.sectionId }

@@ -6,7 +6,7 @@ A2 follows the existing A0 and A1 lessons. Each unit uses **Qoida → Misollar �
 
 ## Implementation status
 
-This roadmap defines 300 lesson slots. The app seed implements all 60 lessons each for A2, B1, B2 and C1, plus four sample lessons for C2. The remaining 56 lesson slots still need full lesson copy, bilingual examples and interactive exercises. The coverage table tracks chapters. A subsection-by-subsection audit is still pending.
+The app seed implements 60 lessons per level across A2, B1, B2, C1 and C2. Each lesson has an Uzbek rule, three bilingual examples, three exercises and a Wrap-up. The table below tracks the textbook chapters.
 
 ### Example lesson — Ordering and Shopping
 
@@ -360,3 +360,27 @@ This roadmap defines 300 lesson slots. The app seed implements all 60 lessons ea
 | 295–325 | Coordination and subordination, direct and reported speech, relative clauses, conditionals, and wish across B1–C2. |
 | 326–330 | Commas, semicolons, colons, full stops, question marks, exclamation marks, quotation marks, apostrophes and hyphens across A2–C2. |
 | 331–332 | Irregular verbs revisited through A2 past forms, B1 perfect forms and B2–C2 participles. |
+
+### Detailed coverage notes
+
+| Textbook subsection | Lessons |
+|---|---|
+| Regular and irregular verbs, auxiliary forms and basic modality | A2 1–15, A2 49–54, B2 3–16 |
+| Bare, to-, perfect, continuous and passive infinitives, including nominative and complex object patterns | B1 41–42, B2 17–23, C1 13–21 and 28, C2 7 |
+| Gerunds after verbs and prepositions, with possessive subjects, in passive and perfect forms, and verbal nouns | B1 43–46, B2 24–29, C2 20 and 31 |
+| Participles and independent participial constructions | B2 30–34, C1 22–27, C2 32–33 |
+| Future-in-the-past and perfect continuous forms | B1 3–5 and 9–14, C1 5–10 and 20 |
+| Common and proper nouns, countability, plurals and possessives | A2 16–23, C2 19–26 and 56 |
+| Indefinite, definite and zero articles, including institutions, geography and illnesses | A2 24–25, B2 38–43, C2 21–24 |
+| Ordinal and cardinal numbers, fractions, decimals and percentages | A2 36–39, B2 44, C2 27–29 |
+| Personal, possessive, reflexive, demonstrative, reciprocal and relative pronouns | A2 40–43 and 56–58, B1 31–34 and 55, C1 33–35, C2 16–19 |
+| Indefinite pronouns and quantifiers | A2 26–32, B1 52–54, C2 8 and 11–15 |
+| Adjective and adverb comparison, formation and placement | A2 2 and 33–35, B1 47–51, B2 33–37, C1 49–50 |
+| Prepositions of time, place, motion, means and limits, multiword prepositions and sentence placement | A2 39 and 44–48, B1 56–59, B2 45–54, C1 33 and 51–52, C2 17 |
+| Sentence elements, dummy subjects and objects, transitivity and agreement | A2 59, B1 38–40, B2 57–59, C1 29–32 and 42–48 |
+| Coordination, subordination and word order | B1 21–34, C1 33–41 and 53–54, C2 38–43 and 49 |
+| Reported speech, questions, commands and exclamations | A2 50–51 and 55–58, B1 12–20, C1 9–12, C2 43–48 and 54–55 |
+| Real, hypothetical, past, mixed, implicit and inverted conditions, wishes | B1 22–24, B2 4–6, C1 55–59, C2 34–37 and 41 |
+| Commas, semicolons, colons, quotations, end punctuation, apostrophes and hyphens | B1 34, C2 29 and 48–58 |
+
+The crosswalk maps the grammar families. Individual senses in the book's preposition entries and every item in its irregular-verb appendix have not been verified against a specific example in the app.

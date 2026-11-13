@@ -67,23 +67,12 @@ object A0CurriculumSeed {
             titleEnglish = "Hello!",
             titleUzbek = "1-Dars: Hello!",
             objectiveUzbek = "Salomlashish mavzusini o‘rganish va amalda qo‘llash.",
-            explanationUzbek = """Hello — bu “Salom!” degani.
-Do‘stingizni ko‘rganingizda — Hello!
-Onangizni ko‘rganingizda — Hello!
-Mushukni ko‘rganingizda ham — Hello! 😺
+            explanationUzbek = """Sinfga kirdingiz va tanish odamni ko‘rdingiz. “Hello!” deb salom bering.
 
-Hello — har doim ishlaydi.
-Ertalab ham, kechqurun ham. Tamom.
-
-Ovoz chiqarib aytamiz: HE-LLO.
-Katta ovoz bilan: HELLO! 🗣️""",
-            wrapUpSummaryUzbek = """Hello — salom!
-Hello, mom! — Salom, ona!
-Hello, cat! — Salom, mushuk!
-
-Bugun siz Hello deb aytishni o‘rgandingiz.
-Uyda 3 kishiga “Hello!” deb ayting.
-Keyingi darsda — “My name is...” — ismingizni aytamiz! 👋""",
+Kimga murojaat qilayotganingizni aytsangiz, nomini qo‘shing: “Hello, Dad!”
+Misollarni tinglang va o‘zingiz takrorlang.""",
+            wrapUpSummaryUzbek = """Hello! — Salom!
+Bugun bir kishiga “Hello!” deb salom bering. Suhbatni boshlash uchun shu bitta so‘z yetadi.""",
             isUnlocked = true,
             isCompleted = false
         ),
@@ -95,14 +84,14 @@ Keyingi darsda — “My name is...” — ismingizni aytamiz! 👋""",
             titleUzbek = "2-Dars: My name is...",
             objectiveUzbek = "Ism aytish mavzusini o‘rganish va amalda qo‘llash.",
             explanationUzbek = """My name is... — bu “Mening ismim...” degani.
-Sizni tanishtirmoqchi bo‘lsangiz — shunday deysiz.
+O‘zingizni tanishtirmoqchi bo‘lsangiz — shunday deysiz.
 
 My name is Aziz. — Mening ismim Aziz.
 My name is Laylo. — Mening ismim Laylo.
 
-My — mening. Name — ism. Is — “...dir”. Tamom.
+My name is dan keyin ismingizni ayting.
 
-Ovoz chiqarib: MY NAME IS A-ZIZ.""",
+Misolni tinglang, keyin Aziz o‘rniga o‘z ismingizni ayting.""",
             wrapUpSummaryUzbek = """My name is... — mening ismim...
 Bugun siz ismingizni aytishni o‘rgandingiz.
 Onangizga ayting: “My name is ___.”
@@ -1010,14 +999,14 @@ Kimnidir urib yuborsangiz — I am sorry. Tamom.""",
             id = DARS_47_SECTION_ID,
             topicId = CurriculumLevel.A0.topicId,
             orderIndex = 47,
-            titleEnglish = "Good bye",
-            titleUzbek = "47-Dars: Good bye",
+            titleEnglish = "Goodbye",
+            titleUzbek = "47-Dars: Goodbye",
             objectiveUzbek = "Xayr mavzusini o‘rganish va amalda qo‘llash.",
-            explanationUzbek = """Good bye — bu “Xayr” degani.
+            explanationUzbek = """Goodbye — bu “Xayr” degani.
 
-Uydan chiqayotganda — Good bye!
-Do‘st bilan xayrlashganda — Good bye! Tamom.""",
-            wrapUpSummaryUzbek = """Good bye. Uydan chiqib: “Good bye, mom!” 👋""",
+Uydan chiqayotganda — Goodbye!
+Do‘st bilan xayrlashganda — Goodbye! Tamom.""",
+            wrapUpSummaryUzbek = """Goodbye. Uydan chiqib: “Goodbye, mom!” 👋""",
             isUnlocked = false,
             isCompleted = false
         ),
@@ -1140,7 +1129,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             englishWord = "hello",
             uzbekTranslation = "salom",
             exampleEnglish = "Hello, friend!",
-            exampleUzbek = "Salom, do'st!"
+            exampleUzbek = "Salom, do‘stim!"
         ),
         VocabularyEntity(
             id = "v_a0_01_02",
@@ -1167,7 +1156,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             englishWord = "hello, friend!",
             uzbekTranslation = "salom, do'st!",
             exampleEnglish = "Hello, friend!",
-            exampleUzbek = "Salom, do'st!"
+            exampleUzbek = "Salom, do‘stim!"
         ),
         VocabularyEntity(
             id = "v_a0_02_01",
@@ -2892,27 +2881,27 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             id = "v_a0_47_01",
             topicId = CurriculumLevel.A0.topicId,
             sectionId = DARS_47_SECTION_ID,
-            englishWord = "good bye",
+            englishWord = "goodbye",
             uzbekTranslation = "xayr",
-            exampleEnglish = "Good bye, see you!",
+            exampleEnglish = "Goodbye, see you!",
             exampleUzbek = "Xayr, ko'rishguncha!"
         ),
         VocabularyEntity(
             id = "v_a0_47_02",
             topicId = CurriculumLevel.A0.topicId,
             sectionId = DARS_47_SECTION_ID,
-            englishWord = "good bye, mom!",
+            englishWord = "goodbye, mom!",
             uzbekTranslation = "xayr, ona!",
-            exampleEnglish = "Good bye, mom, have a nice day!",
+            exampleEnglish = "Goodbye, mom, have a nice day!",
             exampleUzbek = "Xayr, ona, yaxshi kun tilayman!"
         ),
         VocabularyEntity(
             id = "v_a0_47_03",
             topicId = CurriculumLevel.A0.topicId,
             sectionId = DARS_47_SECTION_ID,
-            englishWord = "good bye, friend!",
+            englishWord = "goodbye, friend!",
             uzbekTranslation = "xayr, do'st!",
-            exampleEnglish = "Good bye, friend, see you tomorrow!",
+            exampleEnglish = "Goodbye, friend, see you tomorrow!",
             exampleUzbek = "Xayr, do'st, ertagacha!"
         ),
         VocabularyEntity(
@@ -3121,7 +3110,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             topicId = CurriculumLevel.A0.topicId,
             sectionId = DARS_1_SECTION_ID,
             titleUzbek = "Hello salomlashish so'zi",
-            explanationUzbek = """Hello — har doim va hamma bilan salomlashish uchun ishlatiladi.""",
+            explanationUzbek = """Hello — uchrashganda salom berish uchun ishlatiladi.""",
             exampleEnglish = "Hello!",
             exampleUzbek = "Salom!",
             associatedVocabularyIdsCsv = "",
@@ -3673,8 +3662,8 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             topicId = CurriculumLevel.A0.topicId,
             sectionId = DARS_47_SECTION_ID,
             titleUzbek = "Xayrlashuv so'zi",
-            explanationUzbek = """Good bye — xayrlashayotganda aytiladi: Good bye, mom!""",
-            exampleEnglish = "Good bye!",
+            explanationUzbek = """Goodbye — xayrlashayotganda aytiladi: Goodbye, mom!""",
+            exampleEnglish = "Goodbye!",
             exampleUzbek = "Xayr!",
             associatedVocabularyIdsCsv = "",
             isStudied = false,
@@ -3778,12 +3767,12 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "Onangizga nima deysiz?",
+            promptText = "Dadamga salom berdim. Qaysi gapni aytdim?",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "Hello, mom!",
-            optionsPipeSeparated = "Hello, mom!|Hello, dad!|Hello, cat!",
-            correctAnswer = "Hello, mom!",
-            explanationUzbek = """Mom — ona. Onaga 'Hello, mom!' deyiladi.""",
+            audioTextToSpeak = null,
+            optionsPipeSeparated = "Hello, Dad!|Hello, Mom!|Goodbye, Dad!",
+            correctAnswer = "Hello, Dad!",
+            explanationUzbek = "Dad — dada. Hello bilan salom beramiz.",
             vocabularyIdsCsv = "v_a0_01_01",
             grammarRuleIdsCsv = "g_a0_01_01"
         ),
@@ -3794,12 +3783,12 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "Mushukka nima deysiz?",
+            promptText = "Sinfga kirib, do‘stingizga duch keldingiz. Suhbatni qaysi so‘z bilan boshlaysiz?",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "Hello, cat!",
-            optionsPipeSeparated = "Hello, dog!|Hello, cat!|Hello, mom!",
-            correctAnswer = "Hello, cat!",
-            explanationUzbek = """Cat — mushuk. Mushukka 'Hello, cat!' deyiladi.""",
+            audioTextToSpeak = null,
+            optionsPipeSeparated = "Hello!|Goodbye!|Thanks!",
+            correctAnswer = "Hello!",
+            explanationUzbek = "Hello! — uchrashganda aytiladigan salom.",
             vocabularyIdsCsv = "v_a0_01_01",
             grammarRuleIdsCsv = "g_a0_01_01"
         ),
@@ -5957,7 +5946,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             promptText = "Ovoz chiqarib ayting:",
             subPromptText = "To‘g‘ri javobni tanlang:",
             audioTextToSpeak = "I am sorry!",
-            optionsPipeSeparated = "I am sorry!|Hello!|Good bye!",
+            optionsPipeSeparated = "I am sorry!|Hello!|Goodbye!",
             correctAnswer = "I am sorry!",
             explanationUzbek = """I am sorry!""",
             vocabularyIdsCsv = "v_a0_46_01",
@@ -5970,12 +5959,12 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             practiceCategory = "SECTION_QUIZ",
             exerciseType = "MULTIPLE_CHOICE",
             difficulty = 1,
-            promptText = "“Good bye” nima?",
+            promptText = "“Goodbye” nima?",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "Good bye",
+            audioTextToSpeak = "Goodbye",
             optionsPipeSeparated = "salom|xayr",
             correctAnswer = "xayr",
-            explanationUzbek = """Good bye — xayr.""",
+            explanationUzbek = """Goodbye — xayr.""",
             vocabularyIdsCsv = "v_a0_47_01",
             grammarRuleIdsCsv = "g_a0_47_01"
         ),
@@ -5988,10 +5977,10 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             difficulty = 1,
             promptText = "Bo‘sh joy: Good ______, mom!",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "Good bye, mom!",
+            audioTextToSpeak = "Goodbye, mom!",
             optionsPipeSeparated = "bye|hello|night",
             correctAnswer = "bye",
-            explanationUzbek = """Good bye — xayr.""",
+            explanationUzbek = """Goodbye — xayr.""",
             vocabularyIdsCsv = "v_a0_47_01",
             grammarRuleIdsCsv = "g_a0_47_01"
         ),
@@ -6004,10 +5993,10 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             difficulty = 1,
             promptText = "Do'st bilan xayrlashish:",
             subPromptText = "To‘g‘ri javobni tanlang:",
-            audioTextToSpeak = "Good bye, friend!",
-            optionsPipeSeparated = "Good bye, friend!|Hello, friend!|Thank you, friend!",
-            correctAnswer = "Good bye, friend!",
-            explanationUzbek = """Good bye, friend!""",
+            audioTextToSpeak = "Goodbye, friend!",
+            optionsPipeSeparated = "Goodbye, friend!|Hello, friend!|Thank you, friend!",
+            correctAnswer = "Goodbye, friend!",
+            explanationUzbek = """Goodbye, friend!""",
             vocabularyIdsCsv = "v_a0_47_01",
             grammarRuleIdsCsv = "g_a0_47_01"
         ),
@@ -6497,7 +6486,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
         DARS_1_SECTION_ID -> listOf(
             CurriculumSeedData.LessonExampleSeed("Hello!", "Hello", "", "Salom!", "Salom"),
             CurriculumSeedData.LessonExampleSeed("Hello, mom!", "Hello", "mom", "Salom, ona!", "ona"),
-            CurriculumSeedData.LessonExampleSeed("Hello, cat!", "Hello", "cat", "Salom, mushuk!", "mushuk")
+            CurriculumSeedData.LessonExampleSeed("Hello, Dad!", "Hello", "Dad", "Salom, dada!", "dada")
         )
         DARS_2_SECTION_ID -> listOf(
             CurriculumSeedData.LessonExampleSeed("My name is Aziz.", "My name", "Aziz", "Mening ismim Aziz.", "Aziz"),
@@ -6725,9 +6714,9 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
             CurriculumSeedData.LessonExampleSeed("I am sorry, mom.", "I am sorry", "mom", "Kechirasiz, ona.", "Kechirasiz")
         )
         DARS_47_SECTION_ID -> listOf(
-            CurriculumSeedData.LessonExampleSeed("Good bye!", "Good bye", "", "Xayr!", "Xayr"),
-            CurriculumSeedData.LessonExampleSeed("Good bye, mom!", "Good bye", "mom", "Xayr, ona!", "ona"),
-            CurriculumSeedData.LessonExampleSeed("Good bye, friend!", "Good bye", "friend", "Xayr, do'st!", "do'st")
+            CurriculumSeedData.LessonExampleSeed("Goodbye!", "Goodbye", "", "Xayr!", "Xayr"),
+            CurriculumSeedData.LessonExampleSeed("Goodbye, mom!", "Goodbye", "mom", "Xayr, ona!", "ona"),
+            CurriculumSeedData.LessonExampleSeed("Goodbye, friend!", "Goodbye", "friend", "Xayr, do'st!", "do'st")
         )
         DARS_48_SECTION_ID -> listOf(
             CurriculumSeedData.LessonExampleSeed("My pet is a cat.", "My pet is", "cat", "Mening uy hayvonim mushuk.", "mushuk"),
@@ -6757,7 +6746,7 @@ Tabriklaymiz! A0 kursini a'lo darajada yakunladingiz! 🎉""",
         DARS_53_SECTION_ID -> listOf(
             CurriculumSeedData.LessonExampleSeed("Hello! My name is Aziz.", "Hello", "Aziz", "Salom! Mening ismim Aziz.", "Aziz"),
             CurriculumSeedData.LessonExampleSeed("I am happy. I have a ball.", "happy", "ball", "Men baxtliman. Menda to'p bor.", "to'p"),
-            CurriculumSeedData.LessonExampleSeed("I go to school. Good bye!", "go to", "Good bye", "Men maktabga boraman. Xayr!", "Xayr")
+            CurriculumSeedData.LessonExampleSeed("I go to school. Goodbye!", "go to", "Goodbye", "Men maktabga boraman. Xayr!", "Xayr")
         )
         else -> null
     }

@@ -74,6 +74,28 @@ interface TalkMeDao {
         if (grammarRules.isNotEmpty()) insertGrammarRulesIgnore(grammarRules)
         if (exercises.isNotEmpty()) insertExercisesIgnore(exercises)
         if (achievements.isNotEmpty()) insertAchievementsIgnore(achievements)
+
+        // Refresh edited beginner content on existing installations while retaining learner state.
+        val beginnerTopics = setOf("level_a0", "level_a1")
+        val savedSections = getAllSectionsOnce().associateBy { it.id }
+        insertSections(sections.filter { it.topicId in beginnerTopics }.map { seed ->
+            val saved = savedSections.getValue(seed.id)
+            seed.copy(isUnlocked = saved.isUnlocked, isCompleted = saved.isCompleted)
+        })
+        val savedWords = getAllVocabularyOnce().associateBy { it.id }
+        updateVocabularyContent(vocabulary.filter { it.topicId in beginnerTopics }.mapNotNull { seed ->
+            savedWords[seed.id]?.let { saved ->
+                saved.copy(uzbekTranslation = seed.uzbekTranslation, exampleEnglish = seed.exampleEnglish,
+                    exampleUzbek = seed.exampleUzbek)
+            }
+        })
+        val savedRules = beginnerTopics.flatMap { getGrammarRulesByTopicOnce(it) }.associateBy { it.id }
+        insertGrammarRules(grammarRules.filter { it.topicId in beginnerTopics }.map { seed ->
+            val saved = savedRules.getValue(seed.id)
+            seed.copy(isStudied = saved.isStudied, isMastered = saved.isMastered)
+        })
+        insertExercises(exercises.filter { it.topicId in beginnerTopics })
+
     }
 
 
@@ -127,6 +149,9 @@ interface TalkMeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertVocabulary(items: List<VocabularyEntity>)
+
+    @androidx.room.Update
+    suspend fun updateVocabularyContent(items: List<VocabularyEntity>)
 
     @Query("SELECT * FROM vocabulary WHERE sectionId = :sectionId")
     fun observeVocabularyBySection(sectionId: String): Flow<List<VocabularyEntity>>

@@ -313,12 +313,22 @@ class CurriculumResetTest {
 
             primaryCta.performClick()
             waitUntil { lessonView.findViewById<View>(R.id.layoutStageMashqlar).visibility == View.VISIBLE }
-            assertEquals("1 / 3", lessonView.findViewById<TextView>(R.id.tvStageHeaderBadge).text.toString())
-            primaryCta.performClick()
-            waitUntil { lessonView.findViewById<TextView>(R.id.tvStageHeaderBadge).text.toString() == "2 / 3" }
-            primaryCta.performClick()
-            waitUntil { lessonView.findViewById<TextView>(R.id.tvStageHeaderBadge).text.toString() == "3 / 3" }
-            primaryCta.performClick()
+            val optionViews = listOf(
+                R.id.tvOption1Text to R.id.btnOption1,
+                R.id.tvOption2Text to R.id.btnOption2,
+                R.id.tvOption3Text to R.id.btnOption3
+            )
+            listOf("salom", "Hello, Dad!", "Hello!").forEachIndexed { index, answer ->
+                waitUntil {
+                    lessonView.findViewById<TextView>(R.id.tvStageHeaderBadge)
+                        .text.toString() == "${index + 1} / 3"
+                }
+                val (_, buttonId) = optionViews.single { (labelId, _) ->
+                    lessonView.findViewById<TextView>(labelId).text.toString() == answer
+                }
+                lessonView.findViewById<View>(buttonId).performClick()
+                primaryCta.performClick()
+            }
             waitUntil { lessonView.findViewById<View>(R.id.layoutStageWrapUp).visibility == View.VISIBLE }
             assertEquals(View.GONE, lessonView.findViewById<View>(R.id.tvWrapUpExtendedSummary).visibility)
             primaryCta.performClick()

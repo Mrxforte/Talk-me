@@ -11,13 +11,16 @@ import org.junit.Test
 class IntegrationFlowTest {
     private val introductoryTopics = setOf(CurriculumLevel.A0.topicId, CurriculumLevel.A1.topicId)
 
-    @Test fun a2HasSixtyCompleteSeededLessons() {
-        val topic = CurriculumLevel.A2.topicId
-        val sections = CurriculumSeedData.buildSections().filter { it.topicId == topic }
+    @Test fun a2AndB1HaveSixtyCompleteSeededLessonsEach() {
+        val topics = setOf(CurriculumLevel.A2.topicId, CurriculumLevel.B1.topicId)
+        val sections = CurriculumSeedData.buildSections().filter { it.topicId in topics }
         val allWords = CurriculumSeedData.buildVocabulary()
         val words = allWords.groupBy { it.sectionId }
         val exercises = CurriculumSeedData.buildExercises().groupBy { it.sectionId }
-        assertEquals((1..60).toList(), sections.map { it.orderIndex })
+        assertEquals(topics, sections.map { it.topicId }.toSet())
+        sections.groupBy { it.topicId }.values.forEach { level ->
+            assertEquals((1..60).toList(), level.map { it.orderIndex })
+        }
         assertEquals(allWords.size, allWords.distinctBy { it.englishWord.lowercase() }.size)
         sections.forEach { lesson ->
             assertTrue(lesson.explanationUzbek.isNotBlank())

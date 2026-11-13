@@ -250,7 +250,8 @@ class CurriculumResetTest {
             assertTrue(lessonsView.findViewById<View>(R.id.btnHeroContinue).isEnabled)
             assertNull(findFirstChipGroup(lessonsView))
             val topicsRv = lessonsView.findViewById<RecyclerView>(R.id.rvTopics)
-            assertEquals(1, topicsRv.adapter?.itemCount)
+            waitUntil { topicsRv.adapter?.itemCount == 7 }
+            assertEquals(7, topicsRv.adapter?.itemCount)
 
             // 3. Practice tab + Listening exercise session from curriculum content
             navController.navigate(R.id.practiceFragment)

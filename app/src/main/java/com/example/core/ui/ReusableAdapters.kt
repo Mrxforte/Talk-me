@@ -25,6 +25,19 @@ import com.example.domain.model.TopicModel
 import com.example.domain.model.UnlockStatus
 import com.example.domain.model.VocabularyModel
 
+internal fun curriculumLevelName(context: android.content.Context, topic: TopicModel): String {
+    val name = when (CurriculumLevel.forTopic(topic.id)) {
+        CurriculumLevel.A0, null -> return topic.titleUzbek
+        CurriculumLevel.A1 -> R.string.level_beginner_english
+        CurriculumLevel.A2 -> R.string.level_elementary_english
+        CurriculumLevel.B1 -> R.string.level_intermediate_english
+        CurriculumLevel.B2 -> R.string.level_upper_intermediate_english
+        CurriculumLevel.C1 -> R.string.level_advanced_english
+        CurriculumLevel.C2 -> R.string.level_proficiency_english
+    }
+    return context.getString(name)
+}
+
 /**
  * Reusable RecyclerView Adapter for the 12 curriculum topics.
  */
@@ -79,6 +92,9 @@ class TopicAdapter(
             nodeParams.height = (26 * density).toInt()
             binding.frameTimelineNode.layoutParams = nodeParams
 
+            val levelName = curriculumLevelName(binding.root.context, item)
+            val levelTitle = if (levelName == item.titleEnglish) levelName else
+                binding.root.context.getString(R.string.curriculum_level_title, item.titleEnglish, levelName)
             when (item.status) {
                 UnlockStatus.COMPLETED -> {
                     binding.layoutCardCompleted.visibility = View.VISIBLE
@@ -97,7 +113,7 @@ class TopicAdapter(
                         if (item.orderIndex == 1) R.drawable.img_curriculum_kirish
                         else TopicVisualArtwork.getTopicImageRes(item.id, item.orderIndex)
                     )
-                    binding.tvCompletedTitle.text = if (item.orderIndex == 1 && !item.titleUzbek.startsWith("A0")) "A0 • ${item.titleUzbek}" else item.titleUzbek
+                    binding.tvCompletedTitle.text = levelTitle
                     binding.tvCompletedBadge.text = "✓ Bajarildi"
                     binding.tvCompletedRangePill.text =
                         binding.root.context.getString(R.string.curriculum_lesson_count, item.completedSections, item.totalSections)
@@ -131,7 +147,7 @@ class TopicAdapter(
                         if (item.orderIndex <= 2) R.drawable.img_curriculum_salomlashish
                         else TopicVisualArtwork.getTopicImageRes(item.id, item.orderIndex)
                     )
-                    binding.tvActiveTitle.text = if (item.orderIndex == 1 && !item.titleUzbek.startsWith("A0")) "A0 • ${item.titleUzbek}" else item.titleUzbek
+                    binding.tvActiveTitle.text = levelTitle
 
                     val cefrCode = com.example.domain.model.CurriculumLevel.forTopic(item.id)?.name.orEmpty()
                     binding.tvActiveModulePill.text =
@@ -159,6 +175,10 @@ class TopicAdapter(
 
                 UnlockStatus.LOCKED -> {
                     binding.layoutCardLocked.visibility = View.VISIBLE
+                    binding.tvLockedTopicTitle.text = levelTitle
+                    binding.tvLockedTopicCount.text = binding.root.context.getString(
+                        R.string.curriculum_lesson_count, item.completedSections, item.totalSections
+                    )
 
                     binding.lineTopConnector.visibility = View.VISIBLE
                     binding.lineTopConnector.setLineStyle(blueColor, dashed = false)
@@ -170,18 +190,10 @@ class TopicAdapter(
                     binding.ivTimelineNodeIcon.setImageResource(R.drawable.ic_lock)
                     binding.ivTimelineNodeIcon.setColorFilter(android.graphics.Color.parseColor("#CBD5E1"))
 
-                    val triggerLockFunAnimation = View.OnClickListener {
-                        LockStarBurstAnimator.playLockTapStarBurst(
-                            cardView = binding.layoutCardLocked,
-                            lockCenterView = binding.layoutLockMedallion,
-                            particleContainer = binding.containerTopicImageFrame
-                        ) {
-                            onTopicClick(item)
-                        }
-                    }
-                    binding.cardTopic.setOnClickListener(triggerLockFunAnimation)
-                    binding.layoutCardLocked.setOnClickListener(triggerLockFunAnimation)
-                    binding.layoutLockMedallion.setOnClickListener(triggerLockFunAnimation)
+                    val openLevel = View.OnClickListener { onTopicClick(item) }
+                    binding.cardTopic.setOnClickListener(openLevel)
+                    binding.layoutCardLocked.setOnClickListener(openLevel)
+                    binding.layoutLockMedallion.setOnClickListener(openLevel)
                 }
             }
         }
@@ -227,41 +239,7 @@ class SectionAdapter(
             }
             binding.ivSectionArtwork.setImageResource(bannerRes)
 
-            val cleanLessonTitle = when {
-                item.id == "sec_a0_01" -> "Welcome to TalkMe"
-                item.id == "sec_a0_02" -> "Lera and talkme"
-                item.id == "sec_a0_03" -> "A cup, an apple"
-                item.id == "sec_a0_04" -> "A book and a cup"
-                item.id == "sec_a0_05" -> "This and that"
-                item.id == "sec_a0_06" -> "These and those"
-                item.id == "sec_a0_07" -> "I have a book"
-                item.id == "sec_a0_08" -> "Have I got a book?"
-                item.id == "sec_a0_09" -> "I have not got a book"
-                item.id == "sec_a0_10" -> "One, two, three — 1 dan 10 gacha"
-                item.id == "sec_a0_11" -> "I have three books"
-                item.id == "sec_a0_12" -> "I have a book, but I have no cups"
-                item.id == "sec_a0_13" -> "Counting the Tigers — Sanoq sonlar"
-                item.id == "sec_a0_14" -> "The first tiger — Tartib sonlar"
-                item.id == "sec_a0_15" -> "Here is a boy"
-                item.id == "sec_a0_16" -> "Here are two boys"
-                item.id == "sec_a0_17" -> "There is a boy"
-                item.id == "sec_a0_18" -> "There are two boys"
-                item.id == "sec_a0_19" -> "My room"
-                item.id == "sec_a0_20" -> "I am a boy"
-                item.id == "sec_a0_21" -> "He is a boy, she is a girl"
-                item.id == "sec_a0_22" -> "Am I a boy?"
-                item.id == "sec_a0_23" -> "I am not a boy"
-                item.id == "sec_01_01" || (item.topicId == "topic_01_introduction" && item.orderIndex == 1) ->
-                    "Welcome to TalkMe"
-                item.id == "sec_01_02" || (item.topicId == "topic_01_introduction" && item.orderIndex == 2) ->
-                    "TalkMe qanday ishlaydi?"
-                item.id == "sec_01_03" || (item.topicId == "topic_01_introduction" && item.orderIndex == 3) ->
-                    "Hello! Hi!"
-                CurriculumLevel.forTopic(item.topicId)?.let { it >= CurriculumLevel.A2 } == true -> item.titleEnglish
-                else -> item.titleUzbek
-                    .replace(Regex("^\\d+-Dars:\\s*", RegexOption.IGNORE_CASE), "")
-                    .ifBlank { item.titleEnglish }
-            }
+            val cleanLessonTitle = item.titleEnglish.ifBlank { item.titleUzbek }
 
             val lessonDurationText = when {
                 item.id == "sec_a0_02" || item.id == "sec_a0_03" || item.id == "sec_a0_04" ||
@@ -347,6 +325,9 @@ class SectionAdapter(
 
                     binding.layoutSectionUnlockedCard.visibility = View.GONE
                     binding.layoutSectionMysteryOverlay.visibility = View.VISIBLE
+                    binding.tvLockedSectionTitle.text = binding.root.context.getString(
+                        R.string.curriculum_locked_lesson_title, item.orderIndex, cleanLessonTitle
+                    )
                     binding.cardSection.alpha = 1.0f
 
                     val triggerSectionLockAnimation = View.OnClickListener {

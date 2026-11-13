@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:letterSpacing="-0.01"
-            android:text="O‘quv yo‘li"
+            android:text="@string/curriculum_general_english"
             android:textColor="#FFFFFF"
             android:textSize="26sp"
             android:textStyle="bold" />

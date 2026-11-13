@@ -394,4 +394,13 @@
     <string name="lesson_self_write_am_not_3_hint">It is not ______ (masalan: It is not a tiger)</string>
     <string name="lesson_self_write_am_not_helper">1-qatorga “I am not...”, 2-qatorga “He is not...”, 3-qatorga “It is not...” inkor gaplarini yozing va “Tekshirish” tugmasini bosing.</string>
     <string name="lesson_self_write_am_not_error">1-qatorga “I am not...”, 2-qatorga “He is not...”, 3-qatorga “It is not...” inkor gaplarini to‘g‘ri yozing.</string>
+    <string name="level_beginner_english">Beginner English</string>
+    <string name="level_elementary_english">Elementary English</string>
+    <string name="level_intermediate_english">Intermediate English</string>
+    <string name="level_upper_intermediate_english">Upper Intermediate English</string>
+    <string name="level_advanced_english">Advanced English</string>
+    <string name="level_proficiency_english">Proficiency English</string>
+    <string name="curriculum_level_title">%1$s · %2$s</string>
+    <string name="curriculum_locked_lesson_title">%1$d. %2$s</string>
+    <string name="curriculum_general_english">General English</string>
 </resources>

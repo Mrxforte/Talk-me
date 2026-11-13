@@ -20,6 +20,7 @@ import com.example.core.common.AppConstants
 import com.example.core.ui.ProgressAnimator.animateProgressTo
 import com.example.core.ui.ProgressAnimator.replayAllProgressFromZero
 import com.example.core.ui.SectionAdapter
+import com.example.core.ui.curriculumLevelName
 import com.example.core.ui.TopicAdapter
 import com.example.databinding.FragmentLessonsBinding
 import com.example.databinding.FragmentTopicDetailBinding
@@ -152,7 +153,7 @@ class LessonsFragment : Fragment() {
     private val viewModel: LessonsViewModel by viewModels()
     private var allTopicsCache: List<TopicModel> = emptyList()
     private val topicAdapter = TopicAdapter { topic ->
-        if (topic.status != UnlockStatus.LOCKED && topic.totalSections > 0) {
+        if (topic.totalSections > 0) {
             findNavController().navigate(R.id.topicDetailFragment,
                 bundleOf(AppConstants.ARG_TOPIC_ID to topic.id))
         } else {
@@ -191,7 +192,7 @@ class LessonsFragment : Fragment() {
                 viewModel.topics.collect { topicList ->
                     allTopicsCache = topicList
                     bindTopHeroSummary(topicList)
-                    topicAdapter.submitList(topicList.filter { it.status != UnlockStatus.LOCKED })
+                    topicAdapter.submitList(topicList)
                 }
             }
         }
@@ -202,14 +203,14 @@ class LessonsFragment : Fragment() {
             ?: topicList.lastOrNull { it.status == UnlockStatus.COMPLETED }
         val hasLessons = active != null && active.totalSections > 0
         binding.tvHeroLevelBadge.text = active?.titleEnglish.orEmpty()
-        binding.tvHeroLevelTitle.text = active?.titleUzbek.orEmpty()
+        binding.tvHeroLevelTitle.text = active?.let { curriculumLevelName(requireContext(), it) }.orEmpty()
         binding.tvHeroLessonCount.text = getString(R.string.curriculum_lesson_count,
             active?.completedSections ?: 0, active?.totalSections ?: 0)
         binding.progressHeroLevel.animateProgressTo(
             targetProgress = active?.completedSections ?: 0,
             maxValue = (active?.totalSections ?: 0).coerceAtLeast(1)
         )
-        binding.tvHeroNextLesson.text = if (hasLessons) active?.titleUzbek
+        binding.tvHeroNextLesson.text = if (hasLessons) active?.let { curriculumLevelName(requireContext(), it) }
             else getString(R.string.curriculum_empty)
         binding.btnHeroContinue.isEnabled = hasLessons
         binding.cardLevelSummary.isClickable = hasLessons
@@ -301,11 +302,11 @@ class TopicDetailFragment : Fragment() {
                     viewModel.selectedTopic.collect { topic ->
                         if (topic != null) {
                             val cefrCode = com.example.domain.model.CurriculumLevel.forTopic(topic.id)?.name.orEmpty()
-                            binding.tvSubtopicTopTitle.text = topic.titleUzbek
+                            binding.tvSubtopicTopTitle.text = curriculumLevelName(requireContext(), topic)
                             binding.tvSubtopicTopSubtitle.text = getString(R.string.curriculum_lesson_count,
                                 topic.completedSections, topic.totalSections)
                             binding.tvSubtopicLevelBadge.text = cefrCode
-                            binding.tvSubtopicHeroTitle.text = topic.titleUzbek
+                            binding.tvSubtopicHeroTitle.text = binding.tvSubtopicTopTitle.text
                             binding.tvSubtopicHeroCount.text = binding.tvSubtopicTopSubtitle.text
                             binding.progressSubtopicBar.animateProgressTo(topic.progressPercent, maxValue = 100)
 

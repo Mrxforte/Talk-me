@@ -77,7 +77,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="94dp"
-                app:cardBackgroundColor="#152544"
+                app:cardBackgroundColor="@color/color_cosmic_card"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
@@ -210,7 +210,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="Davom etish"
-                        android:textColor="#081426"
+                        android:textColor="@color/color_curriculum_on_accent"
                         android:textSize="12.5sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -225,10 +225,10 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:visibility="gone"
-            app:cardBackgroundColor="#1B193E"
+            app:cardBackgroundColor="@color/color_cosmic_card"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
-            app:strokeColor="#3A4370"
+            app:strokeColor="@color/color_cosmic_card_stroke"
             app:strokeWidth="1.5dp">
 
             <FrameLayout
@@ -262,6 +262,24 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/img_subtopic_lock_medallion" />
                 </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical"
+                    android:background="@color/color_curriculum_label_scrim"
+                    android:paddingHorizontal="@dimen/spacing_medium"
+                    android:paddingVertical="@dimen/spacing_xs">
+                    <TextView
+                        android:id="@+id/tvLockedSectionTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:textColor="@color/color_curriculum_text" />
+                </LinearLayout>
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
 

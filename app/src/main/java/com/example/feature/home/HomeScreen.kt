@@ -140,12 +140,15 @@ class HomeFragment : Fragment() {
                     binding.tvHeroSectionName.text = if (cont.hasStarted && cont.currentSectionTitle.isNotBlank()) {
                         cont.currentSectionTitle
                     } else {
-                        "1-Dars: Welcome to TalkMe\n(Xush kelibsiz — TalkMe bilan tanishuv)"
+                        getString(R.string.curriculum_empty)
                     }
                     binding.progressHero.progress = cont.progressPercent
                     binding.tvHeroProgressPercent.text = "${cont.progressPercent}% completed"
 
+                    val hasLesson = cont.currentSectionId.isNotBlank()
+                    binding.btnContinueLearning.isEnabled = hasLesson
                     val openContinueLesson = View.OnClickListener {
+                        if (!hasLesson) return@OnClickListener
                         findNavController().navigate(
                             R.id.lessonDetailFragment,
                             bundleOf(

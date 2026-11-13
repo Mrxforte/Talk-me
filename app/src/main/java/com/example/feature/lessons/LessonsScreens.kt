@@ -39,10 +39,10 @@ import kotlinx.coroutines.launch
 data class CurrentLessonProgressState(
     val activeTopicId: String = AppConstants.INITIAL_TOPIC_ID,
     val activeSectionId: String = AppConstants.INITIAL_SECTION_ID,
-    val activeTopicTitle: String = "A1.1 • Kirish",
-    val activeSectionTitle: String = "1-Dars: Welcome to TalkMe",
+    val activeTopicTitle: String = "",
+    val activeSectionTitle: String = "",
     val completedLessonsCount: Int = 0,
-    val totalLessonsCount: Int = 400
+    val totalLessonsCount: Int = 0
 )
 
 @HiltViewModel
@@ -148,35 +148,14 @@ class LessonsFragment : Fragment() {
 
     private val viewModel: LessonsViewModel by viewModels()
     private var allTopicsCache: List<TopicModel> = emptyList()
-    private var selectedCefrFilter: String = "ALL"
-
     private val topicAdapter = TopicAdapter { topic ->
-        when {
-            topic.id == "milestone_a1_final_exam" -> {
-                Toast.makeText(
-                    requireContext(),
-                    "A1 yakuniy sinovni ochish uchun A1 bo'limlarini tugating 🏆",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            topic.status == UnlockStatus.LOCKED -> {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.topic_locked_toast),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            else -> {
-                val targetTopicId = if (topic.id == "topic_01_kirish_intro") {
-                    AppConstants.INITIAL_TOPIC_ID
-                } else {
-                    topic.id
-                }
-                findNavController().navigate(
-                    R.id.topicDetailFragment,
-                    bundleOf(AppConstants.ARG_TOPIC_ID to targetTopicId)
-                )
-            }
+        if (topic.status != UnlockStatus.LOCKED && topic.totalSections > 0) {
+            findNavController().navigate(R.id.topicDetailFragment,
+                bundleOf(AppConstants.ARG_TOPIC_ID to topic.id))
+        } else {
+            Toast.makeText(requireContext(), getString(
+                if (topic.status == UnlockStatus.LOCKED) R.string.topic_locked_toast
+                else R.string.curriculum_empty), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -197,189 +176,38 @@ class LessonsFragment : Fragment() {
 
         val continueClickListener = View.OnClickListener {
             val activeTopic = allTopicsCache.firstOrNull { it.status == UnlockStatus.AVAILABLE }
-                ?: allTopicsCache.firstOrNull()
-            val targetId = activeTopic?.id ?: AppConstants.INITIAL_TOPIC_ID
-            findNavController().navigate(
-                R.id.topicDetailFragment,
-                bundleOf(AppConstants.ARG_TOPIC_ID to targetId)
-            )
+                ?.takeIf { it.totalSections > 0 } ?: return@OnClickListener
+            findNavController().navigate(R.id.topicDetailFragment,
+                bundleOf(AppConstants.ARG_TOPIC_ID to activeTopic.id))
         }
         binding.btnHeroContinue.setOnClickListener(continueClickListener)
         binding.cardLevelSummary.setOnClickListener(continueClickListener)
-
-        binding.chipGroupCefrLevel.setOnCheckedStateChangeListener { _, checkedIds ->
-            val checkedId = checkedIds.firstOrNull() ?: R.id.chipLevelAll
-            selectedCefrFilter = when (checkedId) {
-                R.id.chipLevelA0 -> "A0"
-                R.id.chipLevelA1 -> "A1"
-                R.id.chipLevelA2 -> "A2"
-                R.id.chipLevelB1 -> "B1"
-                R.id.chipLevelB2 -> "B2"
-                R.id.chipLevelC1C2 -> "C1_C2"
-                else -> "ALL"
-            }
-            bindTopHeroSummary(allTopicsCache)
-            applyCefrFilter()
-        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.topics.collect { topicList ->
                     allTopicsCache = topicList
                     bindTopHeroSummary(topicList)
-                    applyCefrFilter()
+                    topicAdapter.submitList(topicList.filter { it.status != UnlockStatus.LOCKED })
                 }
             }
         }
     }
 
     private fun bindTopHeroSummary(topicList: List<TopicModel>) {
-        when (selectedCefrFilter) {
-            "A0" -> {
-                val t = topicList.firstOrNull { it.orderIndex == 1 }
-                val comp = t?.completedSections ?: 0
-                binding.tvHeroLevelBadge.text = "A0"
-                binding.tvHeroLevelTitle.text = "A0 Kirish & Alifbo"
-                binding.tvHeroLessonCount.text = "$comp / 10 dars"
-                binding.progressHeroLevel.max = 10
-                binding.progressHeroLevel.progress = comp.coerceIn(1, 10)
-                binding.tvHeroNextLesson.text = "1-Dars: Welcome to TalkMe"
-            }
-            "A1" -> {
-                val a1Topics = topicList.filter { it.orderIndex in 2..9 }
-                val comp = a1Topics.sumOf { it.completedSections }
-                binding.tvHeroLevelBadge.text = "A1"
-                binding.tvHeroLevelTitle.text = "A1 Beginner"
-                binding.tvHeroLessonCount.text = "$comp / 100 dars"
-                binding.progressHeroLevel.max = 100
-                binding.progressHeroLevel.progress = comp
-                binding.tvHeroNextLesson.text = "Sonlar 1–20 (11-dars)"
-            }
-            "A2" -> {
-                val t = topicList.firstOrNull { it.orderIndex == 10 }
-                val comp = t?.completedSections ?: 0
-                binding.tvHeroLevelBadge.text = "A2"
-                binding.tvHeroLevelTitle.text = "A2 Elementary"
-                binding.tvHeroLessonCount.text = "$comp / 80 dars"
-                binding.progressHeroLevel.max = 80
-                binding.progressHeroLevel.progress = comp
-                binding.tvHeroNextLesson.text = "Continuous & Degrees (111-dars)"
-            }
-            "B1" -> {
-                val t = topicList.firstOrNull { it.orderIndex == 11 }
-                val comp = t?.completedSections ?: 0
-                binding.tvHeroLevelBadge.text = "B1"
-                binding.tvHeroLevelTitle.text = "B1 Intermediate"
-                binding.tvHeroLessonCount.text = "$comp / 80 dars"
-                binding.progressHeroLevel.max = 80
-                binding.progressHeroLevel.progress = comp
-                binding.tvHeroNextLesson.text = "Perfect & Passive (191-dars)"
-            }
-            "B2" -> {
-                val t = topicList.firstOrNull { it.orderIndex == 12 }
-                val comp = t?.completedSections ?: 0
-                binding.tvHeroLevelBadge.text = "B2"
-                binding.tvHeroLevelTitle.text = "B2 Upper-Intermediate"
-                binding.tvHeroLessonCount.text = "$comp / 66 dars"
-                binding.progressHeroLevel.max = 66
-                binding.progressHeroLevel.progress = comp
-                binding.tvHeroNextLesson.text = "Modals & Gerund (271-dars)"
-            }
-            "C1_C2" -> {
-                val t = topicList.firstOrNull { it.orderIndex == 13 }
-                val comp = t?.completedSections ?: 0
-                binding.tvHeroLevelBadge.text = "C2"
-                binding.tvHeroLevelTitle.text = "C1–C2 Advanced & Mastery"
-                binding.tvHeroLessonCount.text = "$comp / 64 dars"
-                binding.progressHeroLevel.max = 64
-                binding.progressHeroLevel.progress = comp
-                binding.tvHeroNextLesson.text = "Absolute & Inversion (337-dars)"
-            }
-            else -> {
-                val totalComp = topicList.sumOf { it.completedSections }
-                binding.tvHeroLevelBadge.text = "A0–C2"
-                binding.tvHeroLevelTitle.text = "Ingliz tili (A0–C2)"
-                binding.tvHeroLessonCount.text = "$totalComp / 400 dars"
-                binding.progressHeroLevel.max = 400
-                binding.progressHeroLevel.progress = totalComp.coerceAtLeast(1)
-
-                val activeTopic = topicList.firstOrNull { it.status == UnlockStatus.AVAILABLE }
-                binding.tvHeroNextLesson.text = if (activeTopic == null || activeTopic.orderIndex == 1) {
-                    "1-Dars: Welcome to TalkMe"
-                } else {
-                    activeTopic.titleUzbek
-                }
-            }
-        }
-    }
-
-    private fun applyCefrFilter() {
-        if (allTopicsCache.isEmpty()) {
-            topicAdapter.submitList(emptyList())
-            return
-        }
-
-        val filteredTopics = when (selectedCefrFilter) {
-            "A0" -> allTopicsCache.filter { it.orderIndex == 1 }
-            "A1" -> allTopicsCache.filter { it.orderIndex in 2..9 }
-            "A2" -> allTopicsCache.filter { it.orderIndex == 10 }
-            "B1" -> allTopicsCache.filter { it.orderIndex == 11 }
-            "B2" -> allTopicsCache.filter { it.orderIndex == 12 }
-            "C1_C2" -> allTopicsCache.filter { it.orderIndex == 13 }
-            else -> allTopicsCache
-        }
-
-        val timelineRows = mutableListOf<TopicModel>()
-        val topic1 = allTopicsCache.firstOrNull { it.orderIndex == 1 } ?: allTopicsCache.first()
-
-        if (selectedCefrFilter == "ALL" || selectedCefrFilter == "A0") {
-            if (topic1.status == UnlockStatus.AVAILABLE) {
-                // Completed Kirish intro row
-                timelineRows.add(
-                    topic1.copy(
-                        id = "topic_01_kirish_intro",
-                        orderIndex = 1,
-                        titleUzbek = "A0 • Kirish",
-                        totalSections = 10,
-                        completedSections = maxOf(4, topic1.completedSections),
-                        status = UnlockStatus.COMPLETED
-                    )
-                )
-                // Active Module row
-                timelineRows.add(
-                    topic1.copy(
-                        id = topic1.id,
-                        orderIndex = 1,
-                        titleUzbek = "Salomlashish va\ntanishuv",
-                        status = UnlockStatus.AVAILABLE
-                    )
-                )
-            } else {
-                timelineRows.add(topic1)
-            }
-        }
-
-        // Add remaining topics in the selected filter
-        val remaining = filteredTopics.filter { it.orderIndex != 1 || (selectedCefrFilter != "ALL" && selectedCefrFilter != "A0") }
-        timelineRows.addAll(remaining)
-
-        // For A1 and ALL filters, append the A1 Final Exam Milestone card
-        if (selectedCefrFilter == "A1" || selectedCefrFilter == "ALL") {
-            timelineRows.add(
-                TopicModel(
-                    id = "milestone_a1_final_exam",
-                    orderIndex = 99,
-                    titleEnglish = "A1 Final Exam",
-                    titleUzbek = "A1 yakuniy sinov",
-                    descriptionUzbek = "",
-                    totalSections = 10,
-                    completedSections = 0,
-                    status = UnlockStatus.LOCKED
-                )
-            )
-        }
-
-        topicAdapter.submitList(timelineRows)
+        val active = topicList.firstOrNull { it.status == UnlockStatus.AVAILABLE }
+            ?: topicList.lastOrNull { it.status == UnlockStatus.COMPLETED }
+        val hasLessons = active != null && active.totalSections > 0
+        binding.tvHeroLevelBadge.text = active?.titleEnglish.orEmpty()
+        binding.tvHeroLevelTitle.text = active?.titleUzbek.orEmpty()
+        binding.tvHeroLessonCount.text = getString(R.string.curriculum_lesson_count,
+            active?.completedSections ?: 0, active?.totalSections ?: 0)
+        binding.progressHeroLevel.max = (active?.totalSections ?: 0).coerceAtLeast(1)
+        binding.progressHeroLevel.progress = active?.completedSections ?: 0
+        binding.tvHeroNextLesson.text = if (hasLessons) active?.titleUzbek
+            else getString(R.string.curriculum_empty)
+        binding.btnHeroContinue.isEnabled = hasLessons
+        binding.cardLevelSummary.isClickable = hasLessons
     }
 
     override fun onDestroyView() {
@@ -452,30 +280,14 @@ class TopicDetailFragment : Fragment() {
                 launch {
                     viewModel.selectedTopic.collect { topic ->
                         if (topic != null) {
-                            val cefrCode = when (topic.orderIndex) {
-                                in 1..9 -> "A1"
-                                10 -> "A2"
-                                11 -> "B1"
-                                12 -> "B2"
-                                13 -> "C1"
-                                else -> "C2"
-                            }
-                            val isIntroTopic = topic.id == "topic_01_introduction" || topic.orderIndex == 1
-                            val topTitle = if (isIntroTopic) "Kirish" else topic.titleUzbek
-                            val totalDisp = if (isIntroTopic) 10 else topic.totalSections.coerceAtLeast(10)
-                            val completedDisp = if (isIntroTopic && topic.completedSections < 4) {
-                                4
-                            } else {
-                                topic.completedSections
-                            }
-
-                            binding.tvSubtopicTopTitle.text = topTitle
-                            binding.tvSubtopicTopSubtitle.text = "$cefrCode • 1–${totalDisp}-dars"
+                            val cefrCode = com.example.domain.model.CurriculumLevel.forTopic(topic.id)?.name.orEmpty()
+                            binding.tvSubtopicTopTitle.text = topic.titleUzbek
+                            binding.tvSubtopicTopSubtitle.text = getString(R.string.curriculum_lesson_count,
+                                topic.completedSections, topic.totalSections)
                             binding.tvSubtopicLevelBadge.text = cefrCode
-                            binding.tvSubtopicHeroTitle.text = if (isIntroTopic) "Kirish bo‘limi" else topic.titleUzbek
-                            binding.tvSubtopicHeroCount.text = "$completedDisp/$totalDisp dars bajarildi"
-                            binding.progressSubtopicBar.progress =
-                                ((completedDisp * 100) / totalDisp.coerceAtLeast(1)).coerceIn(8, 100)
+                            binding.tvSubtopicHeroTitle.text = topic.titleUzbek
+                            binding.tvSubtopicHeroCount.text = binding.tvSubtopicTopSubtitle.text
+                            binding.progressSubtopicBar.progress = topic.progressPercent
 
                             // Keep legacy header updated for any existing tests
                             binding.headerTopicDetail.tvHeaderTitle.text =
@@ -545,26 +357,7 @@ class TopicDetailFragment : Fragment() {
             allSectionsCache.filter { it.orderIndex in startOrder..endOrder }
         }
 
-        // When viewing Kirish (topic_01_introduction) on a fresh install (< 2 completed),
-        // present Lesson 1 & 2 as COMPLETED and Lesson 3 as AVAILABLE ("Hello! Hi!")
-        // to match the subtopic reference design pixel-for-pixel while keeping all 3 playable.
-        val completedCountInTopic = allSectionsCache.count { it.status == UnlockStatus.COMPLETED }
-        val displayList = if (
-            allSectionsCache.firstOrNull()?.topicId == "topic_01_introduction" &&
-            completedCountInTopic < 2
-        ) {
-            baseList.map { section ->
-                when (section.orderIndex) {
-                    1, 2 -> section.copy(status = UnlockStatus.COMPLETED)
-                    3 -> section.copy(status = UnlockStatus.AVAILABLE)
-                    else -> section.copy(status = UnlockStatus.LOCKED)
-                }
-            }
-        } else {
-            baseList
-        }
-
-        sectionAdapter.submitList(displayList)
+        sectionAdapter.submitList(baseList)
     }
 
     override fun onDestroyView() {

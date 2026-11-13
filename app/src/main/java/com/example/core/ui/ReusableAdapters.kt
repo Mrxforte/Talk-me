@@ -98,14 +98,14 @@ class TopicAdapter(
                     binding.tvCompletedTitle.text = if (item.orderIndex == 1 && !item.titleUzbek.startsWith("A0")) "A0 • ${item.titleUzbek}" else item.titleUzbek
                     binding.tvCompletedBadge.text = "✓ Bajarildi"
                     binding.tvCompletedRangePill.text =
-                        if (item.orderIndex == 1) "A0 • 1–10-dars" else "${item.totalSections} ta dars"
+                        binding.root.context.getString(R.string.curriculum_lesson_count, item.completedSections, item.totalSections)
 
-                    val shownCompleted = if (item.orderIndex == 1 && item.completedSections < 4) 4 else item.completedSections
-                    val shownTotal = if (item.totalSections <= 0) 10 else item.totalSections
+                    val shownCompleted = item.completedSections
+                    val shownTotal = item.totalSections.coerceAtLeast(1)
                     binding.tvCompletedProgressCount.text = "$shownCompleted/$shownTotal dars"
                     binding.progressCompletedBar.max = 100
                     binding.progressCompletedBar.progress =
-                        ((shownCompleted * 100) / shownTotal).coerceIn(42, 100)
+                        ((shownCompleted * 100) / shownTotal).coerceIn(0, 100)
 
                     binding.cardTopic.setOnClickListener { onTopicClick(item) }
                     binding.layoutCardCompleted.setOnClickListener { onTopicClick(item) }
@@ -128,14 +128,7 @@ class TopicAdapter(
                     )
                     binding.tvActiveTitle.text = if (item.orderIndex == 1 && !item.titleUzbek.startsWith("A0")) "A0 • ${item.titleUzbek}" else item.titleUzbek
 
-                    val cefrCode = when (item.orderIndex) {
-                        1 -> "A0"
-                        in 2..9 -> "A1"
-                        10 -> "A2"
-                        11 -> "B1"
-                        12 -> "B2"
-                        else -> "C1–C2"
-                    }
+                    val cefrCode = com.example.domain.model.CurriculumLevel.forTopic(item.id)?.name.orEmpty()
                     binding.tvActiveModulePill.text =
                         String.format("%s • %02d-modul", cefrCode, item.orderIndex)
 

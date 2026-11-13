@@ -15,6 +15,7 @@ import com.example.databinding.ItemGrammarRuleCardBinding
 import com.example.databinding.ItemSectionCardBinding
 import com.example.databinding.ItemTopicCardBinding
 import com.example.databinding.ItemVocabularyCardBinding
+import com.example.domain.model.CurriculumLevel
 import com.example.domain.model.AiTutorMessage
 import com.example.domain.model.GrammarRuleModel
 import com.example.domain.model.LearningActivityModel
@@ -256,6 +257,7 @@ class SectionAdapter(
                     "TalkMe qanday ishlaydi?"
                 item.id == "sec_01_03" || (item.topicId == "topic_01_introduction" && item.orderIndex == 3) ->
                     "Hello! Hi!"
+                CurriculumLevel.forTopic(item.topicId)?.let { it >= CurriculumLevel.A2 } == true -> item.titleEnglish
                 else -> item.titleUzbek
                     .replace(Regex("^\\d+-Dars:\\s*", RegexOption.IGNORE_CASE), "")
                     .ifBlank { item.titleEnglish }

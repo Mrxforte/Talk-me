@@ -72,6 +72,7 @@
     <string name="lesson_step_examples">5. English Examples &amp; Translations</string>
     <string name="lesson_step_exercises">6. Interactive Lesson Exercises</string>
     <string name="lesson_step_wrap_up">7. Wrap-up</string>
+    <string name="lesson_continuation_listen">Audioni tinglang.</string>
     <string name="lesson_btn_listen">Listen Pronunciation</string>
     <string name="lesson_btn_complete_section">Complete Section &amp; Save Progress</string>
     <string name="lesson_btn_start_exercises">Practice Section Exercises</string>

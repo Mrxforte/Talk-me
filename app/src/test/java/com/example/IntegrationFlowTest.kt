@@ -1,6 +1,7 @@
 package com.example
 
 import com.example.data.local.CurriculumSeedData
+import com.example.domain.model.CurriculumLevel
 import com.example.domain.model.TopicModel
 import com.example.domain.model.UnlockStatus
 import com.example.domain.usecase.CurriculumDomainLogic
@@ -8,6 +9,31 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class IntegrationFlowTest {
+    private val introductoryTopics = setOf(CurriculumLevel.A0.topicId, CurriculumLevel.A1.topicId)
+
+    @Test fun a2HasSixtyCompleteSeededLessons() {
+        val topic = CurriculumLevel.A2.topicId
+        val sections = CurriculumSeedData.buildSections().filter { it.topicId == topic }
+        val allWords = CurriculumSeedData.buildVocabulary()
+        val words = allWords.groupBy { it.sectionId }
+        val exercises = CurriculumSeedData.buildExercises().groupBy { it.sectionId }
+        assertEquals((1..60).toList(), sections.map { it.orderIndex })
+        assertEquals(allWords.size, allWords.distinctBy { it.englishWord.lowercase() }.size)
+        sections.forEach { lesson ->
+            assertTrue(lesson.explanationUzbek.isNotBlank())
+            assertTrue(lesson.wrapUpSummaryUzbek.isNotBlank())
+            assertEquals(3, words.getValue(lesson.id).size)
+            val questions = exercises.getValue(lesson.id)
+            assertEquals(3, questions.size)
+            assertEquals(1, questions.count { it.exerciseType == "LISTENING_COMPREHENSION" })
+            questions.forEach {
+                val options = it.optionsPipeSeparated.split("|")
+                assertEquals(3, options.distinct().size)
+                assertTrue(it.correctAnswer in options)
+            }
+        }
+    }
+
     private fun levels() = CurriculumSeedData.buildTopics().map {
         TopicModel(it.id, it.orderIndex, it.titleEnglish, it.titleUzbek,
             it.descriptionUzbek, 0, 0, UnlockStatus.AVAILABLE)
@@ -27,12 +53,12 @@ class IntegrationFlowTest {
         assertEquals(UnlockStatus.AVAILABLE, actual.first().status)
         assertTrue(actual.drop(1).all { it.status == UnlockStatus.LOCKED })
         val expectedSections = (1..53).map { "sec_a0_%02d".format(it) } + (1..4).map { "sec_a1_%02d".format(it) }
-        assertEquals(expectedSections, sections.map { it.id })
-        val vocab = CurriculumSeedData.buildVocabulary()
+        assertEquals(expectedSections, sections.take(expectedSections.size).map { it.id })
+        val vocab = CurriculumSeedData.buildVocabulary().filter { it.topicId in introductoryTopics }
         assertEquals(248, vocab.size)
         assertEquals(248, vocab.distinctBy { it.englishWord.lowercase() }.size)
-        assertEquals(57, CurriculumSeedData.buildGrammarRules().size)
-        val exercises = CurriculumSeedData.buildExercises()
+        assertEquals(57, CurriculumSeedData.buildGrammarRules().count { it.topicId in introductoryTopics })
+        val exercises = CurriculumSeedData.buildExercises().filter { it.topicId in introductoryTopics }
         assertEquals(183, exercises.size)
         assertEquals(3, exercises.count { it.sectionId == CurriculumSeedData.DARS_1_SECTION_ID })
         assertEquals(3, exercises.count { it.sectionId == CurriculumSeedData.DARS_2_SECTION_ID })

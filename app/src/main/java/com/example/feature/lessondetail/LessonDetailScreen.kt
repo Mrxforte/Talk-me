@@ -30,7 +30,9 @@ import com.example.core.ui.TopicVisualArtwork
 import com.example.core.ui.TypewriterTextAnimator
 import com.example.core.ui.VocabularyAdapter
 import com.example.databinding.FragmentLessonDetailBinding
+import com.example.domain.model.CurriculumLevel
 import com.example.domain.model.ExerciseModel
+import com.example.domain.model.ExerciseType
 import com.example.domain.model.GrammarRuleModel
 import com.example.domain.model.LessonSectionModel
 import com.example.domain.model.PracticeCategory
@@ -73,7 +75,7 @@ data class InLessonExerciseItem(
     val id: String = "",
     val promptSub: String,
     val promptSentenceWithBlank: String,
-    val fullAudioSentence: String,
+    val fullAudioSentence: String?,
     val options: List<String>,
     val correctOptionIndex: Int,
     val mode: LessonExerciseMode = LessonExerciseMode.STANDARD,
@@ -419,7 +421,7 @@ class LessonDetailFragment : Fragment() {
         // Mashqlar interactions
         binding.btnSpeakMashqPrompt.setOnClickListener {
             inLessonExercises.getOrNull(currentExerciseIndex)?.let { ex ->
-                viewModel.speakEnglish(ex.fullAudioSentence)
+                ex.fullAudioSentence?.let(viewModel::speakEnglish)
             }
         }
         binding.btnOption1.setOnClickListener { onExerciseOptionSelected(0) }
@@ -428,7 +430,7 @@ class LessonDetailFragment : Fragment() {
 
         binding.btnReadAloudListen.setOnClickListener {
             inLessonExercises.getOrNull(currentExerciseIndex)?.let { ex ->
-                viewModel.speakEnglish(ex.fullAudioSentence)
+                ex.fullAudioSentence?.let(viewModel::speakEnglish)
             }
         }
         binding.btnReadAloudTap.setOnClickListener {
@@ -438,7 +440,7 @@ class LessonDetailFragment : Fragment() {
                 if (readAloudTapCount >= 3) {
                     isCurrentExerciseSolved = true
                     selectedOptionIndex = ex.correctOptionIndex
-                    viewModel.speakEnglish(ex.fullAudioSentence)
+                    ex.fullAudioSentence?.let(viewModel::speakEnglish)
                 }
                 bindCurrentExercise()
             }
@@ -805,6 +807,14 @@ class LessonDetailFragment : Fragment() {
         bindCurrentExercise()
 
         // 4. WRAP-UP DATA
+        val continuation = isContinuationLevel(sec.topicId)
+        binding.tvWrapUpBullet2.visibility = if (continuation) View.GONE else View.VISIBLE
+        if (continuation) {
+            binding.tvWrapUpBullet1.text = cachedExamples.first().englishSentence
+            binding.tvWrapUpExtendedSummary.visibility = View.VISIBLE
+            binding.tvWrapUpExtendedSummary.text = sec.wrapUpSummaryUzbek
+            return
+        }
         binding.tvWrapUpExtendedSummary.visibility = View.GONE
         val bullet1Rule = state.grammarRules.getOrNull(0)
         val bullet2Rule = state.grammarRules.getOrNull(1)
@@ -1863,6 +1873,8 @@ class LessonDetailFragment : Fragment() {
         }
 
         binding.tvMashqPromptSub.text = ex.promptSub
+        binding.tvMashqPromptSub.visibility = if (ex.promptSub.isBlank()) View.GONE else View.VISIBLE
+        binding.btnSpeakMashqPrompt.visibility = if (ex.fullAudioSentence == null) View.GONE else View.VISIBLE
         binding.tvMashqPromptMain.text = ex.promptSentenceWithBlank
 
         when (ex.mode) {
@@ -2363,7 +2375,7 @@ class LessonDetailFragment : Fragment() {
         selectedOptionIndex = optionIdx
         isCurrentExerciseSolved = (optionIdx == ex.correctOptionIndex)
         if (isCurrentExerciseSolved) {
-            viewModel.speakEnglish(ex.fullAudioSentence)
+            ex.fullAudioSentence?.let(viewModel::speakEnglish)
         }
         bindCurrentExercise()
     }
@@ -2826,6 +2838,9 @@ class LessonDetailFragment : Fragment() {
         return result.take(3)
     }
 
+    private fun isContinuationLevel(topicId: String): Boolean =
+        CurriculumLevel.forTopic(topicId)?.let { it >= CurriculumLevel.A2 } == true
+
     private fun buildInLessonExercises(
         repoExercises: List<ExerciseModel>,
         vocab: List<VocabularyModel>,
@@ -2869,9 +2884,14 @@ class LessonDetailFragment : Fragment() {
                 result.add(
                     InLessonExerciseItem(
                         id = ex.id,
-                        promptSub = ex.subPromptText.ifBlank { "Bo‘sh joyni to‘ldiring:" },
+                        promptSub = when {
+                            !isContinuationLevel(sec.topicId) -> ex.subPromptText.ifBlank { "Bo‘sh joyni to‘ldiring:" }
+                            ex.exerciseType == ExerciseType.LISTENING_COMPREHENSION -> getString(R.string.lesson_continuation_listen)
+                            else -> ex.subPromptText
+                        },
                         promptSentenceWithBlank = ex.promptText,
-                        fullAudioSentence = ex.audioTextToSpeak?.takeIf { it.isNotBlank() } ?: ex.correctAnswer,
+                        fullAudioSentence = ex.audioTextToSpeak?.takeIf { it.isNotBlank() }
+                            ?: ex.correctAnswer.takeUnless { isContinuationLevel(sec.topicId) },
                         options = displayOptions,
                         correctOptionIndex = finalCorrectIdx,
                         mode = mode,

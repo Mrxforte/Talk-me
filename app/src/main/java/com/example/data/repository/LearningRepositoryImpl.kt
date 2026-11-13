@@ -12,6 +12,7 @@ import com.example.core.database.UserMistakeEntity
 import com.example.core.database.UserProfileEntity
 import com.example.core.database.VocabularyEntity
 import com.example.data.local.CurriculumSeedData
+import com.example.data.local.TextbookReference
 import com.example.domain.model.ContinueLearningState
 import com.example.domain.model.DailyPlanDayRecord
 import com.example.domain.model.DailyTaskStepModel
@@ -1135,7 +1136,7 @@ class LearningRepositoryImpl @Inject constructor(
             titleEnglish = titleEnglish,
             titleUzbek = titleUzbek,
             objectiveUzbek = objectiveUzbek,
-            explanationUzbek = explanationUzbek,
+            explanationUzbek = TextbookReference.explanation(id, explanationUzbek),
             wrapUpSummaryUzbek = wrapUpSummaryUzbek,
             status = computedStatus
         )

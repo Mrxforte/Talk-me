@@ -383,4 +383,4 @@ The app seed implements 60 lessons per level across A2, B1, B2, C1 and C2. Each 
 | Real, hypothetical, past, mixed, implicit and inverted conditions, wishes | B1 22–24, B2 4–6, C1 55–59, C2 34–37 and 41 |
 | Commas, semicolons, colons, quotations, end punctuation, apostrophes and hyphens | B1 34, C2 29 and 48–58 |
 
-The crosswalk maps the grammar families. Individual senses in the book's preposition entries and every item in its irregular-verb appendix have not been verified against a specific example in the app.
+The lesson explanations include all 65 base verbs from the appendix (pp. 331–332), with past and past-participle forms in A2 lessons 6 and 13. A2 lesson 44, B1 lesson 57, B2 lesson 46, and C1 lesson 52 include additional preposition references and practice. The references cover common meanings and group prepositions. A one-to-one map of every numbered meaning and set phrase in the book remains unverified.

@@ -1,9 +1,16 @@
 package com.example
 
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,10 +25,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 
 /**
  * Single Activity host for the TalkMe application.
@@ -38,8 +41,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var preferencesRepository: UserPreferencesRepository
 
     private lateinit var binding: ActivityMainBinding
-    private var latestTopInset: Int = 0
-    private var latestBottomInset: Int = 0
+    private var safeInsets = Insets.NONE
     private var isBottomNavVisible: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,19 +51,19 @@ class MainActivity : AppCompatActivity() {
         configureAppCheck(this, intent)
 
         // Step 2: Enable edge-to-edge system bar layout
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        configureSystemBars()
 
         // Step 3: Inflate XML UI using ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Step 4: Apply status bar (top), navigation bar (bottom), and IME insets cleanly
+        // Apply the bottom bar padding here so Material does not apply the navigation inset twice.
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation) { _, insets -> insets }
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val systemBars = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            safeInsets = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.ime()
             )
-            latestTopInset = systemBars.top
-            latestBottomInset = systemBars.bottom
             applyRootAndBottomBarInsets()
             insets
         }
@@ -110,14 +112,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
+    private fun configureSystemBars() {
+        WindowCompat.enableEdgeToEdge(window)
+        val nightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val isLightTheme = nightMode != Configuration.UI_MODE_NIGHT_YES
+
+        // Android 7 has light navigation buttons only, so keep a dark background behind them.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            window.navigationBarColor = getColor(R.color.color_cosmic_background)
+        }
+
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = isLightTheme
+            isAppearanceLightNavigationBars = isLightTheme
+        }
+    }
+
     private fun applyRootAndBottomBarInsets() {
         binding.root.setPadding(
-            0,
-            latestTopInset,
-            0,
-            if (isBottomNavVisible) 0 else latestBottomInset
+            safeInsets.left,
+            safeInsets.top,
+            safeInsets.right,
+            if (isBottomNavVisible) 0 else safeInsets.bottom
         )
-        binding.bottomNavigation.setPadding(0, 0, 0, latestBottomInset)
+        binding.bottomNavigation.updatePadding(bottom = safeInsets.bottom)
     }
 
     override fun onSupportNavigateUp(): Boolean {

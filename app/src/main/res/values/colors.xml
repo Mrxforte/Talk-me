@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#1E3A8A</color>
-    <color name="color_primary_variant">#2563EB</color>
-    <color name="color_primary_light">#DBEAFE</color>
+    <color name="color_primary">#1B4D3E</color>
+    <color name="color_primary_variant">#0F766E</color>
+    <color name="color_primary_light">#D1FAE5</color>
     <color name="color_secondary">#0D9488</color>
     <color name="color_secondary_light">#CCFBF1</color>
     <color name="color_accent">#F59E0B</color>
@@ -12,12 +12,12 @@
     <color name="color_surface">#FFFFFF</color>
     <color name="color_surface_variant">#F1F5F9</color>
     <color name="color_surface_elevated">#FFFFFF</color>
-    <color name="color_divider">#E2E8F0</color>
-    <color name="color_card_stroke">#E2E8F0</color>
+    <color name="color_divider">#E5E7EB</color>
+    <color name="color_card_stroke">#E5E7EB</color>
 
-    <color name="color_text_primary">#0F172A</color>
-    <color name="color_text_secondary">#475569</color>
-    <color name="color_text_muted">#94A3B8</color>
+    <color name="color_text_primary">#111827</color>
+    <color name="color_text_secondary">#4B5563</color>
+    <color name="color_text_muted">#9CA3AF</color>
     <color name="color_text_on_primary">#FFFFFF</color>
 
     <color name="color_success">#10B981</color>
@@ -27,11 +27,11 @@
     <color name="color_error">#EF4444</color>
     <color name="color_error_light">#FEE2E2</color>
 
-    <color name="color_topic_unlocked_bg">#EFF6FF</color>
+    <color name="color_topic_unlocked_bg">#F0FDF4</color>
     <color name="color_topic_completed_bg">#ECFDF5</color>
-    <color name="color_topic_locked_bg">#F1F5F9</color>
+    <color name="color_topic_locked_bg">#F3F4F6</color>
 
-    <color name="color_hero_gradient_start">#1E3A8A</color>
+    <color name="color_hero_gradient_start">#1B4D3E</color>
     <color name="color_hero_gradient_end">#0F766E</color>
 
     <color name="color_chart_reading">#2563EB</color>
@@ -53,61 +53,61 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Semantic Cosmic Dark Theme Palette -->
-    <color name="color_cosmic_background">#0E1020</color>
-    <color name="color_cosmic_card">#191D33</color>
-    <color name="color_cosmic_card_stroke">#343B59</color>
-    <color name="color_neon_cyan">#A9B7FF</color>
-    <color name="color_neon_cyan_variant">#8BAAFF</color>
-    <color name="color_neon_green">#78E1B4</color>
-    <color name="color_neon_purple">#BDA3FA</color>
-    <color name="color_gold_accent">#FFD54F</color>
-    <color name="color_gold_stroke">#FFB300</color>
-    <color name="color_slate_subtitle">#8E9CAE</color>
-    <color name="color_pill_gold_bg">#241E11</color>
-    <color name="color_pill_streak_bg">#211718</color>
-    <color name="color_pill_banner_bg">#1A1033</color>
-    <color name="color_pill_banner_stroke">#4D2A87</color>
-    <color name="color_cosmic_studio_top">#14182C</color>
-    <color name="color_cosmic_bubble_tutor">#132344</color>
-    <color name="color_cosmic_bubble_student">#162A52</color>
-    <color name="color_cosmic_bubble_stroke">#243E6E</color>
-    <color name="color_cosmic_chalkboard">#181C22</color>
-    <color name="color_cosmic_chalkboard_border">#2E3642</color>
-    <color name="color_cosmic_note_card">#1B2841</color>
-    <color name="color_cosmic_note_stroke">#3B527A</color>
-    <color name="color_cosmic_live_box">#09142B</color>
-    <color name="color_cosmic_divider">#333951</color>
-    <color name="color_cosmic_circle_btn">#101D36</color>
-    <color name="color_cosmic_circle_stroke">#28436E</color>
-    <color name="color_cosmic_track">#2A304A</color>
-    <color name="color_cosmic_text_secondary">#C7CCE3</color>
-    <color name="color_cosmic_success_bg">#0B2E26</color>
-    <color name="color_cosmic_error_bg">#331522</color>
-    <color name="color_studio_cta_start">#00E5FF</color>
-    <color name="color_studio_cta_center">#0EA5E9</color>
-    <color name="color_studio_cta_end">#1D4ED8</color>
+    <!-- Semantic Theme Palette Mappings -->
+    <color name="color_cosmic_background">#F8FAFC</color>
+    <color name="color_cosmic_card">#FFFFFF</color>
+    <color name="color_cosmic_card_stroke">#E5E7EB</color>
+    <color name="color_neon_cyan">#0F766E</color>
+    <color name="color_neon_cyan_variant">#1B4D3E</color>
+    <color name="color_neon_green">#10B981</color>
+    <color name="color_neon_purple">#8B5CF6</color>
+    <color name="color_gold_accent">#F59E0B</color>
+    <color name="color_gold_stroke">#D97706</color>
+    <color name="color_slate_subtitle">#4B5563</color>
+    <color name="color_pill_gold_bg">#FEF3C7</color>
+    <color name="color_pill_streak_bg">#FEE2E2</color>
+    <color name="color_pill_banner_bg">#F0FDF4</color>
+    <color name="color_pill_banner_stroke">#A7F3D0</color>
+    <color name="color_cosmic_studio_top">#F1F5F9</color>
+    <color name="color_cosmic_bubble_tutor">#E6F4EA</color>
+    <color name="color_cosmic_bubble_student">#D1FAE5</color>
+    <color name="color_cosmic_bubble_stroke">#A7F3D0</color>
+    <color name="color_cosmic_chalkboard">#FFFFFF</color>
+    <color name="color_cosmic_chalkboard_border">#E5E7EB</color>
+    <color name="color_cosmic_note_card">#F0FDF4</color>
+    <color name="color_cosmic_note_stroke">#A7F3D0</color>
+    <color name="color_cosmic_live_box">#F8FAFC</color>
+    <color name="color_cosmic_divider">#E5E7EB</color>
+    <color name="color_cosmic_circle_btn">#F0FDF4</color>
+    <color name="color_cosmic_circle_stroke">#D1FAE5</color>
+    <color name="color_cosmic_track">#E5E7EB</color>
+    <color name="color_cosmic_text_secondary">#374151</color>
+    <color name="color_cosmic_success_bg">#D1FAE5</color>
+    <color name="color_cosmic_error_bg">#FEE2E2</color>
+    <color name="color_studio_cta_start">#1B4D3E</color>
+    <color name="color_studio_cta_center">#0F766E</color>
+    <color name="color_studio_cta_end">#064E3B</color>
 
-    <!-- Profile Cosmic Semantic Colors -->
-    <color name="color_profile_card_bg">#0A1429</color>
-    <color name="color_profile_card_stroke">#1D375E</color>
-    <color name="color_profile_purple_pill_bg">#1A1638</color>
-    <color name="color_profile_purple_pill_stroke">#7C3AED</color>
-    <color name="color_profile_delta_bg">#092E32</color>
-    <color name="color_profile_delta_stroke">#115E59</color>
-    <color name="color_profile_ach_gold_start">#272115</color>
-    <color name="color_profile_ach_gold_end">#171923</color>
-    <color name="color_profile_ach_gold_stroke">#8B6C2A</color>
-    <color name="color_profile_ach_blue_start">#0E2744</color>
-    <color name="color_profile_ach_blue_end">#0B1A33</color>
-    <color name="color_profile_ach_blue_stroke">#2161A6</color>
-    <color name="color_profile_voice_selected_bg">#0C213D</color>
-    <color name="color_profile_voice_unselected_bg">#0D162C</color>
-    <color name="color_profile_voice_unselected_stroke">#21375B</color>
+    <!-- Profile Semantic Colors -->
+    <color name="color_profile_card_bg">#FFFFFF</color>
+    <color name="color_profile_card_stroke">#E5E7EB</color>
+    <color name="color_profile_purple_pill_bg">#F0FDF4</color>
+    <color name="color_profile_purple_pill_stroke">#0F766E</color>
+    <color name="color_profile_delta_bg">#ECFDF5</color>
+    <color name="color_profile_delta_stroke">#10B981</color>
+    <color name="color_profile_ach_gold_start">#FEF3C7</color>
+    <color name="color_profile_ach_gold_end">#FFFBEB</color>
+    <color name="color_profile_ach_gold_stroke">#F59E0B</color>
+    <color name="color_profile_ach_blue_start">#EFF6FF</color>
+    <color name="color_profile_ach_blue_end">#DBEAFE</color>
+    <color name="color_profile_ach_blue_stroke">#2563EB</color>
+    <color name="color_profile_voice_selected_bg">#D1FAE5</color>
+    <color name="color_profile_voice_unselected_bg">#F8FAFC</color>
+    <color name="color_profile_voice_unselected_stroke">#E5E7EB</color>
     <color name="color_skill_pink">#EC4899</color>
-    <color name="color_curriculum_text">#F5F3FF</color>
-    <color name="color_curriculum_label_scrim">#F0181C31</color>
-    <color name="color_curriculum_hero_start">#282A50</color>
-    <color name="color_curriculum_hero_end">#191D35</color>
-    <color name="color_curriculum_on_accent">#111428</color>
+    <color name="color_curriculum_text">#111827</color>
+    <color name="color_curriculum_label_scrim">#E0FFFFFF</color>
+    <color name="color_curriculum_hero_start">#1B4D3E</color>
+    <color name="color_curriculum_hero_end">#0F766E</color>
+    <color name="color_curriculum_on_accent">#FFFFFF</color>
 </resources>

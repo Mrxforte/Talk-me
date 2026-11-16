@@ -1,5 +1,6 @@
 package com.example.feature.lessondetail
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.content.res.Configuration
 import android.graphics.Typeface
 import android.os.Bundle
@@ -381,6 +382,19 @@ class LessonDetailFragment : Fragment() {
             if (sectionId == currentSectionId) setLessonStep(5)
         }
 
+        binding.btnOpenProLesson.setOnClickListener {
+            val avatars = arrayOf(getString(R.string.pro_avatar_girl), getString(R.string.pro_avatar_boy))
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.pro_pick_avatar)
+                .setItems(avatars) { _, index ->
+                    findNavController().navigate(R.id.proLessonFragment, bundleOf(
+                        AppConstants.ARG_TOPIC_ID to currentTopicId,
+                        AppConstants.ARG_SECTION_ID to currentSectionId,
+                        com.example.feature.pro.ProLessonViewModel.ARG_FEMALE to (index == 0)
+                    ))
+                }
+                .show()
+        }
         binding.btnListenRuleUzbek.setOnClickListener {
             viewModel.uiState.value.section?.explanationUzbek?.let(viewModel::speakUzbek)
         }

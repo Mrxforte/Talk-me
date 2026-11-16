@@ -333,6 +333,13 @@
                     android:paddingHorizontal="@dimen/spacing_medium"
                     android:paddingTop="@dimen/spacing_medium"
                     android:visibility="visible">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnOpenProLesson"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target_min"
+                        android:text="@string/pro_open_voice_lesson" />
 <com.google.android.material.button.MaterialButton android:id="@+id/btnListenRuleUzbek"
   style="?attr/materialButtonOutlinedStyle" android:layout_width="match_parent" android:layout_height="wrap_content"
   android:minHeight="@dimen/touch_target_min" android:layout_marginTop="@dimen/spacing_xs" android:text="@string/lesson_flow_uz_rule" />

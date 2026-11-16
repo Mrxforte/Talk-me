@@ -73,4 +73,16 @@
     <dimen name="locked_curriculum_card_height">158dp</dimen>
     <dimen name="curriculum_lock_size">112dp</dimen>
     <dimen name="curriculum_art_height">126dp</dimen>
+
+
+    <dimen name="pro_voice_zero">0dp</dimen>
+    <dimen name="pro_voice_border">1dp</dimen>
+    <dimen name="pro_voice_card_radius">20dp</dimen>
+    <dimen name="pro_voice_control">78dp</dimen>
+    <dimen name="pro_voice_icon">30dp</dimen>
+    <dimen name="pro_voice_fade">105dp</dimen>
+    <dimen name="pro_voice_wave_width">196dp</dimen>
+    <dimen name="pro_voice_wave_height">42dp</dimen>
+    <dimen name="pro_voice_title">17sp</dimen>
+    <dimen name="pro_voice_passage">20sp</dimen>
 </resources>

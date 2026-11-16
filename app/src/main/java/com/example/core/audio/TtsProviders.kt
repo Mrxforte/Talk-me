@@ -60,6 +60,7 @@ class NativeTtsProvider @Inject constructor(
     }
 
     private val pendingUtterances = ConcurrentHashMap<String, CompletableDeferred<Result<Unit>>>()
+    private val speechCues = ConcurrentHashMap<String, (Int, Int) -> Unit>()
 
     private val audioManager: AudioManager? by lazy {
         context.getSystemService(Context.AUDIO_SERVICE) as? AudioManager
@@ -87,7 +88,11 @@ class NativeTtsProvider @Inject constructor(
             val engine = ttsEngine
             engine?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                 override fun onStart(utteranceId: String?) {
-                    // Speech synthesis started
+                    utteranceId?.let { speechCues[it]?.invoke(-1, -1) }
+                }
+
+                override fun onRangeStart(utteranceId: String?, start: Int, end: Int, frame: Int) {
+                    utteranceId?.let { speechCues[it]?.invoke(start, end) }
                 }
 
                 override fun onDone(utteranceId: String?) {
@@ -216,11 +221,19 @@ class NativeTtsProvider @Inject constructor(
         text: String,
         speechRate: Float,
         languageCode: String
+    ): Result<Unit> = speakWithCues(text, speechRate, languageCode, null)
+
+    suspend fun speakWithCues(
+        text: String,
+        speechRate: Float,
+        languageCode: String,
+        onSpeechCue: ((Int, Int) -> Unit)?
     ): Result<Unit> {
         if (text.isBlank()) return Result.success(Unit)
         val utteranceId = "talkme_utt_${UUID.randomUUID()}"
         val completionDeferred = CompletableDeferred<Result<Unit>>()
         pendingUtterances[utteranceId] = completionDeferred
+        onSpeechCue?.let { speechCues[utteranceId] = it }
 
         return try {
             val ready = awaitReady()
@@ -273,6 +286,7 @@ class NativeTtsProvider @Inject constructor(
             Result.failure(e)
         } finally {
             pendingUtterances.remove(utteranceId)
+            speechCues.remove(utteranceId)
         }
     }
 
@@ -485,17 +499,31 @@ open class TtsManager(
         overrideVoiceGender = overrideVoiceGender
     )
 
+    /** Native TTS range callbacks drive the Pro avatar as the words are played. */
+    suspend fun speakPro(
+        text: String,
+        languageCode: String,
+        voiceGender: String,
+        onSpeechCue: (Int, Int) -> Unit
+    ): Result<Unit> = speakInternal(
+        text = text,
+        languageCode = languageCode,
+        overrideVoiceGender = voiceGender,
+        onSpeechCue = onSpeechCue
+    )
+
     private suspend fun speakInternal(
         text: String,
         overrideSpeed: Float? = null,
         languageCode: String = "en",
-        overrideVoiceGender: String? = null
+        overrideVoiceGender: String? = null,
+        onSpeechCue: ((Int, Int) -> Unit)? = null
     ): Result<Unit> {
         val cleanText = text.trim()
         if (cleanText.isEmpty()) return Result.success(Unit)
 
         val prefs = preferencesRepository.userPreferencesFlow.first()
-        if (!prefs.soundEnabled) {
+        if (!prefs.soundEnabled && onSpeechCue == null) {
             _playbackState.value = TtsPlaybackState.Idle
             return Result.success(Unit)
         }
@@ -528,7 +556,12 @@ open class TtsManager(
 
             _playbackState.value = TtsPlaybackState.Playing(cleanText)
             try {
-                val result = activeProvider.speakWithLanguage(cleanText, speed, languageCode)
+                val native = nativeTtsProvider as? NativeTtsProvider
+                val result = if (onSpeechCue != null && native != null) {
+                    native.speakWithCues(cleanText, speed, languageCode, onSpeechCue)
+                } else {
+                    activeProvider.speakWithLanguage(cleanText, speed, languageCode)
+                }
                 if (activeUtteranceToken == token) {
                     result.fold(
                         onSuccess = {

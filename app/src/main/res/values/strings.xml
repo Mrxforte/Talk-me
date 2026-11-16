@@ -505,4 +505,40 @@
     <string name="lesson_materials_vocab">Lug‘at</string>
     <string name="lesson_materials_grammar">Grammatika</string>
     <string name="mistakes_solved_short">To‘g‘ri!</string>
+
+
+    <string name="pro_title">TalkMe Pro</string>
+    <string name="pro_open_voice_lesson">TalkMe Pro bilan ovozli dars</string>
+    <string name="pro_pick_avatar">Suhbatdoshingizni tanlang</string>
+    <string name="pro_avatar_girl">Qiz personaj</string>
+    <string name="pro_avatar_boy">Bola personaj</string>
+    <string name="pro_progress">%1$d/%2$d</string>
+    <string name="pro_back">Orqaga</string>
+    <string name="pro_preparing">Dars tayyorlanmoqda</string>
+    <string name="pro_processing">Bir oz kuting…</string>
+    <string name="pro_listening">Tinglayapman</string>
+    <string name="pro_speaking">Gapiryapti</string>
+    <string name="pro_read_aloud">Ovoz chiqarib o‘qing</string>
+    <string name="pro_answer">Javob bering</string>
+    <string name="pro_continue">Davom etish</string>
+    <string name="pro_finish">Yakunlash</string>
+    <string name="pro_pause">To‘xtatib turish</string>
+    <string name="pro_stop">Javobni tugatish</string>
+    <string name="pro_play">Boshidan tinglash</string>
+    <string name="pro_locked">Bu ovozli dars TalkMe Pro’da ochiladi.</string>
+    <string name="pro_lesson_unavailable">Dars hozircha ochilmadi.</string>
+    <string name="pro_audio_error">Ovoz ijro etilmadi. Qayta tinglab ko‘ring.</string>
+    <string name="pro_guided_status">Tayyor suhbat mashqi</string>
+    <string name="pro_guided_follow_up">Thanks. Here’s another example. %1$s Can you make a similar sentence?</string>
+    <string name="pro_guided_continue">Thanks for practicing with me. Let’s keep going.</string>
+    <string name="pro_rule_intro">Qani, buni birga ko‘rib chiqamiz. %1$s</string>
+    <string name="pro_mic_error">Nutqni tanish ishga tushmadi. Yana urinib ko‘ring.</string>
+    <string name="pro_try_again">Gapingizni eshitmadim. Yana aytib ko‘ring.</string>
+    <string name="pro_permission">Javob berish uchun mikrofonga ruxsat bering.</string>
+    <string name="pro_save_error">Natija saqlanmadi. Yana urinib ko‘ring.</string>
+    <string name="pro_first_prompt">Let’s talk about %1$s. Can you say a short sentence about it?</string>
+    <string name="pro_second_prompt">Let’s try something new. Here is an example. %1$s Now say a different sentence with the same idea.</string>
+    <string name="pro_read_prompt">Qani, ekrandagi gaplarni ovoz chiqarib o‘qib ko‘ring. Men tinglayman.</string>
+    <string name="pro_read_good">Zo‘r! Eshitilgan so‘zlarning %1$d foizi matnga mos keldi.</string>
+    <string name="pro_read_retry">Eshitilgan so‘zlarning %1$d foizi matnga mos keldi. Keyingi safar har bir so‘zni shoshmasdan aytib ko‘ring.</string>
 </resources>

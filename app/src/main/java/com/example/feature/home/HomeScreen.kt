@@ -125,16 +125,16 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
                     val stats = state.stats ?: return@collect
-                    binding.tvUserName.text = stats.userName.ifBlank { "Azamat" }
+                    binding.tvUserName.text = stats.userName.ifBlank { getString(R.string.default_user_name) }
                     val streakDays = stats.currentStreakDays.coerceAtLeast(1)
-                    binding.tvStreakBadge.text = "$streakDays Day Streak"
+                    binding.tvStreakBadge.text = getString(R.string.home_streak_format, streakDays)
 
                     val cont = stats.continueLearning
-                    binding.tvHeroCourseName.text = cont.courseName.ifBlank { "TALKME ENGLISH COURSE (A0–C2)" }
-                    val topicHeader = cont.currentTopicTitle.ifBlank { "1. A0 • Kirish (Alifbo va Tanishuv)" }
+                    binding.tvHeroCourseName.text = cont.courseName.ifBlank { getString(R.string.home_course_label) }
+                    val topicHeader = cont.currentTopicTitle.ifBlank { getString(R.string.home_default_topic) }
                     binding.tvHeroTopicName.text =
                         if (topicHeader.contains("Introduction") || topicHeader.contains("Kirish")) {
-                            "1. A0 • Kirish (Alifbo va Tanishuv)"
+                            getString(R.string.home_default_topic)
                         } else {
                             topicHeader
                         }
@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
                         getString(R.string.curriculum_empty)
                     }
                     binding.progressHero.animateProgressTo(cont.progressPercent, maxValue = 100)
-                    binding.tvHeroProgressPercent.text = "${cont.progressPercent}% completed"
+                    binding.tvHeroProgressPercent.text = getString(R.string.hero_progress_format, cont.progressPercent)
 
                     val hasLesson = cont.currentSectionId.isNotBlank()
                     binding.btnContinueLearning.isEnabled = hasLesson
@@ -176,7 +176,7 @@ class HomeFragment : Fragment() {
                         bindHomeCard(
                             card = binding.cardMemorizedWords,
                             valueText = "${activeTopic.memorizedWordsCount} / ${activeTopic.totalWordsCount}",
-                            subtitleText = "${activeTopic.titleEnglish}: mavzular va sub-topiclar",
+                            subtitleText = getString(R.string.home_topic_subtitle_format, activeTopic.titleEnglish),
                             newBadgeCount = activeTopic.newWordsBadgeCount
                         ) {
                             findNavController().navigate(
@@ -187,39 +187,39 @@ class HomeFragment : Fragment() {
                         bindHomeCard(
                             card = binding.cardMasteredGrammar,
                             valueText = "${activeTopic.masteredGrammarCount} / ${activeTopic.totalGrammarCount}",
-                            subtitleText = "${activeTopic.titleEnglish}: grammatika qoidalari",
+                            subtitleText = getString(R.string.home_grammar_subtitle_format, activeTopic.titleEnglish),
                             newBadgeCount = activeTopic.newGrammarBadgeCount
                         ) {
                             openTopicExercise(PracticeCategory.GRAMMAR, activeTopic.topicId)
                         }
                         bindHomeCard(
                             card = binding.cardSkillReading,
-                            valueText = "${activeTopic.totalWordsCount} so'z",
-                            subtitleText = "${activeTopic.titleEnglish} • matn va o'qish",
+                            valueText = getString(R.string.home_words_format, activeTopic.totalWordsCount),
+                            subtitleText = getString(R.string.home_reading_subtitle_format, activeTopic.titleEnglish),
                             newBadgeCount = activeTopic.readingNewBadgeCount
                         ) {
                             openTopicExercise(PracticeCategory.READING, activeTopic.topicId)
                         }
                         bindHomeCard(
                             card = binding.cardSkillWriting,
-                            valueText = "${activeTopic.totalWordsCount} so'z",
-                            subtitleText = "${activeTopic.titleEnglish} • yozma tarjima",
+                            valueText = getString(R.string.home_words_format, activeTopic.totalWordsCount),
+                            subtitleText = getString(R.string.home_writing_subtitle_format, activeTopic.titleEnglish),
                             newBadgeCount = activeTopic.writingNewBadgeCount
                         ) {
                             openTopicExercise(PracticeCategory.WRITING, activeTopic.topicId)
                         }
                         bindHomeCard(
                             card = binding.cardSkillListening,
-                            valueText = "${activeTopic.totalWordsCount} audio",
-                            subtitleText = "${activeTopic.titleEnglish} • eshitib tushunish",
+                            valueText = getString(R.string.home_audio_format, activeTopic.totalWordsCount),
+                            subtitleText = getString(R.string.home_listening_subtitle_format, activeTopic.titleEnglish),
                             newBadgeCount = activeTopic.listeningNewBadgeCount
                         ) {
                             openTopicExercise(PracticeCategory.LISTENING, activeTopic.topicId)
                         }
                         bindHomeCard(
                             card = binding.cardSkillSpeaking,
-                            valueText = "${activeTopic.totalWordsCount} so'z",
-                            subtitleText = "${activeTopic.titleEnglish} • AI ovozli suhbat",
+                            valueText = getString(R.string.home_words_format, activeTopic.totalWordsCount),
+                            subtitleText = getString(R.string.home_speaking_subtitle_format, activeTopic.titleEnglish),
                             newBadgeCount = activeTopic.speakingNewBadgeCount
                         ) {
                             findNavController().navigate(

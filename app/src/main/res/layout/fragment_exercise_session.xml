@@ -31,7 +31,7 @@
             android:padding="13dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_arrow_back"
-            app:tint="@color/white" />
+            app:tint="@color/color_on_surface" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -48,7 +48,7 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="@string/studio_title_reading"
-                android:textColor="@color/white"
+                android:textColor="@color/color_on_surface"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -89,7 +89,7 @@
             android:padding="13dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_close"
-            app:tint="@color/white" />
+            app:tint="@color/color_on_surface" />
     </LinearLayout>
 
     <!-- Scrollable Studio Body -->
@@ -166,7 +166,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="serif"
                             android:text="A new friend"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -233,7 +233,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:lineSpacingExtra="3dp"
-                                android:textColor="@color/white"
+                                android:textColor="@color/color_on_surface"
                                 android:textSize="17sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -313,7 +313,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/studio_writing_sample_btn"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_on_surface"
                                     android:textSize="13.5sp"
                                     android:textStyle="bold" />
 
@@ -324,7 +324,7 @@
                                     android:layout_marginStart="4dp"
                                     android:contentDescription="@string/studio_writing_sample_btn"
                                     android:src="@drawable/ic_chevron_down"
-                                    app:tint="@color/white" />
+                                    app:tint="@color/color_on_surface" />
                             </LinearLayout>
                         </FrameLayout>
 
@@ -396,7 +396,7 @@
                             android:padding="15dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_play_arrow"
-                            app:tint="@color/white" />
+                            app:tint="@color/color_text_on_primary" />
                     </FrameLayout>
 
                     <TextView
@@ -436,7 +436,7 @@
                             android:padding="13dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_replay_circle"
-                            app:tint="@color/white" />
+                            app:tint="@color/color_on_surface" />
 
                         <View
                             android:layout_width="1dp"
@@ -465,7 +465,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="1.0×"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_on_surface"
                                     android:textSize="13.5sp"
                                     android:textStyle="bold" />
 
@@ -522,7 +522,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_weight="1"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="17sp"
                             android:textStyle="bold" />
 
@@ -577,7 +577,7 @@
                         android:inputType="textCapSentences|textMultiLine"
                         android:minHeight="120dp"
                         android:paddingBottom="28dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textColorHint="@color/color_slate_subtitle"
                         android:textCursorDrawable="@null"
                         android:textSize="16.5sp" />
@@ -657,7 +657,7 @@
                     android:layout_marginTop="@dimen/spacing_medium"
                     android:gravity="center"
                     android:text="@string/exercise_session_complete_title"
-                    android:textColor="@color/white"
+                    android:textColor="@color/color_on_surface"
                     android:textSize="@dimen/text_size_heading"
                     android:textStyle="bold" />
 
@@ -681,7 +681,7 @@
                     android:focusable="true"
                     android:gravity="center"
                     android:text="@string/studio_btn_finish"
-                    android:textColor="@color/white"
+                    android:textColor="@color/color_text_on_primary"
                     android:textSize="16.5sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -703,7 +703,7 @@
         android:focusable="true"
         android:gravity="center"
         android:text="@string/studio_btn_check"
-        android:textColor="@color/white"
+        android:textColor="@color/color_text_on_primary"
         android:textSize="17sp"
         android:textStyle="bold" />
 

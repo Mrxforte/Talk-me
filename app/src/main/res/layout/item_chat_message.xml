@@ -68,7 +68,7 @@
                     android:layout_weight="1"
                     android:lineSpacingExtra="2dp"
                     android:maxWidth="245dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/color_on_surface"
                     android:textSize="15sp" />
 
                 <!-- Tutor TTS Speaker Button (48dp touch target) -->
@@ -147,7 +147,7 @@
         android:background="@drawable/bg_speaking_student_badge"
         android:gravity="center"
         android:text="A"
-        android:textColor="@color/white"
+        android:textColor="@color/color_text_on_primary"
         android:textSize="14sp"
         android:textStyle="bold"
         android:visibility="gone" />

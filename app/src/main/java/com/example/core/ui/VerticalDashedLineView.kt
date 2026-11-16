@@ -2,7 +2,8 @@ package com.example.core.ui
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
+import androidx.core.content.ContextCompat
+import com.example.R
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Path
@@ -25,7 +26,7 @@ class VerticalDashedLineView @JvmOverloads constructor(
         style = Paint.Style.STROKE
         strokeWidth = 2f * density
         strokeCap = Paint.Cap.ROUND
-        color = Color.parseColor("#526480")
+        color = ContextCompat.getColor(context, R.color.color_card_outline)
     }
 
     private var isDashedMode: Boolean = false

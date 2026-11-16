@@ -18,19 +18,19 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="14dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="10dp">
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small">
 
         <ImageButton
             android:id="@+id/btnBackSubtopic"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/action_back"
             android:padding="8dp"
             android:src="@drawable/ic_arrow_back"
-            app:tint="#FFFFFF" />
+            app:tint="@color/color_curriculum_text" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -46,8 +46,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Kirish"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp"
+                android:textColor="@color/color_curriculum_text"
+                android:textSize="@dimen/text_size_title"
                 android:textStyle="bold" />
 
             <TextView
@@ -58,8 +58,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="A1 • 1–10-dars"
-                android:textColor="#9FB3C8"
-                android:textSize="13.5sp" />
+                android:textColor="@color/color_slate_subtitle"
+                android:textSize="@dimen/text_size_body_small" />
         </LinearLayout>
     </LinearLayout>
 
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_curriculum_hero_card"
+        android:background="@drawable/bg_talkme_filled_card"
         android:orientation="vertical"
         android:paddingHorizontal="14dp"
         android:paddingTop="12dp"
@@ -84,20 +84,20 @@
 
             <TextView
                 android:id="@+id/tvSubtopicLevelBadge"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="@dimen/touch_target_min"
+                android:layout_height="@dimen/touch_target_min"
                 android:background="@drawable/bg_curriculum_a1_badge"
                 android:gravity="center"
                 android:text="A1"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textColor="@color/color_text_on_primary"
+                android:textSize="@dimen/text_size_subtitle"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="34dp"
                 android:layout_marginHorizontal="12dp"
-                android:background="#2B426B" />
+                android:background="@color/color_filled_card_outline" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -112,7 +112,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Kirish bo‘limi"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/color_on_filled_card"
                     android:textSize="16.5sp"
                     android:textStyle="bold" />
 
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="4/10 dars bajarildi"
-                    android:textColor="#9FB3C8"
+                    android:textColor="@color/color_on_filled_card"
                     android:textSize="13sp" />
             </LinearLayout>
 
@@ -139,7 +139,7 @@
                 <ImageView
                     android:layout_width="14dp"
                     android:layout_height="14dp"
-                    android:contentDescription="Star"
+                    android:contentDescription="@string/section_status_completed"
                     android:src="@drawable/ic_star_green" />
 
                 <TextView
@@ -147,8 +147,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="+1"
-                    android:textColor="#4ADE80"
-                    android:textSize="13sp"
+                    android:textColor="@color/color_neon_cyan_variant"
+                    android:textSize="@dimen/text_size_body_small"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>

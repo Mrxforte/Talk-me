@@ -6,7 +6,7 @@
     android:background="@drawable/bg_curriculum_screen"
     android:clipToPadding="false"
     android:fillViewport="true"
-    android:paddingBottom="90dp">
+    android:paddingBottom="@dimen/spacing_xxl">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                     android:layout_gravity="center"
                     android:contentDescription="@string/daily_tasks_title"
                     android:src="@drawable/ic_calendar"
-                    app:tint="@color/white" />
+                    app:tint="@color/color_text_on_primary" />
             </FrameLayout>
 
             <LinearLayout
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/daily_tasks_title"
-                    android:textColor="@color/white"
+                    android:textColor="@color/color_on_surface"
                     android:textSize="@dimen/text_size_title"
                     android:textStyle="bold" />
 
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="@string/daily_tasks_today_date"
-                    android:textColor="@color/color_slate_subtitle"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="@dimen/text_size_body_small" />
             </LinearLayout>
 
@@ -73,7 +73,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:minHeight="36dp"
+                android:minHeight="@dimen/touch_target_min"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -100,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:background="@drawable/bg_tasks_hero_card">
+            android:background="@drawable/bg_talkme_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,7 +120,7 @@
                     android:layout_width="1dp"
                     android:layout_height="58dp"
                     android:layout_marginHorizontal="12dp"
-                    android:background="@color/color_cosmic_divider" />
+                    android:background="@color/color_card_outline" />
 
                 <!-- Text & Bar Info -->
                 <LinearLayout
@@ -134,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/daily_tasks_hero_goal_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="@dimen/text_size_subtitle"
                         android:textStyle="bold" />
 
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:text="@string/daily_tasks_hero_completed_format"
-                        android:textColor="@color/color_neon_green"
+                        android:textColor="@color/color_primary"
                         android:textSize="@dimen/text_size_caption"
                         android:textStyle="bold" />
 
@@ -154,7 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="@string/daily_tasks_hero_xp_format"
-                        android:textColor="@color/color_neon_cyan_variant"
+                        android:textColor="@color/color_primary"
                         android:textSize="@dimen/text_size_caption"
                         android:textStyle="bold" />
 
@@ -184,8 +184,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="@dimen/spacing_section_gap"
+            android:layout_marginBottom="@dimen/spacing_medium"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/daily_tasks_section_title"
-                android:textColor="@color/white"
+                android:textColor="@color/color_on_surface"
                 android:textSize="@dimen/text_size_subtitle"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -212,7 +212,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_tasks_card_vocab"
+            android:background="@drawable/bg_talkme_card"
             android:paddingHorizontal="12dp"
             android:paddingVertical="8dp">
 
@@ -248,7 +248,7 @@
                     android:layout_width="1dp"
                     android:layout_height="44dp"
                     android:layout_marginStart="8dp"
-                    android:background="@color/color_cosmic_divider" />
+                    android:background="@color/color_card_outline" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -261,7 +261,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/daily_tasks_task_vocab_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="@dimen/text_size_medium"
                         android:textStyle="bold" />
 
@@ -271,7 +271,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="@string/daily_tasks_task_vocab_subtitle"
-                        android:textColor="@color/color_slate_subtitle"
+                        android:textColor="@color/color_on_surface_secondary"
                         android:textSize="@dimen/text_size_caption" />
 
                     <LinearLayout
@@ -296,7 +296,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="0/5"
-                            android:textColor="@color/color_slate_subtitle"
+                            android:textColor="@color/color_on_surface_secondary"
                             android:textSize="@dimen/text_size_caption"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -325,13 +325,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/touch_target_min"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/bg_tasks_btn_purple"
+                        android:background="@drawable/bg_talkme_secondary_button"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center"
                         android:paddingHorizontal="14dp"
                         android:text="@string/daily_tasks_btn_continue"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="@dimen/text_size_caption"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -344,7 +344,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_tasks_card_listening"
+            android:background="@drawable/bg_talkme_card"
             android:paddingHorizontal="12dp"
             android:paddingVertical="8dp">
 
@@ -380,7 +380,7 @@
                     android:layout_width="1dp"
                     android:layout_height="44dp"
                     android:layout_marginStart="8dp"
-                    android:background="@color/color_cosmic_divider" />
+                    android:background="@color/color_card_outline" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -393,7 +393,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/daily_tasks_task_listening_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="@dimen/text_size_medium"
                         android:textStyle="bold" />
 
@@ -403,7 +403,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="@string/daily_tasks_task_listening_subtitle"
-                        android:textColor="@color/color_slate_subtitle"
+                        android:textColor="@color/color_on_surface_secondary"
                         android:textSize="@dimen/text_size_caption" />
 
                     <LinearLayout
@@ -428,7 +428,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="0/3 daq"
-                            android:textColor="@color/color_slate_subtitle"
+                            android:textColor="@color/color_on_surface_secondary"
                             android:textSize="@dimen/text_size_caption"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -457,13 +457,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/touch_target_min"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/bg_tasks_btn_cyan"
+                        android:background="@drawable/bg_talkme_secondary_button"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center"
                         android:paddingHorizontal="14dp"
                         android:text="@string/daily_tasks_btn_start_play"
-                        android:textColor="@color/color_cosmic_background"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="@dimen/text_size_caption"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -476,7 +476,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_tasks_card_speaking"
+            android:background="@drawable/bg_talkme_card"
             android:paddingHorizontal="12dp"
             android:paddingVertical="8dp">
 
@@ -512,7 +512,7 @@
                     android:layout_width="1dp"
                     android:layout_height="44dp"
                     android:layout_marginStart="8dp"
-                    android:background="@color/color_cosmic_divider" />
+                    android:background="@color/color_card_outline" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -525,7 +525,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/daily_tasks_task_speaking_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="@dimen/text_size_medium"
                         android:textStyle="bold" />
 
@@ -535,7 +535,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="@string/daily_tasks_task_speaking_subtitle"
-                        android:textColor="@color/color_slate_subtitle"
+                        android:textColor="@color/color_on_surface_secondary"
                         android:textSize="@dimen/text_size_caption" />
 
                     <LinearLayout
@@ -560,7 +560,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="0/3 gap"
-                            android:textColor="@color/color_slate_subtitle"
+                            android:textColor="@color/color_on_surface_secondary"
                             android:textSize="@dimen/text_size_caption"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -589,13 +589,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/touch_target_min"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/bg_tasks_btn_purple"
+                        android:background="@drawable/bg_talkme_secondary_button"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center"
                         android:paddingHorizontal="14dp"
                         android:text="@string/daily_tasks_btn_continue"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="@dimen/text_size_caption"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -608,7 +608,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_tasks_card_lesson"
+            android:background="@drawable/bg_talkme_card"
             android:paddingHorizontal="12dp"
             android:paddingVertical="8dp">
 
@@ -644,7 +644,7 @@
                     android:layout_width="1dp"
                     android:layout_height="44dp"
                     android:layout_marginStart="8dp"
-                    android:background="@color/color_cosmic_divider" />
+                    android:background="@color/color_card_outline" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -657,7 +657,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/daily_tasks_task_lesson_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="@dimen/text_size_medium"
                         android:textStyle="bold" />
 
@@ -667,7 +667,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="@string/daily_tasks_task_lesson_subtitle"
-                        android:textColor="@color/color_slate_subtitle"
+                        android:textColor="@color/color_on_surface_secondary"
                         android:textSize="@dimen/text_size_caption" />
 
                     <LinearLayout
@@ -692,7 +692,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="0/1"
-                            android:textColor="@color/color_slate_subtitle"
+                            android:textColor="@color/color_on_surface_secondary"
                             android:textSize="@dimen/text_size_caption"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -721,13 +721,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/touch_target_min"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/bg_tasks_btn_teal"
+                        android:background="@drawable/bg_talkme_secondary_button"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center"
                         android:paddingHorizontal="14dp"
                         android:text="@string/daily_tasks_btn_lesson_go"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="@dimen/text_size_caption"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -749,7 +749,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
-                android:background="@drawable/bg_tasks_reward_banner"
+                android:background="@drawable/bg_talkme_locked_card"
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/touch_target_min"
                 android:orientation="horizontal"
@@ -762,7 +762,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/daily_tasks_reward_banner_text"
-                    android:textColor="@color/color_cosmic_text_secondary"
+                    android:textColor="@color/color_on_locked_surface"
                     android:textSize="@dimen/text_size_body_small"
                     android:textStyle="bold" />
             </LinearLayout>

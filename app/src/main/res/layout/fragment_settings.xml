@@ -24,7 +24,7 @@
             android:contentDescription="@string/action_back"
             android:padding="12dp"
             android:src="@drawable/ic_arrow_back"
-            app:tint="@color/white" />
+            app:tint="@color/color_on_surface" />
 
         <TextView
             android:layout_width="0dp"
@@ -32,7 +32,7 @@
             android:layout_marginStart="14dp"
             android:layout_weight="1"
             android:text="@string/settings_title_uz"
-            android:textColor="@color/white"
+            android:textColor="@color/color_on_surface"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -84,11 +84,11 @@
                         android:id="@+id/btnThemeSystem"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="0dp"
-                        android:layout_height="44dp"
+                        android:layout_height="@dimen/touch_target_min"
                         android:layout_weight="1"
                         android:text="@string/profile_theme_system_uz"
                         android:textAllCaps="false"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="12.5sp"
                         android:textStyle="bold"
                         app:strokeColor="@color/color_cosmic_bubble_stroke" />
@@ -97,11 +97,11 @@
                         android:id="@+id/btnThemeLight"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="0dp"
-                        android:layout_height="44dp"
+                        android:layout_height="@dimen/touch_target_min"
                         android:layout_weight="1"
                         android:text="@string/profile_theme_light_uz"
                         android:textAllCaps="false"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="12.5sp"
                         android:textStyle="bold"
                         app:strokeColor="@color/color_cosmic_bubble_stroke" />
@@ -110,11 +110,11 @@
                         android:id="@+id/btnThemeDark"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="0dp"
-                        android:layout_height="44dp"
+                        android:layout_height="@dimen/touch_target_min"
                         android:layout_weight="1"
                         android:text="@string/profile_theme_dark_uz"
                         android:textAllCaps="false"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="12.5sp"
                         android:textStyle="bold"
                         app:strokeColor="@color/color_cosmic_bubble_stroke" />
@@ -168,7 +168,7 @@
                                 android:layout_gravity="center"
                                 android:contentDescription="@string/profile_read_aloud_label"
                                 android:src="@drawable/ic_speaker"
-                                app:tint="@color/white" />
+                                app:tint="@color/color_text_on_primary" />
                         </FrameLayout>
 
                         <TextView
@@ -177,7 +177,7 @@
                             android:layout_marginHorizontal="12dp"
                             android:layout_weight="1"
                             android:text="@string/profile_read_aloud_label"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -206,7 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/profile_speaking_speed_title"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -275,7 +275,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/profile_voice_engine_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -292,11 +292,11 @@
                             android:id="@+id/btnVoiceEngineNative"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="0dp"
-                            android:layout_height="44dp"
+                            android:layout_height="@dimen/touch_target_min"
                             android:layout_weight="1"
                             android:text="@string/profile_voice_engine_native"
                             android:textAllCaps="false"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:strokeColor="@color/color_cosmic_bubble_stroke" />
@@ -305,11 +305,11 @@
                             android:id="@+id/btnVoiceEngineAi"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="0dp"
-                            android:layout_height="44dp"
+                            android:layout_height="@dimen/touch_target_min"
                             android:layout_weight="1"
                             android:text="@string/profile_voice_engine_ai"
                             android:textAllCaps="false"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:strokeColor="@color/color_cosmic_bubble_stroke" />
@@ -326,7 +326,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/profile_voice_pick_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -377,7 +377,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/profile_voice_male_title"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_on_surface"
                                     android:textSize="13.5sp"
                                     android:textStyle="bold" />
 
@@ -456,7 +456,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/profile_voice_female_title"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/color_on_surface"
                                     android:textSize="13.5sp"
                                     android:textStyle="bold" />
 
@@ -544,7 +544,7 @@
                                 android:layout_gravity="center"
                                 android:contentDescription="@null"
                                 android:src="@drawable/ic_download_blue"
-                                app:tint="@color/white" />
+                                app:tint="@color/color_text_on_primary" />
                         </FrameLayout>
 
                         <TextView
@@ -553,7 +553,7 @@
                             android:layout_marginHorizontal="12dp"
                             android:layout_weight="1"
                             android:text="@string/profile_offline_audio_label"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="14sp" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
@@ -585,7 +585,7 @@
                                 android:layout_gravity="center"
                                 android:contentDescription="@null"
                                 android:src="@drawable/ic_bell_amber"
-                                app:tint="@color/white" />
+                                app:tint="@color/color_text_on_primary" />
                         </FrameLayout>
 
                         <TextView
@@ -594,7 +594,7 @@
                             android:layout_marginHorizontal="12dp"
                             android:layout_weight="1"
                             android:text="@string/profile_new_lessons_reminder_label"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="14sp" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
@@ -658,7 +658,7 @@
                             android:layout_marginHorizontal="12dp"
                             android:layout_weight="1"
                             android:text="@string/profile_privacy_policy"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="14.5sp" />
 
                         <ImageView
@@ -697,7 +697,7 @@
                             android:layout_marginHorizontal="12dp"
                             android:layout_weight="1"
                             android:text="@string/profile_data_management"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="14.5sp" />
 
                         <ImageView
@@ -736,7 +736,7 @@
                             android:layout_marginHorizontal="12dp"
                             android:layout_weight="1"
                             android:text="@string/profile_about_app_row"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="14.5sp" />
 
                         <ImageView

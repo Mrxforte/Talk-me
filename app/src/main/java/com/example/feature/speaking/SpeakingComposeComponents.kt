@@ -74,16 +74,14 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import com.example.R
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 
-private val TalkMeRoyalBlue = Color(0xFF0EA5E9)
-private val TalkMeDarkSlate = Color(0xFF0F172A)
-private val TalkMeCosmicNavy = Color(0xFF101D36)
-private val TalkMeNeonCyan = Color(0xFF00E5FF)
-private val TalkMeErrorRed = Color(0xFFEF4444)
+@Composable
+private fun themeColor(colorRes: Int): Color = Color(ContextCompat.getColor(LocalContext.current, colorRes))
 
 /**
  * Runtime Permission Gate for `Manifest.permission.RECORD_AUDIO`.
@@ -98,6 +96,11 @@ fun MicrophonePermissionGate(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val accent = themeColor(R.color.color_neon_cyan_variant)
+    val surface = themeColor(R.color.color_card_surface)
+    val onSurface = themeColor(R.color.color_on_surface)
+    val secondaryText = themeColor(R.color.color_on_surface_secondary)
+    val onAccent = themeColor(R.color.color_text_on_primary)
     val accompanistMicPermission = rememberPermissionState(Manifest.permission.RECORD_AUDIO)
 
     var isDirectGranted by remember {
@@ -156,7 +159,7 @@ fun MicrophonePermissionGate(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xD90F172A))
+                .background(themeColor(R.color.color_scrim_overlay))
                 .padding(20.dp)
                 .testTag("mic_permission_gate"),
             contentAlignment = Alignment.Center
@@ -167,13 +170,13 @@ fun MicrophonePermissionGate(
                     .align(Alignment.TopStart)
                     .padding(top = 8.dp)
                     .size(48.dp)
-                    .background(Color(0x33FFFFFF), CircleShape)
+                    .background(themeColor(R.color.color_scrim_back_button), CircleShape)
                     .testTag("permission_back_button")
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Orqaga qaytish",
-                    tint = Color.White
+                    tint = themeColor(R.color.color_on_image)
                 )
             }
 
@@ -182,7 +185,7 @@ fun MicrophonePermissionGate(
                     .fillMaxWidth()
                     .widthIn(max = 420.dp),
                 shape = RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = surface),
                 elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
             ) {
                 Column(
@@ -194,13 +197,13 @@ fun MicrophonePermissionGate(
                     Surface(
                         modifier = Modifier.size(72.dp),
                         shape = CircleShape,
-                        color = TalkMeRoyalBlue.copy(alpha = 0.12f)
+                        color = accent.copy(alpha = 0.12f)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             Icon(
                                 imageVector = Icons.Default.Mic,
                                 contentDescription = null,
-                                tint = TalkMeRoyalBlue,
+                                tint = accent,
                                 modifier = Modifier.size(36.dp)
                             )
                         }
@@ -212,7 +215,7 @@ fun MicrophonePermissionGate(
                         text = "Mikrofon ruxsati kerak",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = TalkMeDarkSlate,
+                            color = onSurface,
                             fontSize = 20.sp
                         ),
                         textAlign = TextAlign.Center
@@ -230,7 +233,7 @@ fun MicrophonePermissionGate(
                     Text(
                         text = descriptionText,
                         style = MaterialTheme.typography.bodyMedium.copy(
-                            color = Color(0xFF475569),
+                            color = secondaryText,
                             fontSize = 14.5.sp,
                             lineHeight = 20.sp
                         ),
@@ -248,7 +251,7 @@ fun MicrophonePermissionGate(
                             .height(50.dp)
                             .testTag("grant_mic_permission_button"),
                         shape = RoundedCornerShape(14.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = TalkMeRoyalBlue)
+                        colors = ButtonDefaults.buttonColors(containerColor = accent, contentColor = onAccent)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Mic,
@@ -323,6 +326,16 @@ fun SpeakingAuxiliaryControlsBar(
     modifier: Modifier = Modifier
 ) {
     val focusRequester = remember { FocusRequester() }
+    val accent = themeColor(R.color.color_neon_cyan)
+    val primary = themeColor(R.color.color_filled_card)
+    val onPrimary = themeColor(R.color.color_on_filled_card)
+    val subtleSurface = themeColor(R.color.color_card_surface_subtle)
+    val onSurface = themeColor(R.color.color_on_surface)
+    val secondaryText = themeColor(R.color.color_on_surface_secondary)
+    val errorColor = themeColor(R.color.color_error)
+    val errorSurface = themeColor(R.color.color_error_light)
+    val warning = themeColor(R.color.color_warning)
+    val warningSurface = themeColor(R.color.color_warning_light)
 
     Column(
         modifier = modifier
@@ -341,7 +354,7 @@ fun SpeakingAuxiliaryControlsBar(
                         .padding(bottom = 6.dp)
                         .testTag("error_retry_banner"),
                     shape = RoundedCornerShape(14.dp),
-                    color = Color(0xFFFEE2E2),
+                    color = errorSurface,
                     tonalElevation = 2.dp
                 ) {
                     Row(
@@ -353,7 +366,7 @@ fun SpeakingAuxiliaryControlsBar(
                     ) {
                         Text(
                             text = error.userMessageUzbek,
-                            color = TalkMeErrorRed,
+                            color = errorColor,
                             fontSize = 12.5.sp,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.weight(1f)
@@ -363,11 +376,11 @@ fun SpeakingAuxiliaryControlsBar(
                             FilledTonalButton(
                                 onClick = onRetryFailedTurn,
                                 modifier = Modifier
-                                    .height(38.dp)
+                                    .height(48.dp)
                                     .testTag("retry_turn_button"),
                                 colors = ButtonDefaults.filledTonalButtonColors(
-                                    containerColor = TalkMeErrorRed,
-                                    contentColor = Color.White
+                                    containerColor = errorColor,
+                                    contentColor = themeColor(R.color.color_text_on_primary)
                                 )
                             ) {
                                 Icon(
@@ -390,7 +403,7 @@ fun SpeakingAuxiliaryControlsBar(
                                 OutlinedButton(
                                     onClick = onCancelTurnOrSpeech,
                                     modifier = Modifier
-                                        .height(38.dp)
+                                        .height(48.dp)
                                         .testTag("skip_tts_error_button")
                                 ) {
                                     Text(text = "Skip", fontSize = 12.sp)
@@ -415,13 +428,13 @@ fun SpeakingAuxiliaryControlsBar(
                 FilledTonalButton(
                     onClick = onStopConversation,
                     modifier = Modifier
-                        .height(38.dp)
+                        .height(48.dp)
                         .padding(end = 6.dp)
                         .testTag("stop_conversation_button"),
                     shape = RoundedCornerShape(19.dp),
                     colors = ButtonDefaults.filledTonalButtonColors(
-                        containerColor = Color(0xFF331522),
-                        contentColor = Color(0xFFFCA5A5)
+                        containerColor = errorSurface,
+                        contentColor = errorColor
                     )
                 ) {
                     Icon(
@@ -440,13 +453,13 @@ fun SpeakingAuxiliaryControlsBar(
                 FilledTonalButton(
                     onClick = onToggleMute,
                     modifier = Modifier
-                        .height(38.dp)
+                        .height(48.dp)
                         .padding(end = 6.dp)
                         .testTag("mute_microphone_button"),
                     shape = RoundedCornerShape(19.dp),
                     colors = ButtonDefaults.filledTonalButtonColors(
-                        containerColor = if (uiState.isMuted) Color(0xFF2B2111) else TalkMeCosmicNavy,
-                        contentColor = if (uiState.isMuted) Color(0xFFFBBF24) else TalkMeNeonCyan
+                        containerColor = if (uiState.isMuted) warningSurface else subtleSurface,
+                        contentColor = if (uiState.isMuted) warning else accent
                     )
                 ) {
                     Icon(
@@ -467,13 +480,13 @@ fun SpeakingAuxiliaryControlsBar(
                 FilledTonalButton(
                     onClick = onCancelTurnOrSpeech,
                     modifier = Modifier
-                        .height(38.dp)
+                        .height(48.dp)
                         .padding(end = 6.dp)
                         .testTag("cancel_turn_button"),
                     shape = RoundedCornerShape(19.dp),
                     colors = ButtonDefaults.filledTonalButtonColors(
-                        containerColor = TalkMeCosmicNavy,
-                        contentColor = TalkMeNeonCyan
+                        containerColor = subtleSurface,
+                        contentColor = accent
                     )
                 ) {
                     Icon(
@@ -493,12 +506,12 @@ fun SpeakingAuxiliaryControlsBar(
             FilledTonalButton(
                 onClick = { onToggleKeyboardBar(!uiState.isKeyboardInputVisible) },
                 modifier = Modifier
-                    .height(38.dp)
+                    .height(48.dp)
                     .testTag("toggle_keyboard_input_button"),
                 shape = RoundedCornerShape(19.dp),
                 colors = ButtonDefaults.filledTonalButtonColors(
-                    containerColor = TalkMeCosmicNavy,
-                    contentColor = Color(0xFFCBD5E1)
+                    containerColor = subtleSurface,
+                    contentColor = onSurface
                 )
             ) {
                 Icon(
@@ -534,7 +547,7 @@ fun SpeakingAuxiliaryControlsBar(
                         Text(
                             text = "Ingliz tilida xabar yozing...",
                             fontSize = 13.5.sp,
-                            color = Color(0xFF8E9CAE)
+                            color = secondaryText
                         )
                     },
                     singleLine = false,
@@ -552,13 +565,13 @@ fun SpeakingAuxiliaryControlsBar(
                         }
                     ),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedBorderColor = TalkMeNeonCyan,
-                        unfocusedBorderColor = Color(0xFF28436E),
-                        focusedContainerColor = Color(0xFF09142B),
-                        unfocusedContainerColor = Color(0xFF09142B),
-                        cursorColor = TalkMeNeonCyan
+                        focusedTextColor = onSurface,
+                        unfocusedTextColor = onSurface,
+                        focusedBorderColor = accent,
+                        unfocusedBorderColor = secondaryText,
+                        focusedContainerColor = subtleSurface,
+                        unfocusedContainerColor = subtleSurface,
+                        cursorColor = accent
                     )
                 )
 
@@ -571,9 +584,9 @@ fun SpeakingAuxiliaryControlsBar(
                         .size(48.dp)
                         .background(
                             color = if (uiState.keyboardDraftText.isNotBlank() && !uiState.isLoading) {
-                                TalkMeRoyalBlue
+                                primary
                             } else {
-                                Color(0xFFCBD5E1)
+                                subtleSurface
                             },
                             shape = CircleShape
                         )
@@ -582,7 +595,7 @@ fun SpeakingAuxiliaryControlsBar(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Send,
                         contentDescription = "Yuborish",
-                        tint = Color.White,
+                        tint = if (uiState.keyboardDraftText.isNotBlank() && !uiState.isLoading) onPrimary else onSurface,
                         modifier = Modifier.size(20.dp)
                     )
                 }

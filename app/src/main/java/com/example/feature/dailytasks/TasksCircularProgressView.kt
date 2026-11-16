@@ -3,7 +3,8 @@ package com.example.feature.dailytasks
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
+import androidx.core.content.ContextCompat
+import com.example.R
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.SweepGradient
@@ -21,7 +22,7 @@ class TasksCircularProgressView @JvmOverloads constructor(
     private val trackPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
-        color = Color.parseColor("#152445")
+        color = ContextCompat.getColor(context, R.color.color_card_outline)
     }
 
     private val progressPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -30,7 +31,7 @@ class TasksCircularProgressView @JvmOverloads constructor(
     }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.color_on_surface)
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
     }
@@ -139,9 +140,9 @@ class TasksCircularProgressView @JvmOverloads constructor(
             w / 2f,
             h / 2f,
             intArrayOf(
-                Color.parseColor("#00E5FF"),
-                Color.parseColor("#9D4EDD"),
-                Color.parseColor("#00E5FF")
+                ContextCompat.getColor(context, R.color.color_gradient_primary_start),
+                ContextCompat.getColor(context, R.color.color_gradient_primary_end),
+                ContextCompat.getColor(context, R.color.color_gradient_primary_start)
             ),
             floatArrayOf(0f, 0.5f, 1f)
         )

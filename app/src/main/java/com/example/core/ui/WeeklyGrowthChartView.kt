@@ -3,14 +3,15 @@ package com.example.core.ui
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import com.example.R
 import kotlin.math.ceil
 
 /**
@@ -41,23 +42,23 @@ class WeeklyGrowthChartView @JvmOverloads constructor(
     private val gridPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 0.85f * density
-        color = Color.argb(120, 40, 68, 112)
+        color = ContextCompat.getColor(context, R.color.color_growth_grid)
     }
 
     private val verticalGuidePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 0.9f * density
-        color = Color.argb(95, 56, 189, 248)
+        color = ContextCompat.getColor(context, R.color.color_growth_guide)
     }
 
     private val yAxisTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#8E9CAE")
+        color = ContextCompat.getColor(context, R.color.color_on_surface_secondary)
         textSize = 10.5f * scaledDensity
         textAlign = Paint.Align.RIGHT
     }
 
     private val xAxisTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#CBD5E1")
+        color = ContextCompat.getColor(context, R.color.color_on_surface)
         textSize = 11f * scaledDensity
         textAlign = Paint.Align.CENTER
     }
@@ -65,13 +66,13 @@ class WeeklyGrowthChartView @JvmOverloads constructor(
     private val prevLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 1.8f * density
-        color = Color.parseColor("#94A3B8")
+        color = ContextCompat.getColor(context, R.color.color_growth_previous)
         pathEffect = DashPathEffect(floatArrayOf(5f * density, 4f * density), 0f)
     }
 
     private val prevDotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.parseColor("#94A3B8")
+        color = ContextCompat.getColor(context, R.color.color_growth_previous)
     }
 
     private val currentGlowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -79,7 +80,7 @@ class WeeklyGrowthChartView @JvmOverloads constructor(
         strokeWidth = 7f * density
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
-        color = Color.argb(72, 0, 229, 255)
+        color = ContextCompat.getColor(context, R.color.color_growth_current_glow)
     }
 
     private val currentLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -87,28 +88,28 @@ class WeeklyGrowthChartView @JvmOverloads constructor(
         strokeWidth = 2.6f * density
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
-        color = Color.parseColor("#00E5FF")
+        color = ContextCompat.getColor(context, R.color.color_growth_current)
     }
 
     private val currentNodeOuterPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.parseColor("#00E5FF")
+        color = ContextCompat.getColor(context, R.color.color_growth_current)
     }
 
     private val currentNodeCenterPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.color_card_surface)
     }
 
     private val pointValuePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.color_growth_point)
         textSize = 10.5f * scaledDensity
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
     }
 
     private val legendTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#CBD5E1")
+        color = ContextCompat.getColor(context, R.color.color_on_surface)
         textSize = 10.5f * scaledDensity
         textAlign = Paint.Align.LEFT
     }

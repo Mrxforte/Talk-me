@@ -5,7 +5,8 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
-import android.graphics.Color
+import androidx.core.content.ContextCompat
+import com.example.R
 import android.graphics.Typeface
 import android.view.Gravity
 import android.view.View
@@ -26,15 +27,6 @@ import kotlin.random.Random
 object LockStarBurstAnimator {
 
     private val STAR_SYMBOLS = listOf("★", "✦", "✨", "★", "✶", "✧")
-    private val STAR_COLORS = listOf(
-        Color.parseColor("#FACC15"), // Bright Gold
-        Color.parseColor("#F59E0B"), // Amber
-        Color.parseColor("#EC4899"), // Vibrant Pink
-        Color.parseColor("#38BDF8"), // Sky Cyan
-        Color.parseColor("#A855F7"), // Neon Violet
-        Color.parseColor("#4ADE80")  // Emerald Spark
-    )
-
     fun playLockTapStarBurst(
         cardView: View,
         lockCenterView: View,
@@ -82,7 +74,7 @@ object LockStarBurstAnimator {
         for (i in 0 until starCount) {
             val starTv = TextView(particleContainer.context).apply {
                 text = STAR_SYMBOLS[i % STAR_SYMBOLS.size]
-                setTextColor(STAR_COLORS[i % STAR_COLORS.size])
+                setTextColor(ContextCompat.getColor(context, R.color.color_on_surface))
                 textSize = Random.nextInt(14, 22).toFloat()
                 typeface = Typeface.DEFAULT_BOLD
                 gravity = Gravity.CENTER

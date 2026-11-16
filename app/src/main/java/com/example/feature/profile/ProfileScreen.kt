@@ -358,9 +358,9 @@ class ProfileFragment : Fragment() {
         val activeBtn = if (isMonthly) binding.btnGrowthMonthly else binding.btnGrowthWeekly
         val inactiveBtn = if (isMonthly) binding.btnGrowthWeekly else binding.btnGrowthMonthly
         activeBtn.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(requireContext(), R.color.color_primary_variant)
+            ContextCompat.getColor(requireContext(), R.color.color_filled_card)
         )
-        activeBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        activeBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_on_filled_card))
 
         inactiveBtn.backgroundTintList = ColorStateList.valueOf(
             ContextCompat.getColor(requireContext(), android.R.color.transparent)

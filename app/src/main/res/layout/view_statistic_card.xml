@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_margin="@dimen/spacing_small"
+    android:minHeight="@dimen/touch_target_min"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/color_surface"
-    app:cardCornerRadius="18dp"
-    app:cardElevation="3dp"
-    app:strokeColor="@color/color_card_stroke"
-    app:strokeWidth="1dp">
+    app:cardBackgroundColor="@color/color_card_surface"
+    app:cardCornerRadius="@dimen/radius_card_medium"
+    app:cardElevation="@dimen/elevation_small"
+    app:strokeColor="@color/color_card_outline"
+    app:strokeWidth="@dimen/stroke_card">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
         <ImageView
             android:id="@+id/ivStatCoverImage"
             android:layout_width="match_parent"
-            android:layout_height="168dp"
+            android:layout_height="@dimen/vocab_card_art_height"
             android:contentDescription="@string/stat_memorized_words_title"
             android:scaleType="centerCrop"
             android:src="@drawable/img_lesson_objects_1794310854481" />
@@ -31,38 +32,39 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_surface"
+            android:background="@color/color_card_surface"
             android:gravity="center_vertical"
-            android:minHeight="48dp"
+            android:minHeight="@dimen/touch_target_min"
             android:orientation="horizontal"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="8dp">
+            android:paddingHorizontal="@dimen/spacing_small"
+            android:paddingVertical="@dimen/spacing_small">
 
             <TextView
                 android:id="@+id/tvStatTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_small"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Vocabulary"
-                android:textColor="@color/color_text_primary"
-                android:textSize="15sp"
+                android:text="@string/stat_memorized_words_title"
+                android:textColor="@color/color_on_surface"
+                android:textSize="@dimen/text_size_body"
                 android:textStyle="bold" />
 
             <!-- Circular/Pill Green Telegram-Style Badge in Grid Item Bottom -->
             <TextView
                 android:id="@+id/tvStatBadge"
                 android:layout_width="wrap_content"
-                android:layout_height="26dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_telegram_green_badge"
                 android:gravity="center"
-                android:minWidth="26dp"
-                android:paddingHorizontal="8dp"
-                android:text="+5"
-                android:textColor="@color/white"
-                android:textSize="12sp"
+                android:minWidth="@dimen/vocab_badge_min_size"
+                android:minHeight="@dimen/vocab_badge_min_size"
+                android:paddingHorizontal="@dimen/spacing_small"
+                android:text="@string/vocab_badge_preview"
+                android:textColor="@color/color_on_filled_card"
+                android:textSize="@dimen/text_size_caption"
                 android:textStyle="bold"
                 android:visibility="visible" />
         </LinearLayout>

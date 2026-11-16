@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TalkMe</string>
+    <string name="lesson_show_examples">Misollarni ko‘rish →</string>
 
     <!-- Navigation -->
     <string name="nav_home">Home</string>
@@ -31,6 +32,27 @@
     <string name="default_user_level">Beginner to Practical English</string>
 
     <!-- Home Screen -->
+    <string name="home_skills_today">Bugungi ko‘nikmalar</string>
+    <string name="home_learning_tools">O‘quv vositalari</string>
+    <string name="home_start">Boshlash</string>
+    <string name="home_go">O‘tish</string>
+    <string name="home_course_label">TALKME ENGLISH COURSE</string>
+    <string name="home_default_topic">1. A0 • Kirish (Alifbo va Tanishuv)</string>
+    <string name="home_topic_subtitle_format">%1$s • mavzular va bo‘limlar</string>
+    <string name="home_grammar_subtitle_format">%1$s • grammatika qoidalari</string>
+    <string name="home_reading_subtitle_format">%1$s • matn va o‘qish</string>
+    <string name="home_writing_subtitle_format">%1$s • yozma tarjima</string>
+    <string name="home_listening_subtitle_format">%1$s • eshitib tushunish</string>
+    <string name="home_speaking_subtitle_format">%1$s • AI ovozli suhbat</string>
+    <string name="home_words_format">%1$d so‘z</string>
+    <string name="home_audio_format">%1$d audio</string>
+    <string name="curriculum_module_format">%1$s • %2$02d-modul</string>
+    <string name="lesson_duration_minutes">%1$d daq</string>
+    <string name="daily_tasks_calendar_info">Bugungi kunlik vazifalar faol</string>
+    <string name="daily_tasks_streak_info">Doimiy o‘qish: %1$d kunlik davomiylik!</string>
+    <string name="daily_tasks_progress_count">%1$d/%2$d</string>
+    <string name="daily_tasks_minutes_count">%1$d/%2$d daq</string>
+    <string name="daily_tasks_sentences_count">%1$d/%2$d gap</string>
     <string name="hero_course_title">TalkMe Core English Curriculum</string>
     <string name="hero_continue_learning">Continue Learning</string>
     <string name="hero_start_learning">Start Learning</string>
@@ -79,6 +101,24 @@
     <string name="lesson_completed_banner">Section Completed! Next content unlocked.</string>
 
     <!-- Practice Center -->
+    <string name="practice_daily_goal_format">Bugungi maqsad • %1$d/5</string>
+    <string name="practice_choose_skill">Ko‘nikmani tanlang</string>
+    <string name="practice_mixed_challenge">Aralash mashq • 5 daqiqalik sinov</string>
+    <string name="practice_brand_subtitle">Ingliz tilini o‘rganish</string>
+    <string name="practice_brand_talk">Talk</string>
+    <string name="practice_brand_me">Me</string>
+    <string name="flip_front_badge">INGLIZCHA SO‘Z</string>
+    <string name="flip_back_badge">O‘ZBEKCHA MA’NOSI</string>
+    <string name="flip_example_badge">MISOL</string>
+    <string name="flip_rating_prompt">Qanchalik eslab qoldingiz? (Darajani tanlang)</string>
+    <string name="flip_open_cards">Flip Cards ochish →</string>
+    <string name="vocab_review_all_topic_words">Barcha mavzu so‘zlarini takrorlash</string>
+    <string name="vocab_topics_summary_default">O‘tilgan mavzular va bo‘limlar</string>
+    <string name="vocab_subtopic_order_preview">1.1 BO‘LIM</string>
+    <string name="vocab_topic_mystery_preview">★ MAXFIY MAVZU ★</string>
+    <string name="vocab_topic_order_preview">01-MAVZU</string>
+    <string name="vocab_badge_preview">+5</string>
+    <string name="vocab_subtopic_badge_preview">+3</string>
     <string name="practice_header_title">Practice Center</string>
     <string name="practice_header_subtitle">Exclusively generated from your studied topics &amp; vocabulary</string>
     <string name="practice_cat_reading">Reading Practice</string>
@@ -403,4 +443,10 @@
     <string name="curriculum_level_title">%1$s · %2$s</string>
     <string name="curriculum_locked_lesson_title">%1$d. %2$s</string>
     <string name="curriculum_general_english">General English</string>
+    <string name="curriculum_learning_subtitle">Ingliz tilini bosqichma-bosqich o‘rganing</string>
+    <string name="curriculum_next_lesson_label">Keyingi dars: </string>
+    <string name="curriculum_continue">Davom etish</string>
+    <string name="curriculum_all_lessons">Barchasi (%1$d)</string>
+    <string name="curriculum_lesson_range">%1$d–%2$d dars</string>
+    <string name="lesson_explanation_heading">Qoida va tushuntirish</string>
 </resources>

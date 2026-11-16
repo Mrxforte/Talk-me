@@ -9,7 +9,7 @@
 
     <!-- Left Timeline Column (Node + Vertical Solid/Dashed Connectors) -->
     <LinearLayout
-        android:layout_width="34dp"
+        android:layout_width="@dimen/touch_target_min"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -32,7 +32,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="Status"
                 android:src="@drawable/ic_check_small"
-                app:tint="#FFFFFF" />
+                app:tint="@color/color_text_on_primary" />
 
             <TextView
                 android:id="@+id/tvSectionNodeNumber"
@@ -40,8 +40,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="3"
-                android:textColor="#FFFFFF"
-                android:textSize="12.5sp"
+                android:textColor="@color/color_text_on_primary"
+                android:textSize="@dimen/text_size_body_small"
                 android:textStyle="bold"
                 android:visibility="gone" />
         </FrameLayout>
@@ -69,7 +69,8 @@
             android:id="@+id/layoutSectionUnlockedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_curriculum_card_completed"
+            android:background="@drawable/bg_talkme_card"
+            android:minHeight="@dimen/touch_target_min"
             android:orientation="vertical"
             android:padding="9dp"
             android:visibility="visible">
@@ -105,15 +106,15 @@
                     android:background="@drawable/bg_subtopic_num_green"
                     android:gravity="center"
                     android:text="1"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15.5sp"
+                    android:textColor="@color/color_text_on_primary"
+                    android:textSize="@dimen/text_size_body"
                     android:textStyle="bold" />
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="28dp"
                     android:layout_marginHorizontal="10dp"
-                    android:background="#2B4066" />
+                    android:background="@color/color_divider" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -125,12 +126,10 @@
                         android:id="@+id/tvSectionTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="1dp"
-                        android:maxLines="2"
+                        android:lineSpacingExtra="@dimen/spacing_xs"
                         android:text="Welcome to TalkMe"
-                        android:textColor="#FFFFFF"
-                        android:textSize="15.5sp"
+                        android:textColor="@color/color_on_surface"
+                        android:textSize="@dimen/text_size_medium"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -144,7 +143,8 @@
                             android:layout_width="13dp"
                             android:layout_height="13dp"
                             android:contentDescription="Duration"
-                            android:src="@drawable/ic_clock_small" />
+                            android:src="@drawable/ic_clock_small"
+                            app:tint="@color/color_on_surface_secondary" />
 
                         <TextView
                             android:id="@+id/tvSectionDescription"
@@ -152,8 +152,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:text="4 min"
-                            android:textColor="#94A3B8"
-                            android:textSize="12sp" />
+                            android:textColor="@color/color_on_surface_secondary"
+                            android:textSize="@dimen/text_size_body_small" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -174,7 +174,7 @@
                         android:layout_height="14dp"
                         android:contentDescription="Completed"
                         android:src="@drawable/ic_check_circle"
-                        app:tint="#4ADE80" />
+                        app:tint="@color/color_neon_cyan_variant" />
 
                     <TextView
                         android:id="@+id/tvSectionStatus"
@@ -182,8 +182,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="Bajarildi"
-                        android:textColor="#4ADE80"
-                        android:textSize="11.5sp"
+                        android:textColor="@color/color_neon_cyan_variant"
+                        android:textSize="@dimen/text_size_caption"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -191,7 +191,7 @@
                 <LinearLayout
                     android:id="@+id/btnSectionContinue"
                     android:layout_width="wrap_content"
-                    android:layout_height="34dp"
+                    android:layout_height="@dimen/touch_target_min"
                     android:background="@drawable/bg_curriculum_sky_btn"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -202,7 +202,8 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:contentDescription="Play"
-                        android:src="@drawable/ic_play_outline" />
+                        android:src="@drawable/ic_play_outline"
+                        app:tint="@color/color_text_on_primary" />
 
                     <TextView
                         android:id="@+id/tvSectionActionCta"
@@ -210,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="Davom etish"
-                        android:textColor="@color/color_curriculum_on_accent"
+                        android:textColor="@color/color_text_on_primary"
                         android:textSize="12.5sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -221,36 +222,48 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/layoutSectionMysteryOverlay"
             android:layout_width="match_parent"
-            android:layout_height="108dp"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/locked_lesson_card_min_height"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:visibility="gone"
-            app:cardBackgroundColor="@color/color_cosmic_card"
-            app:cardCornerRadius="18dp"
+            app:cardBackgroundColor="@color/color_locked_surface"
+            app:cardCornerRadius="@dimen/radius_card_medium"
             app:cardElevation="0dp"
-            app:strokeColor="@color/color_cosmic_card_stroke"
-            app:strokeWidth="1.5dp">
+            app:strokeColor="@color/color_locked_outline"
+            app:strokeWidth="@dimen/stroke_card">
 
             <FrameLayout
                 android:id="@+id/containerSectionImageFrame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:clipChildren="false"
                 android:clipToPadding="false">
 
-                <ImageView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="Keyingi dars"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/img_subtopic_locked_clean" />
+                    android:layout_height="@dimen/locked_lesson_art_height"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/section_status_locked"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
 
                 <FrameLayout
                     android:id="@+id/layoutSectionLockMedallion"
                     android:layout_width="56dp"
                     android:layout_height="44dp"
                     android:layout_gravity="top|center_horizontal"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:clipChildren="false"
                     android:clipToPadding="false">
 
@@ -262,24 +275,26 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/img_subtopic_lock_medallion" />
                 </FrameLayout>
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
                     android:orientation="vertical"
-                    android:background="@color/color_curriculum_label_scrim"
+                    android:background="@drawable/bg_talkme_locked_card"
                     android:paddingHorizontal="@dimen/spacing_medium"
-                    android:paddingVertical="@dimen/spacing_xs">
+                    android:paddingVertical="@dimen/spacing_small">
                     <TextView
                         android:id="@+id/tvLockedSectionTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLines="2"
-                        android:ellipsize="end"
+                        android:textSize="@dimen/text_size_body"
+                        android:lineSpacingExtra="@dimen/spacing_xs"
                         android:textStyle="bold"
-                        android:textColor="@color/color_curriculum_text" />
+                        android:textColor="@color/color_on_locked_surface" />
                 </LinearLayout>
+            </LinearLayout>
+
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
 

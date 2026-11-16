@@ -2,11 +2,11 @@
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
     android:insetTop="7dp"
     android:insetBottom="7dp">
-    <ripple android:color="#40FFFFFF">
+    <ripple android:color="@color/color_scrim_back_button">
         <item>
             <shape android:shape="rectangle">
                 <corners android:radius="20dp" />
-                <solid android:color="#00897B" />
+                <solid android:color="@color/color_filled_card" />
             </shape>
         </item>
     </ripple>

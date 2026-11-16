@@ -155,13 +155,13 @@ class DailyTasksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnCalendarPicker.setOnClickListener {
-            Snackbar.make(view, "Bugun: 12-noyabr • Kunlik vazifalar faol", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(view, R.string.daily_tasks_calendar_info, Snackbar.LENGTH_SHORT).show()
         }
 
         binding.layoutStreakBadge.setOnClickListener {
             Snackbar.make(
                 view,
-                "🔥 Doimiy o‘qish: ${viewModel.uiState.value.streakDays} kunlik davomiylik!",
+                getString(R.string.daily_tasks_streak_info, viewModel.uiState.value.streakDays),
                 Snackbar.LENGTH_SHORT
             ).show()
         }
@@ -254,26 +254,26 @@ class DailyTasksFragment : Fragment() {
 
         // Task 1: Vocabulary
         binding.progressVocab.animateProgressTo(state.vocabProgress, state.vocabMax)
-        binding.tvVocabCount.text = "${state.vocabProgress}/${state.vocabMax}"
+        binding.tvVocabCount.text = getString(R.string.daily_tasks_progress_count, state.vocabProgress, state.vocabMax)
         binding.ivVocabDoneBadge.visibility =
             if (state.vocabProgress >= state.vocabMax) View.VISIBLE else View.GONE
 
         // Task 2: Listening
         binding.progressListening.animateProgressTo(state.listeningProgress, state.listeningMax)
-        binding.tvListeningCount.text = "${state.listeningProgress}/${state.listeningMax} daq"
+        binding.tvListeningCount.text = getString(R.string.daily_tasks_minutes_count, state.listeningProgress, state.listeningMax)
         binding.ivListeningDoneBadge.visibility =
             if (state.listeningProgress >= state.listeningMax) View.VISIBLE else View.GONE
 
         // Task 3: Speaking
         binding.progressSpeaking.animateProgressTo(state.speakingProgress, state.speakingMax)
-        binding.tvSpeakingCount.text = "${state.speakingProgress}/${state.speakingMax} gap"
+        binding.tvSpeakingCount.text = getString(R.string.daily_tasks_sentences_count, state.speakingProgress, state.speakingMax)
         binding.ivSpeakingDoneBadge.visibility =
             if (state.speakingProgress >= state.speakingMax) View.VISIBLE else View.GONE
 
         // Task 4: Lesson
         val hasLesson = state.activeSectionId.isNotBlank()
         binding.progressLesson.animateProgressTo(state.lessonProgress, state.lessonMax)
-        binding.tvLessonCount.text = "${state.lessonProgress}/${state.lessonMax}"
+        binding.tvLessonCount.text = getString(R.string.daily_tasks_progress_count, state.lessonProgress, state.lessonMax)
         binding.ivLessonDoneBadge.visibility =
             if (state.lessonProgress >= state.lessonMax) View.VISIBLE else View.GONE
         binding.tvLessonSubtitle.text = if (hasLesson) {

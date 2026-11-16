@@ -4,15 +4,16 @@
     android:id="@+id/cardVocabTopic"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_margin="@dimen/spacing_small"
+    android:minHeight="@dimen/touch_target_min"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/color_surface"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:strokeColor="@color/color_card_stroke"
-    app:strokeWidth="1dp">
+    app:cardBackgroundColor="@color/color_card_surface"
+    app:cardCornerRadius="@dimen/radius_card_medium"
+    app:cardElevation="@dimen/elevation_small"
+    app:strokeColor="@color/color_card_outline"
+    app:strokeWidth="@dimen/stroke_card">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,11 +23,11 @@
         <!-- 1. Large 1-to-1 Topic Cover Image + Mystery Lock Vault Overlay for Locked Topics -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="168dp"
-            app:cardBackgroundColor="@color/color_surface_variant"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp">
+            android:layout_height="@dimen/vocab_card_art_height"
+            app:cardBackgroundColor="@color/color_card_surface_subtle"
+            app:cardCornerRadius="@dimen/radius_card_compact"
+            app:cardElevation="@dimen/elevation_none"
+            app:strokeWidth="@dimen/elevation_none">
 
             <FrameLayout
                 android:id="@+id/containerVocabTopicImageFrame"
@@ -62,31 +63,31 @@
 
                         <FrameLayout
                             android:id="@+id/layoutVocabTopicLockMedallion"
-                            android:layout_width="58dp"
-                            android:layout_height="58dp"
+                            android:layout_width="@dimen/vocab_lock_medallion_size"
+                            android:layout_height="@dimen/vocab_lock_medallion_size"
                             android:background="@drawable/bg_mystery_lock_circle"
-                            android:elevation="6dp">
+                            android:elevation="@dimen/elevation_card">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
+                                android:layout_width="@dimen/vocab_lock_icon_size"
+                                android:layout_height="@dimen/vocab_lock_icon_size"
                                 android:layout_gravity="center"
                                 android:contentDescription="@string/topic_status_locked"
                                 android:src="@drawable/ic_lock"
-                                app:tint="@color/white" />
+                                app:tint="@color/color_on_filled_card" />
                         </FrameLayout>
 
                         <TextView
                             android:id="@+id/tvVocabTopicMysteryHint"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_small"
                             android:background="@drawable/bg_glass_pill"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="★ MAXFIY MAVZU ★"
-                            android:textColor="#FEF08A"
-                            android:textSize="10sp"
+                            android:paddingHorizontal="@dimen/spacing_small"
+                            android:paddingVertical="@dimen/spacing_xs"
+                            android:text="@string/vocab_topic_mystery_preview"
+                            android:textColor="@color/color_on_surface"
+                            android:textSize="@dimen/text_size_caption"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </FrameLayout>
@@ -97,13 +98,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|start"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/spacing_small"
                     android:background="@drawable/bg_glass_pill"
-                    android:paddingHorizontal="9dp"
-                    android:paddingVertical="3dp"
-                    android:text="01-MAVZU"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:paddingHorizontal="@dimen/spacing_small"
+                    android:paddingVertical="@dimen/spacing_xs"
+                    android:text="@string/vocab_topic_order_preview"
+                    android:textColor="@color/color_on_surface"
+                    android:textSize="@dimen/text_size_caption"
                     android:textStyle="bold" />
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -113,9 +114,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingHorizontal="@dimen/spacing_small"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_small">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -127,26 +128,27 @@
                     android:id="@+id/tvVocabTopicTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
+                    android:layout_marginEnd="@dimen/spacing_small"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="15sp"
+                    android:textColor="@color/color_on_surface"
+                    android:textSize="@dimen/text_size_body"
                     android:textStyle="bold" />
 
                 <!-- Telegram-style Circular / Pill Green Badge -->
                 <TextView
                     android:id="@+id/tvVocabTopicBadge"
                     android:layout_width="wrap_content"
-                    android:layout_height="24dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_telegram_green_badge"
                     android:gravity="center"
-                    android:minWidth="24dp"
-                    android:paddingHorizontal="8dp"
-                    android:text="+5"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
+                    android:minWidth="@dimen/vocab_badge_min_size"
+                    android:minHeight="@dimen/vocab_badge_min_size"
+                    android:paddingHorizontal="@dimen/spacing_small"
+                    android:text="@string/vocab_badge_preview"
+                    android:textColor="@color/color_on_filled_card"
+                    android:textSize="@dimen/text_size_caption"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -154,22 +156,22 @@
                 android:id="@+id/tvVocabTopicUzbek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_xxs"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/color_primary_variant"
-                android:textSize="12sp"
+                android:textSize="@dimen/text_size_body_small"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvVocabTopicSubtopicsMeta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/spacing_xs"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="11sp" />
+                android:textColor="@color/color_on_surface_secondary"
+                android:textSize="@dimen/text_size_caption" />
 
         </LinearLayout>
 

@@ -342,7 +342,7 @@ class TopicDetailFragment : Fragment() {
         chipGroup.removeAllViews()
         val allChip = com.google.android.material.chip.Chip(requireContext()).apply {
             id = View.generateViewId()
-            text = "Barchasi ($totalCount)"
+            text = getString(R.string.curriculum_all_lessons, totalCount)
             isCheckable = true
             isChecked = (selectedBatchIndex == -1)
             setOnClickListener {
@@ -357,7 +357,7 @@ class TopicDetailFragment : Fragment() {
             val endIdx = minOf((b + 1) * 20, totalCount)
             val rangeChip = com.google.android.material.chip.Chip(requireContext()).apply {
                 id = View.generateViewId()
-                text = "$startIdx–$endIdx dars"
+                text = getString(R.string.curriculum_lesson_range, startIdx, endIdx)
                 isCheckable = true
                 isChecked = (selectedBatchIndex == b)
                 setOnClickListener {

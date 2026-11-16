@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_xs"
         android:gravity="center"
-        android:text="Qanchalik eslab qoldingiz? (Darajani tanlang)"
+        android:text="@string/flip_rating_prompt"
         android:textColor="@color/color_text_secondary"
         android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
             android:insetBottom="0dp"
             android:paddingHorizontal="4dp"
             android:text="@string/flip_btn_hard"
-            android:textColor="#B45309"
+            android:textColor="@color/color_warning"
             android:textSize="11sp"
             android:textStyle="bold"
             app:backgroundTint="@color/color_warning_light"
@@ -95,7 +95,7 @@
             android:insetBottom="0dp"
             android:paddingHorizontal="4dp"
             android:text="@string/flip_btn_easy"
-            android:textColor="#047857"
+            android:textColor="@color/color_success"
             android:textSize="11sp"
             android:textStyle="bold"
             app:backgroundTint="@color/color_success_light"

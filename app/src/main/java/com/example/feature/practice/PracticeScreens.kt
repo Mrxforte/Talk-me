@@ -99,7 +99,7 @@ class PracticeFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.completedStepsCount.collect { done ->
                     val clamped = done.coerceIn(0, 5)
-                    binding.tvPracticeDailyGoal.text = "Bugungi maqsad • $clamped/5"
+                    binding.tvPracticeDailyGoal.text = getString(R.string.practice_daily_goal_format, clamped)
                     binding.progressPracticeDailyGoal.animateProgressTo(clamped, maxValue = 5)
                 }
             }
@@ -702,7 +702,7 @@ class ExerciseSessionFragment : Fragment() {
             val tvLine = TextView(requireContext()).apply {
                 layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
                 textSize = 15.5f
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.color_on_surface))
                 setLineSpacing(2 * density, 1f)
 
                 val spannable = SpannableStringBuilder(sentence)
@@ -788,7 +788,7 @@ class ExerciseSessionFragment : Fragment() {
                 setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
-                        if (isDone) R.color.white else R.color.color_cosmic_text_secondary
+                        if (isDone) R.color.color_on_surface else R.color.color_cosmic_text_secondary
                     )
                 )
                 text = if (isDone) {
@@ -854,7 +854,7 @@ class ExerciseSessionFragment : Fragment() {
                 layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
                 text = optionText
                 textSize = 15f
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.color_on_surface))
                 if (isSelected || isCorrectOption) {
                     setTypeface(null, Typeface.BOLD)
                 }

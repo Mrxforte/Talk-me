@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="18dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="12dp">
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingTop="@dimen/spacing_medium"
+        android:paddingBottom="@dimen/spacing_small">
 
         <TextView
             android:id="@+id/tvLessonsTitle"
@@ -22,8 +22,8 @@
             android:fontFamily="sans-serif-medium"
             android:letterSpacing="-0.01"
             android:text="@string/curriculum_general_english"
-            android:textColor="#FFFFFF"
-            android:textSize="26sp"
+            android:textColor="@color/color_on_surface"
+            android:textSize="@dimen/text_size_heading"
             android:textStyle="bold" />
 
         <TextView
@@ -31,9 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:text="Ingliz tilini bosqichma-bosqich o‘rganing"
-            android:textColor="#94A3B8"
-            android:textSize="14sp" />
+            android:text="@string/curriculum_learning_subtitle"
+            android:textColor="@color/color_on_surface_secondary"
+            android:textSize="@dimen/text_size_body" />
     </LinearLayout>
 
     <!-- Top Level Summary Hero Card (A1 Beginner) -->
@@ -41,9 +41,9 @@
         android:id="@+id/cardLevelSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/bg_curriculum_hero_card"
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:background="@drawable/bg_talkme_filled_card"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
         android:paddingTop="14dp"
@@ -57,13 +57,13 @@
 
             <TextView
                 android:id="@+id/tvHeroLevelBadge"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/avatar_size_medium"
+                android:layout_height="@dimen/avatar_size_medium"
                 android:background="@drawable/bg_curriculum_a1_badge"
                 android:gravity="center"
                 android:text="A1"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                android:textColor="@color/color_text_on_primary"
+                android:textSize="@dimen/text_size_title"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="A1 Beginner"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/color_on_filled_card"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="4 / 110 dars"
-                    android:textColor="#9FB3C8"
+                    android:textColor="@color/color_on_filled_card"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -114,7 +114,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -128,8 +128,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Keyingi dars: "
-                    android:textColor="#94A3B8"
+                    android:text="@string/curriculum_next_lesson_label"
+                    android:textColor="@color/color_on_filled_card"
                     android:textSize="14sp" />
 
                 <TextView
@@ -139,7 +139,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Hello! Hi!"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/color_on_filled_card"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -148,13 +148,13 @@
                 android:layout_width="1dp"
                 android:layout_height="24dp"
                 android:layout_marginHorizontal="10dp"
-                android:background="#2B4066" />
+                android:background="@color/color_filled_card_outline" />
 
             <LinearLayout
                 android:id="@+id/btnHeroContinue"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_curriculum_sky_btn"
+                android:layout_height="@dimen/touch_target_min"
+                android:background="@drawable/bg_talkme_secondary_button"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
@@ -164,8 +164,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Davom etish"
-                    android:textColor="#081426"
+                    android:text="@string/curriculum_continue"
+                    android:textColor="@color/color_on_surface"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -173,8 +173,9 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="4dp"
-                    android:contentDescription="Continue"
-                    android:src="@drawable/ic_chevron_right" />
+                    android:contentDescription="@string/curriculum_continue"
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="@color/color_on_surface" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

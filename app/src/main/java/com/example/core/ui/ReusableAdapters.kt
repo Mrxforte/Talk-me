@@ -55,9 +55,9 @@ class TopicAdapter(
 
         fun bind(item: TopicModel, position: Int) {
             val density = binding.root.resources.displayMetrics.density
-            val greenColor = android.graphics.Color.parseColor("#4ADE80")
-            val blueColor = android.graphics.Color.parseColor("#3B82F6")
-            val slateDashedColor = android.graphics.Color.parseColor("#526480")
+            val greenColor = ContextCompat.getColor(binding.root.context, R.color.color_success)
+            val blueColor = ContextCompat.getColor(binding.root.context, R.color.color_neon_cyan)
+            val slateDashedColor = ContextCompat.getColor(binding.root.context, R.color.color_card_outline)
 
             // Reset visibility of all 4 card variants
             binding.layoutCardCompleted.visibility = View.GONE
@@ -107,20 +107,20 @@ class TopicAdapter(
                     binding.frameTimelineNode.setBackgroundResource(R.drawable.bg_curriculum_node_completed)
                     binding.ivTimelineNodeIcon.visibility = View.VISIBLE
                     binding.ivTimelineNodeIcon.setImageResource(R.drawable.ic_check_small)
-                    binding.ivTimelineNodeIcon.setColorFilter(android.graphics.Color.WHITE)
+                    binding.ivTimelineNodeIcon.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.color_text_on_primary))
 
                     binding.ivCompletedThumb.setImageResource(
                         if (item.orderIndex == 1) R.drawable.img_curriculum_kirish
                         else TopicVisualArtwork.getTopicImageRes(item.id, item.orderIndex)
                     )
                     binding.tvCompletedTitle.text = levelTitle
-                    binding.tvCompletedBadge.text = "✓ Bajarildi"
+                    binding.tvCompletedBadge.text = binding.root.context.getString(R.string.topic_status_completed)
                     binding.tvCompletedRangePill.text =
                         binding.root.context.getString(R.string.curriculum_lesson_count, item.completedSections, item.totalSections)
 
                     val shownCompleted = item.completedSections
                     val shownTotal = item.totalSections.coerceAtLeast(1)
-                    binding.tvCompletedProgressCount.text = "$shownCompleted/$shownTotal dars"
+                    binding.tvCompletedProgressCount.text = binding.root.context.getString(R.string.curriculum_lesson_count, shownCompleted, shownTotal)
                     binding.progressCompletedBar.animateProgressTo(
                         targetProgress = ((shownCompleted * 100) / shownTotal).coerceIn(0, 100),
                         maxValue = 100,
@@ -150,8 +150,9 @@ class TopicAdapter(
                     binding.tvActiveTitle.text = levelTitle
 
                     val cefrCode = com.example.domain.model.CurriculumLevel.forTopic(item.id)?.name.orEmpty()
-                    binding.tvActiveModulePill.text =
-                        String.format("%s • %02d-modul", cefrCode, item.orderIndex)
+                    binding.tvActiveModulePill.text = binding.root.context.getString(
+                        R.string.curriculum_module_format, cefrCode, item.orderIndex
+                    )
 
                     binding.dotActive1.setBackgroundResource(R.drawable.bg_curriculum_dot_active)
                     binding.dotActive2.setBackgroundResource(
@@ -188,7 +189,7 @@ class TopicAdapter(
                     binding.frameTimelineNode.setBackgroundResource(R.drawable.bg_curriculum_node_locked)
                     binding.ivTimelineNodeIcon.visibility = View.VISIBLE
                     binding.ivTimelineNodeIcon.setImageResource(R.drawable.ic_lock)
-                    binding.ivTimelineNodeIcon.setColorFilter(android.graphics.Color.parseColor("#CBD5E1"))
+                    binding.ivTimelineNodeIcon.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.color_on_locked_surface))
 
                     val openLevel = View.OnClickListener { onTopicClick(item) }
                     binding.cardTopic.setOnClickListener(openLevel)
@@ -262,26 +263,27 @@ class SectionAdapter(
             binding.tvSectionOrder.text = "${item.orderIndex}"
             binding.tvSectionTitle.text = cleanLessonTitle
             binding.tvSectionDescription.text = lessonDurationText
+            binding.cardSection.contentDescription = cleanLessonTitle
 
             when (item.status) {
                 UnlockStatus.COMPLETED -> {
-                    binding.lineSectionTop.setLineStyle(android.graphics.Color.parseColor("#65D62F"), dashed = false)
-                    binding.lineSectionBottom.setLineStyle(android.graphics.Color.parseColor("#5AD245"), dashed = false)
+                    binding.lineSectionTop.setLineStyle(ContextCompat.getColor(binding.root.context, R.color.color_success), dashed = false)
+                    binding.lineSectionBottom.setLineStyle(ContextCompat.getColor(binding.root.context, R.color.color_success), dashed = false)
                     binding.frameSectionNode.setBackgroundResource(R.drawable.bg_curriculum_node_completed)
                     binding.ivSectionNodeIcon.visibility = View.VISIBLE
                     binding.ivSectionNodeIcon.setImageResource(R.drawable.ic_check_small)
-                    binding.ivSectionNodeIcon.setColorFilter(android.graphics.Color.WHITE)
+                    binding.ivSectionNodeIcon.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.color_text_on_primary))
                     binding.tvSectionNodeNumber.visibility = View.GONE
 
                     binding.layoutSectionUnlockedCard.visibility = View.VISIBLE
-                    binding.layoutSectionUnlockedCard.setBackgroundResource(R.drawable.bg_curriculum_card_completed)
+                    binding.layoutSectionUnlockedCard.setBackgroundResource(R.drawable.bg_talkme_card)
                     binding.layoutSectionMysteryOverlay.visibility = View.GONE
 
                     binding.tvSectionOrder.setBackgroundResource(R.drawable.bg_subtopic_num_green)
                     binding.badgeSectionCompleted.visibility = View.VISIBLE
                     binding.btnSectionContinue.visibility = View.GONE
                     binding.ivSectionStatusIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.tvSectionStatus.text = "Bajarildi"
+                    binding.tvSectionStatus.text = binding.root.context.getString(R.string.topic_status_completed)
 
                     val openLessonClick = View.OnClickListener { onSectionClick(item) }
                     binding.cardSection.alpha = 1.0f
@@ -291,21 +293,21 @@ class SectionAdapter(
                 }
 
                 UnlockStatus.AVAILABLE -> {
-                    binding.lineSectionTop.setLineStyle(android.graphics.Color.parseColor("#38BDF8"), dashed = false)
-                    binding.lineSectionBottom.setLineStyle(android.graphics.Color.parseColor("#566789"), dashed = true)
+                    binding.lineSectionTop.setLineStyle(ContextCompat.getColor(binding.root.context, R.color.color_neon_cyan), dashed = false)
+                    binding.lineSectionBottom.setLineStyle(ContextCompat.getColor(binding.root.context, R.color.color_card_outline), dashed = true)
                     binding.frameSectionNode.setBackgroundResource(R.drawable.bg_subtopic_node_active_num)
                     binding.ivSectionNodeIcon.visibility = View.GONE
                     binding.tvSectionNodeNumber.visibility = View.VISIBLE
                     binding.tvSectionNodeNumber.text = "${item.orderIndex}"
 
                     binding.layoutSectionUnlockedCard.visibility = View.VISIBLE
-                    binding.layoutSectionUnlockedCard.setBackgroundResource(R.drawable.bg_curriculum_card_active)
+                    binding.layoutSectionUnlockedCard.setBackgroundResource(R.drawable.bg_talkme_card)
                     binding.layoutSectionMysteryOverlay.visibility = View.GONE
 
                     binding.tvSectionOrder.setBackgroundResource(R.drawable.bg_subtopic_num_blue)
                     binding.badgeSectionCompleted.visibility = View.GONE
                     binding.btnSectionContinue.visibility = View.VISIBLE
-                    binding.tvSectionActionCta.text = "Davom etish"
+                    binding.tvSectionActionCta.text = binding.root.context.getString(R.string.curriculum_continue)
 
                     val openLessonClick = View.OnClickListener { onSectionClick(item) }
                     binding.cardSection.alpha = 1.0f
@@ -315,12 +317,12 @@ class SectionAdapter(
                 }
 
                 UnlockStatus.LOCKED -> {
-                    binding.lineSectionTop.setLineStyle(android.graphics.Color.parseColor("#566789"), dashed = true)
-                    binding.lineSectionBottom.setLineStyle(android.graphics.Color.parseColor("#566789"), dashed = true)
+                    binding.lineSectionTop.setLineStyle(ContextCompat.getColor(binding.root.context, R.color.color_card_outline), dashed = true)
+                    binding.lineSectionBottom.setLineStyle(ContextCompat.getColor(binding.root.context, R.color.color_card_outline), dashed = true)
                     binding.frameSectionNode.setBackgroundResource(R.drawable.bg_curriculum_node_locked)
                     binding.ivSectionNodeIcon.visibility = View.VISIBLE
                     binding.ivSectionNodeIcon.setImageResource(R.drawable.ic_lock)
-                    binding.ivSectionNodeIcon.setColorFilter(android.graphics.Color.parseColor("#CDD7E5"))
+                    binding.ivSectionNodeIcon.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.color_on_locked_surface))
                     binding.tvSectionNodeNumber.visibility = View.GONE
 
                     binding.layoutSectionUnlockedCard.visibility = View.GONE

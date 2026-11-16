@@ -70,7 +70,7 @@
                             android:background="@drawable/bg_badge_pill"
                             android:paddingHorizontal="@dimen/spacing_medium"
                             android:paddingVertical="4dp"
-                            android:text="ENGLISH WORD"
+                            android:text="@string/flip_front_badge"
                             android:textColor="@color/color_primary"
                             android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
                             android:id="@+id/btnFrontSpeak"
                             style="@style/Widget.Material3.Button.TonalButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="40dp"
+                            android:layout_height="@dimen/touch_target_min"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
                             android:text="@string/lesson_btn_listen"
@@ -197,7 +197,7 @@
                             android:background="@drawable/bg_badge_pill"
                             android:paddingHorizontal="@dimen/spacing_medium"
                             android:paddingVertical="4dp"
-                            android:text="O'ZBEKCHA MA'NOSI"
+                            android:text="@string/flip_back_badge"
                             android:textColor="@color/color_secondary"
                             android:textStyle="bold" />
 
@@ -210,7 +210,7 @@
                             android:id="@+id/btnBackSpeak"
                             style="@style/Widget.Material3.Button.TonalButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="40dp"
+                            android:layout_height="@dimen/touch_target_min"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
                             android:text="@string/lesson_btn_listen"
@@ -261,7 +261,7 @@
                                 style="@style/TextAppearance.TalkMe.Caption"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="MISOL (EXAMPLE)"
+                                android:text="@string/flip_example_badge"
                                 android:textColor="@color/color_primary"
                                 android:textStyle="bold" />
 

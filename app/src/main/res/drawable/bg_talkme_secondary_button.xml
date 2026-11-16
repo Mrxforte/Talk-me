@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/color_nav_indicator">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/color_card_surface_subtle" />
+            <corners android:radius="@dimen/radius_button" />
+            <stroke android:width="@dimen/stroke_card" android:color="@color/color_card_outline" />
+        </shape>
+    </item>
+</ripple>

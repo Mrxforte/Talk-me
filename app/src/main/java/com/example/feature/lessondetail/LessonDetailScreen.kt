@@ -1,16 +1,22 @@
 package com.example.feature.lessondetail
 
-import android.graphics.Color
+import android.content.res.Configuration
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.BackgroundColorSpan
 import android.text.style.ForegroundColorSpan
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -646,7 +652,8 @@ class LessonDetailFragment : Fragment() {
 
         // Context Panel: Bugungi vaziyat / Tushuntirish (TTS faqat Dars 1 TalkMe kirish matni uchun; o‘zbekcha qoida va wrap-upda TTS ishlatilmaydi)
         val (sitTitle, sitBody) = getLessonSituationText(sec)
-        binding.tvSituationTitle.text = sitTitle
+        binding.tvSituationTitle.text = if (sec.explanationUzbek.isNotBlank())
+            getString(R.string.lesson_explanation_heading) else sitTitle
         binding.tvSituationBody.text = sitBody
         val isTalkMeWelcomeScript = sec.id == com.example.data.local.CurriculumSeedData.DARS_1_SECTION_ID
         binding.btnSpeakSituation.visibility = if (isTalkMeWelcomeScript) View.VISIBLE else View.GONE
@@ -730,6 +737,7 @@ class LessonDetailFragment : Fragment() {
         binding.tvVocabExampleUz3.text = vc3.exampleUzbek
 
         renderExtraQoidaVocabCards(cachedVocabCards.drop(3))
+        styleLessonVocabularyForTheme()
 
         binding.tvLessonHintText.text = "Audioni tinglang, keyin birga takrorlaymiz."
 
@@ -843,6 +851,51 @@ class LessonDetailFragment : Fragment() {
         }
     }
 
+    private fun styleLessonVocabularyForTheme() {
+        val textColor = ContextCompat.getColor(requireContext(), R.color.lesson_text)
+        val subtextColor = ContextCompat.getColor(requireContext(), R.color.lesson_subtext)
+        val accentColor = ContextCompat.getColor(requireContext(), R.color.lesson_accent)
+        val dividerColor = ContextCompat.getColor(requireContext(), R.color.lesson_border)
+        val buttonTextColor = ContextCompat.getColor(requireContext(), R.color.lesson_button_text)
+        listOf(binding.tvVocabWord1, binding.tvVocabWord2, binding.tvVocabWord3).forEach {
+            it.setTextColor(textColor)
+        }
+        listOf(binding.tvVocabMeaning1, binding.tvVocabMeaning2, binding.tvVocabMeaning3,
+            binding.tvVocabExampleUz1, binding.tvVocabExampleUz2, binding.tvVocabExampleUz3).forEach {
+            it.setTextColor(subtextColor)
+        }
+        listOf(binding.tvVocabExampleEn1, binding.tvVocabExampleEn2, binding.tvVocabExampleEn3).forEach {
+            it.setTextColor(textColor)
+        }
+        listOf(binding.tvVocabBadge1, binding.tvVocabBadge2, binding.tvVocabBadge3).forEach {
+            it.setTextColor(accentColor)
+        }
+        listOf(binding.btnSpeakVocabWord1, binding.btnSpeakVocabWord2, binding.btnSpeakVocabWord3).forEach {
+            it.setColorFilter(buttonTextColor)
+        }
+        listOf(binding.btnSpeakVocabExample1, binding.btnSpeakVocabExample2,
+            binding.btnSpeakVocabExample3).forEach { it.setColorFilter(accentColor) }
+        listOf(binding.cardVocabItem1, binding.cardVocabItem2, binding.cardVocabItem3).forEach {
+            it.setBackgroundResource(R.drawable.bg_lesson_vocab_stacked_card)
+        }
+        binding.tvLessonTopTitle.setTextColor(textColor)
+        binding.tvLessonTopCounter.setTextColor(subtextColor)
+        binding.tvLessonHeadingTitle.setTextColor(textColor)
+        binding.tvLessonHeadingSubtitle.setTextColor(subtextColor)
+        binding.tvQoidaSectionHeading.setTextColor(textColor)
+        binding.tvQoidaSectionSubheading.setTextColor(subtextColor)
+        binding.tvSituationTitle.setTextColor(textColor)
+        binding.tvSituationBody.setTextColor(subtextColor)
+        binding.btnBackLesson.setColorFilter(textColor)
+        binding.btnLessonMoreMenu.setColorFilter(textColor)
+        binding.ivLessonHeadingIcon.setColorFilter(accentColor)
+        binding.ivSituationIcon.setColorFilter(accentColor)
+        binding.tvLessonPrimaryCtaText.setTextColor(buttonTextColor)
+        listOf(binding.lineStepConn1, binding.lineStepConn2, binding.lineStepConn3).forEach {
+            it.setBackgroundColor(dividerColor)
+        }
+    }
+
     private fun renderExtraQoidaVocabCards(extraItems: List<LessonVocabCardItem>) {
         val container = binding.layoutExtraQoidaVocab
         container.removeAllViews()
@@ -852,13 +905,11 @@ class LessonDetailFragment : Fragment() {
         }
         container.visibility = View.VISIBLE
         val density = resources.displayMetrics.density
-        val cardTemplate = binding.cardVocabItem1
-        val inflater = LayoutInflater.from(requireContext())
         extraItems.forEach { item ->
-            val card = android.widget.LinearLayout(requireContext()).apply {
-                orientation = android.widget.LinearLayout.VERTICAL
+            val card = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.VERTICAL
                 setBackgroundResource(R.drawable.bg_lesson_vocab_stacked_card)
-                val pad = (13 * density).toInt()
+                val pad = resources.getDimensionPixelSize(R.dimen.spacing_medium)
                 setPadding(pad, pad, pad, pad)
                 layoutParams = android.widget.LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -882,7 +933,7 @@ class LessonDetailFragment : Fragment() {
             val badgeTv = android.widget.TextView(requireContext()).apply {
                 text = item.badge
                 gravity = android.view.Gravity.CENTER
-                setTextColor(Color.parseColor("#38BDF8"))
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_accent))
                 textSize = 14f
                 setTypeface(null, android.graphics.Typeface.BOLD)
             }
@@ -890,7 +941,7 @@ class LessonDetailFragment : Fragment() {
             topRow.addView(badgeFrame)
 
             val sep = View(requireContext()).apply {
-                setBackgroundColor(Color.parseColor("#1E3A8A"))
+                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.lesson_border))
                 layoutParams = android.widget.LinearLayout.LayoutParams(
                     (1 * density).toInt(),
                     (28 * density).toInt()
@@ -911,22 +962,22 @@ class LessonDetailFragment : Fragment() {
             }
             textCol.addView(android.widget.TextView(requireContext()).apply {
                 text = item.englishWord
-                setTextColor(Color.WHITE)
-                textSize = 16.5f
-                setTypeface(null, android.graphics.Typeface.BOLD)
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_text))
+                textSize = 17f
+                setTypeface(null, Typeface.BOLD)
             })
-            textCol.addView(android.widget.TextView(requireContext()).apply {
+            textCol.addView(TextView(requireContext()).apply {
                 text = item.uzbekMeaning
-                setTextColor(Color.parseColor("#94A3B8"))
-                textSize = 13f
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
+                textSize = 15f
             })
             topRow.addView(textCol)
 
             val speakWordBtn = android.widget.ImageButton(requireContext()).apply {
                 setBackgroundResource(R.drawable.bg_lesson_speaker_btn)
                 setImageResource(R.drawable.ic_volume_up)
-                setColorFilter(Color.WHITE)
-                contentDescription = "Speak ${item.englishWord}"
+                setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_button_text))
+                contentDescription = getString(R.string.lesson_btn_listen)
                 val p = (10 * density).toInt()
                 setPadding(p, p, p, p)
                 layoutParams = android.widget.LinearLayout.LayoutParams(
@@ -939,7 +990,7 @@ class LessonDetailFragment : Fragment() {
             card.addView(topRow)
 
             val hDiv = View(requireContext()).apply {
-                setBackgroundColor(Color.parseColor("#162847"))
+                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.lesson_border))
                 layoutParams = android.widget.LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     (1 * density).toInt()
@@ -952,7 +1003,8 @@ class LessonDetailFragment : Fragment() {
 
             val exRow = android.widget.LinearLayout(requireContext()).apply {
                 orientation = android.widget.LinearLayout.HORIZONTAL
-                gravity = android.view.Gravity.CENTER_VERTICAL
+                gravity = Gravity.CENTER_VERTICAL
+                minimumHeight = resources.getDimensionPixelSize(R.dimen.touch_target_min)
                 setOnClickListener { viewModel.speakEnglish(item.exampleAudioText) }
             }
             val exCol = android.widget.LinearLayout(requireContext()).apply {
@@ -965,20 +1017,20 @@ class LessonDetailFragment : Fragment() {
             }
             exCol.addView(android.widget.TextView(requireContext()).apply {
                 text = item.exampleEnglish
-                setTextColor(Color.parseColor("#E2E8F0"))
-                textSize = 13.5f
-                setTypeface(null, android.graphics.Typeface.BOLD)
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_text))
+                textSize = 15f
+                setTypeface(null, Typeface.BOLD)
             })
-            exCol.addView(android.widget.TextView(requireContext()).apply {
+            exCol.addView(TextView(requireContext()).apply {
                 text = item.exampleUzbek
-                setTextColor(Color.parseColor("#94A3B8"))
-                textSize = 12.5f
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
+                textSize = 15f
             })
             exRow.addView(exCol)
-            val speakExIcon = android.widget.ImageView(requireContext()).apply {
+            val speakExIcon = ImageView(requireContext()).apply {
                 setImageResource(R.drawable.ic_volume_up)
-                setColorFilter(Color.parseColor("#60A5FA"))
-                contentDescription = "Speak example"
+                setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_accent))
+                contentDescription = getString(R.string.lesson_btn_listen)
                 layoutParams = android.widget.LinearLayout.LayoutParams(
                     (22 * density).toInt(),
                     (22 * density).toInt()
@@ -989,11 +1041,6 @@ class LessonDetailFragment : Fragment() {
 
             card.setOnClickListener { viewModel.speakEnglish(item.wordAudioText) }
             container.addView(card)
-        }
-        // Keep unused parameters cleanly scoped
-        if (false) {
-            inflater.hashCode()
-            cardTemplate.hashCode()
         }
     }
 
@@ -1030,7 +1077,7 @@ class LessonDetailFragment : Fragment() {
 
             val icon = android.widget.ImageView(requireContext()).apply {
                 setImageResource(R.drawable.ic_lesson_book_cyan)
-                setColorFilter(Color.parseColor("#0F172A"))
+                setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_text))
                 contentDescription = "Example ${idx + 4}"
                 layoutParams = android.widget.LinearLayout.LayoutParams(
                     (30 * density).toInt(),
@@ -1056,7 +1103,7 @@ class LessonDetailFragment : Fragment() {
             }
             val tvEn = android.widget.TextView(requireContext()).apply {
                 text = formatHighlightedEnglishExample(ex.englishSentence, ex.blueHighlightWord, ex.greenHighlightWord)
-                setTextColor(Color.parseColor("#0F172A"))
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_text))
                 textSize = 16f
                 setTypeface(null, android.graphics.Typeface.BOLD)
                 layoutParams = android.widget.LinearLayout.LayoutParams(
@@ -1068,7 +1115,7 @@ class LessonDetailFragment : Fragment() {
             val speakBtn = android.widget.ImageButton(requireContext()).apply {
                 setBackgroundResource(R.drawable.bg_lesson_speaker_btn)
                 setImageResource(R.drawable.ic_volume_up)
-                setColorFilter(Color.WHITE)
+                setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_button_text))
                 contentDescription = "Speak example ${idx + 4}"
                 val p = (10 * density).toInt()
                 setPadding(p, p, p, p)
@@ -1085,7 +1132,7 @@ class LessonDetailFragment : Fragment() {
             contentCol.addView(topRow)
 
             val divider = View(requireContext()).apply {
-                setBackgroundColor(Color.parseColor("#B4D2F0"))
+                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.lesson_border))
                 layoutParams = android.widget.LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     (1 * density).toInt()
@@ -1098,7 +1145,7 @@ class LessonDetailFragment : Fragment() {
 
             val tvUz = android.widget.TextView(requireContext()).apply {
                 text = formatHighlightedUzbekExample(ex.uzbekSentence, ex.uzbekGreenWord)
-                setTextColor(Color.parseColor("#0F172A"))
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_text))
                 textSize = 14.5f
             }
             contentCol.addView(tvUz)
@@ -1133,7 +1180,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0 // triggers red feedback banner cleanly
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text =
                 "Bo‘sh joylarni to‘g‘ri kiriting: Welcome · What’s · My · [Ismingiz] · bye"
         }
@@ -1165,7 +1212,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_article_error)
         }
     }
@@ -1199,7 +1246,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_pair_error)
         }
     }
@@ -1222,7 +1269,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_this_that_error)
         }
     }
@@ -1245,7 +1292,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_these_those_error)
         }
     }
@@ -1276,7 +1323,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_error)
         }
     }
@@ -1310,7 +1357,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_have_i_got_error)
         }
     }
@@ -1341,7 +1388,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_not_got_error)
         }
     }
@@ -1383,7 +1430,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_numbers_error)
         }
     }
@@ -1421,7 +1468,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_num_error)
         }
     }
@@ -1464,7 +1511,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_but_no_error)
         }
     }
@@ -1516,7 +1563,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_tigers_error)
         }
     }
@@ -1541,7 +1588,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_ordinal_error)
         }
     }
@@ -1614,7 +1661,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_here_is_error)
         }
     }
@@ -1634,7 +1681,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_here_are_error)
         }
     }
@@ -1654,7 +1701,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_there_is_error)
         }
     }
@@ -1684,7 +1731,7 @@ class LessonDetailFragment : Fragment() {
             selectedOptionIndex = 0
             binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
             binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-            binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+            binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
             binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_my_room_error)
         }
     }
@@ -1748,21 +1795,17 @@ class LessonDetailFragment : Fragment() {
             defaultIconRes = if (maxUnlockedStepIndex >= 3) R.drawable.ic_check_circle else R.drawable.ic_lock
         )
 
-        binding.lineStepConn1.setBackgroundColor(
-            Color.parseColor(if (currentStepIndex >= 1) "#4ADE80" else "#475569")
-        )
-        binding.lineStepConn2.setBackgroundColor(
-            Color.parseColor(if (currentStepIndex >= 2) "#4ADE80" else "#475569")
-        )
-        binding.lineStepConn3.setBackgroundColor(
-            Color.parseColor(if (currentStepIndex >= 3) "#4ADE80" else "#475569")
-        )
+        val accent = ContextCompat.getColor(requireContext(), R.color.lesson_accent)
+        val divider = ContextCompat.getColor(requireContext(), R.color.lesson_border)
+        binding.lineStepConn1.setBackgroundColor(if (currentStepIndex >= 1) accent else divider)
+        binding.lineStepConn2.setBackgroundColor(if (currentStepIndex >= 2) accent else divider)
+        binding.lineStepConn3.setBackgroundColor(if (currentStepIndex >= 3) accent else divider)
 
-        // Update Stage Card Header & Bottom Primary CTA Button
+        // Keep the reading surface consistent in both themes and across lesson stages.
         if (currentStepIndex == 0) {
             binding.layoutStageHeaderRow.visibility = View.GONE
             binding.dividerStageHeader.visibility = View.GONE
-            binding.cardLessonStageContainer.setBackgroundResource(android.R.color.transparent)
+            binding.cardLessonStageContainer.setBackgroundResource(R.drawable.bg_lesson_stage_card)
         } else {
             binding.layoutStageHeaderRow.visibility = View.VISIBLE
             binding.dividerStageHeader.visibility = View.VISIBLE
@@ -1781,7 +1824,7 @@ class LessonDetailFragment : Fragment() {
                 binding.ivStageHeaderIcon.setImageResource(R.drawable.ic_lesson_book_cyan)
                 binding.tvStageHeaderTitle.text = cleanRuleHeader
                 binding.tvStageHeaderBadge.visibility = View.GONE
-                binding.tvLessonPrimaryCtaText.text = "Misollarni ko‘rish  →"
+                binding.tvLessonPrimaryCtaText.text = getString(R.string.lesson_show_examples)
             }
             1 -> {
                 binding.ivStageHeaderIcon.setImageResource(R.drawable.ic_lesson_list_cyan)
@@ -1815,32 +1858,28 @@ class LessonDetailFragment : Fragment() {
         stepIdx: Int,
         defaultIconRes: Int
     ) {
+        val accent = ContextCompat.getColor(requireContext(), R.color.lesson_accent)
+        val text = ContextCompat.getColor(requireContext(), R.color.lesson_text)
+        val onButton = ContextCompat.getColor(requireContext(), R.color.lesson_button_text)
+        val lockedText = ContextCompat.getColor(requireContext(), R.color.lesson_subtext)
         when {
             stepIdx < currentStepIndex -> {
-                // Completed step: Green border pill + green checkmark
                 pill.setBackgroundResource(R.drawable.bg_lesson_step_completed)
                 iconView.setImageResource(R.drawable.ic_check_circle)
-                iconView.setColorFilter(Color.parseColor("#4ADE80"))
-                labelView.setTextColor(Color.WHITE)
+                iconView.setColorFilter(accent)
+                labelView.setTextColor(text)
             }
             stepIdx == currentStepIndex -> {
-                // Active step: Glowing blue pill
                 pill.setBackgroundResource(R.drawable.bg_lesson_step_active)
-                if (stepIdx == 3) {
-                    iconView.setImageResource(R.drawable.ic_check_circle)
-                    iconView.setColorFilter(Color.WHITE)
-                } else {
-                    iconView.setImageResource(defaultIconRes)
-                    iconView.setColorFilter(Color.WHITE)
-                }
-                labelView.setTextColor(Color.WHITE)
+                iconView.setImageResource(if (stepIdx == 3) R.drawable.ic_check_circle else defaultIconRes)
+                iconView.setColorFilter(onButton)
+                labelView.setTextColor(onButton)
             }
             else -> {
-                // Upcoming/locked step: Dark slate pill
                 pill.setBackgroundResource(R.drawable.bg_lesson_step_locked)
                 iconView.setImageResource(defaultIconRes)
-                iconView.setColorFilter(Color.parseColor("#CBD5E1"))
-                labelView.setTextColor(Color.parseColor("#E2E8F0"))
+                iconView.setColorFilter(lockedText)
+                labelView.setTextColor(lockedText)
             }
         }
     }
@@ -1877,12 +1916,12 @@ class LessonDetailFragment : Fragment() {
                 if (readAloudTapCount >= 3 || isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_read_aloud_done)
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text =
                         "Matnni ovoz chiqarib 3 marta o‘qing va har safar tugmani bosing."
                 }
@@ -1895,13 +1934,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text =
                         "Lera o‘rnida o‘zingiz yozib chiqing va 'Tekshirish' tugmasini bosing."
                 }
@@ -1918,13 +1957,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text =
                         "3 ta narsani a yoki an bilan yozing va 'Tekshirish' tugmasini bosing."
                 }
@@ -1940,13 +1979,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_pair_helper)
                 }
             }
@@ -1961,13 +2000,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_this_that_helper)
                 }
             }
@@ -1982,13 +2021,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_these_those_helper)
                 }
             }
@@ -2004,13 +2043,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_helper)
                 }
             }
@@ -2025,13 +2064,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_have_i_got_helper)
                 }
             }
@@ -2047,13 +2086,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_not_got_helper)
                 }
             }
@@ -2069,13 +2108,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_numbers_helper)
                 }
             }
@@ -2091,13 +2130,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_i_have_num_helper)
                 }
             }
@@ -2112,13 +2151,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_but_no_helper)
                 }
             }
@@ -2134,13 +2173,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_tigers_helper)
                 }
             }
@@ -2156,13 +2195,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_ordinal_helper)
                 }
             }
@@ -2178,13 +2217,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_here_is_helper)
                 }
             }
@@ -2200,13 +2239,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_here_are_helper)
                 }
             }
@@ -2222,13 +2261,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_there_is_helper)
                 }
             }
@@ -2244,13 +2283,13 @@ class LessonDetailFragment : Fragment() {
                 if (isCurrentExerciseSolved) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         ex.explanationUzbek.ifBlank { "Barakalla! Barcha mashqlar bajarildi." }
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = getString(R.string.lesson_self_write_my_room_helper)
                 }
             }
@@ -2281,7 +2320,7 @@ class LessonDetailFragment : Fragment() {
                 if (selectedOptionIndex == ex.correctOptionIndex) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_success)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_check_circle)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#4ADE80"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_success))
                     binding.tvMashqFeedbackText.text =
                         if (ex.explanationUzbek.isNotBlank()) {
                             ex.explanationUzbek
@@ -2293,12 +2332,12 @@ class LessonDetailFragment : Fragment() {
                 } else if (selectedOptionIndex >= 0) {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#FCA5A5"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_error))
                     binding.tvMashqFeedbackText.text = "Noto‘g‘ri javob. Yana bir bor urinib ko‘ring!"
                 } else {
                     binding.layoutMashqFeedback.setBackgroundResource(R.drawable.bg_lesson_feedback_helper)
                     binding.ivMashqFeedbackIcon.setImageResource(R.drawable.ic_lesson_info_outline)
-                    binding.ivMashqFeedbackIcon.setColorFilter(Color.parseColor("#CBD5E1"))
+                    binding.ivMashqFeedbackIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lesson_subtext))
                     binding.tvMashqFeedbackText.text = "To‘g‘ri variantlardan birini tanlang."
                 }
             }
@@ -2343,17 +2382,25 @@ class LessonDetailFragment : Fragment() {
         optionIdx: Int,
         correctIdx: Int
     ) {
+        val label = when (optionIdx) {
+            0 -> binding.tvOption1Text
+            1 -> binding.tvOption2Text
+            else -> binding.tvOption3Text
+        }
         when {
             selectedOptionIndex == optionIdx && optionIdx == correctIdx -> {
                 optionContainer.setBackgroundResource(R.drawable.bg_lesson_option_correct)
+                label.setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_option_text))
                 checkIcon.visibility = View.VISIBLE
             }
             selectedOptionIndex == optionIdx && optionIdx != correctIdx -> {
                 optionContainer.setBackgroundResource(R.drawable.bg_lesson_option_wrong)
+                label.setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_text))
                 checkIcon.visibility = View.GONE
             }
             else -> {
                 optionContainer.setBackgroundResource(R.drawable.bg_lesson_option_default)
+                label.setTextColor(ContextCompat.getColor(requireContext(), R.color.lesson_text))
                 checkIcon.visibility = View.GONE
             }
         }
@@ -2988,7 +3035,7 @@ class LessonDetailFragment : Fragment() {
             val start = fullLabel.indexOf(highlightPart, ignoreCase = true)
             if (start >= 0) {
                 builder.setSpan(
-                    ForegroundColorSpan(Color.parseColor("#D9F99D")),
+                    ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lesson_accent)),
                     start,
                     start + highlightPart.length,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -3009,13 +3056,13 @@ class LessonDetailFragment : Fragment() {
             if (start >= 0) {
                 val end = start + blueWord.length
                 builder.setSpan(
-                    BackgroundColorSpan(Color.parseColor("#93C5FD")),
+                    BackgroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lesson_highlight_bg)),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 builder.setSpan(
-                    ForegroundColorSpan(Color.parseColor("#0F172A")),
+                    ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lesson_highlight_text)),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -3027,13 +3074,13 @@ class LessonDetailFragment : Fragment() {
             if (start >= 0) {
                 val end = start + greenWord.length
                 builder.setSpan(
-                    BackgroundColorSpan(Color.parseColor("#BBF7D0")),
+                    BackgroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lesson_highlight_bg)),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 builder.setSpan(
-                    ForegroundColorSpan(Color.parseColor("#0F172A")),
+                    ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lesson_highlight_text)),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -3053,13 +3100,13 @@ class LessonDetailFragment : Fragment() {
             if (start >= 0) {
                 val end = start + greenWord.length
                 builder.setSpan(
-                    BackgroundColorSpan(Color.parseColor("#BBF7D0")),
+                    BackgroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lesson_highlight_bg)),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 builder.setSpan(
-                    ForegroundColorSpan(Color.parseColor("#0F172A")),
+                    ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lesson_highlight_text)),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -3076,10 +3123,10 @@ class LessonDetailFragment : Fragment() {
     ): CharSequence {
         val fullText = "•  $highlightLead$middleText$boldExample"
         val builder = SpannableStringBuilder(fullText)
-        // Color bullet and lead in cyan (#38BDF8)
+        // Highlight the bullet and lead with the lesson accent.
         val leadEnd = (3 + highlightLead.length).coerceAtMost(fullText.length)
         builder.setSpan(
-            ForegroundColorSpan(Color.parseColor("#38BDF8")),
+            ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lesson_accent)),
             0,
             leadEnd,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

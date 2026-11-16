@@ -325,13 +325,13 @@ class SettingsFragment : Fragment() {
         val ctx = requireContext()
         val selectedBg = ContextCompat.getColor(ctx, selectedColorRes)
         val transparentBg = ContextCompat.getColor(ctx, android.R.color.transparent)
-        val white = ContextCompat.getColor(ctx, R.color.white)
+        val selectedText = ContextCompat.getColor(ctx, R.color.color_on_surface)
         val muted = ContextCompat.getColor(ctx, R.color.color_slate_subtitle)
 
         buttons.forEach { btn ->
             val selected = btn.id == selectedId
             btn.backgroundTintList = ColorStateList.valueOf(if (selected) selectedBg else transparentBg)
-            btn.setTextColor(if (selected) white else muted)
+            btn.setTextColor(if (selected) selectedText else muted)
         }
     }
 

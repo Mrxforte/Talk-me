@@ -77,7 +77,7 @@
                             android:layout_gravity="center"
                             android:contentDescription="@string/settings_user_name_label"
                             android:src="@drawable/ic_lesson_pencil"
-                            app:tint="@color/white" />
+                            app:tint="@color/color_on_filled_card" />
                     </FrameLayout>
                 </FrameLayout>
 
@@ -90,7 +90,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/default_user_name"
-                    android:textColor="@color/white"
+                    android:textColor="@color/color_on_surface"
                     android:textSize="21sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@id/btnScrollToSettings"
@@ -145,7 +145,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:text="A0 Foundation"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_neon_cyan_variant"
                             android:textSize="12sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -232,7 +232,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/profile_roadmap_title"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="17sp"
                             android:textStyle="bold" />
 
@@ -308,7 +308,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_weight="1"
                             android:text="0 dars yakunlandi"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="13.5sp"
                             android:textStyle="bold" />
 
@@ -400,7 +400,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/profile_weekly_growth_title"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="17sp"
                             android:textStyle="bold" />
 
@@ -424,12 +424,12 @@
                             android:id="@+id/btnGrowthWeekly"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="38dp"
+                            android:layout_height="@dimen/touch_target_min"
                             android:minWidth="62dp"
                             android:paddingHorizontal="12dp"
                             android:text="@string/chart_filter_weekly"
                             android:textAllCaps="false"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_on_surface"
                             android:textSize="12sp"
                             android:textStyle="bold"
                             app:cornerRadius="18dp"
@@ -439,7 +439,7 @@
                             android:id="@+id/btnGrowthMonthly"
                             style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="38dp"
+                            android:layout_height="@dimen/touch_target_min"
                             android:minWidth="56dp"
                             android:paddingHorizontal="12dp"
                             android:text="@string/chart_filter_monthly"
@@ -473,7 +473,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:text="@string/profile_this_week_prefix"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="13.5sp"
                         android:textStyle="bold" />
 
@@ -560,7 +560,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/profile_four_skills_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -587,7 +587,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
-                    android:minHeight="44dp"
+                    android:minHeight="@dimen/touch_target_min"
                     android:orientation="horizontal">
 
                     <FrameLayout
@@ -601,7 +601,7 @@
                             android:layout_gravity="center"
                             android:contentDescription="@null"
                             android:src="@drawable/ic_skill_reading"
-                            app:tint="@color/white" />
+                            app:tint="@color/color_text_on_primary" />
                     </FrameLayout>
 
                     <TextView
@@ -609,7 +609,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="@string/profile_skill_reading_uz"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="12.5sp" />
 
                     <ProgressBar
@@ -629,7 +629,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:text="0%"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="13sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -644,7 +644,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
-                    android:minHeight="44dp"
+                    android:minHeight="@dimen/touch_target_min"
                     android:orientation="horizontal">
 
                     <FrameLayout
@@ -658,7 +658,7 @@
                             android:layout_gravity="center"
                             android:contentDescription="@null"
                             android:src="@drawable/ic_skill_listening"
-                            app:tint="@color/white" />
+                            app:tint="@color/color_text_on_primary" />
                     </FrameLayout>
 
                     <TextView
@@ -666,7 +666,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="@string/profile_skill_listening_uz"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="12.5sp" />
 
                     <ProgressBar
@@ -686,7 +686,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:text="0%"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="13sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -701,7 +701,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
-                    android:minHeight="44dp"
+                    android:minHeight="@dimen/touch_target_min"
                     android:orientation="horizontal">
 
                     <FrameLayout
@@ -715,7 +715,7 @@
                             android:layout_gravity="center"
                             android:contentDescription="@null"
                             android:src="@drawable/ic_skill_writing"
-                            app:tint="@color/white" />
+                            app:tint="@color/color_text_on_primary" />
                     </FrameLayout>
 
                     <TextView
@@ -723,7 +723,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="@string/profile_skill_writing_uz"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="12.5sp" />
 
                     <ProgressBar
@@ -743,7 +743,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:text="0%"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="13sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -758,7 +758,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
-                    android:minHeight="44dp"
+                    android:minHeight="@dimen/touch_target_min"
                     android:orientation="horizontal">
 
                     <FrameLayout
@@ -772,7 +772,7 @@
                             android:layout_gravity="center"
                             android:contentDescription="@null"
                             android:src="@drawable/ic_skill_speaking"
-                            app:tint="@color/white" />
+                            app:tint="@color/color_text_on_primary" />
                     </FrameLayout>
 
                     <TextView
@@ -780,7 +780,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="@string/profile_skill_speaking_uz"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="12.5sp" />
 
                     <ProgressBar
@@ -800,7 +800,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:text="0%"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="13sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -842,7 +842,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/profile_achievements_uz_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -884,7 +884,7 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="1 kunlik seriya"
-                                android:textColor="@color/white"
+                                android:textColor="@color/color_on_surface"
                                 android:textSize="12.5sp"
                                 android:textStyle="bold" />
 
@@ -930,7 +930,7 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="0 ta yangi so‘z"
-                                android:textColor="@color/white"
+                                android:textColor="@color/color_on_surface"
                                 android:textSize="12.5sp"
                                 android:textStyle="bold" />
 

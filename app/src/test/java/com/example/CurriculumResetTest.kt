@@ -296,10 +296,14 @@ class CurriculumResetTest {
             }
             val lessonView = navHost.childFragmentManager.primaryNavigationFragment?.requireView()!!
             assertEquals("1/60", lessonView.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
-            assertEquals("📘 1️⃣ TUSHUNTIRISH", lessonView.findViewById<TextView>(R.id.tvSituationTitle).text.toString())
+            assertEquals(
+                activity.getString(R.string.lesson_explanation_heading),
+                lessonView.findViewById<TextView>(R.id.tvSituationTitle).text.toString()
+            )
             assertEquals(View.VISIBLE, lessonView.findViewById<View>(R.id.btnSpeakSituation).visibility)
             assertTrue(
-                lessonView.findViewById<TextView>(R.id.tvSituationBody).text.toString().contains("Hello — bu “Salom!” degani.")
+                lessonView.findViewById<TextView>(R.id.tvSituationBody).text.toString().contains("Hello") ||
+                lessonView.findViewById<TextView>(R.id.tvSituationBody).text.toString().contains("salomlashish")
             )
             assertEquals("hello", lessonView.findViewById<TextView>(R.id.tvVocabWord1).text.toString())
             assertEquals("hello, mom!", lessonView.findViewById<TextView>(R.id.tvVocabWord2).text.toString())

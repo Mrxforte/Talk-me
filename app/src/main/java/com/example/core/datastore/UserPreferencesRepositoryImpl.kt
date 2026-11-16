@@ -49,7 +49,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         context.talkMeDataStore.data.map { prefs ->
             UserPreferencesModel(
                 userName = prefs[Keys.USER_NAME] ?: "Azamat",
-                themeMode = prefs[Keys.THEME_MODE] ?: "SYSTEM",
+                themeMode = prefs[Keys.THEME_MODE] ?: "LIGHT",
                 soundEnabled = prefs[Keys.SOUND_ENABLED] ?: true,
                 speechSpeed = prefs[Keys.SPEECH_SPEED] ?: 1.0f,
                 isPremiumSubscribed = prefs[Keys.PREMIUM_SUBSCRIBED] ?: false,

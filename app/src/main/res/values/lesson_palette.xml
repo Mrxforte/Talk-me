@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lesson_text">@color/color_text_primary</color>
+    <color name="lesson_subtext">@color/color_text_secondary</color>
+    <color name="lesson_accent">@color/color_primary_variant</color>
+    <color name="lesson_button">@color/color_primary</color>
+    <color name="lesson_button_text">@color/color_text_on_primary</color>
+    <color name="lesson_card">@color/color_surface</color>
+    <color name="lesson_border">@color/color_card_stroke</color>
+    <color name="lesson_explanation">@color/color_primary_light</color>
+    <color name="lesson_badge">@color/color_primary_light</color>
+    <color name="lesson_success">@color/color_primary_variant</color>
+    <color name="lesson_error">@color/color_error</color>
+    <color name="lesson_option_text">@color/color_text_on_primary</color>
+    <color name="lesson_option_default">@color/color_surface_variant</color>
+    <color name="lesson_option_selected">@color/color_primary</color>
+    <color name="lesson_highlight_bg">@color/color_secondary_light</color>
+    <color name="lesson_highlight_text">@color/color_text_primary</color>
+</resources>

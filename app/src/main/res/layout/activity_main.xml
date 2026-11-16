@@ -4,7 +4,7 @@
     android:id="@+id/rootContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background">
+    android:background="@color/color_app_canvas">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
@@ -22,13 +22,11 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/color_surface"
+        style="@style/Widget.TalkMe.BottomNavigation"
+        android:background="@color/color_nav_surface"
         app:elevation="@dimen/elevation_card"
-        app:itemActiveIndicatorStyle="@style/Widget.TalkMe.BottomNavIndicator"
-        app:itemIconSize="24dp"
-        app:itemIconTint="@color/selector_bottom_nav"
-        app:itemRippleColor="@color/color_primary_light"
-        app:itemTextColor="@color/selector_bottom_nav"
+        app:itemIconSize="@dimen/icon_size_medium"
+        app:itemRippleColor="@color/color_nav_indicator"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

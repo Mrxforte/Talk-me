@@ -1,9 +1,14 @@
 package com.example
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,10 +23,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 
 /**
  * Single Activity host for the TalkMe application.
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         // Step 2: Enable edge-to-edge system bar layout
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        updateSystemBarAppearance()
 
         // Step 3: Inflate XML UI using ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -107,6 +109,22 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
             }
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        updateSystemBarAppearance()
+    }
+
+    private fun updateSystemBarAppearance() {
+        val isLightTheme = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) !=
+            Configuration.UI_MODE_NIGHT_YES
+        val insetsController: WindowInsetsControllerCompat =
+            WindowCompat.getInsetsController(window, window.decorView)
+        insetsController.apply {
+            isAppearanceLightStatusBars = isLightTheme
+            isAppearanceLightNavigationBars = isLightTheme
         }
     }
 

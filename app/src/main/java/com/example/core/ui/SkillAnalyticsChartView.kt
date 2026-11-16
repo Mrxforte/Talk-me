@@ -3,7 +3,6 @@ package com.example.core.ui
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RadialGradient
@@ -110,25 +109,25 @@ class SkillAnalyticsChartView @JvmOverloads constructor(
 
     private val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.color_card_surface)
     }
 
     private val titlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
+        color = ContextCompat.getColor(context, R.color.color_on_surface)
         textSize = 17f * scaledDensity
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD)
     }
 
     private val axisLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
+        color = ContextCompat.getColor(context, R.color.color_on_surface)
         textSize = 11.5f * scaledDensity
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD)
     }
 
     private val yAxisLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
+        color = ContextCompat.getColor(context, R.color.color_on_surface)
         textSize = 12.5f * scaledDensity
         textAlign = Paint.Align.RIGHT
         typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD)
@@ -174,7 +173,7 @@ class SkillAnalyticsChartView @JvmOverloads constructor(
 
     private val legendBgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.color_card_surface_raised)
     }
 
     private val legendBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -184,7 +183,7 @@ class SkillAnalyticsChartView @JvmOverloads constructor(
     }
 
     private val legendTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
+        color = ContextCompat.getColor(context, R.color.color_on_surface)
         textSize = 11.5f * scaledDensity
         textAlign = Paint.Align.LEFT
         typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD)
@@ -302,7 +301,7 @@ class SkillAnalyticsChartView @JvmOverloads constructor(
         super.onDraw(canvas)
         if (width <= 0 || height <= 0) return
 
-        // 1. Crisp white canvas background matching reference image
+        // 1. Theme-aware chart canvas
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
 
         val topTitleY = 22f * density

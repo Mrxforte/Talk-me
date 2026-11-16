@@ -24,18 +24,18 @@
             android:paddingHorizontal="2dp">
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                app:cardBackgroundColor="#1E3A8A"
+                android:layout_width="@dimen/touch_target_min"
+                android:layout_height="@dimen/touch_target_min"
+                app:cardBackgroundColor="@color/color_card_surface_subtle"
                 app:cardCornerRadius="21dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#60A5FA"
+                app:strokeColor="@color/color_card_outline"
                 app:strokeWidth="1.5dp">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="TalkMe"
+                    android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_home_avatar_tutor" />
             </com.google.android.material.card.MaterialCardView>
@@ -55,16 +55,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Talk"
-                        android:textColor="#FFFFFF"
+                        android:text="@string/practice_brand_talk"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Me"
-                        android:textColor="#38BDF8"
+                        android:text="@string/practice_brand_me"
+                        android:textColor="@color/color_neon_cyan_variant"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -72,8 +72,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="English Learning"
-                    android:textColor="#94A3B8"
+                    android:text="@string/practice_brand_subtitle"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="11sp" />
             </LinearLayout>
 
@@ -81,7 +81,7 @@
             <LinearLayout
                 android:id="@+id/pillPracticeDailyGoal"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="@dimen/touch_target_min"
                 android:background="@drawable/bg_practice_goal_pill"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -90,7 +90,7 @@
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:contentDescription="Goal"
+                    android:contentDescription="@string/practice_header_title"
                     android:src="@drawable/ic_lesson_target_cyan" />
 
                 <TextView
@@ -98,8 +98,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="Bugungi maqsad • 0/5"
-                    android:textColor="#F1F5F9"
+                    android:text="@string/practice_daily_goal_format"
+                    android:textColor="@color/color_on_surface"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
@@ -110,9 +110,9 @@
                     android:layout_marginStart="8dp"
                     android:max="5"
                     android:progress="0"
-                    app:indicatorColor="#22D3EE"
+                    app:indicatorColor="@color/color_neon_cyan"
                     app:indicatorSize="20dp"
-                    app:trackColor="#263B5E"
+                    app:trackColor="@color/color_cosmic_track"
                     app:trackCornerRadius="99dp"
                     app:trackThickness="3dp" />
             </LinearLayout>
@@ -136,7 +136,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="#0F203C"
+            app:cardBackgroundColor="@color/color_filled_card"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -144,7 +144,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="Aralash mashq • 5 daqiqalik challenge"
+                android:contentDescription="@string/practice_mixed_challenge"
                 android:scaleType="fitXY"
                 android:src="@drawable/img_practice_hero_aralash" />
         </com.google.android.material.card.MaterialCardView>
@@ -167,8 +167,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="9dp"
-                android:text="Ko‘nikmani tanlang"
-                android:textColor="#FFFFFF"
+                android:text="@string/practice_choose_skill"
+                android:textColor="@color/color_on_surface"
                 android:textSize="19.5sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -191,7 +191,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#0D223A"
+                app:cardBackgroundColor="@color/color_card_surface"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
@@ -213,7 +213,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#161A3E"
+                app:cardBackgroundColor="@color/color_card_surface"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
@@ -244,7 +244,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#0E2244"
+                app:cardBackgroundColor="@color/color_card_surface"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
@@ -266,7 +266,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#1B1E3C"
+                app:cardBackgroundColor="@color/color_card_surface"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
@@ -297,7 +297,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#0E2A38"
+                app:cardBackgroundColor="@color/color_card_surface"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
@@ -319,7 +319,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#16193E"
+                app:cardBackgroundColor="@color/color_card_surface"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">

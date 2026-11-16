@@ -41,6 +41,9 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
+import com.example.R
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -51,11 +54,8 @@ import com.example.domain.repository.SpeechRecognitionState
 import java.util.Locale
 import kotlin.math.sin
 
-val TalkMePrimaryColor = Color(0xFF1E3A8A)
-val TalkMeSecondaryColor = Color(0xFF0D9488)
-val TalkMeAccentColor = Color(0xFFF59E0B)
-val TalkMeErrorColor = Color(0xFFEF4444)
-val TalkMeSurfaceColor = Color(0xFFFFFFFF)
+@Composable
+private fun micColor(resource: Int): Color = Color(ContextCompat.getColor(LocalContext.current, resource))
 
 /**
  * Jetpack Compose Microphone Component featuring:
@@ -77,10 +77,16 @@ fun TalkMeMicrophone(
     modifier: Modifier = Modifier,
     vadState: VadState = VadState.SILENCE
 ) {
+    val primaryColor = micColor(R.color.color_primary)
+    val secondaryColor = micColor(R.color.color_secondary)
+    val onPrimaryColor = micColor(R.color.color_text_on_primary)
+    val onSurfaceColor = micColor(R.color.color_on_surface)
+    val mutedColor = micColor(R.color.color_on_surface_secondary)
+
     Surface(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
-        color = TalkMeSurfaceColor,
+        color = micColor(R.color.color_card_surface),
         shadowElevation = 4.dp
     ) {
         Column(
@@ -122,7 +128,7 @@ fun TalkMeMicrophone(
                 text = displayText,
                 fontSize = 15.sp,
                 fontWeight = if (finalText.isNotBlank()) FontWeight.Bold else FontWeight.Normal,
-                color = if (finalText.isNotBlank()) TalkMePrimaryColor else Color(0xFF475569),
+                color = if (finalText.isNotBlank()) onSurfaceColor else mutedColor,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -135,7 +141,7 @@ fun TalkMeMicrophone(
                 val secs = durationSeconds % 60
                 Text(
                     text = String.format(Locale.US, "● REC %02d:%02d", mins, secs),
-                    color = TalkMeErrorColor,
+                    color = micColor(R.color.color_error),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 4.dp)
@@ -157,13 +163,13 @@ fun TalkMeMicrophone(
                         modifier = Modifier
                             .size(48.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFFF1F5F9))
+                            .background(micColor(R.color.color_card_surface_subtle))
                             .testTag("talkme_mic_cancel_button")
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Cancel",
-                            tint = Color(0xFF64748B)
+                            tint = mutedColor
                         )
                     }
 
@@ -197,7 +203,7 @@ fun TalkMeMicrophone(
                                 .size(64.dp)
                                 .scale(pulseGlow)
                                 .clip(CircleShape)
-                                .background(TalkMeSecondaryColor.copy(alpha = 0.25f))
+                                .background(secondaryColor.copy(alpha = 0.25f))
                         )
                     }
 
@@ -208,7 +214,7 @@ fun TalkMeMicrophone(
                             .scale(animatedScale)
                             .clip(CircleShape)
                             .background(
-                                if (isListening) TalkMeSecondaryColor else TalkMePrimaryColor
+                                if (isListening) secondaryColor else primaryColor
                             )
                             .clickable {
                                 if (isListening) onStopRecording() else onStartRecording()
@@ -218,7 +224,7 @@ fun TalkMeMicrophone(
                         Icon(
                             imageVector = if (isListening) Icons.Default.Stop else Icons.Default.Mic,
                             contentDescription = "Microphone",
-                            tint = Color.White,
+                            tint = onPrimaryColor,
                             modifier = Modifier.size(30.dp)
                         )
                     }
@@ -232,13 +238,13 @@ fun TalkMeMicrophone(
                         modifier = Modifier
                             .size(48.dp)
                             .clip(CircleShape)
-                            .background(TalkMeSecondaryColor)
+                            .background(secondaryColor)
                             .testTag("talkme_mic_done_button")
                     ) {
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = "Done",
-                            tint = Color.White
+                            tint = onPrimaryColor
                         )
                     }
                 }
@@ -254,8 +260,8 @@ private fun AudioWaveformBars(
     modifier: Modifier = Modifier
 ) {
     val barsCount = 20
-    val activeColor = TalkMeSecondaryColor
-    val inactiveColor = Color(0xFFE2E8F0)
+    val activeColor = micColor(R.color.color_secondary)
+    val inactiveColor = micColor(R.color.color_cosmic_track)
 
     Canvas(modifier = modifier) {
         val barWidth = 6.dp.toPx()

@@ -14,7 +14,9 @@ import android.graphics.Shader
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import com.example.R
 
 /**
  * Interactive cosmic dark Mountain Roadmap View for the Profile "O'quv yo'li" card.
@@ -52,44 +54,44 @@ class LearningRoadmapView @JvmOverloads constructor(
         style = Paint.Style.STROKE
         strokeWidth = 7f * density
         strokeCap = Paint.Cap.ROUND
-        color = Color.argb(72, 0, 230, 118)
+        color = ContextCompat.getColor(context, R.color.color_roadmap_trail_glow)
     }
 
     private val completedTrailPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 3.2f * density
         strokeCap = Paint.Cap.ROUND
-        color = Color.parseColor("#4ADE80")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_checkpoint)
     }
 
     private val remainingTrailPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 2.4f * density
         strokeCap = Paint.Cap.ROUND
-        color = Color.argb(210, 226, 232, 240)
+        color = ContextCompat.getColor(context, R.color.color_cosmic_text_secondary)
         pathEffect = DashPathEffect(floatArrayOf(8f * density, 6f * density), 0f)
     }
 
     private val checkCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.parseColor("#22C55E")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_checkpoint)
     }
 
     private val checkCircleBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 1.6f * density
-        color = Color.parseColor("#DCFCE7")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_checkpoint_border)
     }
 
     private val futureCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.argb(130, 15, 31, 61)
+        color = ContextCompat.getColor(context, R.color.color_card_surface_subtle)
     }
 
     private val futureCircleBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 1.5f * density
-        color = Color.argb(170, 148, 163, 184)
+        color = ContextCompat.getColor(context, R.color.color_card_outline)
     }
 
     private val checkMarkPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -97,7 +99,7 @@ class LearningRoadmapView @JvmOverloads constructor(
         strokeWidth = 2.0f * density
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.color_text_on_primary)
     }
 
     private val glowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -106,72 +108,72 @@ class LearningRoadmapView @JvmOverloads constructor(
 
     private val todayOuterPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.parseColor("#00E5FF")
+        color = ContextCompat.getColor(context, R.color.color_growth_current)
     }
 
     private val todayInnerPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.color_card_surface)
     }
 
     private val todayCenterDotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.parseColor("#0284C7")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_today_dot)
     }
 
     private val startFlagBgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.parseColor("#0F3B2E")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_start_bg)
     }
 
     private val startFlagStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 1.2f * density
-        color = Color.parseColor("#4ADE80")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_checkpoint)
     }
 
     private val startPolePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 2.2f * density
         strokeCap = Paint.Cap.ROUND
-        color = Color.parseColor("#4ADE80")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_checkpoint)
     }
 
     private val todayBubbleBgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.parseColor("#082942")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_today_bg)
     }
 
     private val todayBubbleStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 1.3f * density
-        color = Color.parseColor("#00E5FF")
+        color = ContextCompat.getColor(context, R.color.color_growth_current)
     }
 
     private val peakFlagBgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.parseColor("#F59E0B")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_peak_bg)
     }
 
     private val peakPolePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 2.4f * density
         strokeCap = Paint.Cap.ROUND
-        color = Color.parseColor("#FDE68A")
+        color = ContextCompat.getColor(context, R.color.color_gold_stroke)
     }
 
     private val labelTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 11f * scaledDensity
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.color_on_surface)
     }
 
     private val peakTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 12.5f * scaledDensity
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-        color = Color.parseColor("#111827")
+        color = ContextCompat.getColor(context, R.color.color_roadmap_peak_text)
     }
 
     fun setRoadmapState(
@@ -313,8 +315,8 @@ class LearningRoadmapView @JvmOverloads constructor(
             peakY,
             34f * density,
             intArrayOf(
-                Color.argb(175, 255, 213, 79),
-                Color.argb(60, 245, 158, 11),
+                ContextCompat.getColor(context, R.color.color_roadmap_peak_glow_inner),
+                ContextCompat.getColor(context, R.color.color_roadmap_peak_glow_outer),
                 Color.TRANSPARENT
             ),
             floatArrayOf(0f, 0.5f, 1f),
@@ -352,7 +354,7 @@ class LearningRoadmapView @JvmOverloads constructor(
                     cx,
                     cy,
                     checkRadius * 1.9f,
-                    intArrayOf(Color.argb(120, 74, 222, 128), Color.TRANSPARENT),
+                    intArrayOf(ContextCompat.getColor(context, R.color.color_roadmap_checkpoint_glow), Color.TRANSPARENT),
                     null,
                     Shader.TileMode.CLAMP
                 )
@@ -393,7 +395,7 @@ class LearningRoadmapView @JvmOverloads constructor(
         canvas.drawRoundRect(badgeRect, 10.5f * density, 10.5f * density, startFlagBgPaint)
         canvas.drawRoundRect(badgeRect, 10.5f * density, 10.5f * density, startFlagStrokePaint)
         val textCenterOffset = (labelTextPaint.descent() + labelTextPaint.ascent()) / 2f
-        labelTextPaint.color = Color.parseColor("#DCFCE7")
+        labelTextPaint.color = ContextCompat.getColor(context, R.color.color_roadmap_start_text)
         canvas.drawText(
             startLabel,
             badgeRect.centerX(),
@@ -427,8 +429,8 @@ class LearningRoadmapView @JvmOverloads constructor(
             curY,
             22f * density,
             intArrayOf(
-                Color.argb(200, 0, 229, 255),
-                Color.argb(70, 0, 229, 255),
+                ContextCompat.getColor(context, R.color.color_roadmap_beacon_glow_inner),
+                ContextCompat.getColor(context, R.color.color_roadmap_beacon_glow_outer),
                 Color.TRANSPARENT
             ),
             null,
@@ -469,7 +471,7 @@ class LearningRoadmapView @JvmOverloads constructor(
         trianglePath.close()
         canvas.drawPath(trianglePath, todayBubbleBgPaint)
 
-        labelTextPaint.color = Color.parseColor("#E0F2FE")
+        labelTextPaint.color = ContextCompat.getColor(context, R.color.color_roadmap_today_text)
         canvas.drawText(
             todayLabel,
             badgeRect.centerX(),

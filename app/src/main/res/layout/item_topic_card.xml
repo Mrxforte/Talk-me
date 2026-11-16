@@ -10,7 +10,7 @@
 
     <!-- Left Timeline Column (Node + Vertical Solid/Dashed Connectors) -->
     <LinearLayout
-        android:layout_width="34dp"
+        android:layout_width="@dimen/touch_target_min"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="Status"
                 android:src="@drawable/ic_check_small"
-                app:tint="#FFFFFF" />
+                app:tint="@color/color_text_on_primary" />
         </FrameLayout>
 
         <com.example.core.ui.VerticalDashedLineView
@@ -59,7 +59,8 @@
             android:id="@+id/layoutCardCompleted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_curriculum_card_completed"
+            android:background="@drawable/bg_talkme_card"
+            android:minHeight="@dimen/touch_target_min"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="11dp"
@@ -103,7 +104,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="Kirish"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -115,8 +116,8 @@
                         android:paddingHorizontal="9dp"
                         android:paddingVertical="3dp"
                         android:text="✓ Bajarildi"
-                        android:textColor="#4ADE80"
-                        android:textSize="11sp"
+                        android:textColor="@color/color_neon_cyan_variant"
+                        android:textSize="@dimen/text_size_overline"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -129,7 +130,7 @@
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="2dp"
                     android:text="1–10-dars"
-                    android:textColor="#CBD5E1"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="11.5sp" />
 
                 <TextView
@@ -138,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:text="4/10 dars"
-                    android:textColor="#CBD5E1"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="12.5sp" />
 
                 <ProgressBar
@@ -158,7 +159,8 @@
             android:id="@+id/layoutCardActive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_curriculum_card_active"
+            android:background="@drawable/bg_talkme_card"
+            android:minHeight="@dimen/touch_target_min"
             android:orientation="vertical"
             android:padding="12dp"
             android:visibility="gone">
@@ -201,7 +203,7 @@
                         android:lineSpacingExtra="1dp"
                         android:maxLines="2"
                         android:text="Salomlashish va\ntanishuv"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -214,7 +216,7 @@
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="2dp"
                         android:text="A1 • 01-modul"
-                        android:textColor="#CBD5E1"
+                        android:textColor="@color/color_on_surface_secondary"
                         android:textSize="11.5sp" />
 
                     <LinearLayout
@@ -257,7 +259,7 @@
             <LinearLayout
                 android:id="@+id/btnOpenActiveModule"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/touch_target_min"
                 android:layout_marginTop="11dp"
                 android:background="@drawable/bg_curriculum_sky_btn"
                 android:gravity="center"
@@ -268,8 +270,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bo‘limni ochish"
-                    android:textColor="@color/color_curriculum_on_accent"
-                    android:textSize="14.5sp"
+                    android:textColor="@color/color_text_on_primary"
+                    android:textSize="@dimen/text_size_body"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -277,7 +279,8 @@
                     android:layout_height="17dp"
                     android:layout_marginStart="5dp"
                     android:contentDescription="Open"
-                    android:src="@drawable/ic_chevron_right" />
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="@color/color_text_on_primary" />
             </LinearLayout>
         </LinearLayout>
 
@@ -285,15 +288,15 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/layoutCardLocked"
             android:layout_width="match_parent"
-            android:layout_height="118dp"
+            android:layout_height="@dimen/locked_lesson_card_min_height"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:visibility="gone"
-            app:cardBackgroundColor="@color/color_cosmic_card"
-            app:cardCornerRadius="18dp"
+            app:cardBackgroundColor="@color/color_locked_surface"
+            app:cardCornerRadius="@dimen/radius_card_medium"
             app:cardElevation="0dp"
-            app:strokeColor="@color/color_cosmic_card_stroke"
-            app:strokeWidth="1.5dp">
+            app:strokeColor="@color/color_locked_outline"
+            app:strokeWidth="@dimen/stroke_card">
 
             <FrameLayout
                 android:id="@+id/containerTopicImageFrame"
@@ -308,7 +311,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="Keyingi bo'lim"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img_curriculum_locked_card_clean" />
+                    android:visibility="gone" />
 
                 <!-- Interactive 3D Padlock Medallion that shakes & bursts shooting stars on tap -->
                 <FrameLayout
@@ -316,7 +319,7 @@
                     android:layout_width="58dp"
                     android:layout_height="58dp"
                     android:layout_gravity="top|center_horizontal"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:clipChildren="false"
                     android:clipToPadding="false">
 
@@ -335,7 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:orientation="vertical"
-                    android:background="@color/color_curriculum_label_scrim"
+                    android:background="@color/color_image_scrim"
                     android:paddingHorizontal="@dimen/spacing_medium"
                     android:paddingVertical="@dimen/spacing_xs">
                     <TextView
@@ -345,12 +348,12 @@
                         android:maxLines="2"
                         android:ellipsize="end"
                         android:textStyle="bold"
-                        android:textColor="@color/color_curriculum_text" />
+                        android:textColor="@color/color_on_image" />
                     <TextView
                         android:id="@+id/tvLockedTopicCount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/color_cosmic_text_secondary" />
+                        android:textColor="@color/color_on_image_secondary" />
                 </LinearLayout>
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -360,7 +363,8 @@
             android:id="@+id/layoutCardFinalExam"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/bg_curriculum_card_completed"
+            android:background="@drawable/bg_talkme_card"
+            android:minHeight="@dimen/touch_target_min"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="14dp"
@@ -381,7 +385,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
                 android:text="A1 yakuniy sinov"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/color_on_surface"
                 android:textSize="15.5sp"
                 android:textStyle="bold" />
         </LinearLayout>

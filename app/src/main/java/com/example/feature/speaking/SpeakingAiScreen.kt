@@ -2,7 +2,6 @@ package com.example.feature.speaking
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -478,7 +477,7 @@ class SpeakingAiFragment : Fragment() {
         binding.btnMicrophoneSpeak.isEnabled = !state.isLoading
         if (state.isListeningOrSpeakingUser) {
             binding.btnMicrophoneSpeak.setColorFilter(
-                if (state.isMuted) Color.parseColor("#FBBF24") else Color.WHITE
+                ContextCompat.getColor(requireContext(), if (state.isMuted) R.color.color_warning else R.color.color_text_on_primary)
             )
             val amp = if (state.isMuted) 0f else state.audioAmplitude.coerceIn(0f, 1f)
             val auraScale = 1.08f + amp * 0.36f
@@ -487,14 +486,14 @@ class SpeakingAiFragment : Fragment() {
             binding.btnMicrophoneSpeak.scaleX = 1.08f
             binding.btnMicrophoneSpeak.scaleY = 1.08f
         } else if (state.isAiSpeaking) {
-            binding.btnMicrophoneSpeak.setColorFilter(Color.parseColor("#00E5FF"))
+            binding.btnMicrophoneSpeak.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_text_on_primary))
             binding.ivAiCharacterAura.scaleX = 1.05f
             binding.ivAiCharacterAura.scaleY = 1.05f
             binding.viewTutorSpeakingBar.scaleX = 1.35f
             binding.btnMicrophoneSpeak.scaleX = 1.0f
             binding.btnMicrophoneSpeak.scaleY = 1.0f
         } else {
-            binding.btnMicrophoneSpeak.setColorFilter(Color.WHITE)
+            binding.btnMicrophoneSpeak.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_text_on_primary))
             binding.ivAiCharacterAura.scaleX = 1.0f
             binding.ivAiCharacterAura.scaleY = 1.0f
             binding.viewTutorSpeakingBar.scaleX = 1.0f

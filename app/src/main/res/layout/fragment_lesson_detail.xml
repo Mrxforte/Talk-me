@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_curriculum_screen"
+    android:background="@color/color_background"
     android:orientation="vertical">
 
     <!-- Hidden legacy views preserved for view-binding compatibility -->
@@ -29,13 +29,13 @@
 
             <ImageButton
                 android:id="@+id/btnBackLesson"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="@dimen/touch_target_min"
+                android:layout_height="@dimen/touch_target_min"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/action_back"
                 android:padding="7dp"
                 android:src="@drawable/ic_arrow_back"
-                app:tint="#FFFFFF" />
+                app:tint="@color/lesson_text" />
 
             <TextView
                 android:id="@+id/tvLessonTopTitle"
@@ -46,7 +46,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Sonlar • Dars 11"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/lesson_text"
                 android:textSize="18.5sp"
                 android:textStyle="bold" />
 
@@ -56,19 +56,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:text="1/10"
-                android:textColor="#CBD5E1"
+                android:textColor="@color/lesson_subtext"
                 android:textSize="14.5sp"
                 android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/btnLessonMoreMenu"
-                android:layout_width="34dp"
-                android:layout_height="38dp"
+                android:layout_width="@dimen/touch_target_min"
+                android:layout_height="@dimen/touch_target_min"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="More"
                 android:padding="6dp"
                 android:src="@drawable/ic_lesson_more_vert"
-                app:tint="#FFFFFF" />
+                app:tint="@color/lesson_text" />
         </LinearLayout>
 
         <ProgressBar
@@ -98,7 +98,7 @@
         <LinearLayout
             android:id="@+id/pillStepQoida"
             android:layout_width="0dp"
-            android:layout_height="34dp"
+            android:layout_height="@dimen/touch_target_min"
             android:layout_weight="1"
             android:background="@drawable/bg_lesson_step_active"
             android:gravity="center"
@@ -111,7 +111,7 @@
                 android:layout_height="14dp"
                 android:contentDescription="Qoida"
                 android:src="@drawable/ic_lesson_target_cyan"
-                app:tint="#FFFFFF" />
+                app:tint="@color/lesson_button_text" />
 
             <TextView
                 android:id="@+id/tvStepQoidaLabel"
@@ -121,8 +121,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Qoida"
-                android:textColor="#FFFFFF"
-                android:textSize="11.5sp"
+                android:textColor="@color/lesson_button_text"
+                android:textSize="@dimen/text_size_body_small"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -130,13 +130,13 @@
             android:id="@+id/lineStepConn1"
             android:layout_width="7dp"
             android:layout_height="2dp"
-            android:background="#475569" />
+            android:background="@color/lesson_border" />
 
         <!-- Step 2: Misollar -->
         <LinearLayout
             android:id="@+id/pillStepMisollar"
             android:layout_width="0dp"
-            android:layout_height="34dp"
+            android:layout_height="@dimen/touch_target_min"
             android:layout_weight="1.08"
             android:background="@drawable/bg_lesson_step_locked"
             android:gravity="center"
@@ -149,7 +149,7 @@
                 android:layout_height="14dp"
                 android:contentDescription="Misollar"
                 android:src="@drawable/ic_lesson_list_cyan"
-                app:tint="#CBD5E1" />
+                app:tint="@color/lesson_subtext" />
 
             <TextView
                 android:id="@+id/tvStepMisollarLabel"
@@ -159,8 +159,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Misollar"
-                android:textColor="#E2E8F0"
-                android:textSize="11.5sp"
+                android:textColor="@color/lesson_text"
+                android:textSize="@dimen/text_size_body_small"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -168,13 +168,13 @@
             android:id="@+id/lineStepConn2"
             android:layout_width="7dp"
             android:layout_height="2dp"
-            android:background="#475569" />
+            android:background="@color/lesson_border" />
 
         <!-- Step 3: Mashqlar -->
         <LinearLayout
             android:id="@+id/pillStepMashqlar"
             android:layout_width="0dp"
-            android:layout_height="34dp"
+            android:layout_height="@dimen/touch_target_min"
             android:layout_weight="1.12"
             android:background="@drawable/bg_lesson_step_locked"
             android:gravity="center"
@@ -187,7 +187,7 @@
                 android:layout_height="14dp"
                 android:contentDescription="Mashqlar"
                 android:src="@drawable/ic_lesson_target_cyan"
-                app:tint="#CBD5E1" />
+                app:tint="@color/lesson_subtext" />
 
             <TextView
                 android:id="@+id/tvStepMashqlarLabel"
@@ -197,8 +197,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Mashqlar"
-                android:textColor="#E2E8F0"
-                android:textSize="11.5sp"
+                android:textColor="@color/lesson_text"
+                android:textSize="@dimen/text_size_body_small"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -206,13 +206,13 @@
             android:id="@+id/lineStepConn3"
             android:layout_width="7dp"
             android:layout_height="2dp"
-            android:background="#475569" />
+            android:background="@color/lesson_border" />
 
         <!-- Step 4: Wrap-up -->
         <LinearLayout
             android:id="@+id/pillStepWrapUp"
             android:layout_width="0dp"
-            android:layout_height="34dp"
+            android:layout_height="@dimen/touch_target_min"
             android:layout_weight="1.08"
             android:background="@drawable/bg_lesson_step_locked"
             android:gravity="center"
@@ -225,7 +225,7 @@
                 android:layout_height="13dp"
                 android:contentDescription="Wrap-up"
                 android:src="@drawable/ic_lock"
-                app:tint="#CBD5E1" />
+                app:tint="@color/lesson_subtext" />
 
             <TextView
                 android:id="@+id/tvStepWrapUpLabel"
@@ -235,8 +235,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Wrap-up"
-                android:textColor="#E2E8F0"
-                android:textSize="11.5sp"
+                android:textColor="@color/lesson_text"
+                android:textSize="@dimen/text_size_body_small"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
@@ -294,7 +294,7 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:text="Sonlar: one, two, three"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/lesson_text"
                         android:textSize="19.5sp"
                         android:textStyle="bold" />
 
@@ -306,7 +306,7 @@
                         android:paddingHorizontal="11dp"
                         android:paddingVertical="4dp"
                         android:text="1 / 3"
-                        android:textColor="#E2E8F0"
+                        android:textColor="@color/lesson_text"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:visibility="gone" />
@@ -317,7 +317,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="14dp"
-                    android:background="#1E3A63"
+                    android:background="@color/lesson_border"
                     android:visibility="gone" />
 
                 <!-- ========================================================= -->
@@ -328,7 +328,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="6dp"
+                    android:paddingHorizontal="@dimen/spacing_medium"
+                    android:paddingTop="@dimen/spacing_medium"
                     android:visibility="visible">
 
                     <!-- A. Lesson Heading (Book Icon + Title + Subtitle) -->
@@ -347,7 +348,7 @@
                             android:layout_height="28dp"
                             android:contentDescription="Lesson Icon"
                             android:src="@drawable/ic_lesson_book_cyan"
-                            app:tint="#38BDF8" />
+                            app:tint="@color/lesson_accent" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -358,25 +359,23 @@
 
                             <TextView
                                 android:id="@+id/tvLessonHeadingTitle"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:maxLines="2"
+                                android:lineSpacingExtra="@dimen/spacing_xs"
                                 android:text="Xush kelibsiz!"
-                                android:textColor="#FFFFFF"
-                                android:textSize="21sp"
+                                android:textColor="@color/lesson_text"
+                                android:textSize="@dimen/text_size_heading"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tvLessonHeadingSubtitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:ellipsize="end"
-                                android:maxLines="1"
+                                android:layout_marginTop="@dimen/spacing_xs"
+                                android:lineSpacingExtra="@dimen/spacing_xs"
                                 android:text="TalkMe bilan ilk qadam"
-                                android:textColor="#94A3B8"
-                                android:textSize="13.5sp" />
+                                android:textColor="@color/lesson_subtext"
+                                android:textSize="@dimen/text_size_body" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -386,10 +385,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
-                        app:cardBackgroundColor="#0B172E"
+                        app:cardBackgroundColor="@color/lesson_card"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="0dp"
-                        app:strokeColor="#1E3A8A"
+                        app:strokeColor="@color/lesson_border"
                         app:strokeWidth="1dp">
 
                         <ImageView
@@ -409,10 +408,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:background="@drawable/bg_lesson_situation_panel"
-                        android:gravity="center_vertical"
+                        android:gravity="top"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="14dp"
-                        android:paddingVertical="12dp">
+                        android:padding="@dimen/spacing_medium">
 
                         <ImageView
                             android:id="@+id/ivSituationIcon"
@@ -420,14 +418,14 @@
                             android:layout_height="22dp"
                             android:contentDescription="Bugungi vaziyat"
                             android:src="@drawable/ic_lesson_info_outline"
-                            app:tint="#38BDF8" />
+                            app:tint="@color/lesson_accent" />
 
                         <View
                             android:layout_width="1dp"
-                            android:layout_height="36dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginEnd="12dp"
-                            android:background="#1E3A8A" />
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/spacing_small"
+                            android:layout_marginEnd="@dimen/spacing_small"
+                            android:background="@color/lesson_border" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -439,20 +437,20 @@
                                 android:id="@+id/tvSituationTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Bugungi vaziyat"
-                                android:textColor="#FFFFFF"
-                                android:textSize="13.5sp"
+                                android:text="@string/lesson_explanation_heading"
+                                android:textColor="@color/lesson_text"
+                                android:textSize="@dimen/text_size_medium"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tvSituationBody"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:lineSpacingExtra="2dp"
+                                android:lineSpacingExtra="@dimen/spacing_small"
                                 android:text="Til klubidagi ilk kun. Tanishamiz va birga boshlaymiz."
-                                android:textColor="#CBD5E1"
-                                android:textSize="12.5sp" />
+                                android:textColor="@color/lesson_text"
+                                android:textSize="@dimen/text_size_medium" />
                         </LinearLayout>
 
                         <ImageButton
@@ -464,7 +462,7 @@
                             android:contentDescription="@string/lesson_btn_listen"
                             android:padding="12dp"
                             android:src="@drawable/ic_volume_up"
-                            app:tint="@color/white" />
+                            app:tint="@color/lesson_button_text" />
                     </LinearLayout>
 
                     <!-- D. Section Heading (Tinglang va tushuning) -->
@@ -480,7 +478,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tinglang va tushuning"
-                            android:textColor="#FFFFFF"
+                            android:textColor="@color/lesson_text"
                             android:textSize="18.5sp"
                             android:textStyle="bold" />
 
@@ -490,7 +488,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="So‘zlarni vaziyat bilan eslab qoling."
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/lesson_subtext"
                             android:textSize="13sp" />
                     </LinearLayout>
 
@@ -523,7 +521,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center"
                                     android:text="01"
-                                    android:textColor="#38BDF8"
+                                    android:textColor="@color/lesson_accent"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
@@ -533,7 +531,7 @@
                                 android:layout_height="28dp"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="#1E3A8A" />
+                                android:background="@color/lesson_border" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -548,7 +546,7 @@
                                     android:ellipsize="end"
                                     android:maxLines="1"
                                     android:text="Welcome"
-                                    android:textColor="#FFFFFF"
+                                    android:textColor="@color/lesson_text"
                                     android:textSize="16.5sp"
                                     android:textStyle="bold" />
 
@@ -560,20 +558,20 @@
                                     android:ellipsize="end"
                                     android:maxLines="1"
                                     android:text="Xush kelibsiz"
-                                    android:textColor="#94A3B8"
+                                    android:textColor="@color/lesson_subtext"
                                     android:textSize="13sp" />
                             </LinearLayout>
 
                             <ImageButton
                                 android:id="@+id/btnSpeakVocabWord1"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
+                                android:layout_width="@dimen/touch_target_min"
+                                android:layout_height="@dimen/touch_target_min"
                                 android:layout_marginStart="8dp"
                                 android:background="@drawable/bg_lesson_speaker_btn"
                                 android:contentDescription="Speak word"
                                 android:padding="8dp"
                                 android:src="@drawable/ic_volume_up"
-                                app:tint="#FFFFFF" />
+                                app:tint="@color/lesson_button_text" />
                         </LinearLayout>
 
                         <View
@@ -581,12 +579,13 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
-                            android:background="#162847" />
+                            android:background="@color/lesson_border" />
 
                         <LinearLayout
                             android:id="@+id/layoutVocabExample1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:minHeight="@dimen/touch_target_min"
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:focusable="true"
@@ -603,10 +602,8 @@
                                     android:id="@+id/tvVocabExampleEn1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:maxLines="2"
                                     android:text="Welcome to TalkMe!"
-                                    android:textColor="#E2E8F0"
+                                    android:textColor="@color/lesson_text"
                                     android:textSize="13.5sp"
                                     android:textStyle="bold" />
 
@@ -618,20 +615,20 @@
                                     android:ellipsize="end"
                                     android:maxLines="2"
                                     android:text="TalkMe’ga xush kelibsiz!"
-                                    android:textColor="#94A3B8"
+                                    android:textColor="@color/lesson_subtext"
                                     android:textSize="12.5sp" />
                             </LinearLayout>
 
                             <ImageView
                                 android:id="@+id/btnSpeakVocabExample1"
-                                android:layout_width="26dp"
-                                android:layout_height="26dp"
+                                android:layout_width="@dimen/touch_target_min"
+                                android:layout_height="@dimen/touch_target_min"
                                 android:layout_marginStart="6dp"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:contentDescription="Speak example"
                                 android:padding="4dp"
                                 android:src="@drawable/ic_volume_up"
-                                app:tint="#60A5FA" />
+                                app:tint="@color/lesson_accent" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -662,7 +659,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center"
                                     android:text="02"
-                                    android:textColor="#38BDF8"
+                                    android:textColor="@color/lesson_accent"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
@@ -672,7 +669,7 @@
                                 android:layout_height="28dp"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="#1E3A8A" />
+                                android:background="@color/lesson_border" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -687,7 +684,7 @@
                                     android:ellipsize="end"
                                     android:maxLines="1"
                                     android:text="Learn"
-                                    android:textColor="#FFFFFF"
+                                    android:textColor="@color/lesson_text"
                                     android:textSize="16.5sp"
                                     android:textStyle="bold" />
 
@@ -699,20 +696,20 @@
                                     android:ellipsize="end"
                                     android:maxLines="1"
                                     android:text="O‘rganmoq"
-                                    android:textColor="#94A3B8"
+                                    android:textColor="@color/lesson_subtext"
                                     android:textSize="13sp" />
                             </LinearLayout>
 
                             <ImageButton
                                 android:id="@+id/btnSpeakVocabWord2"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
+                                android:layout_width="@dimen/touch_target_min"
+                                android:layout_height="@dimen/touch_target_min"
                                 android:layout_marginStart="8dp"
                                 android:background="@drawable/bg_lesson_speaker_btn"
                                 android:contentDescription="Speak word"
                                 android:padding="8dp"
                                 android:src="@drawable/ic_volume_up"
-                                app:tint="#FFFFFF" />
+                                app:tint="@color/lesson_button_text" />
                         </LinearLayout>
 
                         <View
@@ -720,12 +717,13 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
-                            android:background="#162847" />
+                            android:background="@color/lesson_border" />
 
                         <LinearLayout
                             android:id="@+id/layoutVocabExample2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:minHeight="@dimen/touch_target_min"
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:focusable="true"
@@ -742,10 +740,8 @@
                                     android:id="@+id/tvVocabExampleEn2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:maxLines="2"
                                     android:text="Learn English."
-                                    android:textColor="#E2E8F0"
+                                    android:textColor="@color/lesson_text"
                                     android:textSize="13.5sp"
                                     android:textStyle="bold" />
 
@@ -757,20 +753,20 @@
                                     android:ellipsize="end"
                                     android:maxLines="2"
                                     android:text="Ingliz tilini o‘rganing."
-                                    android:textColor="#94A3B8"
+                                    android:textColor="@color/lesson_subtext"
                                     android:textSize="12.5sp" />
                             </LinearLayout>
 
                             <ImageView
                                 android:id="@+id/btnSpeakVocabExample2"
-                                android:layout_width="26dp"
-                                android:layout_height="26dp"
+                                android:layout_width="@dimen/touch_target_min"
+                                android:layout_height="@dimen/touch_target_min"
                                 android:layout_marginStart="6dp"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:contentDescription="Speak example"
                                 android:padding="4dp"
                                 android:src="@drawable/ic_volume_up"
-                                app:tint="#60A5FA" />
+                                app:tint="@color/lesson_accent" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -801,7 +797,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center"
                                     android:text="03"
-                                    android:textColor="#38BDF8"
+                                    android:textColor="@color/lesson_accent"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
                             </FrameLayout>
@@ -811,7 +807,7 @@
                                 android:layout_height="28dp"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:background="#1E3A8A" />
+                                android:background="@color/lesson_border" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -826,7 +822,7 @@
                                     android:ellipsize="end"
                                     android:maxLines="1"
                                     android:text="Start"
-                                    android:textColor="#FFFFFF"
+                                    android:textColor="@color/lesson_text"
                                     android:textSize="16.5sp"
                                     android:textStyle="bold" />
 
@@ -838,20 +834,20 @@
                                     android:ellipsize="end"
                                     android:maxLines="1"
                                     android:text="Boshlamoq"
-                                    android:textColor="#94A3B8"
+                                    android:textColor="@color/lesson_subtext"
                                     android:textSize="13sp" />
                             </LinearLayout>
 
                             <ImageButton
                                 android:id="@+id/btnSpeakVocabWord3"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
+                                android:layout_width="@dimen/touch_target_min"
+                                android:layout_height="@dimen/touch_target_min"
                                 android:layout_marginStart="8dp"
                                 android:background="@drawable/bg_lesson_speaker_btn"
                                 android:contentDescription="Speak word"
                                 android:padding="8dp"
                                 android:src="@drawable/ic_volume_up"
-                                app:tint="#FFFFFF" />
+                                app:tint="@color/lesson_button_text" />
                         </LinearLayout>
 
                         <View
@@ -859,12 +855,13 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
-                            android:background="#162847" />
+                            android:background="@color/lesson_border" />
 
                         <LinearLayout
                             android:id="@+id/layoutVocabExample3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:minHeight="@dimen/touch_target_min"
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:focusable="true"
@@ -881,10 +878,8 @@
                                     android:id="@+id/tvVocabExampleEn3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:maxLines="2"
                                     android:text="Let’s start!"
-                                    android:textColor="#E2E8F0"
+                                    android:textColor="@color/lesson_text"
                                     android:textSize="13.5sp"
                                     android:textStyle="bold" />
 
@@ -896,20 +891,20 @@
                                     android:ellipsize="end"
                                     android:maxLines="2"
                                     android:text="Boshlaymiz!"
-                                    android:textColor="#94A3B8"
+                                    android:textColor="@color/lesson_subtext"
                                     android:textSize="12.5sp" />
                             </LinearLayout>
 
                             <ImageView
                                 android:id="@+id/btnSpeakVocabExample3"
-                                android:layout_width="26dp"
-                                android:layout_height="26dp"
+                                android:layout_width="@dimen/touch_target_min"
+                                android:layout_height="@dimen/touch_target_min"
                                 android:layout_marginStart="6dp"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:contentDescription="Speak example"
                                 android:padding="4dp"
                                 android:src="@drawable/ic_volume_up"
-                                app:tint="#60A5FA" />
+                                app:tint="@color/lesson_accent" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -938,7 +933,7 @@
                             android:layout_height="16dp"
                             android:contentDescription="Hint"
                             android:src="@drawable/ic_skill_listening"
-                            app:tint="#60A5FA" />
+                            app:tint="@color/lesson_accent" />
 
                         <TextView
                             android:id="@+id/tvLessonHintText"
@@ -946,7 +941,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Audioni tinglang, keyin birga takrorlaymiz."
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/lesson_subtext"
                             android:textSize="12.5sp"
                             android:textStyle="italic" />
                     </LinearLayout>
@@ -1067,7 +1062,7 @@
                                 android:layout_height="22dp"
                                 android:contentDescription="@string/lesson_dialogue_title"
                                 android:src="@drawable/ic_lesson_info_outline"
-                                app:tint="@color/color_neon_cyan" />
+                                app:tint="@color/lesson_accent" />
 
                             <TextView
                                 android:id="@+id/tvMisollarDialogueTitle"
@@ -1076,7 +1071,7 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_weight="1"
                                 android:text="@string/lesson_dialogue_title"
-                                android:textColor="@color/white"
+                                android:textColor="@color/lesson_text"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -1088,7 +1083,7 @@
                                 android:contentDescription="@string/lesson_dialogue_listen_all"
                                 android:padding="12dp"
                                 android:src="@drawable/ic_volume_up"
-                                app:tint="@color/white" />
+                                app:tint="@color/lesson_button_text" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -1104,7 +1099,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:lineSpacingExtra="3dp"
-                            android:textColor="@color/color_cosmic_text_secondary"
+                            android:textColor="@color/lesson_subtext"
                             android:textSize="13sp"
                             android:visibility="gone" />
                     </LinearLayout>
@@ -1115,7 +1110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="@string/lesson_examples_list_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/lesson_text"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:visibility="gone" />
@@ -1137,7 +1132,7 @@
                             android:layout_height="32dp"
                             android:contentDescription="Example 1"
                             android:src="@drawable/ic_lesson_book_cyan"
-                            app:tint="#0F172A" />
+                            app:tint="@color/lesson_text" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1159,34 +1154,34 @@
                                     android:layout_weight="1"
                                     android:lineSpacingExtra="2dp"
                                     android:text="I have one book."
-                                    android:textColor="#0F172A"
+                                    android:textColor="@color/lesson_text"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
                                 <ImageButton
                                     android:id="@+id/btnSpeakExample1"
-                                    android:layout_width="40dp"
-                                    android:layout_height="32dp"
+                                    android:layout_width="@dimen/touch_target_min"
+                                    android:layout_height="@dimen/touch_target_min"
                                     android:layout_marginStart="8dp"
                                     android:background="@drawable/bg_lesson_speaker_btn"
                                     android:contentDescription="Speak example 1"
                                     android:padding="5dp"
                                     android:src="@drawable/ic_volume_up"
-                                    app:tint="#FFFFFF" />
+                                    app:tint="@color/lesson_button_text" />
                             </LinearLayout>
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:layout_marginVertical="7dp"
-                                android:background="#B4D2F0" />
+                                android:background="@color/lesson_border" />
 
                             <TextView
                                 android:id="@+id/tvExampleUz1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Menda bitta kitob bor."
-                                android:textColor="#0F172A"
+                                android:textColor="@color/lesson_text"
                                 android:textSize="14.5sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1209,7 +1204,7 @@
                             android:layout_height="32dp"
                             android:contentDescription="Example 2"
                             android:src="@drawable/ic_lesson_books_stack"
-                            app:tint="#0F172A" />
+                            app:tint="@color/lesson_text" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1231,34 +1226,34 @@
                                     android:layout_weight="1"
                                     android:lineSpacingExtra="2dp"
                                     android:text="I have two books."
-                                    android:textColor="#0F172A"
+                                    android:textColor="@color/lesson_text"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
                                 <ImageButton
                                     android:id="@+id/btnSpeakExample2"
-                                    android:layout_width="40dp"
-                                    android:layout_height="32dp"
+                                    android:layout_width="@dimen/touch_target_min"
+                                    android:layout_height="@dimen/touch_target_min"
                                     android:layout_marginStart="8dp"
                                     android:background="@drawable/bg_lesson_speaker_btn"
                                     android:contentDescription="Speak example 2"
                                     android:padding="5dp"
                                     android:src="@drawable/ic_volume_up"
-                                    app:tint="#FFFFFF" />
+                                    app:tint="@color/lesson_button_text" />
                             </LinearLayout>
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:layout_marginVertical="7dp"
-                                android:background="#B4D2F0" />
+                                android:background="@color/lesson_border" />
 
                             <TextView
                                 android:id="@+id/tvExampleUz2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Menda ikkita kitob bor."
-                                android:textColor="#0F172A"
+                                android:textColor="@color/lesson_text"
                                 android:textSize="14.5sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1281,7 +1276,7 @@
                             android:layout_height="32dp"
                             android:contentDescription="Example 3"
                             android:src="@drawable/ic_lesson_cat"
-                            app:tint="#0F172A" />
+                            app:tint="@color/lesson_text" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1303,34 +1298,34 @@
                                     android:layout_weight="1"
                                     android:lineSpacingExtra="2dp"
                                     android:text="She has three cats."
-                                    android:textColor="#0F172A"
+                                    android:textColor="@color/lesson_text"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
                                 <ImageButton
                                     android:id="@+id/btnSpeakExample3"
-                                    android:layout_width="40dp"
-                                    android:layout_height="32dp"
+                                    android:layout_width="@dimen/touch_target_min"
+                                    android:layout_height="@dimen/touch_target_min"
                                     android:layout_marginStart="8dp"
                                     android:background="@drawable/bg_lesson_speaker_btn"
                                     android:contentDescription="Speak example 3"
                                     android:padding="5dp"
                                     android:src="@drawable/ic_volume_up"
-                                    app:tint="#FFFFFF" />
+                                    app:tint="@color/lesson_button_text" />
                             </LinearLayout>
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:layout_marginVertical="7dp"
-                                android:background="#B4D2F0" />
+                                android:background="@color/lesson_border" />
 
                             <TextView
                                 android:id="@+id/tvExampleUz3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Uning uchta mushugi bor."
-                                android:textColor="#0F172A"
+                                android:textColor="@color/lesson_text"
                                 android:textSize="14.5sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1386,7 +1381,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Bo‘sh joyni to‘ldiring:"
-                                android:textColor="#1E293B"
+                                android:textColor="@color/lesson_subtext"
                                 android:textSize="14sp" />
 
                             <TextView
@@ -1395,21 +1390,21 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:text="I have ___ books."
-                                android:textColor="#0F172A"
+                                android:textColor="@color/lesson_text"
                                 android:textSize="19sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
                         <ImageButton
                             android:id="@+id/btnSpeakMashqPrompt"
-                            android:layout_width="40dp"
-                            android:layout_height="34dp"
+                            android:layout_width="@dimen/touch_target_min"
+                            android:layout_height="@dimen/touch_target_min"
                             android:layout_marginStart="8dp"
                             android:background="@drawable/bg_lesson_speaker_btn"
                             android:contentDescription="Speak exercise"
                             android:padding="6dp"
                             android:src="@drawable/ic_volume_up"
-                            app:tint="#FFFFFF" />
+                            app:tint="@color/lesson_button_text" />
                     </LinearLayout>
 
                     <!-- Answer Option Chips (Adaptive Horizontal / Vertical) -->
@@ -1442,7 +1437,7 @@
                                 android:gravity="center"
                                 android:maxLines="4"
                                 android:text="one"
-                                android:textColor="@color/white"
+                                android:textColor="@color/lesson_text"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -1454,7 +1449,7 @@
                                 android:contentDescription="Selected"
                                 android:src="@drawable/ic_check_circle"
                                 android:visibility="gone"
-                                app:tint="@color/white" />
+                                app:tint="@color/lesson_button_text" />
                         </LinearLayout>
 
                         <!-- Option 2 -->
@@ -1479,7 +1474,7 @@
                                 android:gravity="center"
                                 android:maxLines="4"
                                 android:text="two"
-                                android:textColor="@color/white"
+                                android:textColor="@color/lesson_text"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -1491,7 +1486,7 @@
                                 android:contentDescription="Selected"
                                 android:src="@drawable/ic_check_circle"
                                 android:visibility="visible"
-                                app:tint="@color/white" />
+                                app:tint="@color/lesson_button_text" />
                         </LinearLayout>
 
                         <!-- Option 3 -->
@@ -1515,7 +1510,7 @@
                                 android:gravity="center"
                                 android:maxLines="4"
                                 android:text="three"
-                                android:textColor="@color/white"
+                                android:textColor="@color/lesson_text"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -1527,7 +1522,7 @@
                                 android:contentDescription="Selected"
                                 android:src="@drawable/ic_check_circle"
                                 android:visibility="gone"
-                                app:tint="@color/white" />
+                                app:tint="@color/lesson_button_text" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -1549,8 +1544,8 @@
                             android:layout_height="wrap_content"
                             android:minHeight="@dimen/touch_target_min"
                             android:text="@string/lesson_read_aloud_listen"
-                            android:textColor="@color/color_neon_cyan"
-                            app:strokeColor="@color/color_neon_cyan" />
+                            android:textColor="@color/lesson_accent"
+                            app:strokeColor="@color/lesson_accent" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnReadAloudTap"
@@ -1559,8 +1554,8 @@
                             android:layout_marginTop="10dp"
                             android:minHeight="@dimen/touch_target_min"
                             android:text="🗣️ Men ovoz chiqarib o‘qidim (0 / 3)"
-                            android:textColor="@color/white"
-                            app:backgroundTint="@color/color_primary_variant" />
+                            android:textColor="@color/lesson_button_text"
+                            app:backgroundTint="@color/lesson_button" />
                     </LinearLayout>
 
                     <!-- Interactive Self-Write Mode (Dars 2 Lera Dialogue) -->
@@ -1583,8 +1578,8 @@
                             android:hint="@string/lesson_self_write_hint_welcome"
                             android:inputType="text"
                             android:paddingHorizontal="12dp"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/color_text_muted"
+                            android:textColor="@color/lesson_text"
+                            android:textColorHint="@color/lesson_subtext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -1597,8 +1592,8 @@
                             android:hint="@string/lesson_self_write_hint_whats"
                             android:inputType="text"
                             android:paddingHorizontal="12dp"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/color_text_muted"
+                            android:textColor="@color/lesson_text"
+                            android:textColorHint="@color/lesson_subtext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -1611,8 +1606,8 @@
                             android:hint="@string/lesson_self_write_hint_my"
                             android:inputType="text"
                             android:paddingHorizontal="12dp"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/color_text_muted"
+                            android:textColor="@color/lesson_text"
+                            android:textColorHint="@color/lesson_subtext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -1625,8 +1620,8 @@
                             android:hint="@string/lesson_self_write_hint_name"
                             android:inputType="textPersonName"
                             android:paddingHorizontal="12dp"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/color_text_muted"
+                            android:textColor="@color/lesson_text"
+                            android:textColorHint="@color/lesson_subtext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -1639,8 +1634,8 @@
                             android:hint="@string/lesson_self_write_hint_bye"
                             android:inputType="text"
                             android:paddingHorizontal="12dp"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/color_text_muted"
+                            android:textColor="@color/lesson_text"
+                            android:textColorHint="@color/lesson_subtext"
                             android:textSize="14sp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -1650,8 +1645,8 @@
                             android:layout_marginTop="12dp"
                             android:minHeight="@dimen/touch_target_min"
                             android:text="@string/lesson_self_write_check"
-                            android:textColor="@color/white"
-                            app:backgroundTint="@color/color_primary_variant" />
+                            android:textColor="@color/lesson_button_text"
+                            app:backgroundTint="@color/lesson_button" />
                     </LinearLayout>
 
                     <!-- Interactive Self-Write Mode (Lesson 3: 3 items at home with a/an) -->
@@ -1674,8 +1669,8 @@
                             android:hint="@string/lesson_self_write_article_1_hint"
                             android:inputType="text"
                             android:paddingHorizontal="12dp"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/color_text_muted"
+                            android:textColor="@color/lesson_text"
+                            android:textColorHint="@color/lesson_subtext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -1688,8 +1683,8 @@
                             android:hint="@string/lesson_self_write_article_2_hint"
                             android:inputType="text"
                             android:paddingHorizontal="12dp"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/color_text_muted"
+                            android:textColor="@color/lesson_text"
+                            android:textColorHint="@color/lesson_subtext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -1702,8 +1697,8 @@
                             android:hint="@string/lesson_self_write_article_3_hint"
                             android:inputType="text"
                             android:paddingHorizontal="12dp"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/color_text_muted"
+                            android:textColor="@color/lesson_text"
+                            android:textColorHint="@color/lesson_subtext"
                             android:textSize="14sp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -1713,8 +1708,8 @@
                             android:layout_marginTop="12dp"
                             android:minHeight="@dimen/touch_target_min"
                             android:text="@string/lesson_self_write_check"
-                            android:textColor="@color/white"
-                            app:backgroundTint="@color/color_primary_variant" />
+                            android:textColor="@color/lesson_button_text"
+                            app:backgroundTint="@color/lesson_button" />
                     </LinearLayout>
 
                     <!-- Feedback Pill Banner (✓ To'g'ri! Keyingi mashq ochildi.) -->
@@ -1735,7 +1730,7 @@
                             android:layout_height="20dp"
                             android:contentDescription="Feedback"
                             android:src="@drawable/ic_check_circle"
-                            app:tint="#4ADE80" />
+                            app:tint="@color/lesson_success" />
 
                         <TextView
                             android:id="@+id/tvMashqFeedbackText"
@@ -1744,7 +1739,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_weight="1"
                             android:text="To‘g‘ri! Keyingi mashq ochildi."
-                            android:textColor="#FFFFFF"
+                            android:textColor="@color/lesson_text"
                             android:textSize="14.5sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -1767,7 +1762,7 @@
                             android:layout_marginTop="2dp"
                             android:contentDescription="Info"
                             android:src="@drawable/ic_lesson_info_outline"
-                            app:tint="#CBD5E1" />
+                            app:tint="@color/lesson_subtext" />
 
                         <TextView
                             android:id="@+id/tvMashqHelperText"
@@ -1777,7 +1772,7 @@
                             android:layout_weight="1"
                             android:lineSpacingExtra="2dp"
                             android:text="Keyingi mashqqa o‘tish uchun to‘g‘ri javob tanlang. Noto‘g‘ri javob bersangiz, shu mashqda qolib, qayta urinishingiz mumkin."
-                            android:textColor="#E2E8F0"
+                            android:textColor="@color/lesson_text"
                             android:textSize="13sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -1810,7 +1805,7 @@
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="3dp"
                             android:text="•  One + birlik: one book."
-                            android:textColor="#FFFFFF"
+                            android:textColor="@color/lesson_text"
                             android:textSize="16.5sp"
                             android:textStyle="bold" />
 
@@ -1821,7 +1816,7 @@
                             android:layout_marginTop="12dp"
                             android:lineSpacingExtra="3dp"
                             android:text="•  Two/three + ko‘plik:\n    two books."
-                            android:textColor="#FFFFFF"
+                            android:textColor="@color/lesson_text"
                             android:textSize="16.5sp"
                             android:textStyle="bold" />
 
@@ -1831,7 +1826,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
                             android:lineSpacingExtra="4dp"
-                            android:textColor="@color/color_cosmic_text_secondary"
+                            android:textColor="@color/lesson_subtext"
                             android:textSize="14sp"
                             android:visibility="gone" />
                     </LinearLayout>
@@ -1850,7 +1845,7 @@
                     <LinearLayout
                         android:id="@+id/badgeWrapUpCompleted"
                         android:layout_width="wrap_content"
-                        android:layout_height="46dp"
+                        android:layout_height="@dimen/touch_target_min"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/bg_lesson_feedback_success"
@@ -1863,14 +1858,14 @@
                             android:layout_height="22dp"
                             android:contentDescription="Completed"
                             android:src="@drawable/ic_check_circle"
-                            app:tint="#4ADE80" />
+                            app:tint="@color/lesson_success" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Dars yakunlandi"
-                            android:textColor="#FFFFFF"
+                            android:textColor="@color/lesson_text"
                             android:textSize="17sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -1943,7 +1938,7 @@
         <LinearLayout
             android:id="@+id/btnLessonPrimaryCta"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="@dimen/button_height_primary"
             android:background="@drawable/bg_lesson_primary_cta"
             android:clickable="true"
             android:focusable="true"
@@ -1955,8 +1950,8 @@
                 android:id="@+id/tvLessonPrimaryCtaText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Misollarni ko‘rish  →"
-                android:textColor="#FFFFFF"
+                android:text="@string/lesson_show_examples"
+                android:textColor="@color/lesson_button_text"
                 android:textSize="17sp"
                 android:textStyle="bold" />
         </LinearLayout>

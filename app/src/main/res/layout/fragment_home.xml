@@ -6,14 +6,14 @@
     android:background="@drawable/bg_curriculum_screen"
     android:clipToPadding="false"
     android:fillViewport="true"
-    android:paddingBottom="20dp">
+    android:paddingBottom="@dimen/spacing_large">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="14dp"
-        android:paddingTop="12dp">
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingTop="@dimen/spacing_medium">
 
         <!-- 1. TOP GREETING HEADER (Avatar + Xayrli tong, Azamat + 1 Day Streak) -->
         <LinearLayout
@@ -21,15 +21,15 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingVertical="4dp">
+            android:paddingVertical="@dimen/spacing_xs">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="54dp"
                 android:layout_height="54dp"
-                app:cardBackgroundColor="#1E3A8A"
-                app:cardCornerRadius="27dp"
+                app:cardBackgroundColor="@color/color_card_surface"
+                app:cardCornerRadius="@dimen/radius_pill"
                 app:cardElevation="0dp"
-                app:strokeColor="#60A5FA"
+                app:strokeColor="@color/color_card_outline"
                 app:strokeWidth="2dp">
 
                 <ImageView
@@ -52,8 +52,8 @@
                     android:id="@+id/tvGreeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Xayrli tong,"
-                    android:textColor="#CBD5E1"
+                    android:text="@string/greeting_morning"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="13.5sp" />
 
                 <TextView
@@ -61,9 +61,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
-                    android:text="Azamat"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
+                    android:text="@string/default_user_name"
+                    android:textColor="@color/color_on_surface"
+                    android:textSize="@dimen/text_size_heading"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -71,12 +71,12 @@
                 android:id="@+id/tvStreakBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_home_streak_pill"
+                android:background="@drawable/bg_talkme_secondary_button"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="8dp"
-                android:text="1 Day Streak"
-                android:textColor="#60A5FA"
-                android:textSize="13sp"
+                android:text="@string/home_streak_format"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/text_size_body_small"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -85,8 +85,8 @@
             android:id="@+id/cardHeroBanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/bg_home_hero_card"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:background="@drawable/bg_talkme_filled_card"
             android:orientation="vertical"
             android:paddingHorizontal="16dp"
             android:paddingTop="15dp"
@@ -110,9 +110,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:letterSpacing="0.03"
-                        android:text="TALKME ENGLISH COURSE"
+                        android:text="@string/home_course_label"
                         android:textAllCaps="true"
-                        android:textColor="#E2E8F0"
+                        android:textColor="@color/color_on_filled_card"
                         android:textSize="11.5sp"
                         android:textStyle="bold" />
 
@@ -121,8 +121,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="1. A0 — A0"
-                        android:textColor="#FFFFFF"
+                        android:text="@string/home_default_topic"
+                        android:textColor="@color/color_on_filled_card"
                         android:textSize="19.5sp"
                         android:textStyle="bold" />
 
@@ -133,17 +133,17 @@
                         android:layout_marginTop="5dp"
                         android:lineSpacingExtra="2dp"
                         android:text="@string/curriculum_empty"
-                        android:textColor="#E2E8F0"
+                        android:textColor="@color/color_on_filled_card"
                         android:textSize="12.5sp" />
                 </LinearLayout>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="78dp"
                     android:layout_height="78dp"
-                    app:cardBackgroundColor="#1E3A5F"
-                    app:cardCornerRadius="16dp"
+                    app:cardBackgroundColor="@color/color_card_surface"
+                    app:cardCornerRadius="@dimen/radius_card_medium"
                     app:cardElevation="0dp"
-                    app:strokeColor="#4B83B8"
+                    app:strokeColor="@color/color_filled_card_outline"
                     app:strokeWidth="1dp">
 
                     <ImageView
@@ -173,8 +173,8 @@
                         android:id="@+id/progressHero"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:indicatorColor="#FBBF24"
-                        app:trackColor="#567C96"
+                        app:indicatorColor="@color/color_gold_accent"
+                        app:trackColor="@color/color_cosmic_track"
                         app:trackCornerRadius="99dp"
                         app:trackThickness="8dp" />
 
@@ -191,8 +191,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="0% completed"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/hero_progress_format"
+                    android:textColor="@color/color_on_filled_card"
                     android:textSize="12.5sp"
                     android:textStyle="bold" />
 
@@ -200,13 +200,13 @@
                     android:layout_width="1dp"
                     android:layout_height="26dp"
                     android:layout_marginHorizontal="10dp"
-                    android:background="#3B6998" />
+                    android:background="@color/color_filled_card_outline" />
 
                 <LinearLayout
                     android:id="@+id/btnContinueLearning"
                     android:layout_width="wrap_content"
-                    android:layout_height="42dp"
-                    android:background="@drawable/bg_home_continue_btn"
+                    android:layout_height="@dimen/touch_target_min"
+                    android:background="@drawable/bg_talkme_secondary_button"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
@@ -219,8 +219,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:lineSpacingMultiplier="0.9"
-                        android:text="Continue\nLearning"
-                        android:textColor="#1D68E6"
+                        android:text="@string/hero_continue_learning"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
@@ -228,9 +228,9 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_marginStart="6dp"
-                        android:contentDescription="Go"
+                        android:contentDescription="@string/home_go"
                         android:src="@drawable/ic_chevron_right_dark"
-                        app:tint="#1D68E6" />
+                        app:tint="@color/color_on_surface" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -239,7 +239,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="@dimen/spacing_section_gap"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -253,9 +253,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Bugungi ko‘nikmalar"
-                android:textColor="#FFFFFF"
-                android:textSize="21sp"
+                android:text="@string/home_skills_today"
+                android:textColor="@color/color_on_surface"
+                android:textSize="@dimen/text_size_title"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -264,7 +264,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:baselineAligned="false"
             android:orientation="horizontal">
 
@@ -275,7 +275,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_home_skill_speaking"
+                android:background="@drawable/bg_talkme_card"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_horizontal"
@@ -287,7 +287,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="104dp"
-                    app:cardBackgroundColor="#00000000"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -295,7 +295,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="Speaking"
+                        android:contentDescription="@string/home_skill_speaking_title"
                         android:scaleType="centerCrop"
                         android:src="@drawable/img_home_skill_speaking" />
                 </com.google.android.material.card.MaterialCardView>
@@ -304,9 +304,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Speaking"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
+                    android:text="@string/home_skill_speaking_title"
+                    android:textColor="@color/color_on_surface"
+                    android:textSize="@dimen/text_size_subtitle"
                     android:textStyle="bold" />
 
                 <TextView
@@ -315,23 +315,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="Gapirish"
-                    android:textColor="#F3E8FF"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="14.5sp" />
 
                 <LinearLayout
                     android:id="@+id/btnHomeSpeakingStart"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="@dimen/touch_target_min"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_home_white_pill_btn"
+                    android:background="@drawable/bg_talkme_secondary_button"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Boshlash"
-                        android:textColor="#6D28D9"
+                        android:text="@string/home_start"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -339,9 +339,9 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_marginStart="6dp"
-                        android:contentDescription="Start"
+                        android:contentDescription="@string/home_start"
                         android:src="@drawable/ic_chevron_right_dark"
-                        app:tint="#6D28D9" />
+                        app:tint="@color/color_on_surface" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -352,7 +352,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_home_skill_listening"
+                android:background="@drawable/bg_talkme_card"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_horizontal"
@@ -364,7 +364,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="104dp"
-                    app:cardBackgroundColor="#00000000"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -372,7 +372,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="Listening"
+                        android:contentDescription="@string/home_skill_listening_title"
                         android:scaleType="centerCrop"
                         android:src="@drawable/img_home_skill_listening" />
                 </com.google.android.material.card.MaterialCardView>
@@ -381,9 +381,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Listening"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
+                    android:text="@string/home_skill_listening_title"
+                    android:textColor="@color/color_on_surface"
+                    android:textSize="@dimen/text_size_subtitle"
                     android:textStyle="bold" />
 
                 <TextView
@@ -392,23 +392,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="Tinglash"
-                    android:textColor="#E0F2FE"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="14.5sp" />
 
                 <LinearLayout
                     android:id="@+id/btnHomeListeningStart"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="@dimen/touch_target_min"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_home_white_pill_btn"
+                    android:background="@drawable/bg_talkme_secondary_button"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Boshlash"
-                        android:textColor="#0E7490"
+                        android:text="@string/home_start"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -416,9 +416,9 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_marginStart="6dp"
-                        android:contentDescription="Start"
+                        android:contentDescription="@string/home_start"
                         android:src="@drawable/ic_chevron_right_dark"
-                        app:tint="#0E7490" />
+                        app:tint="@color/color_on_surface" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -427,7 +427,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:baselineAligned="false"
             android:orientation="horizontal">
 
@@ -438,7 +438,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_home_skill_writing"
+                android:background="@drawable/bg_talkme_card"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_horizontal"
@@ -450,7 +450,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="104dp"
-                    app:cardBackgroundColor="#00000000"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -458,7 +458,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="Writing"
+                        android:contentDescription="@string/home_skill_writing_title"
                         android:scaleType="centerCrop"
                         android:src="@drawable/img_home_skill_writing" />
                 </com.google.android.material.card.MaterialCardView>
@@ -467,9 +467,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Writing"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
+                    android:text="@string/home_skill_writing_title"
+                    android:textColor="@color/color_on_surface"
+                    android:textSize="@dimen/text_size_subtitle"
                     android:textStyle="bold" />
 
                 <TextView
@@ -478,23 +478,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="Yozish"
-                    android:textColor="#FEF3C7"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="14.5sp" />
 
                 <LinearLayout
                     android:id="@+id/btnHomeWritingStart"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="@dimen/touch_target_min"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_home_white_pill_btn"
+                    android:background="@drawable/bg_talkme_secondary_button"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Boshlash"
-                        android:textColor="#C2410C"
+                        android:text="@string/home_start"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -502,9 +502,9 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_marginStart="6dp"
-                        android:contentDescription="Start"
+                        android:contentDescription="@string/home_start"
                         android:src="@drawable/ic_chevron_right_dark"
-                        app:tint="#C2410C" />
+                        app:tint="@color/color_on_surface" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -515,7 +515,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_home_skill_reading"
+                android:background="@drawable/bg_talkme_card"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_horizontal"
@@ -527,7 +527,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="104dp"
-                    app:cardBackgroundColor="#00000000"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="14dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -535,7 +535,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="Reading"
+                        android:contentDescription="@string/home_skill_reading_title"
                         android:scaleType="centerCrop"
                         android:src="@drawable/img_home_skill_reading" />
                 </com.google.android.material.card.MaterialCardView>
@@ -544,9 +544,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Reading"
-                    android:textColor="#FFFFFF"
-                    android:textSize="22sp"
+                    android:text="@string/home_skill_reading_title"
+                    android:textColor="@color/color_on_surface"
+                    android:textSize="@dimen/text_size_subtitle"
                     android:textStyle="bold" />
 
                 <TextView
@@ -555,23 +555,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="O‘qish"
-                    android:textColor="#DBEAFE"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="14.5sp" />
 
                 <LinearLayout
                     android:id="@+id/btnHomeReadingStart"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="@dimen/touch_target_min"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_home_white_pill_btn"
+                    android:background="@drawable/bg_talkme_secondary_button"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Boshlash"
-                        android:textColor="#1D4ED8"
+                        android:text="@string/home_start"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -579,9 +579,9 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_marginStart="6dp"
-                        android:contentDescription="Start"
+                        android:contentDescription="@string/home_start"
                         android:src="@drawable/ic_chevron_right_dark"
-                        app:tint="#1D4ED8" />
+                        app:tint="@color/color_on_surface" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -590,7 +590,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="@dimen/spacing_section_gap"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -603,9 +603,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Learning tools"
-                android:textColor="#FFFFFF"
-                android:textSize="21sp"
+                android:text="@string/home_learning_tools"
+                android:textColor="@color/color_on_surface"
+                android:textSize="@dimen/text_size_title"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -613,7 +613,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:baselineAligned="false"
             android:orientation="horizontal">
 
@@ -624,7 +624,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_home_tool_card"
+                android:background="@drawable/bg_talkme_card"
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="vertical"
@@ -633,7 +633,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="84dp"
-                    app:cardBackgroundColor="#00000000"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -641,7 +641,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="Vocabulary"
+                        android:contentDescription="@string/stat_memorized_words_title"
                         android:scaleType="centerCrop"
                         android:src="@drawable/img_home_tool_vocab" />
                 </com.google.android.material.card.MaterialCardView>
@@ -658,8 +658,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Vocabulary"
-                        android:textColor="#FFFFFF"
+                        android:text="@string/stat_memorized_words_title"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -667,11 +667,11 @@
                         android:id="@+id/tvHomeVocabBadge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_home_green_count_pill"
+                        android:background="@drawable/bg_talkme_secondary_button"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="3dp"
                         android:text="+0"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="13sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -684,7 +684,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_home_tool_card"
+                android:background="@drawable/bg_talkme_card"
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="vertical"
@@ -693,7 +693,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="84dp"
-                    app:cardBackgroundColor="#00000000"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -701,7 +701,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="Grammar"
+                        android:contentDescription="@string/stat_mastered_grammar_title"
                         android:scaleType="centerCrop"
                         android:src="@drawable/img_home_tool_grammar" />
                 </com.google.android.material.card.MaterialCardView>
@@ -718,8 +718,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Grammar"
-                        android:textColor="#FFFFFF"
+                        android:text="@string/stat_mastered_grammar_title"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -727,11 +727,11 @@
                         android:id="@+id/tvHomeGrammarBadge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_home_green_count_pill"
+                        android:background="@drawable/bg_talkme_secondary_button"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="3dp"
                         android:text="+0"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/color_on_surface"
                         android:textSize="13sp"
                         android:textStyle="bold" />
                 </LinearLayout>

@@ -37,6 +37,8 @@
 
     <!-- Component Sizes -->
     <dimen name="touch_target_min">48dp</dimen>
+    <dimen name="locked_lesson_card_min_height">128dp</dimen>
+    <dimen name="locked_lesson_art_height">76dp</dimen>
     <dimen name="button_height_primary">54dp</dimen>
     <dimen name="avatar_size_small">40dp</dimen>
     <dimen name="avatar_size_medium">56dp</dimen>
@@ -49,4 +51,23 @@
     <dimen name="progress_height_medium">10dp</dimen>
     <dimen name="flip_card_height">430dp</dimen>
     <dimen name="chart_height">260dp</dimen>
+
+    <!-- Reusable card, navigation, and compact control scale. -->
+    <dimen name="spacing_card_inset">20dp</dimen>
+    <dimen name="spacing_section_gap">24dp</dimen>
+    <dimen name="spacing_nav_item">8dp</dimen>
+    <dimen name="radius_card_compact">14dp</dimen>
+    <dimen name="radius_nav_indicator">16dp</dimen>
+    <dimen name="radius_button">14dp</dimen>
+    <dimen name="text_size_overline">11sp</dimen>
+    <dimen name="text_size_button">15sp</dimen>
+    <dimen name="text_size_hero">28sp</dimen>
+    <dimen name="button_height_compact">48dp</dimen>
+    <dimen name="vocab_card_art_height">168dp</dimen>
+    <dimen name="vocab_lock_medallion_size">58dp</dimen>
+    <dimen name="vocab_lock_icon_size">28dp</dimen>
+    <dimen name="vocab_badge_min_size">26dp</dimen>
+    <dimen name="nav_item_min_height">48dp</dimen>
+    <dimen name="nav_item_min_width">48dp</dimen>
+    <dimen name="stroke_card">1dp</dimen>
 </resources>

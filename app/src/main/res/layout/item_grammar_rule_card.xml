@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
-            android:background="@color/color_surface_variant"
+            android:background="@drawable/bg_flip_example_box"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/spacing_small">

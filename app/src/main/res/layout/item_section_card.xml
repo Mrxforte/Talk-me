@@ -247,34 +247,26 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/locked_lesson_art_height"
+                    android:layout_height="72dp"
                     android:clipChildren="false"
                     android:clipToPadding="false">
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/section_status_locked"
-                        android:scaleType="centerCrop"
-                        android:visibility="gone" />
-
-                <FrameLayout
-                    android:id="@+id/layoutSectionLockMedallion"
-                    android:layout_width="56dp"
-                    android:layout_height="44dp"
-                    android:layout_gravity="top|center_horizontal"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:clipChildren="false"
-                    android:clipToPadding="false">
-
-                    <ImageView
-                        android:layout_width="54dp"
-                        android:layout_height="42dp"
+                    <FrameLayout
+                        android:id="@+id/layoutSectionLockMedallion"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
-                        android:contentDescription="@string/section_status_locked"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/img_subtopic_lock_medallion" />
-                </FrameLayout>
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
+
+                        <ImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/section_status_locked"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/img_subtopic_lock_medallion" />
+                    </FrameLayout>
                 </FrameLayout>
 
                 <LinearLayout
@@ -282,16 +274,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@drawable/bg_talkme_locked_card"
-                    android:paddingHorizontal="@dimen/spacing_medium"
-                    android:paddingVertical="@dimen/spacing_small">
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="14dp">
                     <TextView
                         android:id="@+id/tvLockedSectionTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_body"
-                        android:lineSpacingExtra="@dimen/spacing_xs"
+                        android:textSize="15.5sp"
+                        android:lineSpacingExtra="2dp"
                         android:textStyle="bold"
-                        android:textColor="@color/color_on_locked_surface" />
+                        android:textColor="@color/color_on_surface" />
                 </LinearLayout>
             </LinearLayout>
 

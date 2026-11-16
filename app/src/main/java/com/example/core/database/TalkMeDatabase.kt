@@ -96,6 +96,9 @@ interface TalkMeDao {
         })
         insertExercises(exercises.filter { it.topicId in beginnerTopics })
 
+        // Unlock all topics and sections for full inspection
+        unlockAllTopics()
+        unlockAllSections()
     }
 
 
@@ -125,6 +128,12 @@ interface TalkMeDao {
 
     @Query("UPDATE topics SET isUnlocked = :unlocked, isCompleted = :completed WHERE id = :topicId")
     suspend fun updateTopicStatus(topicId: String, unlocked: Boolean, completed: Boolean)
+
+    @Query("UPDATE topics SET isUnlocked = 1")
+    suspend fun unlockAllTopics()
+
+    @Query("UPDATE lesson_sections SET isUnlocked = 1")
+    suspend fun unlockAllSections()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSections(sections: List<LessonSectionEntity>)

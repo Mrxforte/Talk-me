@@ -99,7 +99,7 @@ Keling, ilk darsni boshlaymiz!"""
                 CurriculumLevel.A1 -> "A1: Kundalik muloqot va asosiy grammatika (60 ta dars)"
                 else -> ""
             },
-            isUnlocked = level == CurriculumLevel.A0
+            isUnlocked = true
         )
     }
 

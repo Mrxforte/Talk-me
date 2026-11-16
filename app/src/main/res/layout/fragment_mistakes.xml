@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/color_cosmic_background"
+    android:paddingHorizontal="@dimen/spacing_medium" android:paddingTop="@dimen/spacing_medium">
+    <TextView
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/nav_mistakes" android:textColor="@color/color_on_surface"
+        android:textSize="@dimen/text_size_display" android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs" android:text="@string/mistakes_intro"
+        android:textColor="@color/color_on_surface" android:textSize="@dimen/text_size_body" />
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        xmlns:app="http://schemas.android.com/apk/res-auto" app:singleSelection="true" app:selectionRequired="true">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/openMistakes" style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:minHeight="@dimen/touch_target_min" android:text="@string/mistakes_open" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/resolvedMistakes" style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:minHeight="@dimen/touch_target_min" android:text="@string/mistakes_done" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+    <TextView
+        android:id="@+id/emptyMistakes"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/spacing_medium" android:textSize="@dimen/text_size_body"
+        android:textColor="@color/color_on_surface" android:text="@string/mistakes_empty_open" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mistakeList"
+        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:clipToPadding="false" android:paddingVertical="@dimen/spacing_small" />
+</LinearLayout>

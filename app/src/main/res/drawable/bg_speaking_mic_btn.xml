@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/color_cosmic_circle_stroke">
+    android:color="#40FFFFFF">
     <item>
         <shape android:shape="oval">
-            <gradient android:angle="0"
-                android:startColor="@color/color_gradient_primary_start"
-                android:endColor="@color/color_gradient_primary_end" />
-            <stroke android:width="@dimen/stroke_medium"
-                android:color="@color/color_filled_card_outline" />
+            <gradient
+                android:angle="270"
+                android:startColor="#2563EB"
+                android:centerColor="#1D4ED8"
+                android:endColor="#0F2D7A"
+                android:type="linear" />
+            <stroke
+                android:width="2.5dp"
+                android:color="@color/color_neon_cyan" />
         </shape>
     </item>
 </ripple>

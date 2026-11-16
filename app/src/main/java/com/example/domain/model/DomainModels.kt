@@ -270,7 +270,9 @@ data class UserPreferencesModel(
     val lastActiveTopicId: String = "topic_01_introduction",
     val lastActiveSectionId: String = "sec_01_01",
     val lastScrollOffset: Int = 0,
-    val hasStartedLearning: Boolean = false
+    val hasStartedLearning: Boolean = false,
+    val lessonDraftSectionId: String = "",
+    val lessonDraft: String = ""
 )
 
 /**

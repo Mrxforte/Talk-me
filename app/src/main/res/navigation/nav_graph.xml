@@ -74,4 +74,12 @@
         android:name="com.example.feature.profile.SettingsFragment"
         android:label="@string/settings_title_uz" />
 
+    <fragment
+        android:id="@id/mistakesFragment"
+        android:name="com.example.feature.mistakes.MistakesFragment"
+        android:label="@string/nav_mistakes" />
+    <fragment
+        android:id="@+id/lessonMaterialsFragment"
+        android:name="com.example.feature.materials.LessonMaterialsFragment"
+        android:label="@string/lesson_materials_title" />
 </navigation>

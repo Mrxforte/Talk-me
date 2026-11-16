@@ -5,6 +5,12 @@ package com.example.core.common
  * Avoids magic strings and numbers across presentation and domain layers.
  */
 object AppConstants {
+    const val ARG_LESSON_FLOW_STAGE = "lesson_flow_stage"
+    const val RESULT_LESSON_LISTENING = "lesson_listening_result"
+    const val RESULT_LESSON_SPEAKING = "lesson_speaking_result"
+    const val LESSON_RESULT_CORRECT = "lesson_correct"
+    const val LESSON_RESULT_TOTAL = "lesson_total"
+    const val LESSON_RESULT_DETAILS = "lesson_details"
     const val ARG_TOPIC_ID = "arg_topic_id"
     const val ARG_SECTION_ID = "arg_section_id"
     const val ARG_PRACTICE_CATEGORY = "arg_practice_category"

@@ -237,6 +237,7 @@
 
         <!-- 3. SECTION HEADER: | Bugungi ko'nikmalar -->
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_section_gap"
@@ -262,6 +263,7 @@
         <!-- 4. SKILLS 2x2 GRID (Speaking, Listening, Writing, Reading) -->
         <!-- Row 1: Speaking & Listening -->
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"
@@ -425,6 +427,7 @@
 
         <!-- Row 2: Writing & Reading -->
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"

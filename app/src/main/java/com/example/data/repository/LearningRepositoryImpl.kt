@@ -274,6 +274,15 @@ class LearningRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun observeLibrarySections(): Flow<List<LessonSectionModel>> =
+        dao.observeAllSections().map { rows -> rows.map { it.toDomain(UnlockStatus.AVAILABLE) } }
+
+    override fun observeLibraryVocabulary(): Flow<List<VocabularyModel>> =
+        dao.observeAllVocabulary().map { rows -> rows.map { it.toDomain() } }
+
+    override fun observeLibraryGrammar(): Flow<List<GrammarRuleModel>> =
+        dao.observeAllGrammarRules().map { rows -> rows.map { it.toDomain() } }
+
     override suspend fun saveLastLearningPosition(
         topicId: String,
         sectionId: String,
@@ -1018,9 +1027,15 @@ class LearningRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun observeUnresolvedMistakes(): Flow<List<UserMistakeModel>> {
+    override fun observeUnresolvedMistakes(): Flow<List<UserMistakeModel>> =
+        mapMistakes(dao.observeUnresolvedMistakes())
+
+    override fun observeResolvedMistakes(): Flow<List<UserMistakeModel>> =
+        mapMistakes(dao.observeResolvedMistakes())
+
+    private fun mapMistakes(entries: Flow<List<UserMistakeEntity>>): Flow<List<UserMistakeModel>> {
         return combine(
-            dao.observeUnresolvedMistakes(),
+            entries,
             dao.observeAllTopics()
         ) { mistakes, topics ->
             val topicMap = topics.associateBy { it.id }

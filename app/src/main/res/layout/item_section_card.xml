@@ -236,57 +236,21 @@
             <FrameLayout
                 android:id="@+id/containerSectionImageFrame"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/locked_lesson_card_min_height"
                 android:clipChildren="false"
                 android:clipToPadding="false">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
                 <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="72dp"
-                    android:clipChildren="false"
-                    android:clipToPadding="false">
-
-                    <FrameLayout
-                        android:id="@+id/layoutSectionLockMedallion"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:clipChildren="false"
-                        android:clipToPadding="false">
-
-                        <ImageView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/section_status_locked"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/img_subtopic_lock_medallion" />
-                    </FrameLayout>
-                </FrameLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_talkme_locked_card"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="14dp">
-                    <TextView
-                        android:id="@+id/tvLockedSectionTitle"
+                    android:id="@+id/layoutSectionLockMedallion"
+                    android:layout_width="@dimen/curriculum_lock_size"
+                    android:layout_height="@dimen/curriculum_lock_size"
+                    android:layout_gravity="center">
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15.5sp"
-                        android:lineSpacingExtra="2dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/color_on_surface" />
-                </LinearLayout>
-            </LinearLayout>
-
+                        android:layout_height="match_parent"
+                        android:importantForAccessibility="no"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/img_subtopic_lock_medallion_cutout" />
+                </FrameLayout>
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
 

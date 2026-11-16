@@ -8,6 +8,8 @@ import android.animation.PropertyValuesHolder
 import androidx.core.content.ContextCompat
 import com.example.R
 import android.graphics.Typeface
+import android.media.MediaPlayer
+import java.util.WeakHashMap
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -26,13 +28,36 @@ import kotlin.random.Random
  */
 object LockStarBurstAnimator {
 
+    private val activeCards = WeakHashMap<View, AnimatorSet>()
+    private var sound: MediaPlayer? = null
+
+    fun stopSound() {
+        sound?.release()
+        sound = null
+    }
+
+    private fun playSound(view: View) {
+        stopSound()
+        sound = MediaPlayer.create(view.context.applicationContext, R.raw.talkme_lock_tap)?.apply {
+            setOnCompletionListener { if (sound === it) stopSound() }
+            setOnErrorListener { player, _, _ ->
+                if (sound === player) stopSound()
+                true
+            }
+            start()
+        }
+    }
+
     private val STAR_SYMBOLS = listOf("★", "✦", "✨", "★", "✶", "✧")
     fun playLockTapStarBurst(
         cardView: View,
         lockCenterView: View,
         particleContainer: FrameLayout,
+        soundEnabled: Boolean = true,
         onAnimationComplete: (() -> Unit)? = null
     ) {
+        if (activeCards.containsKey(cardView)) return
+        if (soundEnabled && cardView.isSoundEffectsEnabled) playSound(cardView)
         val density = cardView.resources.displayMetrics.density
 
         // 1. Lock Medallion Spring Pop + Playful Wiggle
@@ -123,17 +148,17 @@ object LockStarBurstAnimator {
             starAnimators.add(starAnim)
         }
 
-        AnimatorSet().apply {
+        val animation = AnimatorSet().apply {
             playTogether(listOf(lockAnimator, cardAnimator) + starAnimators)
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    spawnedViews.forEach { view ->
-                        particleContainer.removeView(view)
-                    }
-                    onAnimationComplete?.invoke()
+                    activeCards.remove(cardView)
+                    spawnedViews.forEach(particleContainer::removeView)
+                    if (cardView.isAttachedToWindow) onAnimationComplete?.invoke()
                 }
             })
-            start()
         }
+        activeCards[cardView] = animation
+        animation.start()
     }
 }

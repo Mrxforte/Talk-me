@@ -13,11 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.content.res.ColorStateList
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -54,9 +57,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
+import com.example.domain.usecase.CurriculumDomainLogic
 
 enum class LessonExerciseMode {
     STANDARD,
+    GUIDED_TEXT,
     READ_ALOUD,
     SELF_WRITE,
     SELF_WRITE_ARTICLES,
@@ -122,7 +129,8 @@ data class LessonDetailUiState(
     val grammarRules: List<GrammarRuleModel> = emptyList(),
     val exercises: List<ExerciseModel> = emptyList(),
     val isCompletedSuccess: Boolean = false,
-    val userName: String = "Azamat"
+    val userName: String = "Azamat",
+    val draft: String = ""
 )
 
 @HiltViewModel
@@ -165,7 +173,8 @@ class LessonDetailViewModel @Inject constructor(
                     grammarRules = grammar,
                     exercises = sectionExercises,
                     isCompletedSuccess = _uiState.value.isCompletedSuccess,
-                    userName = prefs.userName
+                    userName = prefs.userName,
+                    draft = prefs.lessonDraft.takeIf { prefs.lessonDraftSectionId == sectionId }.orEmpty()
                 )
             }.collect { state ->
                 _uiState.value = state
@@ -218,6 +227,18 @@ class LessonDetailViewModel @Inject constructor(
         }
     }
 
+    fun saveLessonDraft(sectionId: String, draft: String) {
+        viewModelScope.launch { preferencesRepository.updateLessonDraft(sectionId, draft) }
+    }
+
+    fun recordMistake(section: LessonSectionModel, category: PracticeCategory, prompt: String,
+                      answer: String, expected: String, hint: String) {
+        if (expected.isBlank() || answer.isBlank()) return
+        viewModelScope.launch {
+            learningRepository.recordUserMistake(section.topicId, category, prompt, answer, expected, hint)
+        }
+    }
+
     fun stopTts() {
         ttsManager.stop()
     }
@@ -229,11 +250,10 @@ class LessonDetailViewModel @Inject constructor(
 }
 
 /**
- * Pixel-Perfect 4-Step Interactive Lesson Experience Fragment:
+ * Sequential lesson flow using the existing explanation, examples, and skill studios.
  * Step 0: Qoida (Rule Box + 3-Column Visual Concept Showcase)
- * Step 1: Misollar (3 Highlighted Example Cards with Speaker Buttons)
- * Step 2: Mashqlar (3 In-Lesson Fill-in-the-Blank Exercises with Instant Feedback)
- * Step 3: Wrap-up (Dars yakuniy sharhi + Golden Celebration Star + Completion Badge)
+ * Steps 1–4: reading, writing, listening and an optional voice-tutor conversation.
+ * Step 5: lesson review and progression.
  */
 @AndroidEntryPoint
 class LessonDetailFragment : Fragment() {
@@ -251,9 +271,14 @@ class LessonDetailFragment : Fragment() {
     private var currentTopicId: String = AppConstants.INITIAL_TOPIC_ID
     private var currentSectionId: String = AppConstants.INITIAL_SECTION_ID
 
-    // 0 = Qoida, 1 = Misollar, 2 = Mashqlar, 3 = Wrap-up
     private var currentStepIndex: Int = 0
-    private var maxUnlockedStepIndex: Int = 2 // Qoida, Misollar, Mashqlar accessible; Wrap-up unlocks after Mashqlar
+    private val firstAnswers = linkedMapOf<String, Boolean>()
+    private val missedAnswers = linkedMapOf<String, String>()
+    private var listeningResult: Bundle? = null
+    private var hasRenderedStep = false
+    private var readingExercise: ExerciseModel? = null
+    private var readingAnswer: String? = null
+    private var readingSolved = false
 
     // In-lesson exercise state
     private var inLessonExercises: List<InLessonExerciseItem> = emptyList()
@@ -279,9 +304,12 @@ class LessonDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hasRenderedStep = false
 
-        currentTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID) ?: AppConstants.INITIAL_TOPIC_ID
-        currentSectionId = arguments?.getString(AppConstants.ARG_SECTION_ID) ?: AppConstants.INITIAL_SECTION_ID
+        if (lastLoadedSectionId == null) {
+            currentTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID) ?: AppConstants.INITIAL_TOPIC_ID
+            currentSectionId = arguments?.getString(AppConstants.ARG_SECTION_ID) ?: AppConstants.INITIAL_SECTION_ID
+        }
 
         vocabAdapter = VocabularyAdapter { textToSpeak ->
             viewModel.speakEnglish(textToSpeak)
@@ -340,21 +368,39 @@ class LessonDetailFragment : Fragment() {
             popup.show()
         }
 
-        // Stepper pill navigation
-        binding.pillStepQoida.setOnClickListener { setLessonStep(0) }
-        binding.pillStepMisollar.setOnClickListener { setLessonStep(1) }
-        binding.pillStepMashqlar.setOnClickListener { setLessonStep(2) }
-        binding.pillStepWrapUp.setOnClickListener {
-            if (maxUnlockedStepIndex >= 3) {
-                setLessonStep(3)
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Wrap-up qismini ochish uchun avval mashqlarni bajaring!",
-                    Toast.LENGTH_SHORT
-                ).show()
+        val results = findNavController().getBackStackEntry(R.id.lessonDetailFragment).savedStateHandle
+        results.getLiveData<Bundle>(AppConstants.RESULT_LESSON_LISTENING).observe(viewLifecycleOwner) { result ->
+            results.remove<Bundle>(AppConstants.RESULT_LESSON_LISTENING)
+            if (result.getString(AppConstants.ARG_SECTION_ID) == currentSectionId) {
+                listeningResult = result
+                setLessonStep(4)
             }
         }
+        results.getLiveData<String>(AppConstants.RESULT_LESSON_SPEAKING).observe(viewLifecycleOwner) { sectionId ->
+            results.remove<String>(AppConstants.RESULT_LESSON_SPEAKING)
+            if (sectionId == currentSectionId) setLessonStep(5)
+        }
+
+        binding.btnListenRuleUzbek.setOnClickListener {
+            viewModel.uiState.value.section?.explanationUzbek?.let(viewModel::speakUzbek)
+        }
+        binding.btnListenWrapUzbek.setOnClickListener {
+            val state = viewModel.uiState.value
+            state.section?.wrapUpSummaryUzbek?.replace("[USER_NAME]", state.userName)?.let(viewModel::speakUzbek)
+        }
+        binding.btnLessonVocabulary.setOnClickListener { openLessonMaterials(false) }
+        binding.btnWrapVocabulary.setOnClickListener { openLessonMaterials(false) }
+        binding.btnWrapGrammar.setOnClickListener { openLessonMaterials(true) }
+        binding.btnLessonMistakes.setOnClickListener { findNavController().navigate(R.id.mistakesFragment) }
+        binding.btnLessonOpenTutor.setOnClickListener {
+            findNavController().navigate(R.id.speakingAiFragment, bundleOf(
+                AppConstants.ARG_TOPIC_ID to currentTopicId,
+                AppConstants.ARG_SECTION_ID to currentSectionId,
+                AppConstants.ARG_LESSON_FLOW_STAGE to 5
+            ))
+        }
+
+
 
         // Audio buttons in Qoida (Pixel-Perfect Reference UI)
         val speakVocabWord1 = View.OnClickListener {
@@ -451,7 +497,7 @@ class LessonDetailFragment : Fragment() {
                 bindCurrentExercise()
             }
         }
-        binding.btnCheckSelfWrite.setOnClickListener { validateSelfWriteExercise() }
+        binding.btnCheckSelfWrite.setOnClickListener { validateSelfWriteExercise(); captureTypedAnswer() }
         binding.btnCheckSelfWriteArticles.setOnClickListener {
             when (inLessonExercises.getOrNull(currentExerciseIndex)?.mode) {
                 LessonExerciseMode.SELF_WRITE_PAIRS -> validatePairSelfWriteExercise()
@@ -471,17 +517,21 @@ class LessonDetailFragment : Fragment() {
                 LessonExerciseMode.SELF_WRITE_MY_ROOM -> validateMyRoomSelfWriteExercise()
                 else -> validateArticleSelfWriteExercise()
             }
+            captureTypedAnswer()
         }
 
         // Primary Bottom CTA Button
         binding.btnLessonPrimaryCta.setOnClickListener {
             when (currentStepIndex) {
                 0 -> setLessonStep(1)
-                1 -> setLessonStep(2)
+                1 -> submitReadingOrAdvance()
                 2 -> {
                     val currentEx = inLessonExercises.getOrNull(currentExerciseIndex)
-                    if (!isCurrentExerciseSolved) {
+                    if (currentEx == null) {
+                        openLessonListening()
+                    } else if (!isCurrentExerciseSolved) {
                         when (currentEx?.mode) {
+                            LessonExerciseMode.GUIDED_TEXT -> validateGuidedExercise(currentEx)
                             LessonExerciseMode.SELF_WRITE -> validateSelfWriteExercise()
                             LessonExerciseMode.SELF_WRITE_ARTICLES -> validateArticleSelfWriteExercise()
                             LessonExerciseMode.SELF_WRITE_PAIRS -> validatePairSelfWriteExercise()
@@ -505,17 +555,20 @@ class LessonDetailFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                        captureTypedAnswer()
                     } else if (currentExerciseIndex < inLessonExercises.lastIndex) {
                         currentExerciseIndex++
                         resetExerciseInteractionState()
                         bindCurrentExercise()
+                        saveDraft()
                         updateTopProgressBar()
                     } else {
-                        maxUnlockedStepIndex = 3
-                        setLessonStep(3)
+                        openLessonListening()
                     }
                 }
-                3 -> completeLessonAndProceed()
+                3 -> openLessonListening()
+                4 -> setLessonStep(5)
+                5 -> completeLessonAndProceed()
             }
         }
 
@@ -538,13 +591,19 @@ class LessonDetailFragment : Fragment() {
                             lastLoadedSectionId = sec.id
                             lastBoundSectionKey = null
                             currentStepIndex = 0
-                            maxUnlockedStepIndex = 2
+                            firstAnswers.clear()
+                            missedAnswers.clear()
+                            listeningResult = null
+                            readingAnswer = null
+                            readingSolved = false
                             currentExerciseIndex = 0
                             resetExerciseInteractionState()
+                            restoreDraft(state.draft)
                         }
+                        readingExercise = findReadingExercise(state.exercises, sec.id)
                         bindLessonDataToSteps(state, sec, isNewSection)
-                        if (isNewSection) {
-                            setLessonStep(currentStepIndex)
+                        if (isNewSection || !hasRenderedStep) {
+                            setLessonStep(currentStepIndex, saveDraft = false)
                         }
 
                         // Update legacy views for compatibility
@@ -576,13 +635,16 @@ class LessonDetailFragment : Fragment() {
     }
 
     private fun completeLessonAndProceed() {
+        if (currentStepIndex != 5 || viewModel.uiState.value.section?.id != currentSectionId) return
+        binding.btnLessonPrimaryCta.isEnabled = false
         viewModel.completeSection(currentTopicId, currentSectionId) { nextSectionId ->
-            if (isAdded) {
+            if (_binding != null) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.lesson_completed_banner),
                     Toast.LENGTH_SHORT
                 ).show()
+                viewModel.saveLessonDraft(currentSectionId, "")
                 if (nextSectionId != null) {
                     currentSectionId = nextSectionId
                     binding.scrollLessonContent.smoothScrollTo(0, 0)
@@ -598,6 +660,7 @@ class LessonDetailFragment : Fragment() {
         selectedOptionIndex = -1
         isCurrentExerciseSolved = false
         readAloudTapCount = 0
+        binding.etLessonGuidedAnswer.text?.clear()
         binding.etSelfWelcome.text?.clear()
         binding.etSelfWhats.text?.clear()
         binding.etSelfMy.text?.clear()
@@ -623,8 +686,7 @@ class LessonDetailFragment : Fragment() {
                 .ifBlank { "Dars" }
         }
         binding.tvLessonTopTitle.text = "$cleanTopicName • Dars ${sec.orderIndex}"
-        val totalDisp = state.totalSectionsInTopic.coerceAtLeast(sec.orderIndex)
-        binding.tvLessonTopCounter.text = "${sec.orderIndex}/$totalDisp"
+
 
         // 1. QOIDA DATA
         val headingTitle = sec.titleEnglish.ifBlank {
@@ -1737,151 +1799,224 @@ class LessonDetailFragment : Fragment() {
     }
 
     private fun updateTopProgressBar() {
-        val totalEx = inLessonExercises.size.coerceAtLeast(1)
-        val targetProgress = when (currentStepIndex) {
-            0 -> 22
-            1 -> 48
-            2 -> {
-                val frac = (currentExerciseIndex + 1).toFloat() / totalEx.toFloat()
-                (62 + (frac * 32f)).toInt().coerceIn(65, 95)
-            }
-            else -> 100
-        }
-        binding.progressLessonTopBar.animateProgressTo(targetProgress, maxValue = 100, durationMs = 650L)
+        binding.tvLessonTopCounter.text = getString(R.string.lesson_flow_counter, currentStepIndex + 1, 6)
     }
 
-    private fun setLessonStep(stepIndex: Int) {
-        currentStepIndex = stepIndex.coerceIn(0, 3)
-        if (currentStepIndex > maxUnlockedStepIndex) {
-            maxUnlockedStepIndex = currentStepIndex
-        }
-
-        // Hide all 4 stage content views
-        binding.layoutStageQoida.visibility = if (currentStepIndex == 0) View.VISIBLE else View.GONE
-        binding.layoutStageMisollar.visibility = if (currentStepIndex == 1) View.VISIBLE else View.GONE
-        binding.layoutStageMashqlar.visibility = if (currentStepIndex == 2) View.VISIBLE else View.GONE
-        binding.layoutStageWrapUp.visibility = if (currentStepIndex == 3) View.VISIBLE else View.GONE
-
-        // Update Top ProgressBar
+    private fun setLessonStep(stepIndex: Int, saveDraft: Boolean = true) {
+        hasRenderedStep = true
+        currentStepIndex = stepIndex.coerceIn(0, 5)
+        binding.btnLessonPrimaryCta.isEnabled = true
+        binding.layoutStageQoida.isVisible = currentStepIndex == 0
+        binding.layoutStageMisollar.isVisible = currentStepIndex == 1
+        binding.layoutStageMashqlar.isVisible = currentStepIndex == 2
+        binding.layoutLessonSkill.isVisible = currentStepIndex in 3..4
+        binding.layoutStageWrapUp.isVisible = currentStepIndex == 5
+        binding.layoutStageHeaderRow.isVisible = currentStepIndex != 0
+        binding.dividerStageHeader.isVisible = currentStepIndex != 0
+        binding.tvStageHeaderBadge.isVisible = false
+        binding.btnLessonOpenTutor.isVisible = currentStepIndex == 4
         updateTopProgressBar()
 
-        // Update Stepper Pills (Qoida, Misollar, Mashqlar, Wrap-up)
-        styleStepPill(
-            pill = binding.pillStepQoida,
-            iconView = binding.ivStepQoidaIcon,
-            labelView = binding.tvStepQoidaLabel,
-            stepIdx = 0,
-            defaultIconRes = R.drawable.ic_lesson_target_cyan
-        )
-        styleStepPill(
-            pill = binding.pillStepMisollar,
-            iconView = binding.ivStepMisollarIcon,
-            labelView = binding.tvStepMisollarLabel,
-            stepIdx = 1,
-            defaultIconRes = R.drawable.ic_lesson_list_cyan
-        )
-        styleStepPill(
-            pill = binding.pillStepMashqlar,
-            iconView = binding.ivStepMashqlarIcon,
-            labelView = binding.tvStepMashqlarLabel,
-            stepIdx = 2,
-            defaultIconRes = R.drawable.ic_lesson_target_cyan
-        )
-        styleStepPill(
-            pill = binding.pillStepWrapUp,
-            iconView = binding.ivStepWrapUpIcon,
-            labelView = binding.tvStepWrapUpLabel,
-            stepIdx = 3,
-            defaultIconRes = if (maxUnlockedStepIndex >= 3) R.drawable.ic_check_circle else R.drawable.ic_lock
-        )
-
-        val accent = ContextCompat.getColor(requireContext(), R.color.lesson_accent)
-        val divider = ContextCompat.getColor(requireContext(), R.color.lesson_border)
-        binding.lineStepConn1.setBackgroundColor(if (currentStepIndex >= 1) accent else divider)
-        binding.lineStepConn2.setBackgroundColor(if (currentStepIndex >= 2) accent else divider)
-        binding.lineStepConn3.setBackgroundColor(if (currentStepIndex >= 3) accent else divider)
-
-        // Keep the reading surface consistent in both themes and across lesson stages.
-        if (currentStepIndex == 0) {
-            binding.layoutStageHeaderRow.visibility = View.GONE
-            binding.dividerStageHeader.visibility = View.GONE
-            binding.cardLessonStageContainer.setBackgroundResource(R.drawable.bg_lesson_stage_card)
-        } else {
-            binding.layoutStageHeaderRow.visibility = View.VISIBLE
-            binding.dividerStageHeader.visibility = View.VISIBLE
-            binding.cardLessonStageContainer.setBackgroundResource(R.drawable.bg_lesson_stage_card)
-        }
-
-        val sec = viewModel.uiState.value.section
-        val cleanRuleHeader = sec?.titleUzbek
-            ?.replace(Regex("^\\d+-Dars:\\s*", RegexOption.IGNORE_CASE), "")
-            ?.takeIf { it.isNotBlank() }
-            ?: sec?.titleEnglish
-            ?: "Dars qoidasi"
-
+        val headers = intArrayOf(R.string.lesson_flow_uz_rule, R.string.lesson_flow_reading, R.string.lesson_flow_writing,
+            R.string.lesson_flow_listening, R.string.lesson_flow_speaking, R.string.lesson_flow_wrap)
+        val actions = intArrayOf(R.string.lesson_flow_to_read, R.string.lesson_flow_to_write, R.string.lesson_flow_next_item,
+            R.string.lesson_flow_to_listen, R.string.lesson_flow_skip_speaking, R.string.lesson_flow_finish)
+        val icons = intArrayOf(R.drawable.ic_lesson_book_cyan, R.drawable.ic_lesson_list_cyan, R.drawable.ic_lesson_pencil,
+            R.drawable.ic_skill_listening, R.drawable.ic_skill_speaking, R.drawable.ic_lesson_flag_cyan)
+        binding.tvStageHeaderTitle.setText(headers[currentStepIndex])
+        binding.ivStageHeaderIcon.setImageResource(icons[currentStepIndex])
+        binding.tvLessonPrimaryCtaText.setText(actions[currentStepIndex])
         when (currentStepIndex) {
-            0 -> {
-                binding.ivStageHeaderIcon.setImageResource(R.drawable.ic_lesson_book_cyan)
-                binding.tvStageHeaderTitle.text = cleanRuleHeader
-                binding.tvStageHeaderBadge.visibility = View.GONE
-                binding.tvLessonPrimaryCtaText.text = getString(R.string.lesson_show_examples)
-            }
-            1 -> {
-                binding.ivStageHeaderIcon.setImageResource(R.drawable.ic_lesson_list_cyan)
-                binding.tvStageHeaderTitle.text = "Misollar"
-                binding.tvStageHeaderBadge.visibility = View.GONE
-                binding.tvLessonPrimaryCtaText.text = "Mashqlarni boshlash  →"
-            }
-            2 -> {
-                binding.ivStageHeaderIcon.setImageResource(R.drawable.ic_lesson_target_cyan)
-                val totalEx = inLessonExercises.size.coerceAtLeast(3)
-                val dispIdx = (currentExerciseIndex + 1).coerceIn(1, totalEx)
-                binding.tvStageHeaderTitle.text = "Mashq $dispIdx / $totalEx"
-                binding.tvStageHeaderBadge.visibility = View.VISIBLE
-                binding.tvStageHeaderBadge.text = "$dispIdx / $totalEx"
-                binding.tvLessonPrimaryCtaText.text = "Keyingi mashq  →"
-            }
-            3 -> {
-                binding.ivStageHeaderIcon.setImageResource(R.drawable.ic_lesson_flag_cyan)
-                binding.tvStageHeaderTitle.text = "Dars yakuniy sharhi"
-                binding.tvStageHeaderBadge.visibility = View.GONE
-                binding.tvLessonPrimaryCtaText.text = "Keyingi dars  →"
-            }
+            1 -> renderReadingQuestion()
+            2 -> bindCurrentExercise()
+            3 -> binding.tvLessonSkillHint.setText(R.string.lesson_flow_listen_info)
+            4 -> binding.tvLessonSkillHint.setText(R.string.lesson_flow_speak_info)
+            5 -> renderLessonResult()
         }
+        if (saveDraft) saveDraft()
         binding.scrollLessonContent.smoothScrollTo(0, 0)
     }
 
-    private fun styleStepPill(
-        pill: View,
-        iconView: android.widget.ImageView,
-        labelView: android.widget.TextView,
-        stepIdx: Int,
-        defaultIconRes: Int
-    ) {
-        val accent = ContextCompat.getColor(requireContext(), R.color.lesson_accent)
-        val text = ContextCompat.getColor(requireContext(), R.color.lesson_text)
-        val onButton = ContextCompat.getColor(requireContext(), R.color.lesson_button_text)
-        val lockedText = ContextCompat.getColor(requireContext(), R.color.lesson_subtext)
-        when {
-            stepIdx < currentStepIndex -> {
-                pill.setBackgroundResource(R.drawable.bg_lesson_step_completed)
-                iconView.setImageResource(R.drawable.ic_check_circle)
-                iconView.setColorFilter(accent)
-                labelView.setTextColor(text)
-            }
-            stepIdx == currentStepIndex -> {
-                pill.setBackgroundResource(R.drawable.bg_lesson_step_active)
-                iconView.setImageResource(if (stepIdx == 3) R.drawable.ic_check_circle else defaultIconRes)
-                iconView.setColorFilter(onButton)
-                labelView.setTextColor(onButton)
-            }
-            else -> {
-                pill.setBackgroundResource(R.drawable.bg_lesson_step_locked)
-                iconView.setImageResource(defaultIconRes)
-                iconView.setColorFilter(lockedText)
-                labelView.setTextColor(lockedText)
+    private fun saveDraft() {
+        if (lastLoadedSectionId != currentSectionId) return
+        val record = JSONObject()
+            .put("step", currentStepIndex)
+            .put("exercise", currentExerciseIndex)
+            .put("first", JSONObject(firstAnswers))
+            .put("missed", JSONObject(missedAnswers))
+            .put("reading_solved", readingSolved)
+        listeningResult?.let { result ->
+            record.put("listen_correct", result.getInt(AppConstants.LESSON_RESULT_CORRECT))
+            record.put("listen_total", result.getInt(AppConstants.LESSON_RESULT_TOTAL))
+            record.put("listen_details", JSONArray(result.getStringArrayList(AppConstants.LESSON_RESULT_DETAILS).orEmpty()))
+        }
+        viewModel.saveLessonDraft(currentSectionId, record.toString())
+    }
+
+    private fun restoreDraft(saved: String) {
+        if (saved.isBlank()) return
+        val record = runCatching { JSONObject(saved) }.getOrNull() ?: return
+        currentStepIndex = record.optInt("step").coerceIn(0, 5)
+        currentExerciseIndex = record.optInt("exercise").coerceAtLeast(0)
+        record.optJSONObject("first")?.let { answers ->
+            answers.keys().forEach { firstAnswers[it] = answers.optBoolean(it) }
+        }
+        record.optJSONObject("missed")?.let { answers ->
+            answers.keys().forEach { missedAnswers[it] = answers.optString(it) }
+        }
+        readingSolved = record.optBoolean("reading_solved")
+        if (record.has("listen_total")) {
+            val details = record.optJSONArray("listen_details") ?: JSONArray()
+            listeningResult = bundleOf(
+                AppConstants.LESSON_RESULT_CORRECT to record.optInt("listen_correct"),
+                AppConstants.LESSON_RESULT_TOTAL to record.optInt("listen_total"),
+                AppConstants.LESSON_RESULT_DETAILS to ArrayList(List(details.length()) { details.optString(it) })
+            )
+        }
+    }
+
+    private fun findReadingExercise(exercises: List<ExerciseModel>, sectionId: String): ExerciseModel? {
+        val candidates = exercises.filter { it.sectionId == sectionId && it.options.distinct().size >= 2 &&
+            it.correctAnswer in it.options && it.exerciseType != ExerciseType.LISTENING_COMPREHENSION &&
+            it.exerciseType != ExerciseType.AUDIO_RECOGNITION }
+        return candidates.firstOrNull { it.exerciseType == ExerciseType.READING_COMPREHENSION }
+            ?: candidates.firstOrNull { it.audioTextToSpeak.isNullOrBlank() }
+    }
+
+    private fun renderReadingQuestion() {
+        val exercise = readingExercise
+        binding.layoutReadingQuestion.isVisible = exercise != null
+        if (exercise == null) return
+        binding.tvReadingQuestion.text = exercise.promptText
+        binding.tvReadingFeedback.text = if (readingSolved) getString(R.string.mistakes_solved_short) else ""
+        binding.readingAnswers.removeAllViews()
+        exercise.options.filter(String::isNotBlank).distinct().forEach { option ->
+            binding.readingAnswers.addView(RadioButton(requireContext()).apply {
+                id = View.generateViewId()
+                text = option
+                textSize = resources.getDimension(R.dimen.text_size_body) / resources.displayMetrics.scaledDensity
+                minHeight = resources.getDimensionPixelSize(R.dimen.touch_target_min)
+                setTextColor(ContextCompat.getColor(context, R.color.lesson_text))
+                buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lesson_accent))
+                isChecked = option == readingAnswer
+                isEnabled = !readingSolved
+                setOnClickListener { readingAnswer = option }
+            })
+        }
+        binding.tvLessonPrimaryCtaText.setText(
+            if (readingSolved) R.string.lesson_flow_to_write else R.string.mistakes_check
+        )
+    }
+
+    private fun submitReadingOrAdvance() {
+        val exercise = readingExercise
+        if (exercise == null || readingSolved) {
+            setLessonStep(2)
+            return
+        }
+        val answer = readingAnswer
+        if (answer == null) {
+            binding.tvReadingFeedback.setText(R.string.lesson_select_answer_first)
+            return
+        }
+        val correct = CurriculumDomainLogic.evaluateExerciseAnswer(exercise, answer)
+        if (firstAnswers.putIfAbsent("reading_" + exercise.id, correct) == null && !correct) {
+            missedAnswers["reading_" + exercise.id] = getString(R.string.lesson_flow_answer_line,
+                exercise.promptText, answer, exercise.correctAnswer)
+            viewModel.uiState.value.section?.let {
+                viewModel.recordMistake(it, PracticeCategory.READING, exercise.promptText, answer,
+                    exercise.correctAnswer, exercise.explanationUzbek)
             }
         }
+        readingSolved = correct
+        if (correct) {
+            renderReadingQuestion()
+            binding.tvLessonPrimaryCtaText.setText(R.string.lesson_flow_to_write)
+        } else {
+            binding.tvReadingFeedback.setText(R.string.mistakes_try_again)
+        }
+        saveDraft()
+    }
+
+    private fun openLessonListening() {
+        setLessonStep(3)
+        findNavController().navigate(R.id.exerciseSessionFragment, bundleOf(
+            AppConstants.ARG_PRACTICE_CATEGORY to PracticeCategory.LISTENING.id,
+            AppConstants.ARG_TOPIC_ID to currentTopicId,
+            AppConstants.ARG_SECTION_ID to currentSectionId,
+            AppConstants.ARG_LESSON_FLOW_STAGE to 4
+        ))
+    }
+
+    private fun openLessonMaterials(grammar: Boolean) {
+        findNavController().navigate(R.id.lessonMaterialsFragment, bundleOf(
+            AppConstants.ARG_TOPIC_ID to currentTopicId,
+            AppConstants.ARG_SECTION_ID to currentSectionId,
+            AppConstants.ARG_PRACTICE_CATEGORY to if (grammar) PracticeCategory.GRAMMAR.id else PracticeCategory.VOCABULARY.id
+        ))
+    }
+
+    private fun validateGuidedExercise(exercise: InLessonExerciseItem) {
+        val expected = exercise.options.getOrNull(exercise.correctOptionIndex) ?: return
+        val answer = binding.etLessonGuidedAnswer.text.toString().trim()
+        if (answer.isEmpty()) return
+        isCurrentExerciseSolved = CurriculumDomainLogic.answersMatch(expected, answer)
+        recordLessonAnswer(exercise, answer)
+        binding.etLessonGuidedAnswer.isEnabled = !isCurrentExerciseSolved
+        binding.tvLessonPrimaryCtaText.setText(
+            if (isCurrentExerciseSolved) R.string.lesson_flow_next_item else R.string.mistakes_check
+        )
+        binding.layoutMashqFeedback.isVisible = true
+        binding.layoutMashqFeedback.setBackgroundResource(
+            if (isCurrentExerciseSolved) R.drawable.bg_lesson_feedback_success else R.drawable.bg_lesson_option_wrong
+        )
+        binding.tvMashqFeedbackText.setText(
+            if (isCurrentExerciseSolved) R.string.mistakes_solved_short else R.string.mistakes_try_again
+        )
+    }
+
+    private fun captureTypedAnswer() {
+        val exercise = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
+        if (exercise.mode in setOf(LessonExerciseMode.STANDARD, LessonExerciseMode.GUIDED_TEXT, LessonExerciseMode.READ_ALOUD)) return
+        val fields = if (exercise.mode == LessonExerciseMode.SELF_WRITE) {
+            listOf(binding.etSelfWelcome, binding.etSelfWhats, binding.etSelfMy, binding.etSelfName, binding.etSelfBye)
+        } else {
+            listOf(binding.etArticleItem1, binding.etArticleItem2, binding.etArticleItem3)
+        }
+        val answer = fields.filter { it.visibility == View.VISIBLE }.mapNotNull { it.text?.toString()?.trim()?.takeIf(String::isNotBlank) }
+            .joinToString("\n")
+        if (answer.isNotBlank()) recordLessonAnswer(exercise, answer)
+    }
+
+    private fun recordLessonAnswer(exercise: InLessonExerciseItem, answer: String) {
+        val expected = viewModel.uiState.value.exercises.firstOrNull { it.id == exercise.id }?.correctAnswer
+            ?: exercise.options.getOrNull(exercise.correctOptionIndex) ?: return
+        val key = exercise.id.ifBlank { currentExerciseIndex.toString() }
+        val first = firstAnswers.putIfAbsent(key, isCurrentExerciseSolved) == null
+        if (first && !isCurrentExerciseSolved) {
+            missedAnswers[key] = getString(R.string.lesson_flow_answer_line, exercise.promptSentenceWithBlank, answer, expected)
+            viewModel.uiState.value.section?.let {
+                viewModel.recordMistake(it, PracticeCategory.WRITING, exercise.promptSentenceWithBlank,
+                    answer, expected, exercise.explanationUzbek)
+            }
+        }
+        if (first) saveDraft()
+    }
+
+    private fun renderLessonResult() {
+        val state = viewModel.uiState.value
+        val total = firstAnswers.size + (listeningResult?.getInt(AppConstants.LESSON_RESULT_TOTAL) ?: 0)
+        val right = firstAnswers.values.count { it } + (listeningResult?.getInt(AppConstants.LESSON_RESULT_CORRECT) ?: 0)
+        val details = missedAnswers.values.toList() +
+            listeningResult?.getStringArrayList(AppConstants.LESSON_RESULT_DETAILS).orEmpty()
+        binding.tvLessonResultScore.text = getString(R.string.lesson_flow_results, right, total - right, total)
+        binding.tvLessonResultLearned.text = getString(R.string.lesson_flow_learned, state.vocabulary.size, state.grammarRules.size)
+        binding.tvLessonResultDetails.text = details.joinToString("\n\n")
+        binding.tvLessonResultDetails.isVisible = details.isNotEmpty()
+        binding.btnLessonMistakes.isVisible = details.isNotEmpty()
+        binding.tvLessonReviewTip.setText(if (details.isEmpty()) R.string.lesson_flow_practice_tip else R.string.lesson_flow_review_tip)
+        binding.tvLessonApplyTip.text = state.section?.objectiveUzbek?.takeIf(String::isNotBlank)
+            ?: getString(R.string.lesson_flow_practice_tip)
     }
 
     private fun bindCurrentExercise() {
@@ -1905,7 +2040,20 @@ class LessonDetailFragment : Fragment() {
             if (ex.fullAudioSentence == null || (givesAwayAnswer && !isCurrentExerciseSolved)) View.GONE else View.VISIBLE
         binding.tvMashqPromptMain.text = ex.promptSentenceWithBlank
 
+        binding.etLessonGuidedAnswer.isVisible = ex.mode == LessonExerciseMode.GUIDED_TEXT
         when (ex.mode) {
+            LessonExerciseMode.GUIDED_TEXT -> {
+                binding.rowMashqOptions.isVisible = false
+                binding.layoutMashqReadAloud.isVisible = false
+                binding.layoutMashqSelfWrite.isVisible = false
+                binding.layoutMashqSelfWriteArticles.isVisible = false
+                binding.layoutMashqFeedback.isVisible = false
+                binding.btnSpeakMashqPrompt.isVisible = false
+                binding.etLessonGuidedAnswer.isEnabled = !isCurrentExerciseSolved
+                binding.tvLessonPrimaryCtaText.setText(
+                    if (isCurrentExerciseSolved) R.string.lesson_flow_next_item else R.string.mistakes_check
+                )
+            }
             LessonExerciseMode.READ_ALOUD -> {
                 binding.rowMashqOptions.visibility = View.GONE
                 binding.layoutMashqReadAloud.visibility = View.VISIBLE
@@ -2410,6 +2558,7 @@ class LessonDetailFragment : Fragment() {
         val ex = inLessonExercises.getOrNull(currentExerciseIndex) ?: return
         selectedOptionIndex = optionIdx
         isCurrentExerciseSolved = (optionIdx == ex.correctOptionIndex)
+        ex.options.getOrNull(optionIdx)?.let { recordLessonAnswer(ex, it) }
         if (isCurrentExerciseSolved) {
             ex.fullAudioSentence?.let(viewModel::speakEnglish)
         }
@@ -2892,7 +3041,8 @@ class LessonDetailFragment : Fragment() {
         val result = mutableListOf<InLessonExerciseItem>()
 
         // 1. From repository exercises (sorted deterministically by ID; no 3-item cap so 10-exercise lessons show all 10)
-        repoExercises.sortedBy { it.id }.forEach { ex ->
+        repoExercises.filter { it.sectionId == sec.id && it.id != readingExercise?.id &&
+            it.exerciseType != ExerciseType.LISTENING_COMPREHENSION && it.exerciseType != ExerciseType.AUDIO_RECOGNITION }.sortedBy { it.id }.forEach { ex ->
             val mode = when (ex.id) {
                 "ex_a0_02_09", "ex_a0_03_09", "ex_a0_04_09", "ex_a0_05_09",
                 "ex_a0_06_10", "ex_a0_07_08", "ex_a0_08_08", "ex_a0_09_09",
@@ -2900,6 +3050,7 @@ class LessonDetailFragment : Fragment() {
                 "ex_a0_13_08", "ex_a0_14_08",
                 "ex_a0_15_08", "ex_a0_16_08", "ex_a0_17_09", "ex_a0_18_09" ->
                     LessonExerciseMode.READ_ALOUD
+                "ex_a0_01_03" -> LessonExerciseMode.GUIDED_TEXT
                 "ex_a0_02_10" -> LessonExerciseMode.SELF_WRITE
                 "ex_a0_03_10" -> LessonExerciseMode.SELF_WRITE_ARTICLES
                 "ex_a0_04_10" -> LessonExerciseMode.SELF_WRITE_PAIRS
@@ -2916,11 +3067,14 @@ class LessonDetailFragment : Fragment() {
                 "ex_a0_15_09" -> LessonExerciseMode.SELF_WRITE_HERE_IS
                 "ex_a0_16_09" -> LessonExerciseMode.SELF_WRITE_HERE_ARE
                 "ex_a0_17_10" -> LessonExerciseMode.SELF_WRITE_THERE_IS
-                else -> LessonExerciseMode.STANDARD
+                else -> if (ex.exerciseType == ExerciseType.WRITING_ANSWERS && ex.correctAnswer.isNotBlank())
+                    LessonExerciseMode.GUIDED_TEXT else LessonExerciseMode.STANDARD
             }
             val options = ex.options.filter { it.isNotBlank() }.distinct()
             if (mode != LessonExerciseMode.STANDARD || (options.size >= 2 && ex.correctAnswer in options)) {
-                val displayOptions = if (mode == LessonExerciseMode.STANDARD) {
+                val displayOptions = if (mode == LessonExerciseMode.GUIDED_TEXT) {
+                    listOf(ex.correctAnswer)
+                } else if (mode == LessonExerciseMode.STANDARD) {
                     (options.filterNot { it == ex.correctAnswer }.take(2) + ex.correctAnswer).shuffled()
                 } else {
                     options.take(3)
@@ -2946,51 +3100,19 @@ class LessonDetailFragment : Fragment() {
             }
         }
 
-        // 2. Synthesize from current lesson examples (testing the EXACT sentences from Misollar)
-        if (result.size < 3) {
-            examples.forEachIndexed { index, ex ->
-                if (result.size >= 3) return@forEachIndexed
-                val targetWord = ex.blueHighlightWord.ifBlank {
-                    ex.englishSentence.split(" ").firstOrNull { it.length > 2 } ?: "English"
-                }.trimEnd('.', ',', '!', '?')
-
-                val sentenceWithBlank = if (ex.englishSentence.contains(targetWord, ignoreCase = true)) {
-                    ex.englishSentence.replaceFirst(Regex(Regex.escape(targetWord), RegexOption.IGNORE_CASE), "___")
-                } else {
-                    "___: ${ex.englishSentence}"
-                }
-
-                val distractorPool = (vocab.map { it.englishWord } + grammar.map { it.exampleEnglish.split(" ").firstOrNull().orEmpty() })
-                    .filter { it.isNotBlank() && !it.equals(targetWord, ignoreCase = true) }
-                    .distinct()
-
-                val d1 = distractorPool.getOrNull(0) ?: when (index) {
-                    0 -> "Wait"
-                    1 -> "Stop"
-                    else -> "No"
-                }
-                val d2 = distractorPool.getOrNull(1) ?: when (index) {
-                    0 -> "Never"
-                    1 -> "Leave"
-                    else -> "Wrong"
-                }
-
-                val targetPos = index % 3
-                val options = when (targetPos) {
-                    0 -> listOf(targetWord, d1, d2)
-                    1 -> listOf(d1, targetWord, d2)
-                    else -> listOf(d1, d2, targetWord)
-                }
-
-                result.add(
-                    InLessonExerciseItem(
-                        promptSub = "Bo‘sh joyni to‘ldiring:",
-                        promptSentenceWithBlank = sentenceWithBlank,
-                        fullAudioSentence = ex.englishSentence,
-                        options = options,
-                        correctOptionIndex = targetPos
-                    )
-                )
+        // Provide a real typed response even in lessons whose authored questions are multiple-choice.
+        val hasWriting = result.any { it.mode != LessonExerciseMode.STANDARD && it.mode != LessonExerciseMode.READ_ALOUD }
+        if (!hasWriting) {
+            examples.firstOrNull { it.englishSentence.isNotBlank() && it.uzbekSentence.isNotBlank() }?.let { example ->
+                result.add(InLessonExerciseItem(
+                    id = "guided_" + sec.id,
+                    promptSub = "",
+                    promptSentenceWithBlank = example.uzbekSentence,
+                    fullAudioSentence = null,
+                    options = listOf(example.englishSentence),
+                    correctOptionIndex = 0,
+                    mode = LessonExerciseMode.GUIDED_TEXT
+                ))
             }
         }
 

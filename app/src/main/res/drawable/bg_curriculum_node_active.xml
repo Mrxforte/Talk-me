@@ -2,10 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/color_primary" />
+            <solid android:color="#1D4ED8" />
             <stroke
                 android:width="2dp"
-                android:color="@color/color_filled_card_outline" />
+                android:color="#60A5FA" />
         </shape>
     </item>
     <item
@@ -14,7 +14,7 @@
         android:right="7dp"
         android:top="7dp">
         <shape android:shape="oval">
-            <solid android:color="@color/color_text_on_primary" />
+            <solid android:color="#FFFFFF" />
         </shape>
     </item>
 </layer-list>

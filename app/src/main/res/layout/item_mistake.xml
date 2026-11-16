@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_small" android:orientation="vertical"
+    android:background="@drawable/bg_talkme_card" android:padding="@dimen/spacing_medium">
+    <TextView
+        android:id="@+id/mistakeTopic"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="@color/color_neon_cyan" android:textSize="@dimen/text_size_caption" />
+    <TextView
+        android:id="@+id/mistakePrompt"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/spacing_xs" android:textStyle="bold"
+        android:textColor="@color/color_on_surface" android:textSize="@dimen/text_size_subtitle" />
+    <TextView
+        android:id="@+id/previousAnswer"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="@color/color_on_surface" android:textSize="@dimen/text_size_body" />
+    <EditText
+        android:id="@+id/retryAnswer"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:minHeight="@dimen/touch_target_min" android:hint="@string/mistakes_retry_placeholder"
+        android:inputType="textCapSentences" android:textColor="@color/color_on_surface"
+        android:textColorHint="@color/color_on_surface" android:textSize="@dimen/text_size_body" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/checkAnswer"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:minHeight="@dimen/touch_target_min" android:text="@string/mistakes_check" />
+    <TextView
+        android:id="@+id/correctAnswer"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="@color/color_on_surface" android:textSize="@dimen/text_size_body" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/showHint" style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:minHeight="@dimen/touch_target_min" android:text="@string/mistakes_hint" />
+    <TextView
+        android:id="@+id/hintText"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="@color/color_on_surface" android:textSize="@dimen/text_size_body" />
+</LinearLayout>

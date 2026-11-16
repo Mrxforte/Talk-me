@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/color_cosmic_background"
+    android:paddingHorizontal="@dimen/spacing_medium" android:paddingTop="@dimen/spacing_small">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+        <ImageButton android:id="@+id/materialBack" android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min" android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_back" android:src="@drawable/ic_arrow_back" app:tint="@color/color_on_surface" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/lesson_materials_title" android:textColor="@color/color_on_surface"
+            android:textSize="@dimen/text_size_heading" android:textStyle="bold" />
+    </LinearLayout>
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:singleSelection="true" app:selectionRequired="true">
+        <com.google.android.material.button.MaterialButton android:id="@+id/vocabularyTab" style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:minHeight="@dimen/touch_target_min" android:text="@string/lesson_materials_vocab" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/grammarTab" style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:minHeight="@dimen/touch_target_min" android:text="@string/lesson_materials_grammar" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+    <EditText android:id="@+id/materialSearch" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:minHeight="@dimen/touch_target_min" android:hint="@string/lesson_materials_search"
+        android:inputType="text" android:singleLine="true" android:textSize="@dimen/text_size_body"
+        android:textColor="@color/color_on_surface" android:textColorHint="@color/color_on_surface" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <Spinner android:id="@+id/materialLevel" android:layout_width="0dp" android:layout_height="@dimen/touch_target_min"
+            android:layout_weight="1" android:contentDescription="@string/lesson_materials_all_levels" android:popupBackground="@color/color_cosmic_card" />
+        <Spinner android:id="@+id/materialLesson" android:layout_width="0dp" android:layout_height="@dimen/touch_target_min"
+            android:layout_weight="1" android:contentDescription="@string/lesson_materials_all_lessons" android:popupBackground="@color/color_cosmic_card" />
+    </LinearLayout>
+    <com.google.android.material.button.MaterialButton android:id="@+id/materialFlip"
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="@dimen/touch_target_min"
+        android:text="@string/lesson_materials_flip" android:visibility="gone" />
+    <TextView android:id="@+id/materialEmpty" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/spacing_medium" android:text="@string/lesson_materials_empty"
+        android:textColor="@color/color_on_surface" android:textSize="@dimen/text_size_body" android:visibility="gone" />
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/materialList" android:layout_width="match_parent"
+        android:layout_height="0dp" android:layout_weight="1" android:paddingVertical="@dimen/spacing_small" android:clipToPadding="false" />
+</LinearLayout>

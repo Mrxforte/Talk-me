@@ -263,14 +263,17 @@ class HomeFragment : Fragment() {
 
         val openVocab = View.OnClickListener {
             findNavController().navigate(
-                R.id.vocabularyTopicsFragment,
+                R.id.lessonMaterialsFragment,
                 bundleOf(AppConstants.ARG_TOPIC_ID to topicId)
             )
         }
         binding.cardHomeVocabulary.setOnClickListener(openVocab)
 
         val openGrammar = View.OnClickListener {
-            openTopicExercise(PracticeCategory.GRAMMAR, topicId)
+            findNavController().navigate(R.id.lessonMaterialsFragment, bundleOf(
+                AppConstants.ARG_TOPIC_ID to topicId,
+                AppConstants.ARG_PRACTICE_CATEGORY to PracticeCategory.GRAMMAR.id
+            ))
         }
         binding.cardHomeGrammar.setOnClickListener(openGrammar)
     }

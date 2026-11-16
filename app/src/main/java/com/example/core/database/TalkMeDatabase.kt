@@ -96,9 +96,6 @@ interface TalkMeDao {
         })
         insertExercises(exercises.filter { it.topicId in beginnerTopics })
 
-        // Unlock all topics and sections for full inspection
-        unlockAllTopics()
-        unlockAllSections()
     }
 
 
@@ -128,12 +125,6 @@ interface TalkMeDao {
 
     @Query("UPDATE topics SET isUnlocked = :unlocked, isCompleted = :completed WHERE id = :topicId")
     suspend fun updateTopicStatus(topicId: String, unlocked: Boolean, completed: Boolean)
-
-    @Query("UPDATE topics SET isUnlocked = 1")
-    suspend fun unlockAllTopics()
-
-    @Query("UPDATE lesson_sections SET isUnlocked = 1")
-    suspend fun unlockAllSections()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSections(sections: List<LessonSectionEntity>)
@@ -277,6 +268,9 @@ interface TalkMeDao {
 
     @Query("SELECT * FROM user_mistakes WHERE isResolved = 0 ORDER BY timestamp DESC")
     fun observeUnresolvedMistakes(): Flow<List<UserMistakeEntity>>
+
+    @Query("SELECT * FROM user_mistakes WHERE isResolved = 1 ORDER BY timestamp DESC")
+    fun observeResolvedMistakes(): Flow<List<UserMistakeEntity>>
 
     @Query("UPDATE user_mistakes SET isResolved = 1 WHERE id = :id")
     suspend fun markMistakeResolved(id: String)

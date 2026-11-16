@@ -99,9 +99,12 @@ object CurriculumDomainLogic {
      * Evaluates a user's exercise response against the expected answer, normalizing
      * case, punctuation, and extra whitespace.
      */
-    fun evaluateExerciseAnswer(exercise: ExerciseModel, userAnswer: String): Boolean {
+    fun evaluateExerciseAnswer(exercise: ExerciseModel, userAnswer: String): Boolean =
+        answersMatch(exercise.correctAnswer, userAnswer)
+
+    fun answersMatch(expectedAnswer: String, userAnswer: String): Boolean {
         val normalizedUser = normalizeText(userAnswer)
-        val normalizedExpected = normalizeText(exercise.correctAnswer)
+        val normalizedExpected = normalizeText(expectedAnswer)
         if (normalizedUser.isEmpty()) return false
         return normalizedUser == normalizedExpected
     }

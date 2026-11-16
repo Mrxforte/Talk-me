@@ -266,7 +266,7 @@
                             android:layout_height="match_parent"
                             android:contentDescription="@string/profile_roadmap_title"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_profile_roadmap_mountains_1794557023568" />
+                            android:src="@drawable/img_profile_roadmap_green" />
 
                         <View
                             android:layout_width="match_parent"

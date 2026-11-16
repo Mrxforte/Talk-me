@@ -101,9 +101,9 @@ class SpeakingAiViewModel @Inject constructor(
     /**
      * Called once `Manifest.permission.RECORD_AUDIO` is confirmed granted via [MicrophonePermissionGate].
      */
-    fun onMicrophonePermissionGranted(requestedTopicId: String? = null) {
+    fun onMicrophonePermissionGranted(requestedTopicId: String? = null, requestedSectionId: String? = null) {
         coordinator.setMicPermissionGranted(true)
-        initializeSpeakingSession(requestedTopicId)
+        initializeSpeakingSession(requestedTopicId, requestedSectionId)
     }
 
     fun onMicrophonePermissionRevoked() {
@@ -111,7 +111,7 @@ class SpeakingAiViewModel @Inject constructor(
         coordinator.stopConversation()
     }
 
-    fun initializeSpeakingSession(requestedTopicId: String? = null) {
+    fun initializeSpeakingSession(requestedTopicId: String? = null, requestedSectionId: String? = null) {
         if (hasInitializedSession) return
         hasInitializedSession = true
 
@@ -135,24 +135,28 @@ class SpeakingAiViewModel @Inject constructor(
                 topicOrderIndex = topicOrderIndex,
                 completedTopicsCount = completedTopicsCount
             )
-            val title = topic?.let { "${it.orderIndex}. ${it.titleEnglish} (${it.titleUzbek})" }
+            val section = requestedSectionId?.let { learningRepository.getSectionById(it) }
+                ?.takeIf { it.topicId == topicId }
+            val title = section?.titleEnglish ?: topic?.let { "${it.orderIndex}. ${it.titleEnglish} (${it.titleUzbek})" }
                 ?: "1. Introduction (Kirish)"
 
             val vocabModels = withContext(Dispatchers.IO) {
-                learningRepository.getStudiedVocabularyForTopic(topicId)
+                section?.let { learningRepository.observeSectionVocabulary(it.id).first() }
+                    ?: learningRepository.getStudiedVocabularyForTopic(topicId)
             }
             val grammarModels = withContext(Dispatchers.IO) {
-                learningRepository.getStudiedGrammarForTopic(topicId)
+                section?.let { learningRepository.observeSectionGrammarRules(it.id).first() }
+                    ?: learningRepository.getStudiedGrammarForTopic(topicId)
             }
             val allowedWords = vocabModels.map { it.englishWord }
             val allowedGrammar = grammarModels.map { "${it.titleUzbek}: ${it.exampleEnglish}" }
 
             val sampleWords = allowedWords.take(3).joinToString(", ").ifEmpty { "hello, name, student" }
-            val extra = withContext(Dispatchers.IO) {
+            val extra = if (section != null) null else withContext(Dispatchers.IO) {
                 learningRepository.getEligibleExercises(PracticeCategory.SPEAKING, null, topicId)
                     .filter { it.id.startsWith("extra_") }.randomOrNull()
             }
-            val welcomeEnglish = extra?.promptText ?: "Hello! Let's practice speaking about $title. Try using words like $sampleWords. How can you introduce yourself?"
+            val welcomeEnglish = extra?.promptText ?: "Hello! Let's practice speaking about $title. Try using words like $sampleWords. Can you make a sentence about this lesson?"
             val welcomeMessage = ConversationMessage(
                 id = UUID.randomUUID().toString(),
                 turnId = "welcome_turn",
@@ -269,7 +273,7 @@ class SpeakingAiFragment : Fragment() {
     ) { isGranted ->
         val requestedTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
         if (isGranted) {
-            viewModel.onMicrophonePermissionGranted(requestedTopicId)
+            viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
             viewModel.onMicrophoneButtonTapped()
         } else {
             viewModel.onMicrophonePermissionRevoked()
@@ -290,7 +294,8 @@ class SpeakingAiFragment : Fragment() {
 
         val requestedTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
 
-        transcriptAdapter = AiChatTranscriptAdapter { englishText ->
+        val inLessonFlow = arguments?.getInt(AppConstants.ARG_LESSON_FLOW_STAGE) == 5
+        transcriptAdapter = AiChatTranscriptAdapter(showSpeaker = !inLessonFlow) { englishText ->
             viewModel.speakMessage(englishText)
         }
 
@@ -306,7 +311,7 @@ class SpeakingAiFragment : Fragment() {
                 MaterialTheme {
                     MicrophonePermissionGate(
                         onPermissionGranted = {
-                            viewModel.onMicrophonePermissionGranted(requestedTopicId)
+                            viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
                         },
                         onPermissionRevoked = {
                             viewModel.onMicrophonePermissionRevoked()
@@ -347,7 +352,8 @@ class SpeakingAiFragment : Fragment() {
                         },
                         onRetryFailedTurn = {
                             viewModel.retryFailedTurn()
-                        }
+                        },
+                        allowKeyboard = !inLessonFlow
                     )
                 }
             }
@@ -359,6 +365,12 @@ class SpeakingAiFragment : Fragment() {
         }
 
         binding.btnEndSpeakingSession.setOnClickListener {
+            if (arguments?.getInt(AppConstants.ARG_LESSON_FLOW_STAGE) == 5 &&
+                viewModel.uiState.value.messages.any { it.role == ConversationRole.USER }) {
+                findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                    AppConstants.RESULT_LESSON_SPEAKING, arguments?.getString(AppConstants.ARG_SECTION_ID)
+                )
+            }
             viewModel.endAndRecordSession {}
             navigateBackSafely()
         }
@@ -370,7 +382,7 @@ class SpeakingAiFragment : Fragment() {
                 Manifest.permission.RECORD_AUDIO
             ) == PackageManager.PERMISSION_GRANTED
             if (granted) {
-                viewModel.onMicrophonePermissionGranted(requestedTopicId)
+                viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
                 viewModel.onMicrophoneButtonTapped()
             } else {
                 viewModel.onMicrophonePermissionRevoked()
@@ -403,6 +415,10 @@ class SpeakingAiFragment : Fragment() {
                             targetTurns
                         )
 
+                        if (arguments?.getInt(AppConstants.ARG_LESSON_FLOW_STAGE) == 5) {
+                            binding.tvSpeakingTurnCounter.text = getString(R.string.lesson_flow_counter, 5, 6)
+                            binding.progressSpeakingTurn.visibility = View.GONE
+                        }
                         val mins = state.durationSeconds / 60
                         val secs = state.durationSeconds % 60
                         binding.tvSpeakingDuration.text = String.format(Locale.US, "%02d:%02d", mins, secs)

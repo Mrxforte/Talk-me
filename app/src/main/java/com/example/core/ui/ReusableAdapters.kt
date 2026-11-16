@@ -50,6 +50,8 @@ class TopicAdapter(
         override fun areContentsTheSame(oldItem: TopicModel, newItem: TopicModel): Boolean = oldItem == newItem
     }
 
+    var soundEnabled: Boolean = true
+
     inner class TopicViewHolder(private val binding: ItemTopicCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -154,20 +156,6 @@ class TopicAdapter(
                         R.string.curriculum_module_format, cefrCode, item.orderIndex
                     )
 
-                    binding.dotActive1.setBackgroundResource(R.drawable.bg_curriculum_dot_active)
-                    binding.dotActive2.setBackgroundResource(
-                        if (item.progressPercent >= 35) R.drawable.bg_curriculum_dot_active
-                        else R.drawable.bg_curriculum_dot_inactive
-                    )
-                    binding.dotActive3.setBackgroundResource(
-                        if (item.progressPercent >= 65) R.drawable.bg_curriculum_dot_active
-                        else R.drawable.bg_curriculum_dot_inactive
-                    )
-                    binding.dotActive4.setBackgroundResource(
-                        if (item.progressPercent >= 90) R.drawable.bg_curriculum_dot_active
-                        else R.drawable.bg_curriculum_dot_inactive
-                    )
-
                     val openClick = View.OnClickListener { onTopicClick(item) }
                     binding.cardTopic.setOnClickListener(openClick)
                     binding.layoutCardActive.setOnClickListener(openClick)
@@ -176,9 +164,8 @@ class TopicAdapter(
 
                 UnlockStatus.LOCKED -> {
                     binding.layoutCardLocked.visibility = View.VISIBLE
-                    binding.tvLockedTopicTitle.text = levelTitle
-                    binding.tvLockedTopicCount.text = binding.root.context.getString(
-                        R.string.curriculum_lesson_count, item.completedSections, item.totalSections
+                    binding.layoutCardLocked.contentDescription = binding.root.context.getString(
+                        R.string.curriculum_level_locked_description, levelTitle
                     )
 
                     binding.lineTopConnector.visibility = View.VISIBLE
@@ -191,7 +178,12 @@ class TopicAdapter(
                     binding.ivTimelineNodeIcon.setImageResource(R.drawable.ic_lock)
                     binding.ivTimelineNodeIcon.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.color_on_locked_surface))
 
-                    val openLevel = View.OnClickListener { onTopicClick(item) }
+                    val openLevel = View.OnClickListener {
+                        LockStarBurstAnimator.playLockTapStarBurst(
+                            binding.layoutCardLocked, binding.layoutLockMedallion, binding.containerTopicImageFrame,
+                            soundEnabled = soundEnabled
+                        ) { onTopicClick(item) }
+                    }
                     binding.cardTopic.setOnClickListener(openLevel)
                     binding.layoutCardLocked.setOnClickListener(openLevel)
                     binding.layoutLockMedallion.setOnClickListener(openLevel)
@@ -221,6 +213,8 @@ class SectionAdapter(
         override fun areItemsTheSame(oldItem: LessonSectionModel, newItem: LessonSectionModel): Boolean = oldItem.id == newItem.id
         override fun areContentsTheSame(oldItem: LessonSectionModel, newItem: LessonSectionModel): Boolean = oldItem == newItem
     }
+
+    var soundEnabled: Boolean = true
 
     inner class SectionViewHolder(private val binding: ItemSectionCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -327,8 +321,8 @@ class SectionAdapter(
 
                     binding.layoutSectionUnlockedCard.visibility = View.GONE
                     binding.layoutSectionMysteryOverlay.visibility = View.VISIBLE
-                    binding.tvLockedSectionTitle.text = binding.root.context.getString(
-                        R.string.curriculum_locked_lesson_title, item.orderIndex, cleanLessonTitle
+                    binding.layoutSectionMysteryOverlay.contentDescription = binding.root.context.getString(
+                        R.string.curriculum_lesson_locked_description, item.orderIndex
                     )
                     binding.cardSection.alpha = 1.0f
 
@@ -336,7 +330,8 @@ class SectionAdapter(
                         LockStarBurstAnimator.playLockTapStarBurst(
                             cardView = binding.layoutSectionMysteryOverlay,
                             lockCenterView = binding.layoutSectionLockMedallion,
-                            particleContainer = binding.containerSectionImageFrame
+                            particleContainer = binding.containerSectionImageFrame,
+                            soundEnabled = soundEnabled
                         ) {
                             onSectionClick(item)
                         }
@@ -469,6 +464,7 @@ class ActivityHistoryAdapter :
  * Reusable RecyclerView Adapter for AI Tutor transcript messages.
  */
 class AiChatTranscriptAdapter(
+    private val showSpeaker: Boolean = true,
     private val onSpeakMessage: (String) -> Unit
 ) : ListAdapter<AiTutorMessage, AiChatTranscriptAdapter.MessageViewHolder>(DiffCallback) {
 
@@ -515,7 +511,7 @@ class AiChatTranscriptAdapter(
                 binding.colBubbleContainer.gravity = android.view.Gravity.START
                 binding.tvSenderRole.text = binding.root.context.getString(R.string.speaking_ai_tutor_badge)
                 binding.cardMessage.setBackgroundResource(R.drawable.bg_speaking_bubble_tutor)
-                binding.btnSpeakMessage.visibility = View.VISIBLE
+                binding.btnSpeakMessage.visibility = if (showSpeaker) View.VISIBLE else View.GONE
                 binding.rowStudentAudioBadge.visibility = View.GONE
             }
 
@@ -531,7 +527,7 @@ class AiChatTranscriptAdapter(
                 onSpeakMessage(item.englishText)
             }
             binding.btnSpeakMessage.setOnClickListener(speakClickListener)
-            binding.cardMessage.setOnClickListener(speakClickListener)
+            binding.cardMessage.setOnClickListener(if (showSpeaker) speakClickListener else null)
         }
     }
 

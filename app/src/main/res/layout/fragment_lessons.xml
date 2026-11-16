@@ -96,9 +96,10 @@
                 android:id="@+id/ivHeroGradCap"
                 android:layout_width="76dp"
                 android:layout_height="54dp"
-                android:contentDescription="A1 Beginner"
+                android:importantForAccessibility="no"
+                app:tint="@color/color_neon_cyan"
                 android:scaleType="fitCenter"
-                android:src="@drawable/img_curriculum_grad_cap" />
+                android:src="@drawable/ic_graduation_cap" />
         </LinearLayout>
 
         <ProgressBar

@@ -49,6 +49,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
@@ -178,6 +179,7 @@ data class ExerciseSessionUiState(
     val hasSubmittedCurrent: Boolean = false,
     val isCurrentCorrect: Boolean = false,
     val correctCount: Int = 0,
+    val wrongAnswers: List<Pair<ExerciseModel, String>> = emptyList(),
     val isSessionFinished: Boolean = false,
     val isLoaded: Boolean = false
 ) {
@@ -202,18 +204,47 @@ class ExerciseSessionViewModel @Inject constructor(
     private val masteredGrammarIds = mutableListOf<String>()
     private val memorizedVocabIds = mutableListOf<String>()
 
-    fun startSession(categoryId: String, sectionIdFilter: String?, topicIdFilter: String? = null) {
+    fun startSession(categoryId: String, sectionIdFilter: String?, topicIdFilter: String? = null, lessonListening: Boolean = false) {
         if (_uiState.value.exercises.isNotEmpty()) return
         val category = runCatching { PracticeCategory.valueOf(categoryId) }
             .getOrDefault(PracticeCategory.VOCABULARY)
 
         viewModelScope.launch {
             val topicModel = topicIdFilter?.let { learningRepository.getTopicById(it) }
-            val eligible = learningRepository.getEligibleExercises(
-                category = category,
-                sectionIdFilter = sectionIdFilter,
-                topicIdFilter = topicIdFilter
-            )
+            val eligible = if (lessonListening && sectionIdFilter != null) {
+                val authored = learningRepository.getEligibleExercises(PracticeCategory.SECTION_QUIZ, sectionIdFilter, topicIdFilter)
+                    .filter { exercise ->
+                        exercise.sectionId == sectionIdFilter &&
+                            exercise.audioTextToSpeak?.isNotBlank() == true &&
+                            (exercise.exerciseType == ExerciseType.LISTENING_COMPREHENSION ||
+                                exercise.exerciseType == ExerciseType.AUDIO_RECOGNITION)
+                    }
+                authored.ifEmpty {
+                    val words = learningRepository.observeSectionVocabulary(sectionIdFilter).first()
+                        .filter { it.englishWord.isNotBlank() && it.uzbekTranslation.isNotBlank() }
+                        .distinctBy { it.uzbekTranslation }
+                    words.firstOrNull()?.let { word ->
+                        listOf(ExerciseModel(
+                            id = "lesson_audio_" + word.sectionId,
+                            topicId = word.topicId,
+                            sectionId = word.sectionId,
+                            practiceCategory = PracticeCategory.LISTENING,
+                            exerciseType = ExerciseType.LISTENING_COMPREHENSION,
+                            difficulty = 1,
+                            promptText = word.englishWord,
+                            subPromptText = "",
+                            audioTextToSpeak = word.englishWord,
+                            options = words.take(3).map { it.uzbekTranslation }.shuffled(),
+                            correctAnswer = word.uzbekTranslation,
+                            explanationUzbek = word.exampleUzbek,
+                            vocabularyIds = listOf(word.id),
+                            grammarRuleIds = emptyList()
+                        ))
+                    }.orEmpty()
+                }
+            } else {
+                learningRepository.getEligibleExercises(category, sectionIdFilter, topicIdFilter)
+            }
             _uiState.value = ExerciseSessionUiState(
                 category = category,
                 topicTitle = topicModel?.let { "${it.orderIndex}. ${it.titleEnglish} — ${it.titleUzbek}" }.orEmpty(),
@@ -306,7 +337,8 @@ class ExerciseSessionViewModel @Inject constructor(
                 selectedOrTypedAnswer = candidate,
                 hasSubmittedCurrent = true,
                 isCurrentCorrect = isCorrect,
-                correctCount = if (isCorrect) state.correctCount + 1 else state.correctCount
+                correctCount = if (isCorrect) state.correctCount + 1 else state.correctCount,
+                wrongAnswers = if (isCorrect) state.wrongAnswers else state.wrongAnswers + (current to candidate)
             )
         } else {
             val nextIdx = state.currentIndex + 1
@@ -380,6 +412,7 @@ class ExerciseSessionFragment : Fragment() {
             ?: PracticeCategory.VOCABULARY.id
         val sectionId = arguments?.getString(AppConstants.ARG_SECTION_ID)
         val topicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
+        val lessonListening = arguments?.getInt(AppConstants.ARG_LESSON_FLOW_STAGE) == 4
         val isSequentialPlan = arguments?.getBoolean(AppConstants.ARG_SEQUENTIAL_DAILY_PLAN, false) ?: false
 
         binding.waveformListeningRing.setMode(CosmicWaveformView.Mode.RING)
@@ -423,7 +456,22 @@ class ExerciseSessionFragment : Fragment() {
         }
 
         binding.btnFinishSession.setOnClickListener {
-            if (isSequentialPlan && viewModel.uiState.value.exercises.isNotEmpty()) {
+            if (lessonListening) {
+                val state = viewModel.uiState.value
+                val nav = findNavController()
+                nav.previousBackStackEntry?.savedStateHandle?.set(
+                    AppConstants.RESULT_LESSON_LISTENING,
+                    bundleOf(
+                        AppConstants.ARG_SECTION_ID to sectionId,
+                        AppConstants.LESSON_RESULT_CORRECT to state.correctCount,
+                        AppConstants.LESSON_RESULT_TOTAL to state.exercises.size,
+                        AppConstants.LESSON_RESULT_DETAILS to ArrayList(state.wrongAnswers.map { (exercise, answer) ->
+                            getString(R.string.lesson_flow_answer_line, exercise.promptText, answer, exercise.correctAnswer)
+                        })
+                    )
+                )
+                nav.navigateUp()
+            } else if (isSequentialPlan && viewModel.uiState.value.exercises.isNotEmpty()) {
                 val activeTopicId = topicId ?: AppConstants.INITIAL_TOPIC_ID
                 val currentCategory = viewModel.uiState.value.category
                 val nextCategory = when (currentCategory) {
@@ -472,13 +520,19 @@ class ExerciseSessionFragment : Fragment() {
             }
         }
 
-        viewModel.startSession(categoryId, sectionId, topicId)
+        viewModel.startSession(categoryId, sectionId, topicId, lessonListening)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collect { state ->
                         renderSessionUi(state, isSequentialPlan)
+                        if (lessonListening) {
+                            binding.tvStudioProgressCounter.text = getString(R.string.lesson_flow_counter, 4, 6)
+                            if (state.isLoaded && (state.isSessionFinished || state.exercises.isEmpty())) {
+                                binding.btnFinishSession.setText(R.string.lesson_flow_to_speak)
+                            }
+                        }
                     }
                 }
                 launch {
@@ -577,7 +631,8 @@ class ExerciseSessionFragment : Fragment() {
         binding.tvExerciseTypeBadge.text = current.exerciseType.name.replace("_", " ")
         binding.tvExerciseTypeBadge.visibility =
             if (!isReading && !isListening && !isWriting) View.VISIBLE else View.GONE
-        binding.tvQuestionPrompt.text = current.promptText
+        binding.tvQuestionPrompt.text = if (current.id.startsWith("lesson_audio_"))
+            getString(R.string.lesson_flow_listen_info) else current.promptText
         binding.tvQuestionSubPrompt.text = current.subPromptText
         binding.tvQuestionSubPrompt.visibility =
             if (isReading || current.subPromptText.isBlank()) View.GONE else View.VISIBLE

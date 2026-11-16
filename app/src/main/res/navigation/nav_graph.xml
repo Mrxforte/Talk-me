@@ -56,7 +56,12 @@
 
     <fragment
         android:id="@+id/speakingAiFragment"
-        android:name="com.example.feature.speaking.SpeakingAiFragment"
+        android:name="com.example.feature.speaking.GeminiSpeakingSetupFragment"
+        android:label="@string/speaking_ai_title" />
+
+    <fragment
+        android:id="@+id/geminiSpeakingPracticeFragment"
+        android:name="com.example.feature.speaking.GeminiSpeakingPracticeFragment"
         android:label="@string/speaking_ai_title" />
 
     <fragment

@@ -104,6 +104,7 @@ dependencies {
   implementation(libs.moshi.kotlin)
   implementation(libs.okhttp)
   implementation(libs.logging.interceptor)
+  implementation("com.google.code.gson:gson:2.11.0")
 
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.activity.compose)

@@ -3,7 +3,10 @@ package com.example.core.audio
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
+import android.media.AudioFormat
 import android.media.AudioManager
+import android.media.AudioTrack
+import android.media.PlaybackParams
 import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -11,6 +14,14 @@ import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import com.example.domain.repository.TtsProvider
 import com.example.domain.repository.UserPreferencesRepository
+import com.google.firebase.Firebase
+import com.google.firebase.ai.ai
+import com.google.firebase.ai.type.GenerativeBackend
+import com.google.firebase.ai.type.InlineDataPart
+import com.google.firebase.ai.type.ResponseModality
+import com.google.firebase.ai.type.SpeechConfig
+import com.google.firebase.ai.type.Voice
+import com.google.firebase.ai.type.generationConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.util.Locale
@@ -21,13 +32,16 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.withTimeoutOrNull
 
 private const val TAG = "TalkMeTtsSubsystem"
@@ -53,10 +67,14 @@ class NativeTtsProvider @Inject constructor(
     @Volatile
     private var preferredPitch: Float = 1.0f
     @Volatile
+    private var preferredGender: String = "MALE"
+    @Volatile
     private var initDeferred = CompletableDeferred<Boolean>()
 
     fun applyVoiceGender(voiceGender: String) {
-        preferredPitch = if (voiceGender.equals("FEMALE", ignoreCase = true)) 1.08f else 0.92f
+        val isFemale = voiceGender.equals("FEMALE", ignoreCase = true)
+        preferredGender = if (isFemale) "FEMALE" else "MALE"
+        preferredPitch = if (isFemale) 1.08f else 0.92f
     }
 
     private val pendingUtterances = ConcurrentHashMap<String, CompletableDeferred<Result<Unit>>>()
@@ -155,6 +173,43 @@ class NativeTtsProvider @Inject constructor(
         }
         if (langResult == TextToSpeech.LANG_MISSING_DATA || langResult == TextToSpeech.LANG_NOT_SUPPORTED) {
             runCatching { engine.setLanguage(Locale.getDefault()) }
+        }
+        selectSystemVoiceForGender(engine, languageCode, preferredGender)
+    }
+
+    private fun selectSystemVoiceForGender(
+        engine: TextToSpeech,
+        languageCode: String,
+        gender: String
+    ) {
+        runCatching {
+            val availableVoices = engine.voices.orEmpty()
+            if (availableVoices.isEmpty()) return
+            val targetLangPrefix = if (languageCode.equals("uz", ignoreCase = true)) "uz" else "en"
+            val localeVoices = availableVoices.filter {
+                it.locale.language.equals(targetLangPrefix, ignoreCase = true) && !it.isNetworkConnectionRequired
+            }.ifEmpty {
+                availableVoices.filter { it.locale.language.equals(targetLangPrefix, ignoreCase = true) }
+            }
+            if (localeVoices.isEmpty()) return
+
+            val wantFemale = gender.equals("FEMALE", ignoreCase = true)
+            val matched = localeVoices.firstOrNull { voice ->
+                val name = voice.name.lowercase(Locale.US)
+                val feats = voice.features.orEmpty().joinToString(" ").lowercase(Locale.US)
+                if (wantFemale) {
+                    name.contains("female") || feats.contains("female") ||
+                        name.contains("-f-") || name.contains("sfg") ||
+                        name.contains("tpf") || name.contains("tpc") || name.contains("iob")
+                } else {
+                    name.contains("male") || feats.contains("male") ||
+                        name.contains("-m-") || name.contains("iol") ||
+                        name.contains("iom") || name.contains("tpd")
+                }
+            }
+            if (matched != null) {
+                engine.voice = matched
+            }
         }
     }
 
@@ -299,9 +354,13 @@ class NativeTtsProvider @Inject constructor(
 }
 
 /**
- * Cached TTS provider implementation of [TtsProvider].
- * Preserves the exact intended tutor response text without altering or rewriting it,
- * while maintaining encrypted local disk cache management (.nomedia + XOR obfuscation).
+ * Firebase AI Logic TTS provider using `gemini-3.1-flash-tts-preview`.
+ * - Male voice default: `"Orus"` (`voiceGender = "MALE"`).
+ * - Female voice option: `"Kore"` (`voiceGender = "FEMALE"`).
+ * - Generates 24kHz 16-bit mono PCM audio and plays it via [AudioTrack] with adjustable speech rate
+ *   and instant cancellation via [stop].
+ * - Caches synthesized PCM audio in obfuscated local storage (`secure_audio_cache/.nomedia`)
+ *   and falls back cleanly to [NativeTtsProvider] only if cloud generation fails.
  */
 @Singleton
 class GeminiTtsProvider @Inject constructor(
@@ -309,13 +368,44 @@ class GeminiTtsProvider @Inject constructor(
     private val nativeFallback: NativeTtsProvider
 ) : TtsProvider {
 
+    companion object {
+        private const val GEMINI_TTS_MODEL = "gemini-3.1-flash-tts-preview"
+        const val GEMINI_VOICE_MALE = "Orus"
+        const val GEMINI_VOICE_FEMALE = "Kore"
+        private const val PCM_SAMPLE_RATE_HZ = 24_000
+
+        fun resolveVoiceName(voiceGender: String): String =
+            if (voiceGender.equals("FEMALE", ignoreCase = true)) GEMINI_VOICE_FEMALE else GEMINI_VOICE_MALE
+    }
+
     override val providerName: String = "GEMINI"
+
+    @Volatile
+    private var preferredVoiceGender: String = "MALE"
+
+    fun currentVoiceGender(): String = preferredVoiceGender
+
+    @Volatile
+    private var activePlaybackToken: String? = null
+
+    @Volatile
+    private var activeAudioTrack: AudioTrack? = null
+
+    private var currentAudioFocusRequest: AudioFocusRequest? = null
+
+    private val audioManager: AudioManager? by lazy {
+        context.getSystemService(Context.AUDIO_SERVICE) as? AudioManager
+    }
 
     private val ttsCacheDir: File by lazy {
         File(context.cacheDir, "secure_audio_cache").apply {
             mkdirs()
             runCatching { File(this, ".nomedia").createNewFile() }
         }
+    }
+
+    fun applyVoiceGender(voiceGender: String) {
+        preferredVoiceGender = if (voiceGender.equals("FEMALE", ignoreCase = true)) "FEMALE" else "MALE"
     }
 
     override suspend fun speak(text: String, speechRate: Float): Result<Unit> =
@@ -326,33 +416,239 @@ class GeminiTtsProvider @Inject constructor(
         speechRate: Float,
         languageCode: String
     ): Result<Unit> {
-        if (text.isBlank()) return Result.success(Unit)
+        val cleanText = text.trim()
+        if (cleanText.isEmpty()) return Result.success(Unit)
+
         return withContext(Dispatchers.IO) {
+            val token = UUID.randomUUID().toString()
+            activePlaybackToken = token
+            val voiceName = if (preferredVoiceGender.equals("FEMALE", ignoreCase = true)) {
+                GEMINI_VOICE_FEMALE
+            } else {
+                GEMINI_VOICE_MALE
+            }
+
             try {
                 autoPruneStaleCache()
-                val cacheKey = "${languageCode.lowercase()}_${text.trim().lowercase().hashCode()}"
+                val cacheKey = "${voiceName.lowercase()}_${languageCode.lowercase()}_${cleanText.hashCode()}"
                 val cacheFile = File(ttsCacheDir, "tts_$cacheKey.enc")
-                if (!cacheFile.exists()) {
-                    writeObfuscatedText(cacheFile, text)
+
+                val pcmBytes = if (cacheFile.exists() && cacheFile.length() > 64L) {
+                    readObfuscatedBytes(cacheFile)
+                } else {
+                    val generatedPcm = fetchGeminiTtsPcm(cleanText, voiceName, languageCode)
+                    if (generatedPcm.isNotEmpty()) {
+                        writeObfuscatedBytes(cacheFile, generatedPcm)
+                    }
+                    generatedPcm
                 }
-                // Never modify the tutor's intended response text during TTS preparation (Section 12)
-                nativeFallback.speakWithLanguage(text, speechRate, languageCode)
+
+                if (activePlaybackToken != token) {
+                    return@withContext Result.success(Unit)
+                }
+
+                if (pcmBytes.isEmpty()) {
+                    throw IllegalStateException("Gemini TTS returned empty audio payload")
+                }
+
+                playPcmBytes(pcmBytes, speechRate, token)
+                Result.success(Unit)
             } catch (e: CancellationException) {
+                stopAudioTrackOnly()
                 throw e
             } catch (e: Exception) {
-                Log.w(TAG, "TTS cache notice, delegating directly to NativeTtsProvider", e)
-                nativeFallback.speakWithLanguage(text, speechRate, languageCode)
+                Log.w(TAG, "Gemini TTS failed ($voiceName); falling back to NativeTtsProvider", e)
+                if (activePlaybackToken != token) {
+                    return@withContext Result.success(Unit)
+                }
+                nativeFallback.applyVoiceGender(preferredVoiceGender)
+                nativeFallback.speakWithLanguage(cleanText, speechRate, languageCode)
             }
         }
     }
 
-    private fun writeObfuscatedText(file: File, text: String) {
-        val bytes = text.toByteArray(Charsets.UTF_8)
+    @OptIn(com.google.firebase.ai.type.PublicPreviewAPI::class)
+    private suspend fun fetchGeminiTtsPcm(
+        text: String,
+        voiceName: String,
+        languageCode: String
+    ): ByteArray {
+        val speechCfg = if (languageCode.equals("uz", ignoreCase = true)) {
+            SpeechConfig(voice = Voice(voiceName))
+        } else {
+            SpeechConfig(voice = Voice(voiceName), languageCode = "en-US")
+        }
+
+        val config = generationConfig {
+            responseModalities = listOf(ResponseModality.AUDIO)
+            speechConfig = speechCfg
+        }
+
+        val model = Firebase.ai(backend = GenerativeBackend.googleAI()).generativeModel(
+            modelName = GEMINI_TTS_MODEL,
+            generationConfig = config
+        )
+
+        val response = withTimeout(30_000L) {
+            model.generateContent(text)
+        }
+
+        val parts = response.candidates.firstOrNull()?.content?.parts.orEmpty()
+        for (part in parts) {
+            if (part is InlineDataPart && part.inlineData.isNotEmpty()) {
+                return part.inlineData
+            }
+        }
+        return ByteArray(0)
+    }
+
+    private suspend fun playPcmBytes(
+        pcmBytes: ByteArray,
+        speechRate: Float,
+        token: String
+    ) = withContext(Dispatchers.IO) {
+        val clampedRate = speechRate.coerceIn(0.75f, 1.50f)
+        val minBuf = AudioTrack.getMinBufferSize(
+            PCM_SAMPLE_RATE_HZ,
+            AudioFormat.CHANNEL_OUT_MONO,
+            AudioFormat.ENCODING_PCM_16BIT
+        ).coerceAtLeast(4096)
+
+        val audioAttrs = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_MEDIA)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+            .build()
+
+        val audioFormat = AudioFormat.Builder()
+            .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+            .setSampleRate(PCM_SAMPLE_RATE_HZ)
+            .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
+            .build()
+
+        val track = AudioTrack.Builder()
+            .setAudioAttributes(audioAttrs)
+            .setAudioFormat(audioFormat)
+            .setBufferSizeInBytes(minBuf * 2)
+            .setTransferMode(AudioTrack.MODE_STREAM)
+            .build()
+
+        activeAudioTrack = track
+        requestTransientAudioFocus()
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && clampedRate != 1.0f) {
+                runCatching {
+                    track.playbackParams = PlaybackParams().setSpeed(clampedRate)
+                }
+            }
+            track.play()
+
+            val chunkSize = 4096
+            var offset = 0
+            while (offset < pcmBytes.size && isActive && activePlaybackToken == token) {
+                val toWrite = minOf(chunkSize, pcmBytes.size - offset)
+                val written = track.write(pcmBytes, offset, toWrite, AudioTrack.WRITE_BLOCKING)
+                if (written < 0) break
+                offset += written
+            }
+
+            // Wait until buffered PCM frames finish playing out of the speaker (interruptible via stop())
+            val totalFrames = pcmBytes.size / 2
+            val maxWaitMs = ((pcmBytes.size.toLong() * 1000L) / (PCM_SAMPLE_RATE_HZ * 2L * clampedRate))
+                .toLong() + 800L
+            val waitStart = System.currentTimeMillis()
+            while (isActive &&
+                activePlaybackToken == token &&
+                track.playbackHeadPosition < totalFrames &&
+                System.currentTimeMillis() - waitStart < maxWaitMs
+            ) {
+                delay(40L)
+            }
+        } finally {
+            if (activeAudioTrack === track) {
+                activeAudioTrack = null
+            }
+            runCatching {
+                if (track.playState == AudioTrack.PLAYSTATE_PLAYING) {
+                    track.pause()
+                }
+                track.flush()
+                track.stop()
+            }
+            runCatching { track.release() }
+            abandonAudioFocus()
+        }
+    }
+
+    private fun stopAudioTrackOnly() {
+        val track = activeAudioTrack
+        activeAudioTrack = null
+        if (track != null) {
+            runCatching {
+                track.pause()
+                track.flush()
+                track.stop()
+                track.release()
+            }
+        }
+        abandonAudioFocus()
+    }
+
+    private fun requestTransientAudioFocus() {
+        runCatching {
+            val am = audioManager ?: return
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val attrs = AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                    .build()
+                val req = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                    .setAudioAttributes(attrs)
+                    .setAcceptsDelayedFocusGain(false)
+                    .setOnAudioFocusChangeListener { }
+                    .build()
+                currentAudioFocusRequest = req
+                am.requestAudioFocus(req)
+            } else {
+                @Suppress("DEPRECATION")
+                am.requestAudioFocus(
+                    null,
+                    AudioManager.STREAM_MUSIC,
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
+                )
+            }
+        }
+    }
+
+    private fun abandonAudioFocus() {
+        runCatching {
+            val am = audioManager ?: return
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                currentAudioFocusRequest?.let { am.abandonAudioFocusRequest(it) }
+                currentAudioFocusRequest = null
+            } else {
+                @Suppress("DEPRECATION")
+                am.abandonAudioFocus(null)
+            }
+        }
+    }
+
+    private fun writeObfuscatedBytes(file: File, input: ByteArray) {
+        val bytes = input.clone()
         val key = 0x5A.toByte()
         for (i in bytes.indices) {
             bytes[i] = (bytes[i].toInt() xor key.toInt()).toByte()
         }
         file.writeBytes(bytes)
+    }
+
+    private fun readObfuscatedBytes(file: File): ByteArray {
+        val bytes = file.readBytes()
+        val key = 0x5A.toByte()
+        for (i in bytes.indices) {
+            bytes[i] = (bytes[i].toInt() xor key.toInt()).toByte()
+        }
+        return bytes
     }
 
     private fun autoPruneStaleCache() {
@@ -387,6 +683,8 @@ class GeminiTtsProvider @Inject constructor(
     }
 
     override fun stop() {
+        activePlaybackToken = null
+        stopAudioTrackOnly()
         nativeFallback.stop()
     }
 
@@ -502,6 +800,7 @@ open class TtsManager(
 
         val resolvedGender = overrideVoiceGender ?: prefs.voiceGender
         (nativeTtsProvider as? NativeTtsProvider)?.applyVoiceGender(resolvedGender)
+        (geminiTtsProvider as? GeminiTtsProvider)?.applyVoiceGender(resolvedGender)
 
         // Stop any currently playing utterance immediately before starting the new one
         nativeTtsProvider.stop()
@@ -519,7 +818,7 @@ open class TtsManager(
 
             val speed = overrideSpeed ?: prefs.speechSpeed
             val activeProvider: TtsProvider = if (
-                prefs.isPremiumSubscribed && prefs.preferredTtsProvider.equals("GEMINI", ignoreCase = true)
+                prefs.preferredTtsProvider.equals("GEMINI", ignoreCase = true)
             ) {
                 geminiTtsProvider
             } else {

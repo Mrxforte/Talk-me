@@ -262,7 +262,7 @@ data class UserPreferencesModel(
     val soundEnabled: Boolean = true,
     val speechSpeed: Float = 1.0f,
     val isPremiumSubscribed: Boolean = false,
-    val preferredTtsProvider: String = "NATIVE", // NATIVE or GEMINI
+    val preferredTtsProvider: String = "GEMINI", // GEMINI or NATIVE
     val voiceGender: String = "MALE", // MALE or FEMALE
     val offlineAudioEnabled: Boolean = false,
     val lessonRemindersEnabled: Boolean = true,
@@ -270,7 +270,9 @@ data class UserPreferencesModel(
     val lastActiveTopicId: String = "topic_01_introduction",
     val lastActiveSectionId: String = "sec_01_01",
     val lastScrollOffset: Int = 0,
-    val hasStartedLearning: Boolean = false
+    val hasStartedLearning: Boolean = false,
+    val lessonDraftSectionId: String = "",
+    val lessonDraft: String = ""
 )
 
 /**

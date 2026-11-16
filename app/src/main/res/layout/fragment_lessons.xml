@@ -36,14 +36,14 @@
             android:textSize="@dimen/text_size_body" />
     </LinearLayout>
 
-    <!-- Top Level Summary Hero Card (A1 Beginner) -->
+    <!-- Top Level Summary Hero Card (A0/A1) -->
     <LinearLayout
         android:id="@+id/cardLevelSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_medium"
         android:layout_marginBottom="@dimen/spacing_medium"
-        android:background="@drawable/bg_talkme_filled_card"
+        android:background="@drawable/bg_talkme_card"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
         android:paddingTop="14dp"
@@ -62,7 +62,7 @@
                 android:background="@drawable/bg_curriculum_a1_badge"
                 android:gravity="center"
                 android:text="A1"
-                android:textColor="@color/color_text_on_primary"
+                android:textColor="@color/color_cta_button_text"
                 android:textSize="@dimen/text_size_title"
                 android:textStyle="bold" />
 
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="A1 Beginner"
-                    android:textColor="@color/color_on_filled_card"
+                    android:textColor="@color/color_on_surface"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -88,17 +88,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="4 / 110 dars"
-                    android:textColor="@color/color_on_filled_card"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/ivHeroGradCap"
-                android:layout_width="76dp"
-                android:layout_height="54dp"
-                android:contentDescription="A1 Beginner"
-                android:scaleType="fitCenter"
-                android:src="@drawable/img_curriculum_grad_cap" />
+            <FrameLayout
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_lesson_vocab_badge">
+
+                <ImageView
+                    android:id="@+id/ivHeroGradCap"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_graduation_cap"
+                    app:tint="@color/color_primary" />
+            </FrameLayout>
         </LinearLayout>
 
         <ProgressBar
@@ -129,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/curriculum_next_lesson_label"
-                    android:textColor="@color/color_on_filled_card"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -139,7 +147,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Hello! Hi!"
-                    android:textColor="@color/color_on_filled_card"
+                    android:textColor="@color/color_on_surface"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -148,13 +156,13 @@
                 android:layout_width="1dp"
                 android:layout_height="24dp"
                 android:layout_marginHorizontal="10dp"
-                android:background="@color/color_filled_card_outline" />
+                android:background="@color/color_card_outline" />
 
             <LinearLayout
                 android:id="@+id/btnHeroContinue"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/touch_target_min"
-                android:background="@drawable/bg_talkme_secondary_button"
+                android:background="@drawable/bg_curriculum_sky_btn"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
@@ -165,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/curriculum_continue"
-                    android:textColor="@color/color_on_surface"
+                    android:textColor="@color/color_cta_button_text"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -175,7 +183,7 @@
                     android:layout_marginStart="4dp"
                     android:contentDescription="@string/curriculum_continue"
                     android:src="@drawable/ic_chevron_right"
-                    app:tint="@color/color_on_surface" />
+                    app:tint="@color/color_cta_button_text" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

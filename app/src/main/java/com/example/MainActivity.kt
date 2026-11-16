@@ -78,12 +78,14 @@ class MainActivity : AppCompatActivity() {
         val topLevelDestinations = setOf(
             R.id.homeFragment,
             R.id.lessonsFragment,
-            R.id.dailyTasksFragment,
-            R.id.practiceFragment,
+            R.id.speakingAiFragment,
+            R.id.mistakesFragment,
             R.id.profileFragment
         )
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            isBottomNavVisible = destination.id in topLevelDestinations
+        navController.addOnDestinationChangedListener { _, destination, arguments ->
+            val isLessonStageSpeaking = destination.id == R.id.speakingAiFragment &&
+                arguments?.getInt(com.example.core.common.AppConstants.ARG_LESSON_FLOW_STAGE) == 5
+            isBottomNavVisible = destination.id in topLevelDestinations && !isLessonStageSpeaking
             binding.bottomNavigation.visibility =
                 if (isBottomNavVisible) View.VISIBLE else View.GONE
             applyRootAndBottomBarInsets()

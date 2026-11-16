@@ -295,7 +295,7 @@ class CurriculumResetTest {
                 v?.findViewById<TextView>(R.id.tvLessonHeadingTitle)?.text?.toString() == "Hello!"
             }
             val lessonView = navHost.childFragmentManager.primaryNavigationFragment?.requireView()!!
-            assertEquals("1/60", lessonView.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
+            assertEquals("1 / 6", lessonView.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
             assertEquals(
                 activity.getString(R.string.lesson_explanation_heading),
                 lessonView.findViewById<TextView>(R.id.tvSituationTitle).text.toString()
@@ -310,43 +310,67 @@ class CurriculumResetTest {
             assertEquals("hello, dad!", lessonView.findViewById<TextView>(R.id.tvVocabWord3).text.toString())
             assertEquals(View.VISIBLE, lessonView.findViewById<View>(R.id.layoutExtraQoidaVocab).visibility)
 
-            // Qoida -> Misollar -> Mashqlar (1..3) -> Wrap-up -> Complete Dars 1
             val primaryCta = lessonView.findViewById<View>(R.id.btnLessonPrimaryCta)
             primaryCta.performClick()
             waitUntil { lessonView.findViewById<View>(R.id.layoutStageMisollar).visibility == View.VISIBLE }
-            assertEquals(View.GONE, lessonView.findViewById<View>(R.id.cardMisollarDialogue).visibility)
-
+            assertEquals("2 / 6", lessonView.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
+            val reading = lessonView.findViewById<android.widget.RadioGroup>(R.id.readingAnswers)
+            val readingAnswer = (0 until reading.childCount)
+                .map { reading.getChildAt(it) as TextView }.single { it.text.toString() == "Hello, Dad!" }
+            readingAnswer.performClick()
+            primaryCta.performClick()
             primaryCta.performClick()
             waitUntil { lessonView.findViewById<View>(R.id.layoutStageMashqlar).visibility == View.VISIBLE }
-            val optionViews = listOf(
-                R.id.tvOption1Text to R.id.btnOption1,
-                R.id.tvOption2Text to R.id.btnOption2,
-                R.id.tvOption3Text to R.id.btnOption3
-            )
-            listOf("salom", "Hello, Dad!", "Hello!").forEachIndexed { index, answer ->
-                waitUntil {
-                    lessonView.findViewById<TextView>(R.id.tvStageHeaderBadge)
-                        .text.toString() == "${index + 1} / 3"
-                }
-                val (_, buttonId) = optionViews.single { (labelId, _) ->
-                    lessonView.findViewById<TextView>(labelId).text.toString() == answer
-                }
-                lessonView.findViewById<View>(buttonId).performClick()
-                primaryCta.performClick()
-            }
-            waitUntil { lessonView.findViewById<View>(R.id.layoutStageWrapUp).visibility == View.VISIBLE }
-            assertEquals(View.GONE, lessonView.findViewById<View>(R.id.tvWrapUpExtendedSummary).visibility)
+            assertEquals("3 / 6", lessonView.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
+            val written = lessonView.findViewById<android.widget.EditText>(R.id.etLessonGuidedAnswer)
+            assertEquals(View.VISIBLE, written.visibility)
+            written.setText("Goodbye!")
+            primaryCta.performClick()
+            written.setText("Hello!")
+            primaryCta.performClick()
             primaryCta.performClick()
 
-                        // 6. Navigate to Daily Tasks after completing Dars 1
-            navController.navigate(R.id.dailyTasksFragment)
             waitUntil {
                 navHost.childFragmentManager.primaryNavigationFragment?.view
-                    ?.findViewById<View>(R.id.btnTaskLesson) != null
+                    ?.findViewById<android.widget.LinearLayout>(R.id.containerOptions)?.childCount == 3
             }
+            val listening = navHost.childFragmentManager.primaryNavigationFragment!!.requireView()
+            assertEquals("4 / 6", listening.findViewById<TextView>(R.id.tvStudioProgressCounter).text.toString())
+            val options = listening.findViewById<android.widget.LinearLayout>(R.id.containerOptions)
+            val correct = (0 until options.childCount).map { options.getChildAt(it) as android.widget.LinearLayout }
+                .single { row -> (row.getChildAt(1) as TextView).text.toString() == "salom" }
+            correct.performClick()
+            Shadows.shadowOf(Looper.getMainLooper()).idle()
+            repeat(2) { listening.findViewById<View>(R.id.btnSubmitOrNext).performClick() }
+            waitUntil { listening.findViewById<View>(R.id.btnFinishSession).isShown }
+            listening.findViewById<View>(R.id.btnFinishSession).performClick()
+
             waitUntil {
                 navHost.childFragmentManager.primaryNavigationFragment?.view
-                    ?.findViewById<View>(R.id.btnTaskLesson) != null
+                    ?.findViewById<TextView>(R.id.tvLessonTopCounter)?.text.toString() == "5 / 6"
+            }
+            val resumed = navHost.childFragmentManager.primaryNavigationFragment!!.requireView()
+            val resumedCta = resumed.findViewById<View>(R.id.btnLessonPrimaryCta)
+            resumedCta.performClick()
+            assertEquals("6 / 6", resumed.findViewById<TextView>(R.id.tvLessonTopCounter).text.toString())
+            assertEquals(View.VISIBLE, resumed.findViewById<View>(R.id.layoutStageWrapUp).visibility)
+            assertTrue(resumed.findViewById<TextView>(R.id.tvLessonResultScore).text.toString().contains("1 ta xato"))
+
+            resumed.findViewById<View>(R.id.btnLessonMistakes).performClick()
+            waitUntil {
+                navHost.childFragmentManager.primaryNavigationFragment?.view
+                    ?.findViewById<RecyclerView>(R.id.mistakeList)?.adapter?.itemCount == 1
+            }
+            navController.navigateUp()
+            waitUntil {
+                navHost.childFragmentManager.primaryNavigationFragment?.view
+                    ?.findViewById<TextView>(R.id.tvLessonTopCounter)?.text.toString() == "6 / 6"
+            }
+            navHost.childFragmentManager.primaryNavigationFragment!!.requireView()
+                .findViewById<View>(R.id.btnLessonPrimaryCta).performClick()
+            waitUntil {
+                navHost.childFragmentManager.primaryNavigationFragment?.view
+                    ?.findViewById<TextView>(R.id.tvLessonHeadingTitle)?.text.toString() == "My name is..."
             }
         } finally {
             controller.pause().stop().destroy()

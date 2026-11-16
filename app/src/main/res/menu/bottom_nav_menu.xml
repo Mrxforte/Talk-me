@@ -9,13 +9,13 @@
         android:icon="@drawable/ic_nav_lessons"
         android:title="@string/nav_lessons" />
     <item
-        android:id="@+id/dailyTasksFragment"
-        android:icon="@drawable/ic_nav_tasks"
-        android:title="@string/nav_tasks" />
+        android:id="@+id/speakingAiFragment"
+        android:icon="@drawable/ic_nav_speaking"
+        android:title="@string/nav_speaking" />
     <item
-        android:id="@+id/practiceFragment"
-        android:icon="@drawable/ic_nav_practice"
-        android:title="@string/nav_practice" />
+        android:id="@+id/mistakesFragment"
+        android:icon="@drawable/ic_nav_tasks"
+        android:title="@string/nav_mistakes" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_nav_profile"

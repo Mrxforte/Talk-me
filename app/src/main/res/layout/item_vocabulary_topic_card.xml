@@ -147,7 +147,7 @@
                     android:minHeight="@dimen/vocab_badge_min_size"
                     android:paddingHorizontal="@dimen/spacing_small"
                     android:text="@string/vocab_badge_preview"
-                    android:textColor="@color/color_on_filled_card"
+                    android:textColor="@color/color_cta_button_text"
                     android:textSize="@dimen/text_size_caption"
                     android:textStyle="bold" />
             </LinearLayout>

@@ -37,6 +37,9 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
 
     private val speakingSchema = Schema.obj(
         properties = mapOf(
+            "studentTranscript" to Schema.string(
+                description = "Exact verbatim transcription of what the learner spoke in the audio (or the learner's text if text was provided)."
+            ),
             "spokenEnglishReply" to Schema.string(
                 description = "Natural, context-aware spoken English reply directly responding to the learner's latest utterance and asking ONE related follow-up question."
             ),
@@ -44,10 +47,10 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
                 description = "Optional brief grammar or vocabulary tip in Uzbek (empty string if no correction is needed; never rewrite the learner's original transcript)."
             ),
             "accuracyScore" to Schema.integer(
-                description = "Communication effectiveness score from 60 to 100 (do not claim acoustic pronunciation accuracy from text alone)."
+                description = "Communication effectiveness score from 60 to 100."
             )
         ),
-        optionalProperties = listOf("grammarAndVocabFeedbackUzbek", "accuracyScore")
+        optionalProperties = listOf("studentTranscript", "grammarAndVocabFeedbackUzbek", "accuracyScore")
     )
 
     private val readingPassageSchema = Schema.obj(
@@ -83,9 +86,10 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
         learnerLevel: String
     ): Result<SpeakingAiResponse> = withContext(Dispatchers.IO) {
         val exactRawTranscript = studentUtterance.trim()
-        if (exactRawTranscript.isEmpty()) {
+        val hasAudioBytes = audioWavBytes != null && audioWavBytes.isNotEmpty()
+        if (exactRawTranscript.isEmpty() && !hasAudioBytes) {
             return@withContext Result.failure(
-                IllegalArgumentException("Cannot submit an empty user transcript to Gemini.")
+                IllegalArgumentException("Cannot submit an empty user transcript or audio to Gemini.")
             )
         }
 
@@ -111,6 +115,7 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
             .let { list ->
                 val last = list.lastOrNull()
                 if (last != null &&
+                    exactRawTranscript.isNotEmpty() &&
                     (last.first.equals("USER", ignoreCase = true) || last.first.equals("STUDENT", ignoreCase = true)) &&
                     last.second.trim() == exactRawTranscript
                 ) {
@@ -135,10 +140,23 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
             )
         }
 
-        // Append the latest user turn with exact rawTranscript
+        // Append the latest user turn (inline WAV audio and/or exact rawTranscript)
         multiTurnContents.add(
             content(role = "user") {
-                text(exactRawTranscript)
+                if (hasAudioBytes && audioWavBytes != null) {
+                    inlineData(audioWavBytes, "audio/wav")
+                    if (exactRawTranscript.isNotEmpty()) {
+                        text(exactRawTranscript)
+                    } else {
+                        text(
+                            "Listen carefully to the learner's spoken audio above. " +
+                                "Transcribe the exact spoken words verbatim into `studentTranscript`, " +
+                                "and give a natural tutor reply in `spokenEnglishReply`."
+                        )
+                    }
+                } else {
+                    text(exactRawTranscript)
+                }
             }
         )
 
@@ -166,12 +184,16 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
                 throw IllegalStateException("Blank spokenEnglishReply from Speaking AI model.")
             }
 
+            val resolvedTranscript = exactRawTranscript.ifEmpty {
+                json.optString("studentTranscript", "").trim()
+            }
+
             Result.success(
                 SpeakingAiResponse(
                     spokenEnglishReply = reply,
                     grammarAndVocabFeedbackUzbek = json.optString("grammarAndVocabFeedbackUzbek", "").trim(),
                     accuracyScore = json.optInt("accuracyScore", 88).coerceIn(0, 100),
-                    studentTranscript = exactRawTranscript
+                    studentTranscript = resolvedTranscript
                 )
             )
         } catch (e: CancellationException) {

@@ -27,6 +27,9 @@ interface LearningRepository {
 
     fun observeSectionVocabulary(sectionId: String): Flow<List<VocabularyModel>>
     fun observeSectionGrammarRules(sectionId: String): Flow<List<GrammarRuleModel>>
+    fun observeLibrarySections(): Flow<List<LessonSectionModel>> = kotlinx.coroutines.flow.flowOf(emptyList())
+    fun observeLibraryVocabulary(): Flow<List<VocabularyModel>> = kotlinx.coroutines.flow.flowOf(emptyList())
+    fun observeLibraryGrammar(): Flow<List<GrammarRuleModel>> = kotlinx.coroutines.flow.flowOf(emptyList())
 
     /**
      * Persists the exact learning position (topic, section, scroll offset) for Continue Learning.
@@ -124,6 +127,9 @@ interface LearningRepository {
      */
     fun observeUnresolvedMistakes(): Flow<List<com.example.domain.model.UserMistakeModel>>
 
+    fun observeResolvedMistakes(): Flow<List<com.example.domain.model.UserMistakeModel>> =
+        kotlinx.coroutines.flow.flowOf(emptyList())
+
     /**
      * Records a user mistake in Reading, Writing, Vocabulary, Grammar, or Listening for targeted remediation.
      */
@@ -166,6 +172,7 @@ interface UserPreferencesRepository {
     suspend fun updateVoiceGender(voiceGender: String)
     suspend fun updateOfflineAudioEnabled(enabled: Boolean)
     suspend fun updateLessonRemindersEnabled(enabled: Boolean)
+    suspend fun updateLessonDraft(sectionId: String, draft: String) = Unit
     suspend fun updateLastLearningBookmark(topicId: String, sectionId: String, scrollOffset: Int)
 }
 

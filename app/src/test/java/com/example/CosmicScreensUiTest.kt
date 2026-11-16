@@ -36,6 +36,11 @@ class CosmicScreensUiTest {
         val binding = FragmentSpeakingAiBinding.inflate(LayoutInflater.from(context))
 
         assertNotNull(binding.cardAiCharacterSection)
+        assertNotNull(binding.ivAiCharacterAvatar.drawable)
+        assertNotNull(binding.tvTutorStageStatus)
+        assertNotNull(binding.viewTutorStatusDot)
+        assertNotNull(androidx.core.content.ContextCompat.getDrawable(context, R.drawable.img_speaking_character_male))
+        assertNotNull(androidx.core.content.ContextCompat.getDrawable(context, R.drawable.img_speaking_character_female))
         assertNotNull(binding.waveformTutorHero)
         assertNotNull(binding.cardLiveSpeech)
         assertNotNull(binding.waveformUserLive)
@@ -183,6 +188,9 @@ class CosmicScreensUiTest {
         assertNotNull(binding.toggleVoiceEngine)
         assertNotNull(binding.btnVoiceEngineNative)
         assertNotNull(binding.btnVoiceEngineAi)
+        assertNotNull(binding.toggleVoiceGender)
+        assertNotNull(binding.btnVoiceGenderMale)
+        assertNotNull(binding.btnVoiceGenderFemale)
         assertNotNull(binding.cardVoiceMale)
         assertNotNull(binding.cardVoiceFemale)
         assertNotNull(binding.btnPreviewVoiceMale)
@@ -205,7 +213,9 @@ class CosmicScreensUiTest {
 
             val navHost = activity.supportFragmentManager
                 .findFragmentById(R.id.nav_host_fragment) as androidx.navigation.fragment.NavHostFragment
-            val bottomNav = activity.findViewById<View>(R.id.bottom_navigation)
+            val bottomNav = activity.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
+            assertEquals(5, bottomNav.menu.size())
+            assertEquals(R.id.speakingAiFragment, bottomNav.menu.getItem(2).itemId)
 
             navHost.navController.navigate(R.id.profileFragment)
             org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle()

@@ -53,8 +53,8 @@
         <item name="cornerRadius">@dimen/radius_button</item>
         <item name="android:textSize">@dimen/text_size_button</item>
         <item name="android:textStyle">bold</item>
-        <item name="backgroundTint">@color/color_primary</item>
-        <item name="android:textColor">@color/color_text_on_primary</item>
+        <item name="backgroundTint">@color/color_cta_button_bg</item>
+        <item name="android:textColor">@color/color_cta_button_text</item>
     </style>
 
     <style name="Widget.TalkMe.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">

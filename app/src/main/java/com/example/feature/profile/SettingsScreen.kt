@@ -71,8 +71,10 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun setVoiceGender(gender: String) {
+        val normalized = if (gender.equals("FEMALE", ignoreCase = true)) "FEMALE" else "MALE"
+        ttsManager.stop()
         viewModelScope.launch {
-            preferencesRepository.updateVoiceGender(gender)
+            preferencesRepository.updateVoiceGender(normalized)
         }
     }
 
@@ -205,6 +207,13 @@ class SettingsFragment : Fragment() {
             viewModel.setVoiceEngine(checkedId == R.id.btnVoiceEngineAi)
         }
 
+        binding.toggleVoiceGender.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isUpdatingControlsProgrammatically || !isChecked) return@addOnButtonCheckedListener
+            viewModel.setVoiceGender(
+                if (checkedId == R.id.btnVoiceGenderFemale) "FEMALE" else "MALE"
+            )
+        }
+
         binding.cardVoiceMale.setOnClickListener {
             viewModel.setVoiceGender("MALE")
         }
@@ -227,6 +236,10 @@ class SettingsFragment : Fragment() {
             if (!isUpdatingControlsProgrammatically) {
                 viewModel.setLessonRemindersEnabled(isChecked)
             }
+        }
+
+        binding.rowExperimentalChatbot.setOnClickListener {
+            findNavController().navigate(R.id.geminiChatbotFragment)
         }
 
         binding.rowPrivacyPolicy.setOnClickListener {
@@ -301,6 +314,17 @@ class SettingsFragment : Fragment() {
             styleSegmentButtons(
                 listOf(binding.btnVoiceEngineNative, binding.btnVoiceEngineAi),
                 targetEngineId,
+                selectedColorRes = R.color.color_profile_purple_pill_bg
+            )
+
+            val isFemaleVoice = prefs.voiceGender.equals("FEMALE", ignoreCase = true)
+            val targetGenderBtnId = if (isFemaleVoice) R.id.btnVoiceGenderFemale else R.id.btnVoiceGenderMale
+            if (binding.toggleVoiceGender.checkedButtonId != targetGenderBtnId) {
+                binding.toggleVoiceGender.check(targetGenderBtnId)
+            }
+            styleSegmentButtons(
+                listOf(binding.btnVoiceGenderMale, binding.btnVoiceGenderFemale),
+                targetGenderBtnId,
                 selectedColorRes = R.color.color_profile_purple_pill_bg
             )
 

@@ -2,8 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid android:color="@color/color_card_surface_subtle" />
-    <corners android:radius="@dimen/radius_pill" />
+    <corners android:radius="999dp" />
     <stroke
-        android:width="@dimen/stroke_thin"
+        android:width="1.2dp"
         android:color="@color/color_card_outline" />
 </shape>

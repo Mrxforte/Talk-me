@@ -27,23 +27,13 @@ data class VadFrameResult(
 )
 
 /**
- * Local Silero VAD processor operating on 16kHz Mono PCM float audio (512-sample / 32ms windows).
- *
- * Uses a two-tier architecture:
- * 1. Native `sherpa-onnx` Silero VAD (`silero_vad.onnx`) via JNI reflection when native `.so` and
- *    model files are installed on device.
- * 2. Multi-Feature Spectral & Formant Voice Activity Detector (Pre-emphasis + Goertzel vocal-tract
- *    formant band energy ratio 85Hz–3400Hz + Spectral Flatness + Zero-Crossing Rate + Adaptive Noise Floor
- *    + Causal Recurrent Smoothing) — NEVER relying on raw microphone amplitude alone.
+ * Pure-Kotlin Spectral & Formant Voice Activity Detector operating on 16kHz Mono PCM float audio
+ * (512-sample / 32ms windows):
+ * - Pre-emphasis + Goertzel vocal-tract formant band energy ratio (130Hz–2750Hz)
+ * - Spectral / temporal flatness + Zero-Crossing Rate + Adaptive Noise Floor + Causal Hysteresis
  */
 @Singleton
-class SileroVadDetector() {
-    private var modelManager: SpeechModelManager? = null
-
-    @Inject
-    constructor(modelManager: SpeechModelManager) : this() {
-        this.modelManager = modelManager
-    }
+class SileroVadDetector @Inject constructor() {
     companion object {
         const val SAMPLE_RATE_HZ = 16_000
         const val WINDOW_SIZE_SAMPLES = 512 // 32 ms at 16 kHz (standard Silero VAD window)
@@ -64,9 +54,6 @@ class SileroVadDetector() {
     var speechThreshold: Float = DEFAULT_SPEECH_THRESHOLD
     var minSpeechFrames: Int = DEFAULT_MIN_SPEECH_FRAMES
     var minSilenceFrames: Int = DEFAULT_MIN_SILENCE_FRAMES
-
-    private var nativeVadInstance: Any? = null
-    private var isNativeSileroActive: Boolean = false
 
     // Ring buffer for 512-sample framing
     private val pendingSamples = FloatArray(WINDOW_SIZE_SAMPLES * 8)
@@ -92,48 +79,8 @@ class SileroVadDetector() {
 
     fun initialize(): Boolean {
         reset()
-        val vadConfig = modelManager?.getSileroVadConfig() ?: return false
-        return try {
-            System.loadLibrary("sherpa-onnx-jni")
-            val sileroConfigClass = Class.forName("com.k2fsa.sherpa.onnx.SileroVadModelConfig")
-            val sileroConfig = sileroConfigClass.getDeclaredConstructor(
-                String::class.java,
-                Float::class.javaPrimitiveType,
-                Float::class.javaPrimitiveType,
-                Float::class.javaPrimitiveType,
-                Int::class.javaPrimitiveType,
-                Float::class.javaPrimitiveType
-            ).newInstance(
-                vadConfig.modelPath,
-                vadConfig.threshold,
-                vadConfig.minSilenceDurationSeconds,
-                vadConfig.minSpeechDurationSeconds,
-                vadConfig.windowSizeSamples,
-                vadConfig.maxSpeechDurationSeconds
-            )
-
-            val vadModelConfigClass = Class.forName("com.k2fsa.sherpa.onnx.VadModelConfig")
-            val vadModelConfig = vadModelConfigClass.getDeclaredConstructor().newInstance()
-            vadModelConfigClass.getField("sileroVadModelConfig").set(vadModelConfig, sileroConfig)
-            vadModelConfigClass.getField("sampleRate").setInt(vadModelConfig, vadConfig.sampleRate)
-            vadModelConfigClass.getField("numThreads").setInt(vadModelConfig, 1)
-            vadModelConfigClass.getField("provider").set(vadModelConfig, "cpu")
-
-            val vadClass = Class.forName("com.k2fsa.sherpa.onnx.Vad")
-            nativeVadInstance = vadClass.getDeclaredConstructor(
-                android.content.res.AssetManager::class.java,
-                vadModelConfigClass
-            ).newInstance(null, vadModelConfig)
-
-            isNativeSileroActive = true
-            Log.i(TAG, "Initialized native Sherpa-ONNX Silero VAD from ${vadConfig.modelPath}")
-            true
-        } catch (t: Throwable) {
-            isNativeSileroActive = false
-            nativeVadInstance = null
-            Log.d(TAG, "Using multi-feature spectral/formant local Silero-compatible VAD processor")
-            true
-        }
+        Log.d(TAG, "Initialized pure-Kotlin spectral/formant VAD processor")
+        return true
     }
 
     /**
@@ -151,10 +98,6 @@ class SileroVadDetector() {
         smoothedProbability = 0f
         _vadState.value = VadState.SILENCE
         _speechProbability.value = 0f
-
-        runCatching {
-            nativeVadInstance?.javaClass?.getMethod("reset")?.invoke(nativeVadInstance)
-        }
     }
 
     /**
@@ -370,17 +313,6 @@ class SileroVadDetector() {
      * multi-feature spectral/formant/ZCR/flatness acoustic analysis (never raw amplitude alone).
      */
     internal fun computeWindowSpeechProbability(window: FloatArray): Float {
-        if (isNativeSileroActive && nativeVadInstance != null) {
-            val nativeDetected = runCatching {
-                val vad = nativeVadInstance!!
-                vad.javaClass.getMethod("acceptWaveform", FloatArray::class.java).invoke(vad, window)
-                vad.javaClass.getMethod("isSpeechDetected").invoke(vad) as? Boolean
-            }.getOrNull()
-            if (nativeDetected != null) {
-                return if (nativeDetected) 0.88f else 0.08f
-            }
-        }
-
         val n = window.size
         if (n == 0) return 0f
 
@@ -501,11 +433,6 @@ class SileroVadDetector() {
     }
 
     fun release() {
-        runCatching {
-            nativeVadInstance?.javaClass?.getMethod("release")?.invoke(nativeVadInstance)
-        }
-        nativeVadInstance = null
-        isNativeSileroActive = false
         reset()
     }
 }

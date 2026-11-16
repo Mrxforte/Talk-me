@@ -214,6 +214,9 @@ class ProfileFragment : Fragment() {
         binding.btnScrollToSettings.setOnClickListener {
             findNavController().navigate(R.id.settingsFragment)
         }
+        binding.rowProfileExperimentalChatbot.setOnClickListener {
+            findNavController().navigate(R.id.geminiChatbotFragment)
+        }
     }
 
     private fun setupRoadmapActions() {

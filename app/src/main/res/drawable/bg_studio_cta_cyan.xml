@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/color_cosmic_circle_stroke">
+    android:color="@color/color_scrim_light_outline">
     <item>
         <shape android:shape="rectangle">
-            <gradient android:angle="0"
-                android:startColor="@color/color_gradient_primary_start"
-                android:endColor="@color/color_gradient_primary_end" />
-            <corners android:radius="@dimen/radius_pill" />
-            <stroke android:width="@dimen/stroke_thin"
-                android:color="@color/color_filled_card_outline" />
+            <solid android:color="@color/color_cta_button_bg" />
+            <corners android:radius="999dp" />
         </shape>
     </item>
 </ripple>

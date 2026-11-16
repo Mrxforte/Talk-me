@@ -66,6 +66,9 @@ class ConversationCoordinator(
     private var allowedGrammar: List<String> = emptyList()
     private val sessionScores = mutableListOf<Int>()
 
+    @Volatile
+    private var pendingRetryAudioBytes: Pair<String, ByteArray>? = null
+
     private var observeStreamsJob: Job? = null
 
     init {
@@ -220,8 +223,13 @@ class ConversationCoordinator(
         }
 
         val exactRawTranscript = result.recognizedText.trim()
-        if (exactRawTranscript.isEmpty()) {
-            // Tests 6 & 7: User said nothing or STT returned no match ->
+        val wavBytes = result.audioWavBytes
+        val hasUsableAudio = wavBytes != null &&
+            wavBytes.size > 4096 &&
+            (result.hadSpeechDetectedByVad || hasSpeechEnergyInWav(wavBytes))
+
+        if (exactRawTranscript.isEmpty() && !hasUsableAudio) {
+            // Tests 6 & 7: User said nothing or STT returned no match with no usable speech audio ->
             // Do NOT create any user message, do NOT invent text, and do NOT call Gemini.
             _uiState.update {
                 it.copy(
@@ -238,6 +246,15 @@ class ConversationCoordinator(
             return
         }
 
+        if (exactRawTranscript.isEmpty() && hasUsableAudio && wavBytes != null) {
+            TalkMeConversationLogger.logFinalTranscript(finishedListeningTurn, wavBytes.size)
+            submitAudioTurnToGemini(
+                turnId = finishedListeningTurn,
+                audioWavBytes = wavBytes
+            )
+            return
+        }
+
         TalkMeConversationLogger.logFinalTranscript(finishedListeningTurn, exactRawTranscript.length)
 
         val verifiedTurn = VerifiedUserTurn(
@@ -248,6 +265,27 @@ class ConversationCoordinator(
             verifiedTurn = verifiedTurn,
             isRetryOfExistingMessage = false
         )
+    }
+
+    internal fun hasSpeechEnergyInWav(wavBytes: ByteArray): Boolean {
+        if (wavBytes.size <= 44) return false
+        var sumSq = 0.0
+        var peak = 0
+        var sampleCount = 0
+        var i = 44
+        while (i + 1 < wavBytes.size) {
+            val low = wavBytes[i].toInt() and 0xFF
+            val high = wavBytes[i + 1].toInt()
+            val sample = ((high shl 8) or low).toShort().toInt()
+            val absSample = kotlin.math.abs(sample)
+            if (absSample > peak) peak = absSample
+            sumSq += sample.toDouble() * sample.toDouble()
+            sampleCount++
+            i += 2
+        }
+        if (sampleCount == 0) return false
+        val rms = kotlin.math.sqrt(sumSq / sampleCount)
+        return rms >= 60.0 || peak >= 350
     }
 
     fun configureLessonContext(
@@ -368,7 +406,13 @@ class ConversationCoordinator(
                 // Allow optional early finalization if user taps mic while actively speaking
                 finalizeCurrentListeningTurnNow()
             }
-            is ConversationState.LISTENING,
+            is ConversationState.LISTENING -> {
+                if (speechRepository.recordingDurationSeconds.value >= 1) {
+                    finalizeCurrentListeningTurnNow()
+                } else {
+                    stopConversation()
+                }
+            }
             is ConversationState.FINALIZING,
             is ConversationState.AI_THINKING,
             is ConversationState.AI_SPEAKING -> {
@@ -632,6 +676,137 @@ class ConversationCoordinator(
             )
         }
         return true
+    }
+
+    private fun submitAudioTurnToGemini(
+        turnId: String,
+        audioWavBytes: ByteArray
+    ) {
+        val captureReadyTimestampMs = System.currentTimeMillis()
+        pendingRetryAudioBytes = turnId to audioWavBytes
+
+        scope.launch {
+            val accepted = turnMutex.withLock {
+                if (_uiState.value.conversationState is ConversationState.AI_THINKING) {
+                    false
+                } else {
+                    listeningTurnId.set(null)
+                    speechRepository.cancelListening()
+                    ttsManager.stop()
+                    activeTtsJob?.cancel()
+
+                    activeTurnId.set(turnId)
+
+                    _uiState.update { current ->
+                        current.copy(
+                            conversationState = ConversationState.AI_THINKING(
+                                turnId = turnId,
+                                rawTranscript = ""
+                            ),
+                            isAudioCaptureActuallyRunning = false,
+                            provisionalTranscript = "",
+                            audioAmplitude = 0f,
+                            lastError = null,
+                            statusMessage = "✨ Gemini ovozingizni tinglamoqda...",
+                            latencyMetrics = current.latencyMetrics.copy(turnId = turnId)
+                        )
+                    }
+                    true
+                }
+            }
+
+            if (!accepted) return@launch
+
+            activeGeminiJob = scope.launch {
+                try {
+                    val priorMessages = _uiState.value.messages
+                    val historyPairs = TutorPromptConfig.buildRoleHistoryPairs(priorMessages)
+                    val currentTopicTitle = _uiState.value.topicTitle
+                    val currentLearnerLevel = _uiState.value.learnerLevel
+
+                    TalkMeConversationLogger.logGeminiRequestStarted(turnId)
+                    val callResult = withContext(ioDispatcher) {
+                        aiLearningService.sendSpeakingTurn(
+                            topicTitle = currentTopicTitle,
+                            allowedVocabulary = allowedVocabulary,
+                            allowedGrammarSummaries = allowedGrammar,
+                            conversationHistory = historyPairs,
+                            studentUtterance = "",
+                            audioWavBytes = audioWavBytes,
+                            learnerLevel = currentLearnerLevel
+                        )
+                    }
+
+                    if (activeTurnId.get() != turnId) return@launch
+
+                    callResult.fold(
+                        onSuccess = { aiReply ->
+                            val responseReadyMs = System.currentTimeMillis()
+                            val aiLatencyMs = (responseReadyMs - captureReadyTimestampMs).coerceAtLeast(0L)
+                            TalkMeConversationLogger.logGeminiResponseReceived(turnId, aiLatencyMs)
+
+                            val assistantText = aiReply.spokenEnglishReply.trim()
+                            if (assistantText.isEmpty()) {
+                                handleGeminiError(
+                                    turnId = turnId,
+                                    error = ConversationError(
+                                        code = ConversationError.ErrorCode.EMPTY_AI_RESPONSE,
+                                        userMessageUzbek = "AI javobi bo'sh qaytdi. Qayta urinib ko'ring.",
+                                        turnId = turnId
+                                    )
+                                )
+                                return@fold
+                            }
+
+                            pendingRetryAudioBytes = null
+                            sessionScores.add(aiReply.accuracyScore)
+
+                            val userText = aiReply.studentTranscript.trim()
+                                .ifEmpty { "🎤 (Ovozli javob)" }
+                            val userMsg = ConversationMessage(
+                                turnId = turnId,
+                                role = ConversationRole.USER,
+                                text = userText
+                            )
+                            val assistantMessage = ConversationMessage(
+                                turnId = turnId,
+                                role = ConversationRole.ASSISTANT,
+                                text = assistantText,
+                                aiGeneratedFeedback = aiReply.grammarAndVocabFeedbackUzbek.takeIf { it.isNotBlank() }
+                            )
+
+                            _uiState.update { current ->
+                                val boundedMessages = (current.messages + userMsg + assistantMessage)
+                                    .takeLast(TutorPromptConfig.MAX_TRANSCRIPT_MESSAGES_IN_MEMORY)
+                                current.copy(
+                                    messages = boundedMessages,
+                                    latencyMetrics = current.latencyMetrics.copy(
+                                        sttToAiResponseMs = aiLatencyMs
+                                    )
+                                )
+                            }
+
+                            speakAssistantResponseAndResumeIfActive(
+                                turnId = turnId,
+                                spokenText = assistantText,
+                                responseReadyTimestampMs = responseReadyMs,
+                                autoResumeListeningAfterTts = _uiState.value.isHandsFreeConversationActive
+                            )
+                        },
+                        onFailure = { err ->
+                            val mappedErr = mapGeminiThrowable(
+                                throwable = err,
+                                failedTranscript = "",
+                                turnId = turnId
+                            )
+                            handleGeminiError(turnId = turnId, error = mappedErr)
+                        }
+                    )
+                } catch (e: CancellationException) {
+                    throw e
+                }
+            }
+        }
     }
 
     private fun executeGeminiRequest(
@@ -914,6 +1089,7 @@ class ConversationCoordinator(
         }
 
         val preserved = error.failedTranscript.trim()
+        val retryAudio = pendingRetryAudioBytes
         if (preserved.isNotEmpty()) {
             val alreadyInHistory = _uiState.value.messages.lastOrNull()?.let {
                 it.role == ConversationRole.USER && it.text == preserved
@@ -926,6 +1102,8 @@ class ConversationCoordinator(
                 verifiedTurn = retryTurn,
                 isRetryOfExistingMessage = alreadyInHistory
             )
+        } else if (retryAudio != null && (error.turnId == null || retryAudio.first == error.turnId)) {
+            submitAudioTurnToGemini(retryAudio.first, retryAudio.second)
         } else {
             startConversation()
         }

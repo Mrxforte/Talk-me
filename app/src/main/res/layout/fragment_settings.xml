@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_cosmic_background"
+    android:background="@color/color_app_canvas"
     android:orientation="vertical">
 
     <!-- Top Navigation Bar -->
@@ -168,7 +168,7 @@
                                 android:layout_gravity="center"
                                 android:contentDescription="@string/profile_read_aloud_label"
                                 android:src="@drawable/ic_speaker"
-                                app:tint="@color/color_text_on_primary" />
+                                app:tint="@color/white" />
                         </FrameLayout>
 
                         <TextView
@@ -329,6 +329,42 @@
                         android:textColor="@color/color_on_surface"
                         android:textSize="14sp"
                         android:textStyle="bold" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleVoiceGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:checkedButton="@id/btnVoiceGenderMale"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnVoiceGenderMale"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/touch_target_min"
+                            android:layout_weight="1"
+                            android:text="@string/profile_voice_toggle_male"
+                            android:textAllCaps="false"
+                            android:textColor="@color/color_on_surface"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            app:strokeColor="@color/color_cosmic_bubble_stroke" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnVoiceGenderFemale"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/touch_target_min"
+                            android:layout_weight="1"
+                            android:text="@string/profile_voice_toggle_female"
+                            android:textAllCaps="false"
+                            android:textColor="@color/color_on_surface"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            app:strokeColor="@color/color_cosmic_bubble_stroke" />
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -544,7 +580,7 @@
                                 android:layout_gravity="center"
                                 android:contentDescription="@null"
                                 android:src="@drawable/ic_download_blue"
-                                app:tint="@color/color_text_on_primary" />
+                                app:tint="@color/white" />
                         </FrameLayout>
 
                         <TextView
@@ -585,7 +621,7 @@
                                 android:layout_gravity="center"
                                 android:contentDescription="@null"
                                 android:src="@drawable/ic_bell_amber"
-                                app:tint="@color/color_text_on_primary" />
+                                app:tint="@color/white" />
                         </FrameLayout>
 
                         <TextView
@@ -606,7 +642,115 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 4. PRIVACY & APP INFO ("MAXFIYLIK VA ILOVA") -->
+            <!-- 4. EXPERIMENTAL AI LAB ("EKSPERIMENTAL AI (BETA)") -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="8dp"
+                android:letterSpacing="0.06"
+                android:text="@string/experimental_section_title"
+                android:textColor="@color/color_neon_cyan_variant"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardExperimentalSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/color_profile_card_bg"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/color_profile_card_stroke"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="6dp">
+
+                    <LinearLayout
+                        android:id="@+id/rowExperimentalChatbot"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:minHeight="56dp"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <FrameLayout
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/bg_telegram_icon_green">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_experimental_chat"
+                                app:tint="@color/white" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/experimental_chatbot_title"
+                                    android:textColor="@color/color_on_surface"
+                                    android:textSize="14.5sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="6dp"
+                                    android:background="@drawable/bg_experimental_badge"
+                                    android:paddingHorizontal="6dp"
+                                    android:paddingVertical="1dp"
+                                    android:text="@string/experimental_badge_beta"
+                                    android:textColor="@color/color_warning"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/experimental_chatbot_subtitle"
+                                android:textColor="@color/color_slate_subtitle"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="@color/color_slate_subtitle" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 5. PRIVACY & APP INFO ("MAXFIYLIK VA ILOVA") -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

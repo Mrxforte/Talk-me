@@ -12,7 +12,7 @@
         layout="@layout/view_screen_header"
         android:visibility="gone" />
 
-    <!-- Shared Studio Cosmic Top Bar -->
+    <!-- Top Bar with Back Arrow and Title (Matching image.png) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,76 +20,111 @@
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/spacing_medium"
         android:paddingTop="12dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="6dp">
 
         <ImageButton
             android:id="@+id/btnStudioBack"
             android:layout_width="@dimen/touch_target_min"
             android:layout_height="@dimen/touch_target_min"
-            android:background="@drawable/bg_cosmic_circle_btn"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/action_back"
-            android:padding="13dp"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_arrow_back"
             app:tint="@color/color_on_surface" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvStudioTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvStudioTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text="@string/studio_title_reading"
-                android:textColor="@color/color_on_surface"
-                android:textSize="18sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ProgressBar
-                    android:id="@+id/progressExercise"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="7dp"
-                    android:layout_weight="1"
-                    android:max="100"
-                    android:progress="33"
-                    android:progressDrawable="@drawable/bg_cosmic_progress_cyan" />
-
-                <TextView
-                    android:id="@+id/tvStudioProgressCounter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="1 / 3"
-                    android:textColor="@color/color_cosmic_text_secondary"
-                    android:textSize="12.5sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Grammar Assessment"
+            android:textColor="@color/color_on_surface"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/btnStudioClose"
             android:layout_width="@dimen/touch_target_min"
             android:layout_height="@dimen/touch_target_min"
-            android:background="@drawable/bg_cosmic_circle_btn"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/speaking_ai_btn_end"
-            android:padding="13dp"
+            android:padding="12dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_close"
+            android:visibility="gone"
             app:tint="@color/color_on_surface" />
+    </LinearLayout>
+
+    <!-- Stepped Segmented Progress Row (Matching image.png: Question 2 of 7 | (2) [==] [==] [-] | 29%) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingTop="2dp"
+        android:paddingBottom="10dp">
+
+        <!-- Question X of Y -->
+        <TextView
+            android:id="@+id/tvStudioProgressCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Question 1 of 5"
+            android:textColor="@color/color_on_surface"
+            android:textSize="13.5sp"
+            android:textStyle="bold" />
+
+        <!-- Stepped Segmented Bar with Number Circle in Center -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvAssessmentStepBadge"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_assessment_step_circle"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/color_cta_button_text"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/containerProgressSegments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" />
+        </LinearLayout>
+
+        <!-- Percentage (e.g. 29%) -->
+        <TextView
+            android:id="@+id/tvAssessmentPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20%"
+            android:textColor="@color/color_on_surface"
+            android:textSize="13.5sp"
+            android:textStyle="bold" />
+
+        <!-- Hidden legacy ProgressBar for backward compatibility with animation helpers -->
+        <ProgressBar
+            android:id="@+id/progressExercise"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone" />
     </LinearLayout>
 
     <!-- Scrollable Studio Body -->
@@ -396,7 +431,7 @@
                             android:padding="15dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_play_arrow"
-                            app:tint="@color/color_text_on_primary" />
+                            app:tint="@color/color_cta_button_text" />
                     </FrameLayout>
 
                     <TextView
@@ -481,15 +516,15 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- 4. COSMIC QUESTION & OPTIONS CARD -->
+                <!-- 4. ASSESSMENT QUESTION & OPTIONS CARD (Matching image.png) -->
                 <LinearLayout
                     android:id="@+id/cardStudioQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_studio_question_card"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_assessment_card_container"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:padding="18dp">
 
                     <TextView
                         android:id="@+id/tvExerciseTypeBadge"
@@ -499,7 +534,7 @@
                         android:background="@drawable/bg_speaking_status_pill"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="3dp"
-                        android:textColor="@color/color_neon_cyan"
+                        android:textColor="@color/color_assessment_green_primary"
                         android:textSize="11sp"
                         android:textStyle="bold"
                         android:visibility="gone" />
@@ -510,32 +545,28 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@string/practice_header_title"
-                            android:src="@drawable/ic_question_mark" />
-
                         <TextView
                             android:id="@+id/tvQuestionPrompt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
                             android:layout_weight="1"
-                            android:textColor="@color/color_on_surface"
-                            android:textSize="17sp"
+                            android:lineSpacingExtra="2dp"
+                            android:text="I have ___ apple."
+                            android:textColor="@color/color_assessment_green_dark"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <ImageButton
                             android:id="@+id/btnPlayQuestionAudio"
                             android:layout_width="@dimen/touch_target_min"
                             android:layout_height="@dimen/touch_target_min"
-                            android:background="@drawable/bg_studio_speaker_btn"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_assessment_btn_previous"
                             android:contentDescription="@string/exercise_play_audio"
-                            android:padding="12dp"
+                            android:padding="10dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_speaker"
-                            app:tint="@color/color_neon_cyan" />
+                            app:tint="@color/color_assessment_green_primary" />
                     </LinearLayout>
 
                     <TextView
@@ -546,23 +577,71 @@
                         android:textColor="@color/color_cosmic_text_secondary"
                         android:textSize="13.5sp" />
 
-                    <!-- Radio-Ring Options Container -->
+                    <!-- Radio-Ring Options Container (Inflated with item_assessment_option) -->
                     <LinearLayout
                         android:id="@+id/containerOptions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="14dp"
                         android:orientation="vertical" />
+
+                    <!-- 6. FEEDBACK CARD WITH TUTOR MASCOT (Matching image.png) -->
+                    <LinearLayout
+                        android:id="@+id/cardFeedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_assessment_feedback_card"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvFeedbackTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="✓ Correct!"
+                                android:textColor="@color/color_assessment_green_primary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvFeedbackExplanation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:lineSpacingExtra="3dp"
+                                android:textColor="@color/color_on_surface"
+                                android:textSize="13.5sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivFeedbackTutorMascot"
+                            android:layout_width="105dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="Tutor mascot"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/img_assessment_tutor" />
+                    </LinearLayout>
                 </LinearLayout>
 
-                <!-- 5. GLOWING CYAN WRITTEN INPUT CARD -->
+                <!-- 5. WRITTEN INPUT CARD (For translation / written exercises) -->
                 <FrameLayout
                     android:id="@+id/layoutWritingInputBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_studio_input_glow"
-                    android:minHeight="170dp"
+                    android:background="@drawable/bg_assessment_card_container"
+                    android:minHeight="150dp"
                     android:padding="16dp"
                     android:visibility="gone">
 
@@ -575,7 +654,7 @@
                         android:hint="@string/studio_writing_input_hint"
                         android:importantForAutofill="no"
                         android:inputType="textCapSentences|textMultiLine"
-                        android:minHeight="120dp"
+                        android:minHeight="110dp"
                         android:paddingBottom="28dp"
                         android:textColor="@color/color_on_surface"
                         android:textColorHint="@color/color_slate_subtitle"
@@ -596,43 +675,6 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:visibility="gone" />
-
-                <!-- 6. FEEDBACK BANNER -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardFeedback"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone"
-                    app:cardBackgroundColor="@color/color_cosmic_card"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="@color/color_cosmic_card_stroke"
-                    app:strokeWidth="1.2dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="14dp">
-
-                        <TextView
-                            android:id="@+id/tvFeedbackTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="15.5sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvFeedbackExplanation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:lineSpacingExtra="2dp"
-                            android:textColor="@color/color_cosmic_text_secondary"
-                            android:textSize="13.5sp" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
             <!-- SESSION COMPLETE / EMPTY CURRICULUM SUMMARY -->
@@ -667,21 +709,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:gravity="center"
-                    android:textColor="@color/color_neon_cyan"
+                    android:textColor="@color/color_assessment_green_primary"
                     android:textSize="@dimen/text_size_title"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/btnFinishSession"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height_primary"
+                    android:layout_height="52dp"
                     android:layout_marginTop="@dimen/spacing_large"
-                    android:background="@drawable/bg_studio_cta_cyan"
+                    android:background="@drawable/bg_assessment_btn_next"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
                     android:text="@string/studio_btn_finish"
-                    android:textColor="@color/color_text_on_primary"
+                    android:textColor="@color/color_cta_button_text"
                     android:textSize="16.5sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -689,22 +731,55 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Sticky Neon-Cyan Studio CTA Button -->
-    <TextView
-        android:id="@+id/btnSubmitOrNext"
+    <!-- Bottom Sticky Assessment Navigation Bar (Previous & Next Question matching image.png) -->
+    <LinearLayout
+        android:id="@+id/layoutAssessmentBottomBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height_primary"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_medium"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_studio_cta_cyan"
-        android:clickable="true"
-        android:elevation="6dp"
-        android:focusable="true"
-        android:gravity="center"
-        android:text="@string/studio_btn_check"
-        android:textColor="@color/color_text_on_primary"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <!-- Previous Button (pill with left arrow) -->
+        <TextView
+            android:id="@+id/btnAssessmentPrevious"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_assessment_btn_previous"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_arrow_back"
+            android:drawablePadding="6dp"
+            android:drawableTint="@color/color_assessment_green_dark"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:text="@string/assessment_btn_previous"
+            android:textColor="@color/color_assessment_green_dark"
+            android:textSize="15.5sp"
+            android:textStyle="bold" />
+
+        <!-- Next Question / Submit Button (pill with right arrow) -->
+        <TextView
+            android:id="@+id/btnSubmitOrNext"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1.2"
+            android:background="@drawable/bg_assessment_btn_next"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_arrow_forward"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/color_cta_button_text"
+            android:elevation="3dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:text="@string/assessment_btn_next"
+            android:textColor="@color/color_cta_button_text"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 </LinearLayout>

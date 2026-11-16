@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_curriculum_screen"
+    android:background="@color/color_app_canvas"
     android:clipToPadding="false"
     android:fillViewport="true"
     android:paddingBottom="@dimen/spacing_xxl">
@@ -36,7 +36,7 @@
                     android:layout_gravity="center"
                     android:contentDescription="@string/daily_tasks_title"
                     android:src="@drawable/ic_calendar"
-                    app:tint="@color/color_text_on_primary" />
+                    app:tint="@color/color_cta_button_text" />
             </FrameLayout>
 
             <LinearLayout
@@ -721,13 +721,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/touch_target_min"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/bg_talkme_secondary_button"
+                        android:background="@drawable/bg_curriculum_sky_btn"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center"
                         android:paddingHorizontal="14dp"
                         android:text="@string/daily_tasks_btn_lesson_go"
-                        android:textColor="@color/color_on_surface"
+                        android:textColor="@color/color_cta_button_text"
                         android:textSize="@dimen/text_size_caption"
                         android:textStyle="bold" />
                 </LinearLayout>

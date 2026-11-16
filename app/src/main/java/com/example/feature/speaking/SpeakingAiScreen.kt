@@ -1,6 +1,9 @@
 package com.example.feature.speaking
 
 import android.Manifest
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.SpannableStringBuilder
@@ -9,6 +12,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.getValue
@@ -92,6 +96,14 @@ class SpeakingAiViewModel @Inject constructor(
             initialValue = "Azamat"
         )
 
+    val voiceGender: StateFlow<String> = preferencesRepository.userPreferencesFlow
+        .map { prefs -> prefs.voiceGender }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = "MALE"
+        )
+
     private var hasInitializedSession = false
 
     init {
@@ -101,9 +113,9 @@ class SpeakingAiViewModel @Inject constructor(
     /**
      * Called once `Manifest.permission.RECORD_AUDIO` is confirmed granted via [MicrophonePermissionGate].
      */
-    fun onMicrophonePermissionGranted(requestedTopicId: String? = null) {
+    fun onMicrophonePermissionGranted(requestedTopicId: String? = null, requestedSectionId: String? = null) {
         coordinator.setMicPermissionGranted(true)
-        initializeSpeakingSession(requestedTopicId)
+        initializeSpeakingSession(requestedTopicId, requestedSectionId)
     }
 
     fun onMicrophonePermissionRevoked() {
@@ -111,7 +123,7 @@ class SpeakingAiViewModel @Inject constructor(
         coordinator.stopConversation()
     }
 
-    fun initializeSpeakingSession(requestedTopicId: String? = null) {
+    fun initializeSpeakingSession(requestedTopicId: String? = null, requestedSectionId: String? = null) {
         if (hasInitializedSession) return
         hasInitializedSession = true
 
@@ -135,24 +147,28 @@ class SpeakingAiViewModel @Inject constructor(
                 topicOrderIndex = topicOrderIndex,
                 completedTopicsCount = completedTopicsCount
             )
-            val title = topic?.let { "${it.orderIndex}. ${it.titleEnglish} (${it.titleUzbek})" }
+            val section = requestedSectionId?.let { learningRepository.getSectionById(it) }
+                ?.takeIf { it.topicId == topicId }
+            val title = section?.titleEnglish ?: topic?.let { "${it.orderIndex}. ${it.titleEnglish} (${it.titleUzbek})" }
                 ?: "1. Introduction (Kirish)"
 
             val vocabModels = withContext(Dispatchers.IO) {
-                learningRepository.getStudiedVocabularyForTopic(topicId)
+                section?.let { learningRepository.observeSectionVocabulary(it.id).first() }
+                    ?: learningRepository.getStudiedVocabularyForTopic(topicId)
             }
             val grammarModels = withContext(Dispatchers.IO) {
-                learningRepository.getStudiedGrammarForTopic(topicId)
+                section?.let { learningRepository.observeSectionGrammarRules(it.id).first() }
+                    ?: learningRepository.getStudiedGrammarForTopic(topicId)
             }
             val allowedWords = vocabModels.map { it.englishWord }
             val allowedGrammar = grammarModels.map { "${it.titleUzbek}: ${it.exampleEnglish}" }
 
             val sampleWords = allowedWords.take(3).joinToString(", ").ifEmpty { "hello, name, student" }
-            val extra = withContext(Dispatchers.IO) {
+            val extra = if (section != null) null else withContext(Dispatchers.IO) {
                 learningRepository.getEligibleExercises(PracticeCategory.SPEAKING, null, topicId)
                     .filter { it.id.startsWith("extra_") }.randomOrNull()
             }
-            val welcomeEnglish = extra?.promptText ?: "Hello! Let's practice speaking about $title. Try using words like $sampleWords. How can you introduce yourself?"
+            val welcomeEnglish = extra?.promptText ?: "Hello! Let's practice speaking about $title. Try using words like $sampleWords. Can you make a sentence about this lesson?"
             val welcomeMessage = ConversationMessage(
                 id = UUID.randomUUID().toString(),
                 turnId = "welcome_turn",
@@ -263,13 +279,15 @@ class SpeakingAiFragment : Fragment() {
 
     private val viewModel: SpeakingAiViewModel by viewModels()
     private lateinit var transcriptAdapter: AiChatTranscriptAdapter
+    private var characterAnimatorSet: AnimatorSet? = null
+    private var characterWasSpeaking: Boolean? = null
 
     private val requestAudioPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         val requestedTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
         if (isGranted) {
-            viewModel.onMicrophonePermissionGranted(requestedTopicId)
+            viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
             viewModel.onMicrophoneButtonTapped()
         } else {
             viewModel.onMicrophonePermissionRevoked()
@@ -290,7 +308,8 @@ class SpeakingAiFragment : Fragment() {
 
         val requestedTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
 
-        transcriptAdapter = AiChatTranscriptAdapter { englishText ->
+        val inLessonFlow = arguments?.getInt(AppConstants.ARG_LESSON_FLOW_STAGE) == 5
+        transcriptAdapter = AiChatTranscriptAdapter(showSpeaker = !inLessonFlow) { englishText ->
             viewModel.speakMessage(englishText)
         }
 
@@ -306,7 +325,7 @@ class SpeakingAiFragment : Fragment() {
                 MaterialTheme {
                     MicrophonePermissionGate(
                         onPermissionGranted = {
-                            viewModel.onMicrophonePermissionGranted(requestedTopicId)
+                            viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
                         },
                         onPermissionRevoked = {
                             viewModel.onMicrophonePermissionRevoked()
@@ -347,7 +366,8 @@ class SpeakingAiFragment : Fragment() {
                         },
                         onRetryFailedTurn = {
                             viewModel.retryFailedTurn()
-                        }
+                        },
+                        allowKeyboard = !inLessonFlow
                     )
                 }
             }
@@ -359,6 +379,12 @@ class SpeakingAiFragment : Fragment() {
         }
 
         binding.btnEndSpeakingSession.setOnClickListener {
+            if (arguments?.getInt(AppConstants.ARG_LESSON_FLOW_STAGE) == 5 &&
+                viewModel.uiState.value.messages.any { it.role == ConversationRole.USER }) {
+                findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                    AppConstants.RESULT_LESSON_SPEAKING, arguments?.getString(AppConstants.ARG_SECTION_ID)
+                )
+            }
             viewModel.endAndRecordSession {}
             navigateBackSafely()
         }
@@ -370,7 +396,7 @@ class SpeakingAiFragment : Fragment() {
                 Manifest.permission.RECORD_AUDIO
             ) == PackageManager.PERMISSION_GRANTED
             if (granted) {
-                viewModel.onMicrophonePermissionGranted(requestedTopicId)
+                viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
                 viewModel.onMicrophoneButtonTapped()
             } else {
                 viewModel.onMicrophonePermissionRevoked()
@@ -383,6 +409,16 @@ class SpeakingAiFragment : Fragment() {
                 launch {
                     viewModel.studentName.collect { name ->
                         transcriptAdapter.updateStudentName(name)
+                    }
+                }
+                launch {
+                    viewModel.voiceGender.collect { gender ->
+                        val drawableRes = if (gender.equals("FEMALE", ignoreCase = true)) {
+                            R.drawable.img_speaking_character_female
+                        } else {
+                            R.drawable.img_speaking_character_male
+                        }
+                        binding.ivAiCharacterAvatar.setImageResource(drawableRes)
                     }
                 }
                 launch {
@@ -403,12 +439,17 @@ class SpeakingAiFragment : Fragment() {
                             targetTurns
                         )
 
+                        if (arguments?.getInt(AppConstants.ARG_LESSON_FLOW_STAGE) == 5) {
+                            binding.tvSpeakingTurnCounter.text = getString(R.string.lesson_flow_counter, 5, 6)
+                            binding.progressSpeakingTurn.visibility = View.GONE
+                        }
                         val mins = state.durationSeconds / 60
                         val secs = state.durationSeconds % 60
                         binding.tvSpeakingDuration.text = String.format(Locale.US, "%02d:%02d", mins, secs)
 
                         updateMicrophoneVisualState(state)
                         updateLiveSpeechCard(state)
+                        updateCharacterStage(state)
 
                         transcriptAdapter.submitList(state.transcript) {
                             if (state.transcript.isNotEmpty()) {
@@ -477,7 +518,7 @@ class SpeakingAiFragment : Fragment() {
         binding.btnMicrophoneSpeak.isEnabled = !state.isLoading
         if (state.isListeningOrSpeakingUser) {
             binding.btnMicrophoneSpeak.setColorFilter(
-                ContextCompat.getColor(requireContext(), if (state.isMuted) R.color.color_warning else R.color.color_text_on_primary)
+                ContextCompat.getColor(requireContext(), if (state.isMuted) R.color.color_warning else R.color.color_cta_button_text)
             )
             val amp = if (state.isMuted) 0f else state.audioAmplitude.coerceIn(0f, 1f)
             val auraScale = 1.08f + amp * 0.36f
@@ -486,19 +527,90 @@ class SpeakingAiFragment : Fragment() {
             binding.btnMicrophoneSpeak.scaleX = 1.08f
             binding.btnMicrophoneSpeak.scaleY = 1.08f
         } else if (state.isAiSpeaking) {
-            binding.btnMicrophoneSpeak.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_text_on_primary))
+            binding.btnMicrophoneSpeak.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_cta_button_text))
             binding.ivAiCharacterAura.scaleX = 1.05f
             binding.ivAiCharacterAura.scaleY = 1.05f
             binding.viewTutorSpeakingBar.scaleX = 1.35f
             binding.btnMicrophoneSpeak.scaleX = 1.0f
             binding.btnMicrophoneSpeak.scaleY = 1.0f
         } else {
-            binding.btnMicrophoneSpeak.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_text_on_primary))
+            binding.btnMicrophoneSpeak.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_cta_button_text))
             binding.ivAiCharacterAura.scaleX = 1.0f
             binding.ivAiCharacterAura.scaleY = 1.0f
             binding.viewTutorSpeakingBar.scaleX = 1.0f
             binding.btnMicrophoneSpeak.scaleX = 1.0f
             binding.btnMicrophoneSpeak.scaleY = 1.0f
+        }
+    }
+
+    private fun updateCharacterStage(state: ConversationUiState) {
+        val ctx = context ?: return
+        val statusText = when {
+            state.isAiSpeaking -> getString(R.string.speaking_tutor_stage_speaking)
+            state.conversationState is ConversationState.AI_THINKING ||
+                state.conversationState is ConversationState.FINALIZING ->
+                getString(R.string.speaking_tutor_stage_thinking)
+            state.isListeningOrSpeakingUser && state.isAudioCaptureActuallyRunning && !state.isMuted ->
+                getString(R.string.speaking_tutor_stage_listening)
+            else -> getString(R.string.speaking_ai_tutor_badge)
+        }
+        binding.tvTutorStageStatus.text = statusText
+
+        val strokeColor = ContextCompat.getColor(
+            ctx,
+            if (state.isAiSpeaking) R.color.color_neon_cyan else R.color.color_card_outline
+        )
+        binding.cardAiCharacterSection.strokeColor = strokeColor
+        binding.viewTutorStatusDot.alpha = if (state.isAiSpeaking) 1.0f else 0.78f
+
+        if (characterWasSpeaking != state.isAiSpeaking) {
+            characterWasSpeaking = state.isAiSpeaking
+            restartCharacterMotion(isSpeaking = state.isAiSpeaking)
+        }
+    }
+
+    private fun restartCharacterMotion(isSpeaking: Boolean) {
+        characterAnimatorSet?.cancel()
+        val avatar = _binding?.ivAiCharacterAvatar ?: return
+        val targetScale = if (isSpeaking) 1.055f else 1.022f
+        val startScale = if (isSpeaking) 1.015f else 1.0f
+        val durationMs = if (isSpeaking) 680L else 2600L
+
+        val scaleX = ObjectAnimator.ofFloat(avatar, View.SCALE_X, startScale, targetScale).apply {
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+            duration = durationMs
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+        val scaleY = ObjectAnimator.ofFloat(avatar, View.SCALE_Y, startScale, targetScale).apply {
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+            duration = durationMs
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+        val bobDp = if (isSpeaking) 3.5f else 1.5f
+        val bobPx = bobDp * resources.displayMetrics.density
+        val translateY = ObjectAnimator.ofFloat(avatar, View.TRANSLATION_Y, -bobPx, bobPx).apply {
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+            duration = if (isSpeaking) 920L else 3100L
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+
+        characterAnimatorSet = AnimatorSet().apply {
+            playTogether(scaleX, scaleY, translateY)
+            start()
+        }
+    }
+
+    private fun stopCharacterMotion() {
+        characterAnimatorSet?.cancel()
+        characterAnimatorSet = null
+        characterWasSpeaking = null
+        _binding?.ivAiCharacterAvatar?.apply {
+            scaleX = 1f
+            scaleY = 1f
+            translationY = 0f
         }
     }
 
@@ -510,12 +622,14 @@ class SpeakingAiFragment : Fragment() {
     }
 
     override fun onStop() {
-        // Safely stop all active STT/Gemini/TTS jobs when leaving the screen (Test 9)
+        // Safely stop all active STT/Gemini/TTS jobs and character animators when leaving the screen
+        stopCharacterMotion()
         viewModel.stopConversation()
         super.onStop()
     }
 
     override fun onDestroyView() {
+        stopCharacterMotion()
         super.onDestroyView()
         _binding = null
     }

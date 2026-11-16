@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_curriculum_screen">
+    android:background="@color/color_app_canvas">
 
     <LinearLayout
         android:id="@+id/layoutSpeakingSessionContent"
@@ -102,17 +102,17 @@
                 app:tint="@color/color_on_surface" />
         </LinearLayout>
 
-        <!-- 2. ROUNDED CYAN-BORDERED AI TUTOR VIDEO CALL HERO CARD -->
+        <!-- 2. ROUNDED AI TUTOR CINEMATIC 3D CHARACTER STAGE CARD -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAiCharacterSection"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="208dp"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             app:cardBackgroundColor="@color/color_cosmic_card"
             app:cardCornerRadius="18dp"
             app:cardElevation="6dp"
-            app:strokeColor="@color/color_neon_cyan"
-            app:strokeWidth="1.8dp">
+            app:strokeColor="@color/color_card_outline"
+            app:strokeWidth="2dp">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/speaking_ai_title"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_ai_tutor_hero_1794423856585" />
+                    android:src="@drawable/img_speaking_character_male" />
 
                 <!-- Bottom Vignette Scrim -->
                 <View
@@ -133,7 +133,7 @@
                     android:layout_gravity="bottom"
                     android:background="@drawable/bg_image_scrim" />
 
-                <!-- Top-Left Glass Pill: Green Dot + AI Tutor -->
+                <!-- Top-Left Glass Pill: Status Dot + AI Tutor Stage -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,11 +146,13 @@
                     android:paddingVertical="5dp">
 
                     <View
+                        android:id="@+id/viewTutorStatusDot"
                         android:layout_width="8dp"
                         android:layout_height="8dp"
                         android:background="@drawable/bg_speaking_green_dot" />
 
                     <TextView
+                        android:id="@+id/tvTutorStageStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
@@ -160,7 +162,7 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <!-- Bottom-Center Animated Cyan Waveform Bars -->
+                <!-- Bottom-Center Animated Waveform Bars -->
                 <com.example.core.ui.CosmicWaveformView
                     android:id="@+id/waveformTutorHero"
                     android:layout_width="148dp"
@@ -310,7 +312,7 @@
                     android:padding="19dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_mic"
-                    app:tint="@color/color_text_on_primary" />
+                    app:tint="@color/color_cta_button_text" />
             </FrameLayout>
 
             <TextView

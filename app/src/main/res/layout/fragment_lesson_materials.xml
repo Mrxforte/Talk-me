@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_app_canvas"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/spacing_medium"
+    android:paddingTop="@dimen/spacing_small">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/spacing_xs">
+
+        <ImageButton
+            android:id="@+id/materialBack"
+            android:layout_width="@dimen/touch_target_min"
+            android:layout_height="@dimen/touch_target_min"
+            android:background="@drawable/bg_cosmic_circle_btn"
+            android:contentDescription="@string/action_back"
+            android:padding="13dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/color_on_surface" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="@string/lesson_materials_title"
+            android:textColor="@color/color_on_surface"
+            android:textSize="@dimen/text_size_heading"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/vocabularyTab"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="@dimen/touch_target_min"
+            android:text="@string/lesson_materials_vocab"
+            android:textAllCaps="false"
+            android:textColor="@color/color_on_surface"
+            android:textStyle="bold"
+            app:strokeColor="@color/color_card_outline" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/grammarTab"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="@dimen/touch_target_min"
+            android:text="@string/lesson_materials_grammar"
+            android:textAllCaps="false"
+            android:textColor="@color/color_on_surface"
+            android:textStyle="bold"
+            app:strokeColor="@color/color_card_outline" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <EditText
+        android:id="@+id/materialSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@drawable/bg_studio_input_glow"
+        android:hint="@string/lesson_materials_search"
+        android:inputType="text"
+        android:minHeight="@dimen/touch_target_min"
+        android:paddingHorizontal="12dp"
+        android:singleLine="true"
+        android:textColor="@color/color_on_surface"
+        android:textColorHint="@color/color_on_surface_secondary"
+        android:textSize="@dimen/text_size_body" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/materialLevel"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/touch_target_min"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_talkme_card"
+            android:contentDescription="@string/lesson_materials_all_levels"
+            android:paddingHorizontal="8dp"
+            android:popupBackground="@color/color_card_surface" />
+
+        <Spinner
+            android:id="@+id/materialLesson"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/touch_target_min"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_talkme_card"
+            android:contentDescription="@string/lesson_materials_all_lessons"
+            android:paddingHorizontal="8dp"
+            android:popupBackground="@color/color_card_surface" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/materialFlip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:minHeight="@dimen/touch_target_min"
+        android:text="@string/lesson_materials_flip"
+        android:textAllCaps="false"
+        android:textColor="@color/color_cta_button_text"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:backgroundTint="@color/color_cta_button_bg"
+        app:cornerRadius="999dp" />
+
+    <TextView
+        android:id="@+id/materialEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/spacing_medium"
+        android:text="@string/lesson_materials_empty"
+        android:textColor="@color/color_on_surface_secondary"
+        android:textSize="@dimen/text_size_body"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/materialList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingVertical="@dimen/spacing_small" />
+</LinearLayout>

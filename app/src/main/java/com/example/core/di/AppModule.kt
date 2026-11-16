@@ -50,10 +50,8 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideSileroVadDetector(
-        modelManager: com.example.core.speech.SpeechModelManager
-    ): com.example.core.speech.SileroVadDetector {
-        return com.example.core.speech.SileroVadDetector(modelManager)
+    fun provideSileroVadDetector(): com.example.core.speech.SileroVadDetector {
+        return com.example.core.speech.SileroVadDetector()
     }
 }
 

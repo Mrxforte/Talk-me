@@ -49,6 +49,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
@@ -178,6 +179,7 @@ data class ExerciseSessionUiState(
     val hasSubmittedCurrent: Boolean = false,
     val isCurrentCorrect: Boolean = false,
     val correctCount: Int = 0,
+    val wrongAnswers: List<Pair<ExerciseModel, String>> = emptyList(),
     val isSessionFinished: Boolean = false,
     val isLoaded: Boolean = false
 ) {
@@ -202,18 +204,47 @@ class ExerciseSessionViewModel @Inject constructor(
     private val masteredGrammarIds = mutableListOf<String>()
     private val memorizedVocabIds = mutableListOf<String>()
 
-    fun startSession(categoryId: String, sectionIdFilter: String?, topicIdFilter: String? = null) {
+    fun startSession(categoryId: String, sectionIdFilter: String?, topicIdFilter: String? = null, lessonListening: Boolean = false) {
         if (_uiState.value.exercises.isNotEmpty()) return
         val category = runCatching { PracticeCategory.valueOf(categoryId) }
             .getOrDefault(PracticeCategory.VOCABULARY)
 
         viewModelScope.launch {
             val topicModel = topicIdFilter?.let { learningRepository.getTopicById(it) }
-            val eligible = learningRepository.getEligibleExercises(
-                category = category,
-                sectionIdFilter = sectionIdFilter,
-                topicIdFilter = topicIdFilter
-            )
+            val eligible = if (lessonListening && sectionIdFilter != null) {
+                val authored = learningRepository.getEligibleExercises(PracticeCategory.SECTION_QUIZ, sectionIdFilter, topicIdFilter)
+                    .filter { exercise ->
+                        exercise.sectionId == sectionIdFilter &&
+                            exercise.audioTextToSpeak?.isNotBlank() == true &&
+                            (exercise.exerciseType == ExerciseType.LISTENING_COMPREHENSION ||
+                                exercise.exerciseType == ExerciseType.AUDIO_RECOGNITION)
+                    }
+                authored.ifEmpty {
+                    val words = learningRepository.observeSectionVocabulary(sectionIdFilter).first()
+                        .filter { it.englishWord.isNotBlank() && it.uzbekTranslation.isNotBlank() }
+                        .distinctBy { it.uzbekTranslation }
+                    words.firstOrNull()?.let { word ->
+                        listOf(ExerciseModel(
+                            id = "lesson_audio_" + word.sectionId,
+                            topicId = word.topicId,
+                            sectionId = word.sectionId,
+                            practiceCategory = PracticeCategory.LISTENING,
+                            exerciseType = ExerciseType.LISTENING_COMPREHENSION,
+                            difficulty = 1,
+                            promptText = word.englishWord,
+                            subPromptText = "",
+                            audioTextToSpeak = word.englishWord,
+                            options = words.take(3).map { it.uzbekTranslation }.shuffled(),
+                            correctAnswer = word.uzbekTranslation,
+                            explanationUzbek = word.exampleUzbek,
+                            vocabularyIds = listOf(word.id),
+                            grammarRuleIds = emptyList()
+                        ))
+                    }.orEmpty()
+                }
+            } else {
+                learningRepository.getEligibleExercises(category, sectionIdFilter, topicIdFilter)
+            }
             _uiState.value = ExerciseSessionUiState(
                 category = category,
                 topicTitle = topicModel?.let { "${it.orderIndex}. ${it.titleEnglish} — ${it.titleUzbek}" }.orEmpty(),
@@ -306,7 +337,8 @@ class ExerciseSessionViewModel @Inject constructor(
                 selectedOrTypedAnswer = candidate,
                 hasSubmittedCurrent = true,
                 isCurrentCorrect = isCorrect,
-                correctCount = if (isCorrect) state.correctCount + 1 else state.correctCount
+                correctCount = if (isCorrect) state.correctCount + 1 else state.correctCount,
+                wrongAnswers = if (isCorrect) state.wrongAnswers else state.wrongAnswers + (current to candidate)
             )
         } else {
             val nextIdx = state.currentIndex + 1
@@ -339,6 +371,27 @@ class ExerciseSessionViewModel @Inject constructor(
                         memorizedVocabularyIds = memorizedVocabIds
                     )
                     _uiState.value = state.copy(isSessionFinished = true)
+                }
+            }
+        }
+    }
+
+    fun previousQuestion() {
+        val state = _uiState.value
+        if (state.currentIndex > 0) {
+            val prevIdx = state.currentIndex - 1
+            val prevEx = state.exercises.getOrNull(prevIdx)
+            _uiState.value = state.copy(
+                currentIndex = prevIdx,
+                selectedOrTypedAnswer = "",
+                hasSubmittedCurrent = false,
+                isCurrentCorrect = false
+            )
+            prevEx?.audioTextToSpeak?.let { audio ->
+                if (state.category == PracticeCategory.LISTENING) {
+                    viewModelScope.launch {
+                        ttsManager.speakEnglish(audio, overrideSpeed = _selectedSpeed.value)
+                    }
                 }
             }
         }
@@ -380,6 +433,7 @@ class ExerciseSessionFragment : Fragment() {
             ?: PracticeCategory.VOCABULARY.id
         val sectionId = arguments?.getString(AppConstants.ARG_SECTION_ID)
         val topicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
+        val lessonListening = arguments?.getInt(AppConstants.ARG_LESSON_FLOW_STAGE) == 4
         val isSequentialPlan = arguments?.getBoolean(AppConstants.ARG_SEQUENTIAL_DAILY_PLAN, false) ?: false
 
         binding.waveformListeningRing.setMode(CosmicWaveformView.Mode.RING)
@@ -417,13 +471,32 @@ class ExerciseSessionFragment : Fragment() {
             binding.ivWritingSampleChevron.rotation = if (isWritingSampleExpanded) 180f else 0f
         }
 
+        binding.btnAssessmentPrevious.setOnClickListener {
+            viewModel.previousQuestion()
+        }
+
         binding.btnSubmitOrNext.setOnClickListener {
             val typed = binding.etWrittenAnswer.text?.toString().orEmpty()
             viewModel.submitOrAdvance(typed)
         }
 
         binding.btnFinishSession.setOnClickListener {
-            if (isSequentialPlan && viewModel.uiState.value.exercises.isNotEmpty()) {
+            if (lessonListening) {
+                val state = viewModel.uiState.value
+                val nav = findNavController()
+                nav.previousBackStackEntry?.savedStateHandle?.set(
+                    AppConstants.RESULT_LESSON_LISTENING,
+                    bundleOf(
+                        AppConstants.ARG_SECTION_ID to sectionId,
+                        AppConstants.LESSON_RESULT_CORRECT to state.correctCount,
+                        AppConstants.LESSON_RESULT_TOTAL to state.exercises.size,
+                        AppConstants.LESSON_RESULT_DETAILS to ArrayList(state.wrongAnswers.map { (exercise, answer) ->
+                            getString(R.string.lesson_flow_answer_line, exercise.promptText, answer, exercise.correctAnswer)
+                        })
+                    )
+                )
+                nav.navigateUp()
+            } else if (isSequentialPlan && viewModel.uiState.value.exercises.isNotEmpty()) {
                 val activeTopicId = topicId ?: AppConstants.INITIAL_TOPIC_ID
                 val currentCategory = viewModel.uiState.value.category
                 val nextCategory = when (currentCategory) {
@@ -472,13 +545,19 @@ class ExerciseSessionFragment : Fragment() {
             }
         }
 
-        viewModel.startSession(categoryId, sectionId, topicId)
+        viewModel.startSession(categoryId, sectionId, topicId, lessonListening)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collect { state ->
                         renderSessionUi(state, isSequentialPlan)
+                        if (lessonListening) {
+                            binding.tvStudioProgressCounter.text = getString(R.string.lesson_flow_counter, 4, 6)
+                            if (state.isLoaded && (state.isSessionFinished || state.exercises.isEmpty())) {
+                                binding.btnFinishSession.setText(R.string.lesson_flow_to_speak)
+                            }
+                        }
                     }
                 }
                 launch {
@@ -506,18 +585,20 @@ class ExerciseSessionFragment : Fragment() {
 
         if (state.isLoaded && state.exercises.isEmpty()) {
             binding.layoutActiveQuestion.visibility = View.GONE
-            binding.btnSubmitOrNext.visibility = View.GONE
+            binding.layoutAssessmentBottomBar.visibility = View.GONE
             binding.layoutSessionSummary.visibility = View.VISIBLE
             binding.tvSessionSummaryScore.text = getString(R.string.curriculum_empty)
             binding.btnFinishSession.text = getString(R.string.exercise_btn_finish)
-            binding.progressExercise.animateProgressTo(0, maxValue = 100, durationMs = 400L)
             binding.tvStudioProgressCounter.text = "0 / 0"
+            binding.tvAssessmentStepBadge.text = "0"
+            binding.tvAssessmentPercent.text = "0%"
+            binding.containerProgressSegments.removeAllViews()
             return
         }
 
         if (state.isSessionFinished) {
             binding.layoutActiveQuestion.visibility = View.GONE
-            binding.btnSubmitOrNext.visibility = View.GONE
+            binding.layoutAssessmentBottomBar.visibility = View.GONE
             binding.layoutSessionSummary.visibility = View.VISIBLE
             val total = state.exercises.size.coerceAtLeast(1)
             val pct = (state.correctCount * 100) / total
@@ -532,24 +613,45 @@ class ExerciseSessionFragment : Fragment() {
             } else {
                 getString(R.string.studio_btn_finish)
             }
-            binding.progressExercise.animateProgressTo(100, maxValue = 100, durationMs = 550L)
+            binding.tvStudioProgressCounter.text = getString(R.string.assessment_question_count_format, total, total)
+            binding.tvAssessmentStepBadge.text = "$total"
+            binding.tvAssessmentPercent.text = "100%"
             return
         }
 
         val current = state.currentExercise ?: return
         binding.layoutActiveQuestion.visibility = View.VISIBLE
-        binding.btnSubmitOrNext.visibility = View.VISIBLE
+        binding.layoutAssessmentBottomBar.visibility = View.VISIBLE
         binding.layoutSessionSummary.visibility = View.GONE
 
         val total = state.exercises.size.coerceAtLeast(1)
-        val counterText = getString(R.string.studio_counter_format, state.currentIndex + 1, total)
-        binding.tvStudioProgressCounter.text = counterText
-        binding.headerExercise.tvHeaderSubtitle.text = if (state.topicTitle.isNotBlank()) {
-            "${state.topicTitle} • $counterText"
-        } else {
-            counterText
+        val currentNum = (state.currentIndex + 1).coerceIn(1, total)
+        val percent = ((currentNum.toFloat() / total) * 100).toInt()
+
+        binding.tvStudioProgressCounter.text = getString(R.string.assessment_question_count_format, currentNum, total)
+        binding.tvAssessmentStepBadge.text = "$currentNum"
+        binding.tvAssessmentPercent.text = getString(R.string.assessment_percent_format, percent)
+
+        // Dynamic Segmented Progress Pills (Matching image.png: [==] [==] [--] [--])
+        binding.containerProgressSegments.removeAllViews()
+        val density = resources.displayMetrics.density
+        val pillHeight = (5 * density).toInt()
+        val pillWidth = (16 * density).toInt()
+        val pillMargin = (3 * density).toInt()
+
+        for (i in 0 until total) {
+            val pill = View(requireContext()).apply {
+                layoutParams = LinearLayout.LayoutParams(pillWidth, pillHeight).apply {
+                    marginStart = pillMargin
+                    marginEnd = pillMargin
+                }
+                setBackgroundResource(
+                    if (i < currentNum) R.drawable.bg_assessment_pill_active
+                    else R.drawable.bg_assessment_pill_inactive
+                )
+            }
+            binding.containerProgressSegments.addView(pill)
         }
-        binding.progressExercise.animateProgressTo(((state.currentIndex + 1) * 100) / total, maxValue = 100, durationMs = 600L)
 
         // Toggle studio mode headers
         val isReading = state.category == PracticeCategory.READING
@@ -577,7 +679,8 @@ class ExerciseSessionFragment : Fragment() {
         binding.tvExerciseTypeBadge.text = current.exerciseType.name.replace("_", " ")
         binding.tvExerciseTypeBadge.visibility =
             if (!isReading && !isListening && !isWriting) View.VISIBLE else View.GONE
-        binding.tvQuestionPrompt.text = current.promptText
+        binding.tvQuestionPrompt.text = if (current.id.startsWith("lesson_audio_"))
+            getString(R.string.lesson_flow_listen_info) else current.promptText
         binding.tvQuestionSubPrompt.text = current.subPromptText
         binding.tvQuestionSubPrompt.visibility =
             if (isReading || current.subPromptText.isBlank()) View.GONE else View.VISIBLE
@@ -596,42 +699,62 @@ class ExerciseSessionFragment : Fragment() {
             renderRadioOptions(current, state)
         }
 
+        // Previous button state
+        val canGoBack = state.currentIndex > 0
+        binding.btnAssessmentPrevious.isEnabled = canGoBack
+        binding.btnAssessmentPrevious.alpha = if (canGoBack) 1.0f else 0.35f
+
+        // Feedback Card & Next Button state
         if (state.hasSubmittedCurrent) {
             binding.cardFeedback.visibility = View.VISIBLE
             if (state.isCurrentCorrect) {
-                binding.cardFeedback.setStrokeColor(ContextCompat.getColor(requireContext(), R.color.color_neon_green))
-                binding.cardFeedback.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.color_cosmic_success_bg))
-                binding.tvFeedbackTitle.text = getString(R.string.exercise_feedback_correct)
-                binding.tvFeedbackTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_neon_green))
+                binding.cardFeedback.setBackgroundResource(R.drawable.bg_assessment_feedback_card)
+                binding.tvFeedbackTitle.text = "✓ " + getString(R.string.assessment_feedback_correct_title)
+                binding.tvFeedbackTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_assessment_green_primary))
             } else {
-                binding.cardFeedback.setStrokeColor(ContextCompat.getColor(requireContext(), R.color.color_error))
-                binding.cardFeedback.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.color_cosmic_error_bg))
-                binding.tvFeedbackTitle.text = getString(R.string.exercise_feedback_incorrect)
+                binding.cardFeedback.setBackgroundResource(R.drawable.bg_assessment_feedback_wrong)
+                binding.tvFeedbackTitle.text = "✕ " + getString(R.string.assessment_feedback_incorrect_title)
                 binding.tvFeedbackTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_error))
             }
-            binding.tvFeedbackExplanation.text =
-                "Javob: ${current.correctAnswer}\n${current.explanationUzbek}"
-            binding.btnSubmitOrNext.text = getString(R.string.studio_btn_next)
+
+            val explanationBuilder = StringBuilder()
+            if (current.explanationUzbek.isNotBlank()) {
+                explanationBuilder.append(current.explanationUzbek).append("\n\n")
+            }
+            val fullSentence = if ("___" in current.promptText) {
+                current.promptText.replace("___", current.correctAnswer)
+            } else {
+                "${current.promptText} ${current.correctAnswer}"
+            }
+            explanationBuilder.append("✓ ").append(fullSentence)
+            binding.tvFeedbackExplanation.text = explanationBuilder.toString()
+
+            binding.btnSubmitOrNext.text = getString(R.string.assessment_btn_next)
+            binding.btnSubmitOrNext.setCompoundDrawablesWithIntrinsicBounds(
+                null,
+                null,
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_forward),
+                null
+            )
         } else {
             binding.cardFeedback.visibility = View.GONE
             binding.btnSubmitOrNext.text = if (isListening) {
                 getString(R.string.studio_btn_check_answer)
             } else {
-                getString(R.string.studio_btn_check)
+                getString(R.string.assessment_btn_check)
             }
+            binding.btnSubmitOrNext.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
         }
     }
 
     private fun formatStudioTitle(category: PracticeCategory): CharSequence {
-        val (firstWord, rest) = when (category) {
-            PracticeCategory.READING -> "Reading" to " Studio"
-            PracticeCategory.WRITING -> "Writing" to " Studio"
-            PracticeCategory.LISTENING -> "Listening" to " Studio"
-            else -> return category.displayName
-        }
-        return SpannableStringBuilder(firstWord).apply {
-            setSpan(StyleSpan(Typeface.BOLD), 0, firstWord.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            append(rest)
+        return when (category) {
+            PracticeCategory.GRAMMAR -> "Grammar Assessment"
+            PracticeCategory.READING -> "Reading Assessment"
+            PracticeCategory.WRITING -> "Writing Assessment"
+            PracticeCategory.LISTENING -> "Listening Assessment"
+            PracticeCategory.SECTION_QUIZ -> "Quiz Assessment"
+            else -> "${category.displayName} Assessment"
         }
     }
 
@@ -807,17 +930,18 @@ class ExerciseSessionFragment : Fragment() {
         binding.containerOptions.removeAllViews()
         val density = resources.displayMetrics.density
         val minTarget = resources.getDimensionPixelSize(R.dimen.touch_target_min)
+        val letters = listOf("A.", "B.", "C.", "D.", "E.", "F.")
 
-        current.options.forEach { optionText ->
+        current.options.forEachIndexed { index, optionText ->
             val isSelected = state.selectedOrTypedAnswer == optionText
             val isCorrectOption = state.hasSubmittedCurrent && optionText == current.correctAnswer
             val isWrongSelected = state.hasSubmittedCurrent && isSelected && !state.isCurrentCorrect
 
             val bgRes = when {
-                isCorrectOption -> R.drawable.bg_studio_option_correct
-                isWrongSelected -> R.drawable.bg_studio_option_wrong
-                isSelected -> R.drawable.bg_studio_option_selected
-                else -> R.drawable.bg_studio_option_default
+                isCorrectOption -> R.drawable.bg_assessment_option_correct
+                isWrongSelected -> R.drawable.bg_assessment_option_wrong
+                isSelected -> R.drawable.bg_assessment_option_correct
+                else -> R.drawable.bg_assessment_option_default
             }
 
             val row = LinearLayout(requireContext()).apply {
@@ -825,12 +949,12 @@ class ExerciseSessionFragment : Fragment() {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 ).apply {
-                    bottomMargin = (10 * density).toInt()
+                    bottomMargin = (12 * density).toInt()
                 }
-                minimumHeight = minTarget
+                minimumHeight = (54 * density).toInt().coerceAtLeast(minTarget)
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER_VERTICAL
-                setPadding((14 * density).toInt(), (12 * density).toInt(), (14 * density).toInt(), (12 * density).toInt())
+                setPadding((16 * density).toInt(), (14 * density).toInt(), (16 * density).toInt(), (14 * density).toInt())
                 setBackgroundResource(bgRes)
                 isClickable = !state.hasSubmittedCurrent
                 isFocusable = !state.hasSubmittedCurrent
@@ -839,21 +963,46 @@ class ExerciseSessionFragment : Fragment() {
                 }
             }
 
-            val radioIndicator = View(requireContext()).apply {
-                val sz = (18 * density).toInt()
-                layoutParams = LinearLayout.LayoutParams(sz, sz).apply {
+            val radioIndicator = LinearLayout(requireContext()).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
                     marginEnd = (12 * density).toInt()
                 }
-                setBackgroundResource(
-                    if (isSelected || isCorrectOption) R.drawable.bg_studio_radio_ring_selected
-                    else R.drawable.bg_studio_radio_ring
-                )
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+
+                val radioCircle = View(requireContext()).apply {
+                    val sz = (22 * density).toInt()
+                    layoutParams = LinearLayout.LayoutParams(sz, sz).apply {
+                        marginEnd = (10 * density).toInt()
+                    }
+                    setBackgroundResource(
+                        if (isSelected || isCorrectOption) R.drawable.bg_assessment_radio_selected
+                        else R.drawable.bg_assessment_radio_unselected
+                    )
+                }
+
+                val letterLabel = TextView(requireContext()).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    text = letters.getOrElse(index) { "${index + 1}." }
+                    textSize = 17f
+                    setTypeface(null, Typeface.BOLD)
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.color_assessment_green_primary))
+                }
+
+                addView(radioCircle)
+                addView(letterLabel)
             }
 
             val tvOption = TextView(requireContext()).apply {
                 layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
                 text = optionText
-                textSize = 15f
+                textSize = 16.5f
                 setTextColor(ContextCompat.getColor(requireContext(), R.color.color_on_surface))
                 if (isSelected || isCorrectOption) {
                     setTypeface(null, Typeface.BOLD)
@@ -862,6 +1011,29 @@ class ExerciseSessionFragment : Fragment() {
 
             row.addView(radioIndicator)
             row.addView(tvOption)
+
+            if (isCorrectOption) {
+                val checkBadge = ImageView(requireContext()).apply {
+                    val sz = (24 * density).toInt()
+                    layoutParams = LinearLayout.LayoutParams(sz, sz).apply {
+                        marginStart = (8 * density).toInt()
+                    }
+                    setImageResource(R.drawable.ic_assessment_check_circle)
+                    contentDescription = "Correct"
+                }
+                row.addView(checkBadge)
+            } else if (isWrongSelected) {
+                val wrongBadge = ImageView(requireContext()).apply {
+                    val sz = (24 * density).toInt()
+                    layoutParams = LinearLayout.LayoutParams(sz, sz).apply {
+                        marginStart = (8 * density).toInt()
+                    }
+                    setImageResource(R.drawable.ic_assessment_wrong_circle)
+                    contentDescription = "Incorrect"
+                }
+                row.addView(wrongBadge)
+            }
+
             binding.containerOptions.addView(row)
         }
     }

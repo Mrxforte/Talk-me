@@ -106,4 +106,65 @@ class TtsManagerTest {
             assertTrue(script.contains("Salom, aziz do‘stim!"))
             assertTrue(script.contains("Har bir xato — bu o‘rganishning bir qismi."))
         }
+
+    @Test
+    fun `gemini tts voice selection switches between Male Orus and Female Kore dynamically`() =
+        kotlinx.coroutines.runBlocking {
+            assertEquals("Orus", com.example.core.audio.GeminiTtsProvider.resolveVoiceName("MALE"))
+            assertEquals("Kore", com.example.core.audio.GeminiTtsProvider.resolveVoiceName("FEMALE"))
+
+            val prefsFlow = kotlinx.coroutines.flow.MutableStateFlow(
+                com.example.domain.model.UserPreferencesModel(
+                    soundEnabled = true,
+                    preferredTtsProvider = "GEMINI",
+                    voiceGender = "MALE"
+                )
+            )
+            val usedProviders = mutableListOf<String>()
+            val fakeNative = object : com.example.domain.repository.TtsProvider {
+                override val providerName: String = "NATIVE"
+                override suspend fun speak(text: String, speechRate: Float): Result<Unit> = Result.success(Unit)
+                override suspend fun speakWithLanguage(text: String, speechRate: Float, languageCode: String): Result<Unit> {
+                    usedProviders.add("NATIVE:$languageCode")
+                    return Result.success(Unit)
+                }
+                override fun stop() = Unit
+                override fun clearCache(): Long = 0L
+                override fun getCacheSizeBytes(): Long = 0L
+            }
+            val fakeGemini = object : com.example.domain.repository.TtsProvider {
+                override val providerName: String = "GEMINI"
+                override suspend fun speak(text: String, speechRate: Float): Result<Unit> = Result.success(Unit)
+                override suspend fun speakWithLanguage(text: String, speechRate: Float, languageCode: String): Result<Unit> {
+                    usedProviders.add("GEMINI:${prefsFlow.value.voiceGender}")
+                    return Result.success(Unit)
+                }
+                override fun stop() = Unit
+                override fun clearCache(): Long = 0L
+                override fun getCacheSizeBytes(): Long = 0L
+            }
+            val prefsRepo = object : com.example.domain.repository.UserPreferencesRepository {
+                override val userPreferencesFlow = prefsFlow
+                override suspend fun updateUserName(name: String) = Unit
+                override suspend fun updateThemeMode(themeMode: String) = Unit
+                override suspend fun updateSoundEnabled(enabled: Boolean) = Unit
+                override suspend fun updateSpeechSpeed(speed: Float) = Unit
+                override suspend fun updatePremiumSubscribed(subscribed: Boolean) = Unit
+                override suspend fun updatePreferredTtsProvider(provider: String) = Unit
+                override suspend fun updateVoiceGender(voiceGender: String) {
+                    prefsFlow.value = prefsFlow.value.copy(voiceGender = voiceGender)
+                }
+                override suspend fun updateOfflineAudioEnabled(enabled: Boolean) = Unit
+                override suspend fun updateLessonRemindersEnabled(enabled: Boolean) = Unit
+                override suspend fun updateLastLearningBookmark(topicId: String, sectionId: String, scrollOffset: Int) = Unit
+            }
+
+            val manager = com.example.core.audio.TtsManager(fakeNative, fakeGemini, prefsRepo)
+
+            manager.speakEnglish("Hello, welcome to your lesson!")
+            prefsRepo.updateVoiceGender("FEMALE")
+            manager.speakEnglish("Great job! Let's continue.")
+
+            assertEquals(listOf("GEMINI:MALE", "GEMINI:FEMALE"), usedProviders)
+        }
 }

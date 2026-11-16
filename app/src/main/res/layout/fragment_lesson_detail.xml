@@ -73,6 +73,7 @@
 
         <ProgressBar
             android:id="@+id/progressLessonTopBar"
+            android:visibility="gone"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="7dp"
@@ -86,6 +87,7 @@
 
     <!-- 2. 4-STEP HORIZONTAL STEPPER ROW (Qoida — Misollar — Mashqlar — Wrap-up) -->
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -262,7 +264,7 @@
                 android:id="@+id/cardLessonStageContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_lesson_stage_card"
+                android:background="@android:color/transparent"
                 android:orientation="vertical"
                 android:paddingBottom="16dp">
 
@@ -446,11 +448,34 @@
                                 android:id="@+id/tvSituationBody"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
+                                android:layout_marginTop="4dp"
                                 android:lineSpacingExtra="@dimen/spacing_small"
                                 android:text="Til klubidagi ilk kun. Tanishamiz va birga boshlaymiz."
                                 android:textColor="@color/lesson_text"
                                 android:textSize="@dimen/text_size_medium" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnListenRuleUzbek"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xs"
+                                android:gravity="start|center_vertical"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:minHeight="@dimen/touch_target_min"
+                                android:paddingStart="0dp"
+                                android:paddingEnd="@dimen/spacing_small"
+                                android:text="@string/lesson_flow_uz_rule"
+                                android:textAllCaps="false"
+                                android:textColor="@color/lesson_accent"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:icon="@drawable/ic_volume_up"
+                                app:iconGravity="textStart"
+                                app:iconPadding="6dp"
+                                app:iconSize="18dp"
+                                app:iconTint="@color/lesson_accent" />
                         </LinearLayout>
 
                         <ImageButton
@@ -1039,6 +1064,20 @@
                     android:orientation="vertical"
                     android:paddingHorizontal="14dp"
                     android:visibility="gone">
+<com.google.android.material.button.MaterialButton
+    android:id="@+id/btnLessonVocabulary"
+    style="@style/Widget.Material3.Button.OutlinedButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_xs"
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:minHeight="@dimen/touch_target_min"
+    android:text="@string/lesson_flow_words"
+    android:textAllCaps="false"
+    android:textColor="@color/lesson_accent"
+    android:textStyle="bold"
+    app:cornerRadius="16dp"
+    app:strokeColor="@color/lesson_border" />
 
                     <!-- Interactive Dialogue Card (used in Dars 2: Lera and talkme) -->
                     <LinearLayout
@@ -1337,6 +1376,19 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:visibility="gone" />
+
+                        <LinearLayout android:id="@+id/layoutReadingQuestion" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:orientation="vertical"
+                            android:padding="@dimen/spacing_small" android:visibility="gone">
+                            <TextView android:id="@+id/tvReadingQuestion" android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:textColor="@color/lesson_text"
+                                android:textSize="@dimen/text_size_body" android:textStyle="bold" />
+                            <RadioGroup android:id="@+id/readingAnswers" android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                            <TextView android:id="@+id/tvReadingFeedback" android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:textColor="@color/lesson_text"
+                                android:textSize="@dimen/text_size_body" android:accessibilityLiveRegion="polite" />
+                        </LinearLayout>
                 </LinearLayout>
 
                 <!-- ========================================================= -->
@@ -1390,8 +1442,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:text="I have ___ books."
-                                android:textColor="@color/lesson_text"
-                                android:textSize="19sp"
+                                android:textColor="@color/color_assessment_green_dark"
+                                android:textSize="20sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -1408,6 +1460,20 @@
                     </LinearLayout>
 
                     <!-- Answer Option Chips (Adaptive Horizontal / Vertical) -->
+                    <EditText
+                        android:id="@+id/etLessonGuidedAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target_min"
+                        android:layout_marginVertical="@dimen/spacing_small"
+                        android:paddingHorizontal="@dimen/spacing_medium"
+                        android:background="@drawable/bg_studio_input_glow"
+                        android:hint="@string/mistakes_retry_placeholder"
+                        android:inputType="textCapSentences"
+                        android:textColor="@color/lesson_text"
+                        android:textColorHint="@color/lesson_subtext"
+                        android:textSize="@dimen/text_size_body"
+                        android:visibility="gone" />
                     <LinearLayout
                         android:id="@+id/rowMashqOptions"
                         android:layout_width="match_parent"
@@ -1777,6 +1843,14 @@
                     </LinearLayout>
                 </LinearLayout>
 
+
+                <LinearLayout android:id="@+id/layoutLessonSkill" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="@dimen/spacing_medium" android:visibility="gone">
+                    <TextView android:id="@+id/tvLessonSkillHint" android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="@dimen/spacing_xs"  android:textColor="@color/lesson_text" android:textSize="@dimen/text_size_body" /><com.google.android.material.button.MaterialButton android:id="@+id/btnLessonOpenTutor"
+  style="?attr/materialButtonOutlinedStyle" android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:minHeight="@dimen/touch_target_min" android:layout_marginTop="@dimen/spacing_xs" android:text="@string/lesson_flow_tutor" />
+                </LinearLayout>
                 <!-- ========================================================= -->
                 <!-- STEP 3: WRAP-UP (Dars yakuniy sharhi + Star + Completed)  -->
                 <!-- ========================================================= -->
@@ -1788,6 +1862,65 @@
                     android:orientation="vertical"
                     android:paddingHorizontal="14dp"
                     android:visibility="gone">
+<TextView android:id="@+id/tvLessonResultScore" android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="@dimen/spacing_xs"  android:textColor="@color/lesson_text" android:textSize="@dimen/text_size_body" /><TextView android:id="@+id/tvLessonResultLearned" android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="@dimen/spacing_xs"  android:textColor="@color/lesson_text" android:textSize="@dimen/text_size_body" /><TextView android:id="@+id/tvLessonResultDetails" android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="@dimen/spacing_xs"  android:textColor="@color/lesson_text" android:textSize="@dimen/text_size_body" /><TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="@dimen/spacing_small" android:text="@string/lesson_flow_review_title" android:textColor="@color/lesson_text"
+  android:textStyle="bold" android:textSize="@dimen/text_size_subtitle" /><TextView android:id="@+id/tvLessonReviewTip" android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="@dimen/spacing_xs" android:text="@string/lesson_flow_review_tip" android:textColor="@color/lesson_text" android:textSize="@dimen/text_size_body" /><com.google.android.material.button.MaterialButton
+    android:id="@+id/btnLessonMistakes"
+    style="@style/Widget.Material3.Button.OutlinedButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_xs"
+    android:minHeight="@dimen/touch_target_min"
+    android:text="@string/nav_mistakes"
+    android:textAllCaps="false"
+    android:textColor="@color/lesson_accent"
+    android:textStyle="bold"
+    app:cornerRadius="16dp"
+    app:strokeColor="@color/lesson_border" /><TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="@dimen/spacing_small" android:text="@string/lesson_flow_apply_title" android:textColor="@color/lesson_text"
+  android:textStyle="bold" android:textSize="@dimen/text_size_subtitle" /><TextView android:id="@+id/tvLessonApplyTip" android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="@dimen/spacing_xs" android:text="@string/lesson_flow_practice_tip" android:textColor="@color/lesson_text" android:textSize="@dimen/text_size_body" /><com.google.android.material.button.MaterialButton
+    android:id="@+id/btnListenWrapUzbek"
+    style="@style/Widget.Material3.Button.OutlinedButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_xs"
+    android:minHeight="@dimen/touch_target_min"
+    android:text="@string/lesson_flow_uz_wrap"
+    android:textAllCaps="false"
+    android:textColor="@color/lesson_accent"
+    android:textStyle="bold"
+    app:cornerRadius="16dp"
+    app:strokeColor="@color/lesson_border" /><com.google.android.material.button.MaterialButton
+    android:id="@+id/btnWrapVocabulary"
+    style="@style/Widget.Material3.Button.OutlinedButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_xs"
+    android:minHeight="@dimen/touch_target_min"
+    android:text="@string/lesson_flow_words"
+    android:textAllCaps="false"
+    android:textColor="@color/lesson_accent"
+    android:textStyle="bold"
+    app:cornerRadius="16dp"
+    app:strokeColor="@color/lesson_border" /><com.google.android.material.button.MaterialButton
+    android:id="@+id/btnWrapGrammar"
+    style="@style/Widget.Material3.Button.OutlinedButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_xs"
+    android:layout_marginBottom="@dimen/spacing_medium"
+    android:minHeight="@dimen/touch_target_min"
+    android:text="@string/lesson_flow_rules"
+    android:textAllCaps="false"
+    android:textColor="@color/lesson_accent"
+    android:textStyle="bold"
+    app:cornerRadius="16dp"
+    app:strokeColor="@color/lesson_border" />
 
                     <!-- Bullet Summary Box -->
                     <LinearLayout

@@ -19,6 +19,7 @@ import com.example.R
 import com.example.core.common.AppConstants
 import com.example.core.ui.ProgressAnimator.animateProgressTo
 import com.example.core.ui.ProgressAnimator.replayAllProgressFromZero
+import com.example.core.ui.LockStarBurstAnimator
 import com.example.core.ui.SectionAdapter
 import com.example.core.ui.curriculumLevelName
 import com.example.core.ui.TopicAdapter
@@ -28,6 +29,7 @@ import com.example.domain.model.LessonSectionModel
 import com.example.domain.model.TopicModel
 import com.example.domain.model.UnlockStatus
 import com.example.domain.repository.LearningRepository
+import com.example.domain.repository.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -35,7 +37,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -50,7 +54,8 @@ data class CurrentLessonProgressState(
 
 @HiltViewModel
 class LessonsViewModel @Inject constructor(
-    private val learningRepository: LearningRepository
+    private val learningRepository: LearningRepository,
+    preferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     init {
@@ -58,6 +63,11 @@ class LessonsViewModel @Inject constructor(
             learningRepository.ensureSeeded()
         }
     }
+
+    val preferences = preferencesRepository.userPreferencesFlow
+
+    suspend fun nextSectionTitle(topicId: String): String? = learningRepository.observeTopicSections(topicId)
+        .first().firstOrNull { it.status == UnlockStatus.AVAILABLE }?.titleEnglish
 
     val topics: StateFlow<List<TopicModel>> = learningRepository.observeTopics()
         .stateIn(
@@ -153,7 +163,7 @@ class LessonsFragment : Fragment() {
     private val viewModel: LessonsViewModel by viewModels()
     private var allTopicsCache: List<TopicModel> = emptyList()
     private val topicAdapter = TopicAdapter { topic ->
-        if (topic.totalSections > 0) {
+        if (topic.status != UnlockStatus.LOCKED && topic.totalSections > 0) {
             findNavController().navigate(R.id.topicDetailFragment,
                 bundleOf(AppConstants.ARG_TOPIC_ID to topic.id))
         } else {
@@ -189,7 +199,10 @@ class LessonsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.topics.collect { topicList ->
+                launch {
+                    viewModel.preferences.collect { topicAdapter.soundEnabled = it.soundEnabled }
+                }
+                viewModel.topics.collectLatest { topicList ->
                     allTopicsCache = topicList
                     bindTopHeroSummary(topicList)
                     topicAdapter.submitList(topicList)
@@ -198,7 +211,7 @@ class LessonsFragment : Fragment() {
         }
     }
 
-    private fun bindTopHeroSummary(topicList: List<TopicModel>) {
+    private suspend fun bindTopHeroSummary(topicList: List<TopicModel>) {
         val active = topicList.firstOrNull { it.status == UnlockStatus.AVAILABLE }
             ?: topicList.lastOrNull { it.status == UnlockStatus.COMPLETED }
         val hasLessons = active != null && active.totalSections > 0
@@ -210,8 +223,8 @@ class LessonsFragment : Fragment() {
             targetProgress = active?.completedSections ?: 0,
             maxValue = (active?.totalSections ?: 0).coerceAtLeast(1)
         )
-        binding.tvHeroNextLesson.text = if (hasLessons) active?.let { curriculumLevelName(requireContext(), it) }
-            else getString(R.string.curriculum_empty)
+        binding.tvHeroNextLesson.text = active?.takeIf { hasLessons }?.let { viewModel.nextSectionTitle(it.id) }
+            ?: getString(R.string.curriculum_empty)
         binding.btnHeroContinue.isEnabled = hasLessons
         binding.cardLevelSummary.isClickable = hasLessons
     }
@@ -225,6 +238,7 @@ class LessonsFragment : Fragment() {
     }
 
     override fun onStop() {
+        LockStarBurstAnimator.stopSound()
         super.onStop()
         wasStopped = true
     }
@@ -298,6 +312,9 @@ class TopicDetailFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.preferences.collect { sectionAdapter.soundEnabled = it.soundEnabled }
+                }
                 launch {
                     viewModel.selectedTopic.collect { topic ->
                         if (topic != null) {
@@ -390,6 +407,7 @@ class TopicDetailFragment : Fragment() {
     }
 
     override fun onStop() {
+        LockStarBurstAnimator.stopSound()
         super.onStop()
         wasStopped = true
     }

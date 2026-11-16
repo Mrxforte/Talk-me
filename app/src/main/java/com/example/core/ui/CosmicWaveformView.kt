@@ -113,15 +113,30 @@ class CosmicWaveformView @JvmOverloads constructor(
         super.onSizeChanged(w, h, oldw, oldh)
         if (w > 0 && h > 0) {
             val radius = min(w, h) * 0.48f
+            val baseColor = ContextCompat.getColor(context, R.color.color_primary)
+            val innerGlow = android.graphics.Color.argb(
+                42,
+                android.graphics.Color.red(baseColor),
+                android.graphics.Color.green(baseColor),
+                android.graphics.Color.blue(baseColor)
+            )
+            val midGlow = android.graphics.Color.argb(
+                16,
+                android.graphics.Color.red(baseColor),
+                android.graphics.Color.green(baseColor),
+                android.graphics.Color.blue(baseColor)
+            )
+            val outerFade = android.graphics.Color.argb(
+                0,
+                android.graphics.Color.red(baseColor),
+                android.graphics.Color.green(baseColor),
+                android.graphics.Color.blue(baseColor)
+            )
             ringFillPaint.shader = RadialGradient(
                 w / 2f,
                 h / 2f,
                 radius.coerceAtLeast(1f),
-                intArrayOf(
-                    0x2A00E5FF,
-                    0x100EA5E9,
-                    0x00070B14
-                ),
+                intArrayOf(innerGlow, midGlow, outerFade),
                 floatArrayOf(0f, 0.72f, 1f),
                 Shader.TileMode.CLAMP
             )

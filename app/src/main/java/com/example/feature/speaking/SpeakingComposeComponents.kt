@@ -227,7 +227,7 @@ fun MicrophonePermissionGate(
                     val descriptionText = if (wasExplicitlyDenied && !showRationale) {
                         "Speaking AI Tutor bilan ingliz tilida jonli gaplashish uchun ilova sozlamalaridan (Settings) mikrofon ruxsatini yoqing."
                     } else {
-                        "Oflayn ovoz aniqlash (Silero VAD + Sherpa-ONNX) orqali AI Tutor bilan avtomatik gaplashish uchun mikrofonga ruxsat bering."
+                        "AI Tutor bilan ovozli suhbatlashish va talaffuzingizni tekshirish uchun mikrofonga ruxsat bering."
                     }
 
                     Text(
@@ -323,7 +323,8 @@ fun SpeakingAuxiliaryControlsBar(
     onToggleMute: () -> Unit,
     onCancelTurnOrSpeech: () -> Unit,
     onRetryFailedTurn: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    allowKeyboard: Boolean = true
 ) {
     val focusRequester = remember { FocusRequester() }
     val accent = themeColor(R.color.color_neon_cyan)
@@ -503,7 +504,7 @@ fun SpeakingAuxiliaryControlsBar(
                 }
             }
 
-            FilledTonalButton(
+            if (allowKeyboard) FilledTonalButton(
                 onClick = { onToggleKeyboardBar(!uiState.isKeyboardInputVisible) },
                 modifier = Modifier
                     .height(48.dp)
@@ -529,7 +530,7 @@ fun SpeakingAuxiliaryControlsBar(
         }
 
         // 3. Separate Normal Keyboard Input Alternative
-        AnimatedVisibility(visible = uiState.isKeyboardInputVisible) {
+        AnimatedVisibility(visible = allowKeyboard && uiState.isKeyboardInputVisible) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

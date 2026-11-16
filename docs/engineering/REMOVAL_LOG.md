@@ -65,3 +65,18 @@ Verification: source references and navigation/manifest inspected; XML parsing a
 whitespace checks run. Full compilation and Gradle tests are unavailable in this
 workspace (no compile_applet or Gradle executable, and no Gradle wrapper in repo).
 This change requires Android build and device validation before merge.
+
+---
+
+## 2026-11-16 — Removal of Experimental Image-to-Video Feature
+
+Removed the experimental Image-to-Video feature per user request while retaining the Experimental Lesson-Focused Gemini Chatbot:
+- Removed files:
+  - `app/src/main/java/com/example/feature/experimental/ImageToVideoModels.kt`
+  - `app/src/main/java/com/example/feature/experimental/ImageToVideoService.kt`
+  - `app/src/main/java/com/example/feature/experimental/ImageToVideoViewModel.kt`
+  - `app/src/main/java/com/example/feature/experimental/ImageToVideoFragment.kt`
+  - `app/src/main/res/layout/fragment_image_to_video.xml`
+  - `app/src/main/res/drawable/ic_experimental_movie.xml`
+  - `app/src/main/res/drawable/ic_photo_add.xml`
+- Updated `nav_graph.xml`, `SettingsScreen.kt`, `fragment_settings.xml`, `ProfileScreen.kt`, `fragment_profile.xml`, `ExperimentalModule.kt`, and `strings.xml` to remove all navigation, UI rows, DI bindings, and string entries for Image-to-Video.

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <corners android:radius="@dimen/radius_pill" />
-    <solid android:color="@color/color_warning_light" />
+    <corners android:radius="20dp" />
+    <solid android:color="@color/color_pill_streak_bg" />
     <stroke
         android:width="1dp"
-        android:color="@color/color_warning" />
+        android:color="@color/color_streak_border" />
     <padding
         android:left="10dp"
         android:top="5dp"

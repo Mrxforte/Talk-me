@@ -92,7 +92,7 @@
                     android:minHeight="@dimen/vocab_badge_min_size"
                     android:paddingHorizontal="@dimen/spacing_small"
                     android:text="@string/vocab_subtopic_badge_preview"
-                    android:textColor="@color/color_on_filled_card"
+                    android:textColor="@color/color_cta_button_text"
                     android:textSize="@dimen/text_size_caption"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -133,7 +133,7 @@
                     android:background="@drawable/bg_uzum_metric_pill"
                     android:paddingHorizontal="@dimen/spacing_small"
                     android:paddingVertical="@dimen/spacing_xs"
-                    android:textColor="@color/color_on_filled_card"
+                    android:textColor="@color/color_gold_accent"
                     android:textSize="@dimen/text_size_caption"
                     android:textStyle="bold" />
 

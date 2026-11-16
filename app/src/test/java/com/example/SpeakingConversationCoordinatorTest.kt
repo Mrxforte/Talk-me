@@ -2,7 +2,6 @@ package com.example
 
 import com.example.core.audio.TtsManager
 import com.example.core.speech.SileroVadDetector
-import com.example.core.speech.SpeechModelManager
 import com.example.core.speech.VadState
 import com.example.domain.model.UserPreferencesModel
 import com.example.domain.repository.AiLearningService
@@ -134,7 +133,9 @@ class FakeLocalSpeechRepository : SpeechRepository {
 
     suspend fun simulateUserSpeakingWithVadAndSherpa(
         partialTranscript: String = "",
-        finalTranscript: String
+        finalTranscript: String,
+        audioWavBytes: ByteArray? = null,
+        hadSpeechDetectedByVad: Boolean = finalTranscript.isNotBlank()
     ) {
         _vadState.value = VadState.SPEECH_BEGIN
         _vadState.value = VadState.ACTIVE_SPEECH
@@ -151,7 +152,8 @@ class FakeLocalSpeechRepository : SpeechRepository {
                 isFinal = true,
                 recordingDurationMs = 1500L,
                 processingDurationMs = 60L,
-                hadSpeechDetectedByVad = finalTranscript.isNotBlank()
+                audioWavBytes = audioWavBytes ?: ByteArray(0),
+                hadSpeechDetectedByVad = hadSpeechDetectedByVad
             )
         )
     }
@@ -220,7 +222,7 @@ class FakeContextAwareAiLearningService : AiLearningService {
                 spokenEnglishReply = reply,
                 grammarAndVocabFeedbackUzbek = feedback,
                 accuracyScore = 90,
-                studentTranscript = studentUtterance
+                studentTranscript = studentUtterance.ifBlank { "Hello tutor, my name is Azamat." }
             )
         )
     }
@@ -615,5 +617,49 @@ class SpeakingConversationCoordinatorTest {
         assertTrue(sawSpeechEnd)
         assertNotNull(segmentedSamples)
         assertTrue(segmentedSamples!!.isNotEmpty())
+    }
+
+    @Test
+    fun `TEST 12 - usable WAV audio with empty local STT goes directly to Gemini while silent WAV does not`() = runTest {
+        val fakeSpeech = FakeLocalSpeechRepository()
+        val fakeAi = FakeContextAwareAiLearningService()
+        val fakeTts = FakeTtsProvider()
+        val coordinator = createCoordinator(this, fakeSpeech, fakeAi, fakeTts)
+
+        coordinator.startConversation()
+        advanceUntilIdle()
+
+        // 1. Silent WAV (all zeros, no VAD speech) must NOT invoke Gemini
+        val silentWav = ByteArray(8192)
+        fakeSpeech.simulateUserSpeakingWithVadAndSherpa(
+            finalTranscript = "",
+            audioWavBytes = silentWav,
+            hadSpeechDetectedByVad = false
+        )
+        advanceUntilIdle()
+        assertEquals(0, fakeAi.callCount.get())
+
+        // 2. Real WAV audio (>4096 bytes with speech amplitude) must be forwarded to Gemini 3.8
+        val speechWav = ByteArray(8192)
+        var idx = 44
+        while (idx + 1 < speechWav.size) {
+            val sample = (4000.0 * sin(2.0 * PI * 220.0 * idx / 16_000.0)).toInt().toShort()
+            speechWav[idx] = (sample.toInt() and 0xFF).toByte()
+            speechWav[idx + 1] = ((sample.toInt() shr 8) and 0xFF).toByte()
+            idx += 2
+        }
+        fakeSpeech.simulateUserSpeakingWithVadAndSherpa(
+            finalTranscript = "",
+            audioWavBytes = speechWav,
+            hadSpeechDetectedByVad = true
+        )
+        advanceUntilIdle()
+
+        assertEquals(1, fakeAi.callCount.get())
+        assertEquals(2, coordinator.uiState.value.messages.size)
+        assertEquals("Hello tutor, my name is Azamat.", coordinator.uiState.value.messages[0].text)
+        assertEquals(ConversationRole.ASSISTANT, coordinator.uiState.value.messages[1].role)
+        assertEquals(1, fakeTts.spokenTexts.size)
+        coordinator.releaseResources()
     }
 }

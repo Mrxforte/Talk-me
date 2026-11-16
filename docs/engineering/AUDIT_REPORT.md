@@ -121,3 +121,7 @@ Verification: source references and navigation/manifest inspected; XML parsing a
 whitespace checks run. Full compilation and Gradle tests are unavailable in this
 workspace (no compile_applet or Gradle executable, and no Gradle wrapper in repo).
 This change requires Android build and device validation before merge.
+
+## Approved TalkMe UI integration
+
+The Android navigation bar now presents Home, Lessons, Mistakes and Profile. The lesson destination uses the approved rule, reading, writing, listening, speaking and wrap-up sequence. The existing listening and speaking studios return to the lesson without replacing their audio engines. The lesson's draft and assessment summary use the existing preferences store. The mistake journal uses the existing Room table and the lesson library indexes existing vocabulary and grammar by section. No Room schema change or progress reset is required.

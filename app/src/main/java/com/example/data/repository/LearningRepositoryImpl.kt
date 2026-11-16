@@ -123,7 +123,7 @@ class LearningRepositoryImpl @Inject constructor(
                         else UnlockStatus.LOCKED
                     )
                 }
-            )
+            ).withTestModeUnlockIfEnabled()
 
             val totalSections = sections.size.coerceAtLeast(1)
             val completedSections = sections.count { it.isCompleted }
@@ -212,7 +212,7 @@ class LearningRepositoryImpl @Inject constructor(
                     }
                 )
             }
-            CurriculumDomainLogic.computeTopicUnlockStatuses(rawModels)
+            CurriculumDomainLogic.computeTopicUnlockStatuses(rawModels).withTestModeUnlockIfEnabled()
         }
     }
 
@@ -225,6 +225,8 @@ class LearningRepositoryImpl @Inject constructor(
                 val sec = sorted[i]
                 val prevCompleted = if (i == 0) true else (result[i - 1].status == UnlockStatus.COMPLETED)
                 val status = when {
+                    AppConstants.TEST_MODE_UNLOCK_ALL ->
+                        if (sec.isCompleted) UnlockStatus.COMPLETED else UnlockStatus.AVAILABLE
                     topicLocked || !prevCompleted -> UnlockStatus.LOCKED
                     sec.isCompleted -> UnlockStatus.COMPLETED
                     prevCompleted -> UnlockStatus.AVAILABLE
@@ -243,6 +245,8 @@ class LearningRepositoryImpl @Inject constructor(
         val idx = topicSecs.indexOfFirst { it.id == sectionId }
         val prevCompleted = idx >= 0 && topicSecs.take(idx).all { it.isCompleted }
         val status = when {
+            AppConstants.TEST_MODE_UNLOCK_ALL ->
+                if (entity.isCompleted) UnlockStatus.COMPLETED else UnlockStatus.AVAILABLE
             getTopicById(entity.topicId)?.status == UnlockStatus.LOCKED || !prevCompleted -> UnlockStatus.LOCKED
             entity.isCompleted -> UnlockStatus.COMPLETED
             prevCompleted -> UnlockStatus.AVAILABLE
@@ -259,7 +263,9 @@ class LearningRepositoryImpl @Inject constructor(
             TopicModel(topic.id, topic.orderIndex, topic.titleEnglish, topic.titleUzbek,
                 topic.descriptionUzbek, rows.size, rows.count { it.isCompleted }, UnlockStatus.LOCKED)
         }
-        return CurriculumDomainLogic.computeTopicUnlockStatuses(topics).firstOrNull { it.id == topicId }
+        return CurriculumDomainLogic.computeTopicUnlockStatuses(topics)
+            .withTestModeUnlockIfEnabled()
+            .firstOrNull { it.id == topicId }
     }
 
     override fun observeSectionVocabulary(sectionId: String): Flow<List<VocabularyModel>> {
@@ -273,6 +279,15 @@ class LearningRepositoryImpl @Inject constructor(
             list.map { it.toDomain() }
         }
     }
+
+    override fun observeLibrarySections(): Flow<List<LessonSectionModel>> =
+        dao.observeAllSections().map { rows -> rows.map { it.toDomain(UnlockStatus.AVAILABLE) } }
+
+    override fun observeLibraryVocabulary(): Flow<List<VocabularyModel>> =
+        dao.observeAllVocabulary().map { rows -> rows.map { it.toDomain() } }
+
+    override fun observeLibraryGrammar(): Flow<List<GrammarRuleModel>> =
+        dao.observeAllGrammarRules().map { rows -> rows.map { it.toDomain() } }
 
     override suspend fun saveLastLearningPosition(
         topicId: String,
@@ -407,7 +422,7 @@ class LearningRepositoryImpl @Inject constructor(
                         }
                     )
                 }
-            )
+            ).withTestModeUnlockIfEnabled()
             domainTopics.map { topic ->
                 val topicWords = vocabByTopic[topic.id].orEmpty().distinctBy { it.englishWord.lowercase() }
                 val memorized = topicWords.count { it.isMemorized }
@@ -573,7 +588,7 @@ class LearningRepositoryImpl @Inject constructor(
             listOf(topicIdFilter)
         } else {
             dao.getAllTopicsOnce()
-                .filter { it.isUnlocked || it.isCompleted || it.orderIndex == 1 }
+                .filter { AppConstants.TEST_MODE_UNLOCK_ALL || it.isUnlocked || it.isCompleted || it.orderIndex == 1 }
                 .map { it.id }
                 .ifEmpty { listOf(AppConstants.INITIAL_TOPIC_ID) }
         }
@@ -864,7 +879,7 @@ class LearningRepositoryImpl @Inject constructor(
                         }
                     )
                 }
-            )
+            ).withTestModeUnlockIfEnabled()
 
             val vocabByTopic = allVocab.groupBy { it.topicId }
             val grammarByTopic = allGrammar.groupBy { it.topicId }
@@ -1018,9 +1033,15 @@ class LearningRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun observeUnresolvedMistakes(): Flow<List<UserMistakeModel>> {
+    override fun observeUnresolvedMistakes(): Flow<List<UserMistakeModel>> =
+        mapMistakes(dao.observeUnresolvedMistakes())
+
+    override fun observeResolvedMistakes(): Flow<List<UserMistakeModel>> =
+        mapMistakes(dao.observeResolvedMistakes())
+
+    private fun mapMistakes(entries: Flow<List<UserMistakeEntity>>): Flow<List<UserMistakeModel>> {
         return combine(
-            dao.observeUnresolvedMistakes(),
+            entries,
             dao.observeAllTopics()
         ) { mistakes, topics ->
             val topicMap = topics.associateBy { it.id }
@@ -1134,6 +1155,13 @@ class LearningRepositoryImpl @Inject constructor(
                 val prefix = if (ach.isUnlocked) "✓ [Unlocked]" else "○ [Locked]"
                 "$prefix ${ach.title} — ${ach.description}"
             }
+        }
+    }
+
+    private fun List<TopicModel>.withTestModeUnlockIfEnabled(): List<TopicModel> {
+        if (!AppConstants.TEST_MODE_UNLOCK_ALL) return this
+        return map { topic ->
+            if (topic.status == UnlockStatus.LOCKED) topic.copy(status = UnlockStatus.AVAILABLE) else topic
         }
     }
 

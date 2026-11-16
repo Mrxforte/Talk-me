@@ -41,6 +41,8 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         val DAILY_GOAL_MINUTES = intPreferencesKey("daily_goal_minutes")
         val LAST_TOPIC_ID = stringPreferencesKey("last_topic_id")
         val LAST_SECTION_ID = stringPreferencesKey("last_section_id")
+        val DRAFT_SECTION_ID = stringPreferencesKey("lesson_draft_section_id")
+        val DRAFT = stringPreferencesKey("lesson_draft")
         val LAST_SCROLL_OFFSET = intPreferencesKey("last_scroll_offset")
         val HAS_STARTED_LEARNING = booleanPreferencesKey("has_started_learning")
     }
@@ -53,7 +55,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 soundEnabled = prefs[Keys.SOUND_ENABLED] ?: true,
                 speechSpeed = prefs[Keys.SPEECH_SPEED] ?: 1.0f,
                 isPremiumSubscribed = prefs[Keys.PREMIUM_SUBSCRIBED] ?: false,
-                preferredTtsProvider = prefs[Keys.PREFERRED_TTS] ?: "NATIVE",
+                preferredTtsProvider = prefs[Keys.PREFERRED_TTS] ?: "GEMINI",
                 voiceGender = prefs[Keys.VOICE_GENDER] ?: "MALE",
                 offlineAudioEnabled = prefs[Keys.OFFLINE_AUDIO] ?: false,
                 lessonRemindersEnabled = prefs[Keys.LESSON_REMINDERS] ?: true,
@@ -61,7 +63,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 lastActiveTopicId = prefs[Keys.LAST_TOPIC_ID] ?: AppConstants.INITIAL_TOPIC_ID,
                 lastActiveSectionId = prefs[Keys.LAST_SECTION_ID] ?: AppConstants.INITIAL_SECTION_ID,
                 lastScrollOffset = prefs[Keys.LAST_SCROLL_OFFSET] ?: 0,
-                hasStartedLearning = prefs[Keys.HAS_STARTED_LEARNING] ?: false
+                hasStartedLearning = prefs[Keys.HAS_STARTED_LEARNING] ?: false,
+                lessonDraftSectionId = prefs[Keys.DRAFT_SECTION_ID].orEmpty(),
+                lessonDraft = prefs[Keys.DRAFT].orEmpty()
             )
         }
 
@@ -101,6 +105,13 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun updateLessonRemindersEnabled(enabled: Boolean) {
         context.talkMeDataStore.edit { it[Keys.LESSON_REMINDERS] = enabled }
+    }
+
+    override suspend fun updateLessonDraft(sectionId: String, draft: String) {
+        context.talkMeDataStore.edit {
+            it[Keys.DRAFT_SECTION_ID] = sectionId
+            it[Keys.DRAFT] = draft
+        }
     }
 
     override suspend fun updateLastLearningBookmark(

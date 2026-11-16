@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
-    <gradient android:angle="135" android:startColor="@color/color_gradient_primary_start" android:endColor="@color/color_gradient_primary_end" />
-    <stroke android:width="1dp" android:color="@color/color_filled_card_outline" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/color_cta_button_bg" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/color_primary_light" />
 </shape>

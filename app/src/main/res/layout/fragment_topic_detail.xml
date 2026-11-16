@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_talkme_filled_card"
+        android:background="@drawable/bg_talkme_card"
         android:orientation="vertical"
         android:paddingHorizontal="14dp"
         android:paddingTop="12dp"
@@ -89,7 +89,7 @@
                 android:background="@drawable/bg_curriculum_a1_badge"
                 android:gravity="center"
                 android:text="A1"
-                android:textColor="@color/color_text_on_primary"
+                android:textColor="@color/color_cta_button_text"
                 android:textSize="@dimen/text_size_subtitle"
                 android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
                 android:layout_width="1dp"
                 android:layout_height="34dp"
                 android:layout_marginHorizontal="12dp"
-                android:background="@color/color_filled_card_outline" />
+                android:background="@color/color_card_outline" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -112,7 +112,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Kirish bo‘limi"
-                    android:textColor="@color/color_on_filled_card"
+                    android:textColor="@color/color_on_surface"
                     android:textSize="16.5sp"
                     android:textStyle="bold" />
 
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="4/10 dars bajarildi"
-                    android:textColor="@color/color_on_filled_card"
+                    android:textColor="@color/color_on_surface_secondary"
                     android:textSize="13sp" />
             </LinearLayout>
 

@@ -25,7 +25,6 @@ import com.example.domain.model.TopicPracticeSummary
 import com.example.domain.repository.LearningRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.Calendar
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -110,13 +109,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        binding.tvGreeting.text = when (hour) {
-            in 5..11 -> getString(R.string.greeting_morning)
-            in 12..17 -> getString(R.string.greeting_afternoon)
-            else -> getString(R.string.greeting_evening)
-        }
-
         // Default click listeners before state arrives
         val defaultTopicId = AppConstants.INITIAL_TOPIC_ID
         wireSkillAndToolCards(defaultTopicId)
@@ -127,9 +119,12 @@ class HomeFragment : Fragment() {
                     val stats = state.stats ?: return@collect
                     binding.tvUserName.text = stats.userName.ifBlank { getString(R.string.default_user_name) }
                     val streakDays = stats.currentStreakDays.coerceAtLeast(1)
-                    binding.tvStreakBadge.text = getString(R.string.home_streak_format, streakDays)
+                    binding.tvStreakBadge.text = getString(R.string.home_streak_days_short, streakDays)
 
                     val cont = stats.continueLearning
+                    val activeLevel = com.example.domain.model.CurriculumLevel.forTopic(cont.currentTopicId)?.name
+                        ?: com.example.domain.model.CurriculumLevel.A0.name
+                    binding.tvHomeLevelSubtitle.text = getString(R.string.home_level_subtitle_format, activeLevel)
                     binding.tvHeroCourseName.text = cont.courseName.ifBlank { getString(R.string.home_course_label) }
                     val topicHeader = cont.currentTopicTitle.ifBlank { getString(R.string.home_default_topic) }
                     binding.tvHeroTopicName.text =
@@ -138,7 +133,7 @@ class HomeFragment : Fragment() {
                         } else {
                             topicHeader
                         }
-                    binding.ivHeroIllustration.setImageResource(R.drawable.img_home_hero_thumb)
+                    binding.ivHeroIllustration.setImageResource(R.drawable.img_lesson_conversation_1794310851367)
 
                     binding.tvHeroSectionName.text = if (cont.currentSectionTitle.isNotBlank()) {
                         cont.currentSectionTitle
@@ -167,6 +162,14 @@ class HomeFragment : Fragment() {
                     val activeTopic = state.activeTopicSummary
                     val resolvedTopicId = activeTopic?.topicId ?: cont.currentTopicId.ifBlank { AppConstants.INITIAL_TOPIC_ID }
                     wireSkillAndToolCards(resolvedTopicId)
+
+                    binding.tvHomeVocabCount.text = getString(R.string.home_words_count_format, stats.memorizedUniqueWordsCount)
+                    binding.tvHomeGrammarCount.text = getString(R.string.home_rules_count_format, stats.masteredGrammarRulesCount)
+                    binding.tvHomeRoadmapSubtitle.text = getString(
+                        R.string.home_roadmap_subtitle_format,
+                        activeLevel,
+                        stats.completedSectionsCount
+                    )
 
                     if (activeTopic != null) {
                         binding.tvHomeVocabBadge.text = "+${activeTopic.totalWordsCount}"
@@ -263,16 +266,26 @@ class HomeFragment : Fragment() {
 
         val openVocab = View.OnClickListener {
             findNavController().navigate(
-                R.id.vocabularyTopicsFragment,
+                R.id.lessonMaterialsFragment,
                 bundleOf(AppConstants.ARG_TOPIC_ID to topicId)
             )
         }
         binding.cardHomeVocabulary.setOnClickListener(openVocab)
 
         val openGrammar = View.OnClickListener {
-            openTopicExercise(PracticeCategory.GRAMMAR, topicId)
+            findNavController().navigate(R.id.lessonMaterialsFragment, bundleOf(
+                AppConstants.ARG_TOPIC_ID to topicId,
+                AppConstants.ARG_PRACTICE_CATEGORY to PracticeCategory.GRAMMAR.id
+            ))
         }
         binding.cardHomeGrammar.setOnClickListener(openGrammar)
+
+        binding.btnHomeResults.setOnClickListener {
+            findNavController().navigate(R.id.profileFragment)
+        }
+        binding.cardHomeRoadmap.setOnClickListener {
+            findNavController().navigate(R.id.lessonsFragment)
+        }
     }
 
     private fun bindHomeCard(

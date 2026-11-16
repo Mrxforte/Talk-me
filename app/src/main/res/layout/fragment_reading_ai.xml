@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_curriculum_screen"
+    android:background="@color/color_app_canvas"
     android:orientation="vertical">
 
     <!-- Dark Cosmic Header -->
@@ -72,7 +72,7 @@
                 app:cardBackgroundColor="@color/color_cosmic_card"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="2dp"
-                app:strokeColor="@color/color_neon_cyan"
+                app:strokeColor="@color/color_card_outline"
                 app:strokeWidth="1.2dp">
 
                 <ImageView
@@ -219,7 +219,7 @@
                     android:focusable="true"
                     android:gravity="center"
                     android:text="@string/reading_ai_evaluate_btn"
-                    android:textColor="@color/color_text_on_primary"
+                    android:textColor="@color/color_cta_button_text"
                     android:textSize="15.5sp"
                     android:textStyle="bold" />
 

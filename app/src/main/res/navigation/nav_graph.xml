@@ -60,6 +60,16 @@
         android:label="@string/speaking_ai_title" />
 
     <fragment
+        android:id="@+id/geminiSpeakingSetupFragment"
+        android:name="com.example.feature.speaking.GeminiSpeakingSetupFragment"
+        android:label="@string/speaking_ai_title" />
+
+    <fragment
+        android:id="@+id/geminiSpeakingPracticeFragment"
+        android:name="com.example.feature.speaking.GeminiSpeakingPracticeFragment"
+        android:label="@string/speaking_ai_title" />
+
+    <fragment
         android:id="@+id/readingAiFragment"
         android:name="com.example.feature.reading.ReadingAiFragment"
         android:label="@string/reading_ai_title" />
@@ -74,4 +84,17 @@
         android:name="com.example.feature.profile.SettingsFragment"
         android:label="@string/settings_title_uz" />
 
+    <fragment
+        android:id="@id/mistakesFragment"
+        android:name="com.example.feature.mistakes.MistakesFragment"
+        android:label="@string/nav_mistakes" />
+    <fragment
+        android:id="@+id/lessonMaterialsFragment"
+        android:name="com.example.feature.materials.LessonMaterialsFragment"
+        android:label="@string/lesson_materials_title" />
+
+    <fragment
+        android:id="@+id/geminiChatbotFragment"
+        android:name="com.example.feature.experimental.GeminiChatbotFragment"
+        android:label="@string/chatbot_screen_title" />
 </navigation>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:background="@drawable/bg_talkme_card"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_medium">
+
+    <TextView
+        android:id="@+id/mistakeTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_primary"
+        android:textSize="@dimen/text_size_caption"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/mistakePrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/spacing_xs"
+        android:textColor="@color/color_on_surface"
+        android:textSize="@dimen/text_size_subtitle"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/previousAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_on_surface_secondary"
+        android:textSize="@dimen/text_size_body" />
+
+    <EditText
+        android:id="@+id/retryAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@drawable/bg_studio_input_glow"
+        android:hint="@string/mistakes_retry_placeholder"
+        android:inputType="textCapSentences"
+        android:minHeight="@dimen/touch_target_min"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/color_on_surface"
+        android:textColorHint="@color/color_on_surface_secondary"
+        android:textSize="@dimen/text_size_body" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/checkAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:minHeight="@dimen/touch_target_min"
+        android:text="@string/mistakes_check"
+        android:textAllCaps="false"
+        android:textColor="@color/color_cta_button_text"
+        android:textStyle="bold"
+        app:backgroundTint="@color/color_cta_button_bg"
+        app:cornerRadius="999dp" />
+
+    <TextView
+        android:id="@+id/correctAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:textColor="@color/color_success"
+        android:textSize="@dimen/text_size_body"
+        android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/showHint"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:minHeight="@dimen/touch_target_min"
+        android:text="@string/mistakes_hint"
+        android:textAllCaps="false"
+        android:textColor="@color/color_primary"
+        android:textStyle="bold"
+        app:cornerRadius="999dp"
+        app:strokeColor="@color/color_card_outline" />
+
+    <TextView
+        android:id="@+id/hintText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:textColor="@color/color_on_surface_secondary"
+        android:textSize="@dimen/text_size_body" />
+</LinearLayout>

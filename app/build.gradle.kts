@@ -1,4 +1,5 @@
 import com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy
+import java.util.Properties
 
 plugins {
   alias(libs.plugins.android.application)
@@ -13,8 +14,9 @@ android {
   namespace = "com.example"
   compileSdk { version = release(36) { minorApiLevel = 1 } }
 
-  defaultConfig {
+  val speakingProperties = Properties().apply {\n    val local = rootProject.file("local.properties")\n    if (local.exists()) local.inputStream().use { load(it) }\n  }\n  val speakingKey = (speakingProperties.getProperty("GEMINI_SPEAKING_API_KEY")\n    ?: System.getenv("GEMINI_SPEAKING_API_KEY") ?: "").replace("\\", "\\\\").replace("\\"", "\\\"")\n\n  defaultConfig {
     applicationId = "com.aistudio.talkme.xkpqvr"
+    buildConfigField("String", "GEMINI_SPEAKING_API_KEY", "\"$speakingKey\"")
     minSdk = 24
     targetSdk = 36
     versionCode = 1

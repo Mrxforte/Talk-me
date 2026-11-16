@@ -70,6 +70,10 @@
         android:label="@string/speaking_ai_title" />
 
     <fragment
+        android:id="@+id/proLessonFragment"
+        android:name="com.example.feature.pro.ProLessonFragment"
+        android:label="@string/pro_title" />
+    <fragment
         android:id="@+id/readingAiFragment"
         android:name="com.example.feature.reading.ReadingAiFragment"
         android:label="@string/reading_ai_title" />

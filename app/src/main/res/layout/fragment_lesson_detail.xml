@@ -334,6 +334,13 @@
                     android:paddingTop="@dimen/spacing_medium"
                     android:visibility="visible">
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnOpenProLesson"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target_min"
+                        android:text="@string/pro_open_voice_lesson" />
                     <!-- A. Lesson Heading (Book Icon + Title + Subtitle) -->
                     <LinearLayout
                         android:id="@+id/layoutLessonHeading"

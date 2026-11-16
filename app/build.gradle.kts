@@ -14,7 +14,13 @@ android {
   namespace = "com.example"
   compileSdk { version = release(36) { minorApiLevel = 1 } }
 
-  val speakingProperties = Properties().apply {\n    val local = rootProject.file("local.properties")\n    if (local.exists()) local.inputStream().use { load(it) }\n  }\n  val speakingKey = (speakingProperties.getProperty("GEMINI_SPEAKING_API_KEY")\n    ?: System.getenv("GEMINI_SPEAKING_API_KEY") ?: "").replace("\\", "\\\\").replace("\\"", "\\\"")\n\n  defaultConfig {
+  val speakingProperties = Properties().apply {
+    val local = rootProject.file("local.properties")
+    if (local.exists()) local.inputStream().use { load(it) }
+  }
+  val speakingKey = speakingProperties.getProperty("GEMINI_SPEAKING_API_KEY")
+    ?: System.getenv("GEMINI_SPEAKING_API_KEY") ?: ""
+  defaultConfig {
     applicationId = "com.aistudio.talkme.xkpqvr"
     buildConfigField("String", "GEMINI_SPEAKING_API_KEY", "\"$speakingKey\"")
     minSdk = 24

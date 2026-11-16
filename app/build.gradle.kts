@@ -1,4 +1,5 @@
 import com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy
+import java.util.Properties
 
 plugins {
   alias(libs.plugins.android.application)
@@ -19,6 +20,14 @@ android {
     targetSdk = 36
     versionCode = 1
     versionName = "1.0.0"
+
+    val prop = Properties()
+    val localPropFile = rootProject.file("local.properties")
+    if (localPropFile.exists()) {
+      localPropFile.inputStream().use { prop.load(it) }
+    }
+    val geminiApiKey = prop.getProperty("GEMINI_API_KEY") ?: System.getenv("GEMINI_API_KEY") ?: ""
+    buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }

@@ -23,6 +23,9 @@ import com.example.domain.model.LearningDashboardStats
 import com.example.domain.model.PracticeCategory
 import com.example.domain.model.TopicPracticeSummary
 import com.example.domain.repository.LearningRepository
+import com.example.domain.repository.UserPreferencesRepository
+import com.example.feature.pro.openProLesson
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -36,7 +39,8 @@ import kotlinx.coroutines.launch
 data class HomeUiState(
     val stats: LearningDashboardStats? = null,
     val studiedTopics: List<TopicPracticeSummary> = emptyList(),
-    val selectedTopicId: String? = null
+    val selectedTopicId: String? = null,
+    val isProEnabled: Boolean = false
 ) {
     val activeTopicSummary: TopicPracticeSummary?
         get() = studiedTopics.find { it.topicId == selectedTopicId }
@@ -45,7 +49,8 @@ data class HomeUiState(
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val learningRepository: LearningRepository
+    private val learningRepository: LearningRepository,
+    preferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val selectedTopicIdFlow = MutableStateFlow<String?>(null)
@@ -53,8 +58,9 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> = combine(
         learningRepository.observeDashboardStats(),
         learningRepository.observeTopicPracticeSummaries(),
-        selectedTopicIdFlow
-    ) { stats, topicSummaries, chosenTopicId ->
+        selectedTopicIdFlow,
+        preferencesRepository.userPreferencesFlow
+    ) { stats, topicSummaries, chosenTopicId, preferences ->
         val resolvedTopicId = chosenTopicId
             ?: stats.continueLearning.currentTopicId.takeIf { id -> topicSummaries.any { it.topicId == id } }
             ?: topicSummaries.lastOrNull()?.topicId
@@ -62,7 +68,8 @@ class HomeViewModel @Inject constructor(
         HomeUiState(
             stats = stats,
             studiedTopics = topicSummaries,
-            selectedTopicId = resolvedTopicId
+            selectedTopicId = resolvedTopicId,
+            isProEnabled = preferences.isPremiumSubscribed
         )
     }.stateIn(
         scope = viewModelScope,
@@ -112,6 +119,7 @@ class HomeFragment : Fragment() {
         // Default click listeners before state arrives
         val defaultTopicId = AppConstants.INITIAL_TOPIC_ID
         wireSkillAndToolCards(defaultTopicId)
+        binding.btnHomeProLesson.setOnClickListener { openHomeProLesson() }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -145,6 +153,8 @@ class HomeFragment : Fragment() {
 
                     val hasLesson = cont.currentSectionId.isNotBlank()
                     binding.btnContinueLearning.isEnabled = hasLesson
+                    binding.btnHomeProLesson.isEnabled = hasLesson &&
+                        cont.currentTopicId.isNotBlank() && cont.currentSectionTitle.isNotBlank()
                     binding.cardHeroBanner.isClickable = hasLesson
                     val openContinueLesson = View.OnClickListener {
                         if (!hasLesson) return@OnClickListener
@@ -234,6 +244,24 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun openHomeProLesson() {
+        val state = viewModel.uiState.value
+        val lesson = state.stats?.continueLearning ?: return
+        if (!state.isProEnabled) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.pro_title)
+                .setMessage(R.string.home_pro_enable_hint)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.settings_title_uz) { _, _ ->
+                    findNavController().navigate(R.id.settingsFragment)
+                }
+                .show()
+            return
+        }
+
+        openProLesson(lesson.currentTopicId, lesson.currentSectionId)
     }
 
     private fun wireSkillAndToolCards(topicId: String) {

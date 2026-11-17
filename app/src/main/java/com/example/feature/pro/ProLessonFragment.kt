@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +17,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.R
+import com.example.core.common.AppConstants
 import com.example.databinding.FragmentProLessonBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -121,4 +124,23 @@ class ProLessonFragment : Fragment() {
         _binding = null
         super.onDestroyView()
     }
+}
+
+internal fun Fragment.openProLesson(topicId: String, sectionId: String) {
+    if (topicId.isBlank() || sectionId.isBlank()) return
+
+    val avatars = arrayOf(getString(R.string.pro_avatar_girl), getString(R.string.pro_avatar_boy))
+    MaterialAlertDialogBuilder(requireContext())
+        .setTitle(R.string.pro_pick_avatar)
+        .setItems(avatars) { _, index ->
+            findNavController().navigate(
+                R.id.proLessonFragment,
+                bundleOf(
+                    AppConstants.ARG_TOPIC_ID to topicId,
+                    AppConstants.ARG_SECTION_ID to sectionId,
+                    ProLessonViewModel.ARG_FEMALE to (index == 0)
+                )
+            )
+        }
+        .show()
 }

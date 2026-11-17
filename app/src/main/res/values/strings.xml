@@ -596,6 +596,8 @@
     <string name="speaking_tutor_stage_thinking">AI Tutor • O‘ylamoqda…</string>
 
     <string name="pro_title">TalkMe Pro</string>
+    <string name="home_open_pro">Pro ovozli darsga o‘tish</string>
+    <string name="home_pro_enable_hint">TalkMe Pro darslarini ochish uchun Sozlamalarda ovoz tizimini Gemini AI’ga o‘tkazing.</string>
     <string name="pro_open_voice_lesson">TalkMe Pro bilan ovozli dars</string>
     <string name="pro_pick_avatar">Suhbatdoshingizni tanlang</string>
     <string name="pro_avatar_girl">Qiz personaj</string>

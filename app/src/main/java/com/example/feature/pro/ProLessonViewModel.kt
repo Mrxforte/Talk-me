@@ -33,7 +33,7 @@ enum class ProStage { RULE, DIALOGUE, READ_ALOUD, FOLLOW_UP, WRAP_UP }
 
 enum class ProAction { BUSY, PLAYING, PLAY, MIC, LISTENING, NEXT, FINISH, BLOCKED, DONE }
 
-data class TutorCue(val words: String, val atMs: Long)
+data class TutorCue(val words: String, val atMs: Long, val amplitude: Float? = null)
 
 data class ProLessonState(
     val stage: ProStage = ProStage.RULE,
@@ -318,7 +318,7 @@ class ProLessonViewModel @Inject constructor(
                 val words = if (start in spoken.indices && end in start + 1..spoken.length) {
                     spoken.substring(start, end)
                 } else {
-                    spoken
+                    ""
                 }
                 viewModelScope.launch {
                     if (request == generation) {

@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -429,6 +430,14 @@ class GeminiTtsProvider @Inject constructor(
         text: String,
         speechRate: Float,
         languageCode: String
+    ): Result<Unit> = speakWithPlaybackCues(text, speechRate, languageCode, null, null)
+
+    internal suspend fun speakWithPlaybackCues(
+        text: String,
+        speechRate: Float,
+        languageCode: String,
+        onAudioLevel: ((Float) -> Unit)?,
+        onSpeechCue: ((Int, Int) -> Unit)?
     ): Result<Unit> {
         val cleanText = text.trim()
         if (cleanText.isEmpty()) return Result.success(Unit)
@@ -465,7 +474,7 @@ class GeminiTtsProvider @Inject constructor(
                     throw IllegalStateException("Gemini TTS returned empty audio payload")
                 }
 
-                playPcmBytes(pcmBytes, speechRate, token)
+                playPcmBytes(pcmBytes, speechRate, token, onAudioLevel)
                 Result.success(Unit)
             } catch (e: CancellationException) {
                 stopAudioTrackOnly()
@@ -476,7 +485,7 @@ class GeminiTtsProvider @Inject constructor(
                     return@withContext Result.success(Unit)
                 }
                 nativeFallback.applyVoiceGender(preferredVoiceGender)
-                nativeFallback.speakWithLanguage(cleanText, speechRate, languageCode)
+                nativeFallback.speakWithCues(cleanText, speechRate, languageCode, onSpeechCue)
             }
         }
     }
@@ -519,7 +528,8 @@ class GeminiTtsProvider @Inject constructor(
     private suspend fun playPcmBytes(
         pcmBytes: ByteArray,
         speechRate: Float,
-        token: String
+        token: String,
+        onAudioLevel: ((Float) -> Unit)?
     ) = withContext(Dispatchers.IO) {
         val clampedRate = speechRate.coerceIn(0.75f, 1.50f)
         val minBuf = AudioTrack.getMinBufferSize(
@@ -549,6 +559,15 @@ class GeminiTtsProvider @Inject constructor(
         activeAudioTrack = track
         requestTransientAudioFocus()
 
+        val levelJob = onAudioLevel?.let { observer ->
+            launch {
+                while (isActive && activePlaybackToken == token) {
+                    val frame = runCatching { track.playbackHeadPosition }.getOrDefault(0)
+                    observer(if (frame > 0) pcmPlaybackLevel(pcmBytes, frame) else 0f)
+                    delay(32L)
+                }
+            }
+        }
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && clampedRate != 1.0f) {
                 runCatching {
@@ -579,6 +598,8 @@ class GeminiTtsProvider @Inject constructor(
                 delay(40L)
             }
         } finally {
+            levelJob?.cancel()
+            onAudioLevel?.invoke(0f)
             if (activeAudioTrack === track) {
                 activeAudioTrack = null
             }
@@ -592,6 +613,22 @@ class GeminiTtsProvider @Inject constructor(
             runCatching { track.release() }
             abandonAudioFocus()
         }
+    }
+
+    private fun pcmPlaybackLevel(bytes: ByteArray, frame: Int): Float {
+        if (frame >= bytes.size / 2) return 0f
+        val offset = frame * 2
+        val end = minOf(bytes.size - 1, offset + PCM_SAMPLE_RATE_HZ / 20 * 2)
+        var energy = 0.0
+        var samples = 0
+        for (index in offset until end step 2) {
+            val pcm = ((bytes[index + 1].toInt() shl 8) or (bytes[index].toInt() and 0xff)).toShort().toInt()
+            energy += pcm.toDouble() * pcm
+            samples++
+        }
+        if (samples == 0) return 0f
+        val rms = kotlin.math.sqrt(energy / samples)
+        return ((rms - 220) / 3_200).toFloat().coerceIn(0f, 1f)
     }
 
     private fun stopAudioTrackOnly() {
@@ -770,7 +807,8 @@ open class TtsManager(
         overrideSpeed: Float? = null,
         languageCode: String = "en",
         overrideVoiceGender: String? = null,
-        onSpeechCue: ((Int, Int) -> Unit)? = null
+        onSpeechCue: ((Int, Int) -> Unit)? = null,
+        onAudioLevel: ((Float) -> Unit)? = null
     ): Result<Unit> {
         if (languageCode.equals("uz", ignoreCase = true)) {
             runCatching { Log.d(TAG, "Skipping speakEnglish for Uzbek explanation text: ${text.trim()}") }
@@ -781,7 +819,8 @@ open class TtsManager(
             overrideSpeed = overrideSpeed,
             languageCode = languageCode,
             overrideVoiceGender = overrideVoiceGender,
-            onSpeechCue = onSpeechCue
+            onSpeechCue = onSpeechCue,
+            onAudioLevel = onAudioLevel
         )
     }
 
@@ -819,7 +858,8 @@ open class TtsManager(
         languageCode: String = "en",
         overrideVoiceGender: String? = null,
         onSpeechCue: ((Int, Int) -> Unit)? = null,
-        forceNative: Boolean = false
+        forceNative: Boolean = false,
+        onAudioLevel: ((Float) -> Unit)? = null
     ): Result<Unit> {
         val cleanText = text.trim()
         if (cleanText.isEmpty()) return Result.success(Unit)
@@ -860,10 +900,12 @@ open class TtsManager(
             _playbackState.value = TtsPlaybackState.Playing(cleanText)
             try {
                 val native = activeProvider as? NativeTtsProvider
-                val result = if (onSpeechCue != null && native != null) {
-                    native.speakWithCues(cleanText, speed, languageCode, onSpeechCue)
-                } else {
-                    activeProvider.speakWithLanguage(cleanText, speed, languageCode)
+                val result = when {
+                    onSpeechCue != null && native != null ->
+                        native.speakWithCues(cleanText, speed, languageCode, onSpeechCue)
+                    activeProvider is GeminiTtsProvider && (onAudioLevel != null || onSpeechCue != null) ->
+                        activeProvider.speakWithPlaybackCues(cleanText, speed, languageCode, onAudioLevel, onSpeechCue)
+                    else -> activeProvider.speakWithLanguage(cleanText, speed, languageCode)
                 }
                 if (activeUtteranceToken == token) {
                     result.fold(

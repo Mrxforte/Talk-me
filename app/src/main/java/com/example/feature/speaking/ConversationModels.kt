@@ -107,10 +107,11 @@ sealed interface ConversationState {
         override val label: String = "AI_THINKING"
     }
 
-    /** Android TextToSpeech is speaking the AI Tutor's reply while the microphone is off. */
+    /** The tutor is speaking. Incoming frames are excluded from recognition. */
     data class AI_SPEAKING(
         val turnId: String,
-        val spokenResponse: String
+        val spokenResponse: String,
+        val delivery: String = ""
     ) : ConversationState {
         override val label: String = "AI_SPEAKING"
     }

@@ -121,16 +121,10 @@
 
                 <com.example.feature.pro.ProAvatarView
                     android:id="@+id/ivAiCharacterAvatar"
+                    android:layout_marginTop="@dimen/speaking_tutor_control_size"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/speaking_ai_title" />
-
-                <!-- Bottom Vignette Scrim -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="76dp"
-                    android:layout_gravity="bottom"
-                    android:background="@drawable/bg_image_scrim" />
 
                 <!-- Top-Left Glass Pill: Status Dot + AI Tutor Stage -->
                 <LinearLayout
@@ -174,22 +168,6 @@
                     android:textColor="@color/color_text_on_primary"
                     app:backgroundTint="@color/color_primary" />
 
-                <!-- Bottom-Center Animated Waveform Bars -->
-                <com.example.core.ui.CosmicWaveformView
-                    android:id="@+id/waveformTutorHero"
-                    android:layout_width="148dp"
-                    android:layout_height="34dp"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="10dp" />
-
-                <!-- Subtle bottom speaking pulse bar preserved for state sync -->
-                <View
-                    android:id="@+id/viewTutorSpeakingBar"
-                    android:layout_width="80dp"
-                    android:layout_height="2dp"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:alpha="0.0"
-                    android:background="@color/color_neon_cyan" />
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
 

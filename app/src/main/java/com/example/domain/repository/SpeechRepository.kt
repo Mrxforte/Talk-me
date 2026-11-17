@@ -48,6 +48,8 @@ interface SpeechRepository {
     fun hasRecordPermission(): Boolean
     fun setMuted(muted: Boolean)
     fun startListening(): Boolean
+    fun startLiveListening(): Boolean = startListening()
+    fun discardListeningTurn() = cancelListening()
     suspend fun stopListening(): SpeechRecognitionResult
     fun cancelListening()
 }

@@ -8,12 +8,12 @@ import android.graphics.Paint
 import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.example.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.exp
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sin
 
 /**
@@ -24,16 +24,14 @@ class ProAvatarView @JvmOverloads constructor(context: Context, attrs: Attribute
     View(context, attrs) {
 
     private val portraitPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
-    private val detailPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val mouthColor = ContextCompat.getColor(context, R.color.pro_avatar_mouth)
-    private val eyelidColor = ContextCompat.getColor(context, R.color.pro_avatar_eyelid)
     private val vertices = FloatArray((GRID + 1) * (GRID + 1) * 2)
     private val depths = FloatArray(vertices.size / 2)
     private var female = true
     private var portrait: Bitmap? = null
     private var action = ProAction.BUSY
     private var cue: TutorCue? = null
-    private var verticalCropBias = 0.5f
+    private var showFullHead = false
+    private var performance = AvatarPerformance.WAITING
     private var origin = SystemClock.uptimeMillis()
     private var angle = 0f
     private var lift = 0f
@@ -42,12 +40,17 @@ class ProAvatarView @JvmOverloads constructor(context: Context, attrs: Attribute
     private var top = 0f
     private var cosine = 1f
     private var sine = 0f
-    private val point = FloatArray(2)
 
     internal fun render(state: ProLessonState) = render(state.female, state.action, state.cue)
 
-    internal fun render(female: Boolean, action: ProAction, cue: TutorCue?, verticalCropBias: Float = 0.5f) {
-        this.verticalCropBias = verticalCropBias
+    internal fun render(
+        female: Boolean,
+        action: ProAction,
+        cue: TutorCue?,
+        showFullHead: Boolean = false,
+        performance: AvatarPerformance = AvatarPerformance.WAITING
+    ) {
+        this.showFullHead = showFullHead
         if (this.female != female || portrait == null) {
             this.female = female
             portrait = BitmapFactory.decodeResource(
@@ -55,7 +58,8 @@ class ProAvatarView @JvmOverloads constructor(context: Context, attrs: Attribute
             )
             prepareDepths()
         }
-        if (this.action != action) origin = SystemClock.uptimeMillis()
+        if (this.action != action || this.performance != performance) origin = SystemClock.uptimeMillis()
+        this.performance = performance
         this.action = action
         this.cue = cue
         invalidate()
@@ -66,53 +70,52 @@ class ProAvatarView @JvmOverloads constructor(context: Context, attrs: Attribute
         val image = portrait ?: return
         val now = SystemClock.uptimeMillis()
         val elapsed = (now - origin) / 1000f
-        val talking = action == ProAction.PLAYING && cue != null
-        val attentive = action == ProAction.LISTENING
-        angle = sin(elapsed * (if (talking) 1.5f else 0.8f)) * (if (talking) 0.10f else 0.065f)
-        lift = sin(elapsed * 1.65f) * (if (attentive) 0.016f else 0.010f)
+        val pose = performance.pose(elapsed)
+        val expression = performance.expressionEnvelope(elapsed)
+        angle = sin(elapsed * 0.74f) * .025f + pose.yaw
+        lift = sin(elapsed * 1.65f) * .006f + pose.rise
         cosine = cos(angle)
         sine = sin(angle)
-        scale = max(width.toFloat(), height * image.width.toFloat() / image.height)
+        scale = if (showFullHead) {
+            min(width * .98f, height / (ASPECT * .75f))
+        } else {
+            max(width.toFloat(), height * image.width.toFloat() / image.height)
+        } * (1f + pose.zoom)
         left = (width - scale) / 2f
-        top = (height - scale * ASPECT) * verticalCropBias
-        val mouth = if (talking) mouthShape(now, cue) else 0f
-        val mouthY = if (female) 0.430f else 0.453f
-        val mouthX = if (female) 0.500f else 0.511f
+        top = if (showFullHead) max(0f, (height - scale * ASPECT) / 2f) + height * .034f
+            else (height - scale * ASPECT) / 2f
+        val mouth = if (action == ProAction.PLAYING) mouthShape(now, cue) else 0f
+        val mouthY = if (female) .430f else .453f
+        val mouthX = if (female) .500f else .511f
+        val blinkTime = (elapsed + .65f) % 4.15f
+        val blink = if (blinkTime in 3.77f..3.91f) sin((blinkTime - 3.77f) / .14f * PI.toFloat()) else 0f
 
         for (row in 0..GRID) {
             val v = row.toFloat() / GRID
             for (col in 0..GRID) {
                 val u = col.toFloat() / GRID
                 val index = row * (GRID + 1) + col
-                val jaw = bump(u, mouthX, 0.14f) * bump(v, mouthY + .032f, .085f) * mouth * .014f
-                project(u, v + jaw, depths[index], vertices, index * 2)
+                val jaw = bump(u, mouthX, .13f) * bump(v, mouthY + .035f, .05f) * mouth * .023f
+                val smile = performance.mood.smile * expression * .010f *
+                    (bump(u, mouthX - .057f, .023f) + bump(u, mouthX + .057f, .023f)) *
+                    bump(v, mouthY, .030f)
+                val leftEye = eyeDeformation(u, v, if (female) .422f else .425f, if (female) .322f else .354f, blink)
+                val rightEye = eyeDeformation(u, v, if (female) .578f else .590f, if (female) .321f else .339f, blink)
+                project(u, v + jaw - smile + leftEye + rightEye, depths[index], vertices, index * 2)
             }
         }
+        canvas.save()
+        canvas.rotate(pose.roll * 57.29578f, width / 2f, height * .44f)
         canvas.drawBitmapMesh(image, GRID, GRID, vertices, 0, null, 0, portraitPaint)
-        if (mouth > 0.06f) {
-            project(mouthX, mouthY + mouth * .003f, depth(mouthX, mouthY), point, 0)
-            val radiusX = scale * (.027f + mouth * .019f)
-            val radiusY = scale * mouth * .012f
-            detailPaint.color = mouthColor
-            detailPaint.alpha = (180 + mouth * 60).toInt()
-            canvas.drawOval(point[0] - radiusX, point[1] - radiusY, point[0] + radiusX, point[1] + radiusY, detailPaint)
-        }
-        val blinkTime = elapsed % 4.15f
-        if (blinkTime in 3.77f..3.91f) {
-            val amount = sin((blinkTime - 3.77f) / .14f * PI.toFloat())
-            drawBlink(canvas, if (female) .422f else .425f, if (female) .322f else .354f, amount)
-            drawBlink(canvas, if (female) .578f else .590f, if (female) .321f else .339f, amount)
-        }
+        canvas.restore()
         if (isShown) postInvalidateDelayed(FRAME_MS)
     }
 
-    private fun drawBlink(canvas: Canvas, x: Float, y: Float, amount: Float) {
-        project(x, y, depth(x, y), point, 0)
-        val wide = scale * .031f
-        val high = scale * .027f * amount
-        detailPaint.color = eyelidColor
-        detailPaint.alpha = (225 * amount).toInt().coerceIn(0, 255)
-        canvas.drawOval(point[0] - wide, point[1] - high, point[0] + wide, point[1] + high, detailPaint)
+    private fun eyeDeformation(u: Float, v: Float, x: Float, y: Float, blink: Float): Float {
+        val eyeWeight = bump(u, x, .045f)
+        val lid = (y - v) * bump(v, y, .033f) * blink * .68f
+        val brow = bump(v, y - .065f, .028f) * performance.mood.brow * .012f
+        return eyeWeight * (lid - brow)
     }
 
     private fun prepareDepths() {
@@ -142,8 +145,10 @@ class ProAvatarView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun mouthShape(now: Long, cue: TutorCue?): Float {
-        if (cue == null || cue.words.isBlank()) return 0f
+        if (cue == null) return 0f
         val elapsed = (now - cue.atMs).coerceAtLeast(0)
+        cue.amplitude?.let { return it.coerceIn(0f, 1f) * (1f - elapsed / 125f).coerceAtLeast(0f) }
+        if (cue.words.isBlank() || elapsed > 360) return 0f
         val text = cue.words
         val index = (elapsed / PHONEME_MS).toInt()
         if (index >= text.length) return 0f

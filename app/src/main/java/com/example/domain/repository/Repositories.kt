@@ -237,7 +237,8 @@ data class SpeakingAiResponse(
     val spokenEnglishReply: String,
     val grammarAndVocabFeedbackUzbek: String,
     val accuracyScore: Int,
-    val studentTranscript: String = ""
+    val studentTranscript: String = "",
+    val delivery: String = ""
 )
 
 data class ReadingPassageResult(

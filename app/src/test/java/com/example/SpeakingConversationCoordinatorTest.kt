@@ -165,6 +165,7 @@ class FakeContextAwareAiLearningService : AiLearningService {
     val receivedLearnerLevels = mutableListOf<String>()
     var artificialDelayMs: Long = 0L
     var shouldFailNextCount: Int = 0
+    var audioTranscript = "Hello tutor, my name is Azamat."
     val callCount = AtomicInteger(0)
 
     override suspend fun sendSpeakingTurn(
@@ -222,7 +223,7 @@ class FakeContextAwareAiLearningService : AiLearningService {
                 spokenEnglishReply = reply,
                 grammarAndVocabFeedbackUzbek = feedback,
                 accuracyScore = 90,
-                studentTranscript = studentUtterance.ifBlank { "Hello tutor, my name is Azamat." }
+                studentTranscript = studentUtterance.ifBlank { audioTranscript }
             )
         )
     }
@@ -705,4 +706,51 @@ class SpeakingConversationCoordinatorTest {
         assertEquals(1, fakeTts.spokenTexts.size)
         coordinator.releaseResources()
     }
+    @Test
+    fun `unrecognized audio never produces a tutor monologue`() = runTest {
+        val speech = FakeLocalSpeechRepository()
+        val ai = FakeContextAwareAiLearningService().apply { audioTranscript = "" }
+        val tts = FakeTtsProvider()
+        val coordinator = createCoordinator(this, fakeSpeech = speech, fakeAi = ai, fakeTts = tts)
+        coordinator.startConversation()
+        advanceUntilIdle()
+
+        speech.simulateUserSpeakingWithVadAndSherpa(
+            finalTranscript = "",
+            audioWavBytes = ByteArray(8192),
+            hadSpeechDetectedByVad = true
+        )
+        advanceUntilIdle()
+
+        assertEquals(1, ai.callCount.get())
+        assertTrue(coordinator.uiState.value.messages.isEmpty())
+        assertTrue(tts.spokenTexts.isEmpty())
+        assertTrue(coordinator.uiState.value.isListeningOrSpeakingUser)
+        coordinator.releaseResources()
+    }
+
+    @Test
+    fun `a captured copy of the just played tutor reply is discarded`() = runTest {
+        val speech = FakeLocalSpeechRepository()
+        val ai = FakeContextAwareAiLearningService()
+        val tts = FakeTtsProvider()
+        val coordinator = createCoordinator(this, fakeSpeech = speech, fakeAi = ai, fakeTts = tts)
+        val tutorLine = "What do you like to eat for lunch?"
+        coordinator.startConversation(ConversationMessage(turnId = "welcome", role = ConversationRole.ASSISTANT, text = tutorLine))
+        advanceUntilIdle()
+        ai.audioTranscript = tutorLine
+
+        speech.simulateUserSpeakingWithVadAndSherpa(
+            finalTranscript = "",
+            audioWavBytes = ByteArray(8192),
+            hadSpeechDetectedByVad = true
+        )
+        advanceUntilIdle()
+
+        assertEquals(listOf(tutorLine), tts.spokenTexts)
+        assertTrue(coordinator.uiState.value.messages.isEmpty())
+        assertTrue(coordinator.uiState.value.isListeningOrSpeakingUser)
+        coordinator.releaseResources()
+    }
+
 }

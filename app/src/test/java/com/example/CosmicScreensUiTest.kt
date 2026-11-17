@@ -41,7 +41,6 @@ class CosmicScreensUiTest {
         assertNotNull(binding.viewTutorStatusDot)
         assertNotNull(androidx.core.content.ContextCompat.getDrawable(context, R.drawable.pro_avatar_boy))
         assertNotNull(androidx.core.content.ContextCompat.getDrawable(context, R.drawable.pro_avatar_girl))
-        assertNotNull(binding.waveformTutorHero)
         assertNotNull(binding.cardLiveSpeech)
         assertNotNull(binding.waveformUserLive)
         assertNotNull(binding.btnMicrophoneSpeak)

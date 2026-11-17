@@ -345,7 +345,7 @@ class SileroVadDetector @Inject constructor() {
         }
 
         val rmsEnergy = sqrt(rawEnergySum / n)
-        if (rmsEnergy < 0.008f) {
+        if (rmsEnergy < 0.003f) {
             // Update adaptive noise floor during quiet frames
             adaptiveNoiseEnergy = 0.92f * adaptiveNoiseEnergy + 0.08f * max(rawEnergySum / n, 1e-6f)
             return 0.02f

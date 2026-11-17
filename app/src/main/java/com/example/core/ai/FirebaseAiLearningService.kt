@@ -66,11 +66,12 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
             "grammarAndVocabFeedbackUzbek" to Schema.string(
                 description = "Optional brief grammar or vocabulary tip in Uzbek (empty string if no correction is needed; never rewrite the learner's original transcript)."
             ),
+            "delivery" to Schema.string(description = "Expression and gesture keys for the spoken reply."),
             "accuracyScore" to Schema.integer(
                 description = "Communication effectiveness score from 60 to 100."
             )
         ),
-        optionalProperties = listOf("studentTranscript", "grammarAndVocabFeedbackUzbek", "accuracyScore")
+        optionalProperties = listOf("studentTranscript", "grammarAndVocabFeedbackUzbek", "accuracyScore", "delivery")
     )
 
     private val readingPassageSchema = Schema.obj(
@@ -150,26 +151,33 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
             if (clean.isEmpty()) null
             else (if (role.equals("USER", true) || role.equals("STUDENT", true)) "user" else "model") to clean
         }
+        val deliveryGuidance = systemGuidance + """
+            |Put only natural spoken English in spokenEnglishReply. Keep tips and system messages separate.
+            |Set delivery to one mood and one gesture as mood:gesture for this reply's meaning.
+            |Moods: neutral, warm, curious, joyful, amused, excited, thoughtful, concerned, surprised, firm.
+            |Gestures: steady, nod, double_nod, tilt_left, tilt_right, glance_up, glance_down, lean_in, ease_back, shake.
+            |Use firm only to act out a firm line in the scenario. Treat the learner respectfully.
+        """.trimMargin()
         val latestText = exactRawTranscript.ifEmpty {
             "Transcribe only the learner's audible words into studentTranscript. " +
-                "Leave it empty if speech is not intelligible. Then reply in spokenEnglishReply."
+                "If you hear silence, background noise, system announcements, the tutor's earlier playback, or cannot verify intelligible learner speech, leave studentTranscript and spokenEnglishReply empty. Never guess a transcript from context."
         }
 
         try {
             val rawJson = if (BuildConfig.DEBUG && BuildConfig.GEMINI_API_KEY.isNotBlank()) {
-                generateSpeakingWithDeveloperKey(systemGuidance, mappedHistory, latestText, audioWavBytes)
+                generateSpeakingWithDeveloperKey(deliveryGuidance, mappedHistory, latestText, audioWavBytes)
             } else {
-                generateSpeakingWithFirebase(systemGuidance, mappedHistory, latestText, audioWavBytes)
+                generateSpeakingWithFirebase(deliveryGuidance, mappedHistory, latestText, audioWavBytes)
             }
 
             val json = JSONObject(rawJson)
             val reply = json.optString("spokenEnglishReply", "").trim()
-            if (reply.isEmpty()) {
-                throw IllegalStateException("Blank spokenEnglishReply from Speaking AI model.")
-            }
-
             val resolvedTranscript = exactRawTranscript.ifEmpty {
                 json.optString("studentTranscript", "").trim()
+            }
+
+            if (reply.isEmpty() && resolvedTranscript.isNotBlank()) {
+                throw IllegalStateException("Blank spokenEnglishReply from Speaking AI model.")
             }
 
             Result.success(
@@ -177,7 +185,8 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
                     spokenEnglishReply = reply,
                     grammarAndVocabFeedbackUzbek = json.optString("grammarAndVocabFeedbackUzbek", "").trim(),
                     accuracyScore = json.optInt("accuracyScore", 88).coerceIn(0, 100),
-                    studentTranscript = resolvedTranscript
+                    studentTranscript = resolvedTranscript,
+                    delivery = json.optString("delivery")
                 )
             )
         } catch (e: CancellationException) {
@@ -248,6 +257,7 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
                     .put("required", JSONArray().put("spokenEnglishReply"))
                     .put("properties", JSONObject()
                         .put("studentTranscript", JSONObject().put("type", "string"))
+                        .put("delivery", JSONObject().put("type", "string"))
                         .put("spokenEnglishReply", JSONObject().put("type", "string"))
                         .put("grammarAndVocabFeedbackUzbek", JSONObject().put("type", "string"))
                         .put("accuracyScore", JSONObject().put("type", "integer")))))

@@ -87,3 +87,9 @@ The production `speakingAiFragment` now renders its portraits with the shared `P
 The old image scaling animator was removed from the fragment and the duplicate permission
 overlay was removed from its XML. The microphone button uses a single permission launcher.
 Checked the speaking destination, ViewBinding references, and its layout smoke test.
+
+### Speaking tutor portrait and playback
+
+The live portrait no longer uses an overlaid waveform, tint scrim, or drawn mouth and
+eyelid shapes. Facial motion uses the existing portrait mesh. Tutor transcript bubbles
+are read-only in Speaking so tapping prior messages does not start a new playback.

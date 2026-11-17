@@ -133,3 +133,11 @@ microphone after playback. Manual submission and voice activity detection share 
 cancellable recording result. The 25-second capture limit bounds the WAV buffer.
 Speaking uses the Gemini API key from `local.properties` or the environment in debug builds
 when configured, and Firebase AI Logic otherwise. Release builds use Firebase AI Logic.
+
+### Foreground Speaking session
+
+The Speaking screen starts capture on entry after microphone permission. The audio device
+stays open while the screen is active. Only VAD segments from the learner turn enter
+recognition. Frames captured while a reply plays and for a brief acoustic tail are
+discarded. An empty or matching recent echo transcript never starts another tutor reply.
+Leaving the screen still releases capture and cancels in-flight speech and requests.

@@ -110,7 +110,7 @@ class AudioRecordManager @Inject constructor(
 
     @Synchronized
     @SuppressLint("MissingPermission")
-    fun startRecording(): Boolean {
+    fun startRecording(streamOnly: Boolean = false): Boolean {
         if (!hasRecordPermission()) {
             _recordingState.value = AudioRecordingState.ERROR
             return false
@@ -131,12 +131,15 @@ class AudioRecordManager @Inject constructor(
             6400
         }
 
-        val audioSources = intArrayOf(
+        val preferredSource = if (streamOnly) MediaRecorder.AudioSource.VOICE_COMMUNICATION
+            else MediaRecorder.AudioSource.VOICE_RECOGNITION
+        val audioSources = listOf(
+            preferredSource,
             MediaRecorder.AudioSource.VOICE_RECOGNITION,
             MediaRecorder.AudioSource.VOICE_COMMUNICATION,
             MediaRecorder.AudioSource.MIC,
             MediaRecorder.AudioSource.DEFAULT
-        )
+        ).distinct()
 
         releaseAudioHardware()
 
@@ -220,7 +223,7 @@ class AudioRecordManager @Inject constructor(
                         }
 
                         synchronized(rawPcmOutputStream) {
-                            if (isActive) rawPcmOutputStream.write(byteBuffer, 0, readShorts * 2)
+                            if (isActive && !streamOnly) rawPcmOutputStream.write(byteBuffer, 0, readShorts * 2)
                         }
 
                         val rms = sqrt(sumSquare / readShorts)
@@ -358,6 +361,16 @@ class AudioRecordManager @Inject constructor(
             rawPcmOutputStream.toByteArray()
         }
         buildWavFromPcm(pcmData)
+    }
+
+    internal fun encodeSpeechSegment(samples: FloatArray): ByteArray {
+        val pcm = ByteArray(samples.size * 2)
+        for (index in samples.indices) {
+            val sample = (samples[index].coerceIn(-1f, 1f) * Short.MAX_VALUE).toInt()
+            pcm[index * 2] = sample.toByte()
+            pcm[index * 2 + 1] = (sample shr 8).toByte()
+        }
+        return buildWavFromPcm(pcm)
     }
 
     private fun buildWavFromPcm(pcmData: ByteArray): ByteArray {

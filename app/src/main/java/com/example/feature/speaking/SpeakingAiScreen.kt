@@ -3,7 +3,6 @@ package com.example.feature.speaking
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.SystemClock
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
@@ -35,6 +34,7 @@ import com.example.core.ui.AiChatTranscriptAdapter
 import com.example.core.ui.CosmicWaveformView
 import com.example.core.ui.ProgressAnimator.animateProgressTo
 import com.example.databinding.FragmentSpeakingAiBinding
+import com.example.feature.pro.AvatarPerformance
 import com.example.feature.pro.ProAction
 import com.example.feature.pro.TutorCue
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -47,7 +47,6 @@ import com.example.domain.repository.UserPreferencesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Locale
-import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -110,7 +109,6 @@ class SpeakingAiViewModel @Inject constructor(
     private var isInitializingSession = false
     private var isSessionReady = false
     private var startWhenReady = false
-    private var welcomeToPlay: ConversationMessage? = null
 
     init {
         startSessionTimer()
@@ -170,31 +168,20 @@ class SpeakingAiViewModel @Inject constructor(
                 val allowedWords = vocabModels.map { it.englishWord }
                 val allowedGrammar = grammarModels.map { "${it.titleUzbek}: ${it.exampleEnglish}" }
 
-                val sampleWords = allowedWords.take(3).joinToString(", ").ifEmpty { "hello, name, student" }
                 val extra = if (section != null) null else withContext(Dispatchers.IO) {
                     learningRepository.getEligibleExercises(PracticeCategory.SPEAKING, null, topicId)
                         .filter { it.id.startsWith("extra_") }.randomOrNull()
                 }
-                val welcomeEnglish = extra?.promptText ?: "Hello! Let's practice speaking about $title. Try using words like $sampleWords. Can you make a sentence about this lesson?"
-                val welcomeMessage = ConversationMessage(
-                    id = UUID.randomUUID().toString(),
-                    turnId = "welcome_turn",
-                    role = ConversationRole.ASSISTANT,
-                    text = welcomeEnglish
-                )
-
                 coordinator.configureLessonContext(
                     topicId = topicId,
                     topicTitle = extra?.promptText ?: title,
                     learnerLevel = learnerLevel,
                     vocabulary = allowedWords,
                     grammarSummaries = allowedGrammar,
-                    welcomeMessage = welcomeMessage,
                     speakWelcome = false
                 )
-                welcomeToPlay = welcomeMessage
                 isSessionReady = true
-                if (startWhenReady) onMicrophoneButtonTapped()
+                if (startWhenReady) startLiveSession()
             } catch (error: kotlinx.coroutines.CancellationException) {
                 throw error
             } catch (error: Exception) {
@@ -216,19 +203,17 @@ class SpeakingAiViewModel @Inject constructor(
         }
     }
 
-    fun onMicrophoneButtonTapped() {
+    fun startLiveSession() {
         if (!isSessionReady) {
             startWhenReady = true
             return
         }
         startWhenReady = false
-        val welcome = welcomeToPlay
-        if (welcome != null) {
-            welcomeToPlay = null
-            coordinator.startConversation(welcome)
-        } else {
-            coordinator.onMicrophoneButtonTapped()
-        }
+        if (!coordinator.uiState.value.isHandsFreeConversationActive) coordinator.startConversation()
+    }
+
+    fun onMicrophoneButtonTapped() {
+        if (isSessionReady) coordinator.onMicrophoneButtonTapped() else startLiveSession()
     }
 
     fun stopConversation() {
@@ -266,13 +251,6 @@ class SpeakingAiViewModel @Inject constructor(
         coordinator.retryFailedTurn()
     }
 
-    fun speakMessage(text: String) {
-        coordinator.speakAssistantResponseAndResumeIfActive(
-            spokenText = text,
-            autoResumeListeningAfterTts = uiState.value.isHandsFreeConversationActive
-        )
-    }
-
     fun endAndRecordSession(onComplete: () -> Unit) {
         viewModelScope.launch {
             coordinator.releaseResources()
@@ -299,15 +277,7 @@ class SpeakingAiViewModel @Inject constructor(
     }
 }
 
-/**
- * Production TalkMe Speaking AI Screen powered by Local Silero VAD + Local Sherpa-ONNX STT +
- * Firebase Gemini AI Tutor + Android TextToSpeech:
- * - Requests `RECORD_AUDIO` runtime permission through the microphone control.
- * - One microphone tap starts automatic hands-free turn-taking:
- *   `IDLE → LISTENING → USER_SPEAKING → FINALIZING → AI_THINKING → AI_SPEAKING → LISTENING`
- * - Preserves exact final STT transcripts (`rawTranscript == displayedUserMessage == geminiStudentUtterance`).
- * - Stops all active recording, AI, and TTS jobs safely when leaving the screen.
- */
+/** Owns the foreground live tutor session and releases capture when the screen is paused. */
 @AndroidEntryPoint
 class SpeakingAiFragment : Fragment() {
 
@@ -317,8 +287,8 @@ class SpeakingAiFragment : Fragment() {
     private val viewModel: SpeakingAiViewModel by viewModels()
     private lateinit var transcriptAdapter: AiChatTranscriptAdapter
     private var femaleTutor = false
-    private var lastSpeakingTurnId: String? = null
-    private var speechCue: TutorCue? = null
+    private var requestedMicPermission = false
+    private var avatarSpeakingTurnId: String? = null
 
     private val requestAudioPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -326,7 +296,7 @@ class SpeakingAiFragment : Fragment() {
         val requestedTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
         if (isGranted) {
             viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
-            viewModel.onMicrophoneButtonTapped()
+            if (isResumed) viewModel.startLiveSession()
         } else {
             viewModel.onMicrophonePermissionRevoked()
             if (isAdded && !shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)) {
@@ -359,13 +329,10 @@ class SpeakingAiFragment : Fragment() {
         val tutorNames = resources.getStringArray(R.array.speaking_tutor_names)
 
         val inLessonFlow = arguments?.getInt(AppConstants.ARG_LESSON_FLOW_STAGE) == 5
-        transcriptAdapter = AiChatTranscriptAdapter(showSpeaker = !inLessonFlow) { englishText ->
-            viewModel.speakMessage(englishText)
-        }
+        transcriptAdapter = AiChatTranscriptAdapter(showSpeaker = false) {}
 
         binding.rvSpeakingTranscript.layoutManager = LinearLayoutManager(requireContext())
         binding.rvSpeakingTranscript.adapter = transcriptAdapter
-        binding.waveformTutorHero.setMode(CosmicWaveformView.Mode.BARS)
         binding.waveformUserLive.setMode(CosmicWaveformView.Mode.BARS)
 
         binding.btnSpeakingTutor.setOnClickListener {
@@ -441,7 +408,7 @@ class SpeakingAiFragment : Fragment() {
                 viewModel.onMicrophoneButtonTapped()
             } else {
                 viewModel.onMicrophonePermissionRevoked()
-                requestAudioPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                requestMicrophone()
             }
         }
 
@@ -518,14 +485,12 @@ class SpeakingAiFragment : Fragment() {
         binding.waveformUserLive.setActive(isUserCapturing)
         binding.waveformUserLive.setAmplitude(if (state.isMuted) 0f else state.audioAmplitude)
 
-        binding.waveformTutorHero.setActive(state.isAiSpeaking)
-        binding.waveformTutorHero.setAmplitude(if (state.isAiSpeaking) 0.85f else 0.15f)
 
         val liveText = when (val convState = state.conversationState) {
             is ConversationState.LISTENING -> {
                 if (state.isAudioCaptureActuallyRunning) {
                     if (state.isMuted) {
-                        getString(R.string.speaking_idle_live_hint)
+                        getString(R.string.speaking_muted_live_hint)
                     } else {
                         getString(R.string.speaking_listening_prompt)
                     }
@@ -536,6 +501,7 @@ class SpeakingAiFragment : Fragment() {
             is ConversationState.USER_SPEAKING -> {
                 convState.provisionalTranscript.ifBlank { getString(R.string.speaking_listening_prompt) }
             }
+            is ConversationState.AI_SPEAKING -> getString(R.string.speaking_playback_live_hint)
             is ConversationState.FINALIZING -> "⏳ Nutq yakunlandi, matn aniqlanmoqda…"
             is ConversationState.AI_THINKING -> "✨ AI Tutor javob tayyorlamoqda…"
             else -> getString(R.string.speaking_idle_live_hint)
@@ -582,14 +548,12 @@ class SpeakingAiFragment : Fragment() {
             binding.btnMicrophoneSpeak.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_text_on_primary))
             binding.ivAiCharacterAura.scaleX = 1.05f
             binding.ivAiCharacterAura.scaleY = 1.05f
-            binding.viewTutorSpeakingBar.scaleX = 1.35f
             binding.btnMicrophoneSpeak.scaleX = 1.0f
             binding.btnMicrophoneSpeak.scaleY = 1.0f
         } else {
             binding.btnMicrophoneSpeak.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_text_on_primary))
             binding.ivAiCharacterAura.scaleX = 1.0f
             binding.ivAiCharacterAura.scaleY = 1.0f
-            binding.viewTutorSpeakingBar.scaleX = 1.0f
             binding.btnMicrophoneSpeak.scaleX = 1.0f
             binding.btnMicrophoneSpeak.scaleY = 1.0f
         }
@@ -621,20 +585,29 @@ class SpeakingAiFragment : Fragment() {
         binding.viewTutorStatusDot.alpha = if (state.isAiSpeaking) 1.0f else 0.78f
 
         val speaking = state.conversationState as? ConversationState.AI_SPEAKING
-        if (lastSpeakingTurnId != speaking?.turnId) {
-            lastSpeakingTurnId = speaking?.turnId
-            speechCue = speaking?.let { TutorCue(it.spokenResponse, SystemClock.uptimeMillis()) }
-        }
         val spokenRange = viewModel.coordinator.spokenRange.value?.takeIf { it.turnId == speaking?.turnId }
+        if (speaking == null) avatarSpeakingTurnId = null
+        if (spokenRange != null && (spokenRange.amplitude ?: 1f) > .04f) {
+            avatarSpeakingTurnId = spokenRange.turnId
+        }
+        val performingReply = speaking != null && avatarSpeakingTurnId == speaking.turnId
         binding.ivAiCharacterAvatar.render(
             female = femaleTutor,
             action = when {
-                state.isAiSpeaking -> ProAction.PLAYING
+                performingReply -> ProAction.PLAYING
                 state.isListeningOrSpeakingUser -> ProAction.LISTENING
-                else -> ProAction.BUSY
+                state.isLoading -> ProAction.BUSY
+                else -> ProAction.MIC
             },
-            cue = spokenRange?.let { TutorCue(it.text, it.timestampMs) } ?: speechCue,
-            verticalCropBias = 0.34f
+            cue = spokenRange?.let { TutorCue(it.text, it.timestampMs, it.amplitude) },
+            showFullHead = true,
+            performance = if (performingReply && speaking != null) {
+                AvatarPerformance.forReply(speaking.delivery, speaking.spokenResponse)
+            } else when {
+                state.isLoading || state.isAiSpeaking -> AvatarPerformance.THINKING
+                state.isListeningOrSpeakingUser && !state.isMuted -> AvatarPerformance.LISTENING
+                else -> AvatarPerformance.WAITING
+            }
         )
     }
 
@@ -643,6 +616,26 @@ class SpeakingAiFragment : Fragment() {
         if (!nav.popBackStack()) {
             nav.navigateUp()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) ==
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            viewModel.onMicrophonePermissionGranted(
+                arguments?.getString(AppConstants.ARG_TOPIC_ID),
+                arguments?.getString(AppConstants.ARG_SECTION_ID)
+            )
+            viewModel.startLiveSession()
+        } else if (!requestedMicPermission) {
+            requestMicrophone()
+        }
+    }
+
+    private fun requestMicrophone() {
+        requestedMicPermission = true
+        requestAudioPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
     }
 
     override fun onPause() {

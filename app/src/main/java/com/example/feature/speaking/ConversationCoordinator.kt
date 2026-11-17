@@ -57,13 +57,14 @@ class ConversationCoordinator(
     private val activeTurnId = AtomicReference<String?>(null)
     private val listeningTurnId = AtomicReference<String?>(null)
 
+    private var lastTutorPlayback: Pair<String, Long>? = null
     private var activeGeminiJob: Job? = null
     private var activeTtsJob: Job? = null
 
     private val _spokenRange = MutableStateFlow<SpokenRange?>(null)
     internal val spokenRange = _spokenRange.asStateFlow()
 
-    internal data class SpokenRange(val turnId: String, val text: String, val timestampMs: Long)
+    internal data class SpokenRange(val turnId: String, val text: String, val timestampMs: Long, val amplitude: Float? = null)
 
     private var allowedVocabulary: List<String> = emptyList()
     private var allowedGrammar: List<String> = emptyList()
@@ -232,9 +233,7 @@ class ConversationCoordinator(
 
         val exactRawTranscript = result.recognizedText.trim()
         val wavBytes = result.audioWavBytes
-        val hasUsableAudio = wavBytes != null &&
-            wavBytes.size > 4096 &&
-            (result.hadSpeechDetectedByVad || hasSpeechEnergyInWav(wavBytes))
+        val hasUsableAudio = wavBytes.size > 4096 && result.hadSpeechDetectedByVad
 
         if (exactRawTranscript.isEmpty() && !hasUsableAudio) {
             // Tests 6 & 7: User said nothing or STT returned no match with no usable speech audio ->
@@ -254,7 +253,7 @@ class ConversationCoordinator(
             return
         }
 
-        if (exactRawTranscript.isEmpty() && hasUsableAudio && wavBytes != null) {
+        if (exactRawTranscript.isEmpty() && hasUsableAudio) {
             TalkMeConversationLogger.logFinalTranscript(finishedListeningTurn, wavBytes.size)
             submitAudioTurnToGemini(
                 turnId = finishedListeningTurn,
@@ -275,25 +274,12 @@ class ConversationCoordinator(
         )
     }
 
-    internal fun hasSpeechEnergyInWav(wavBytes: ByteArray): Boolean {
-        if (wavBytes.size <= 44) return false
-        var sumSq = 0.0
-        var peak = 0
-        var sampleCount = 0
-        var i = 44
-        while (i + 1 < wavBytes.size) {
-            val low = wavBytes[i].toInt() and 0xFF
-            val high = wavBytes[i + 1].toInt()
-            val sample = ((high shl 8) or low).toShort().toInt()
-            val absSample = kotlin.math.abs(sample)
-            if (absSample > peak) peak = absSample
-            sumSq += sample.toDouble() * sample.toDouble()
-            sampleCount++
-            i += 2
-        }
-        if (sampleCount == 0) return false
-        val rms = kotlin.math.sqrt(sumSq / sampleCount)
-        return rms >= 60.0 || peak >= 350
+    private fun matchesPlaybackEcho(transcript: String, tutorText: String?): Boolean {
+        if (tutorText == null) return false
+        val tokens = Regex("[\\p{L}\\p{N}]+")
+        fun words(text: String) = tokens.findAll(text.lowercase()).map { it.value }.toList()
+        val heard = words(transcript)
+        return heard.size >= 4 && words(tutorText).windowed(heard.size).any { it == heard }
     }
 
     fun configureLessonContext(
@@ -483,13 +469,13 @@ class ConversationCoordinator(
     private fun startNextListeningTurn() {
         // Ensure TTS is completely stopped before opening the microphone
         ttsManager.stop()
-        speechRepository.cancelListening()
+        speechRepository.discardListeningTurn()
 
         val turnId = "turn_${UUID.randomUUID()}"
         listeningTurnId.set(turnId)
         TalkMeConversationLogger.logListeningStarted(turnId)
 
-        val started = speechRepository.startListening()
+        val started = speechRepository.startLiveListening()
         if (!started) {
             listeningTurnId.compareAndSet(turnId, null)
             val err = ConversationError(
@@ -549,6 +535,8 @@ class ConversationCoordinator(
      */
     fun stopConversation() {
         val startCancel = System.currentTimeMillis()
+        lastTutorPlayback = null
+        pendingRetryAudioBytes = null
         activeTurnId.set(null)
         listeningTurnId.set(null)
         activeGeminiJob?.cancel()
@@ -647,7 +635,7 @@ class ConversationCoordinator(
                     false
                 } else {
                     listeningTurnId.set(null)
-                    speechRepository.cancelListening()
+                    speechRepository.discardListeningTurn()
                     ttsManager.stop()
                     activeTtsJob?.cancel()
 
@@ -700,6 +688,9 @@ class ConversationCoordinator(
         audioWavBytes: ByteArray
     ) {
         val captureReadyTimestampMs = System.currentTimeMillis()
+        val possibleEcho = lastTutorPlayback?.takeIf {
+            captureReadyTimestampMs - it.second in 0..4_000
+        }?.first
         pendingRetryAudioBytes = turnId to audioWavBytes
 
         scope.launch {
@@ -708,7 +699,7 @@ class ConversationCoordinator(
                     false
                 } else {
                     listeningTurnId.set(null)
-                    speechRepository.cancelListening()
+                    speechRepository.discardListeningTurn()
                     ttsManager.stop()
                     activeTtsJob?.cancel()
 
@@ -762,6 +753,14 @@ class ConversationCoordinator(
                             val aiLatencyMs = (responseReadyMs - captureReadyTimestampMs).coerceAtLeast(0L)
                             TalkMeConversationLogger.logGeminiResponseReceived(turnId, aiLatencyMs)
 
+                            val userText = aiReply.studentTranscript.trim()
+                            if (userText.none(Char::isLetterOrDigit) || matchesPlaybackEcho(userText, possibleEcho)) {
+                                pendingRetryAudioBytes = null
+                                if (activeTurnId.compareAndSet(turnId, null) &&
+                                    _uiState.value.isHandsFreeConversationActive
+                                ) startNextListeningTurn()
+                                return@fold
+                            }
                             val assistantText = aiReply.spokenEnglishReply.trim()
                             if (assistantText.isEmpty()) {
                                 handleGeminiError(
@@ -778,8 +777,6 @@ class ConversationCoordinator(
                             pendingRetryAudioBytes = null
                             sessionScores.add(aiReply.accuracyScore)
 
-                            val userText = aiReply.studentTranscript.trim()
-                                .ifEmpty { "🎤 (Ovozli javob)" }
                             val userMsg = ConversationMessage(
                                 turnId = turnId,
                                 role = ConversationRole.USER,
@@ -807,6 +804,7 @@ class ConversationCoordinator(
                                 turnId = turnId,
                                 spokenText = assistantText,
                                 responseReadyTimestampMs = responseReadyMs,
+                                delivery = aiReply.delivery,
                                 autoResumeListeningAfterTts = _uiState.value.isHandsFreeConversationActive
                             )
                         },
@@ -927,6 +925,7 @@ class ConversationCoordinator(
                             turnId = turnId,
                             spokenText = assistantText,
                             responseReadyTimestampMs = responseReadyMs,
+                            delivery = aiReply.delivery,
                             autoResumeListeningAfterTts = _uiState.value.isHandsFreeConversationActive
                         )
                     },
@@ -1001,7 +1000,8 @@ class ConversationCoordinator(
         turnId: String = UUID.randomUUID().toString(),
         spokenText: String,
         responseReadyTimestampMs: Long = System.currentTimeMillis(),
-        autoResumeListeningAfterTts: Boolean = false
+        autoResumeListeningAfterTts: Boolean = false,
+        delivery: String = ""
     ) {
         val clean = spokenText.trim()
         if (clean.isEmpty()) return
@@ -1011,9 +1011,9 @@ class ConversationCoordinator(
         activeTurnId.set(turnId)
 
         activeTtsJob = scope.launch {
-            // Ensure microphone is stopped while TTS speaks so assistant voice never enters STT
+            // Discard recognition frames during playback while keeping the live recorder open.
             listeningTurnId.set(null)
-            speechRepository.cancelListening()
+            speechRepository.discardListeningTurn()
 
             val firstAudioLatency = (System.currentTimeMillis() - responseReadyTimestampMs).coerceAtLeast(0L)
             TalkMeConversationLogger.logTtsStarted(turnId, clean.length)
@@ -1022,7 +1022,8 @@ class ConversationCoordinator(
                 current.copy(
                     conversationState = ConversationState.AI_SPEAKING(
                         turnId = turnId,
-                        spokenResponse = clean
+                        spokenResponse = clean,
+                        delivery = delivery
                     ),
                     isAudioCaptureActuallyRunning = false,
                     lastError = null,
@@ -1043,6 +1044,11 @@ class ConversationCoordinator(
                 val speakResult = ttsManager.speakEnglish(
                     text = clean,
                     overrideSpeed = targetSpeed,
+                    onAudioLevel = { level ->
+                        if (activeTurnId.get() == turnId) {
+                            _spokenRange.value = SpokenRange(turnId, "", SystemClock.uptimeMillis(), level)
+                        }
+                    },
                     onSpeechCue = { start, end ->
                         if (activeTurnId.get() == turnId && start in clean.indices && end in (start + 1)..clean.length) {
                             _spokenRange.value = SpokenRange(turnId, clean.substring(start, end), SystemClock.uptimeMillis())
@@ -1050,6 +1056,12 @@ class ConversationCoordinator(
                     }
                 )
 
+                if (activeTurnId.get() != turnId) return@launch
+                _spokenRange.value = null
+                if (speakResult.isSuccess) {
+                    lastTutorPlayback = clean to System.currentTimeMillis()
+                    if (autoResumeListeningAfterTts) delay(450)
+                }
                 if (activeTurnId.compareAndSet(turnId, null)) {
                     TalkMeConversationLogger.logTtsCompleted(turnId)
 

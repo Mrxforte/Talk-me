@@ -68,7 +68,7 @@ class SpeechRepositoryImpl @Inject constructor(
     private val captureLock = Any()
     private var capture: Capture? = null
 
-    private class Capture {
+    private class Capture(val keepRecorderOpen: Boolean) {
         val startedAt = android.os.SystemClock.elapsedRealtime()
         val result = CompletableDeferred<SpeechRecognitionResult>()
         var collector: Job? = null
@@ -83,7 +83,11 @@ class SpeechRepositoryImpl @Inject constructor(
         audioRecordManager.setMuted(muted)
     }
 
-    override fun startListening(): Boolean = synchronized(captureLock) {
+    override fun startListening(): Boolean = startListening(keepRecorderOpen = false)
+
+    override fun startLiveListening(): Boolean = startListening(keepRecorderOpen = true)
+
+    private fun startListening(keepRecorderOpen: Boolean): Boolean = synchronized(captureLock) {
         if (_speechState.value == SpeechRecognitionState.LISTENING_PASS_1) return true
         if (_speechState.value == SpeechRecognitionState.PROCESSING_PASS_2) return false
 
@@ -94,12 +98,12 @@ class SpeechRepositoryImpl @Inject constructor(
         sileroVadDetector.initialize()
         sileroVadDetector.reset()
 
-        if (!audioRecordManager.startRecording()) {
+        if (!audioRecordManager.startRecording(streamOnly = keepRecorderOpen)) {
             _speechState.value = SpeechRecognitionState.ERROR
             return false
         }
 
-        val turn = Capture()
+        val turn = Capture(keepRecorderOpen)
         capture = turn
         _speechState.value = SpeechRecognitionState.LISTENING_PASS_1
         turn.collector = scope.launch(start = CoroutineStart.UNDISPATCHED) {
@@ -108,7 +112,9 @@ class SpeechRepositoryImpl @Inject constructor(
                     if (capture !== turn || turn.finalizer != null) return@collect
                     val vadResult = sileroVadDetector.acceptWaveform(chunk)
                     turn.heardSpeech = turn.heardSpeech || vadResult.isSpeechActive
-                    if (vadResult.state == VadState.SPEECH_END) finalize(turn, automatically = true)
+                    if (vadResult.state == VadState.SPEECH_END) {
+                        finalize(turn, automatically = true, completedSpeech = vadResult.completedSpeechSegment)
+                    }
                 }
             }
         }
@@ -143,10 +149,11 @@ class SpeechRepositoryImpl @Inject constructor(
     }
 
     /** Called with [captureLock] held. The finalizer is a sibling of the capture jobs. */
-    private fun finalize(turn: Capture, automatically: Boolean) {
+    private fun finalize(turn: Capture, automatically: Boolean, completedSpeech: FloatArray? = null) {
         if (turn.finalizer != null) return
         val startedFinalizingAt = android.os.SystemClock.elapsedRealtime()
-        val hadSpeech = turn.heardSpeech || sileroVadDetector.flushActiveSpeechSegment().isNotEmpty()
+        val segment = completedSpeech ?: sileroVadDetector.flushActiveSpeechSegment()
+        val hadSpeech = turn.heardSpeech || segment.isNotEmpty()
         val recorderFailed = audioRecordManager.recordingState.value == AudioRecordingState.ERROR
         _speechState.value = SpeechRecognitionState.PROCESSING_PASS_2
 
@@ -154,7 +161,11 @@ class SpeechRepositoryImpl @Inject constructor(
             try {
                 turn.timer?.cancelAndJoin()
                 turn.collector?.cancelAndJoin()
-                val wavBytes = audioRecordManager.finishRecordingWav()
+                val wavBytes = if (turn.keepRecorderOpen && !recorderFailed) {
+                    audioRecordManager.encodeSpeechSegment(segment)
+                } else {
+                    audioRecordManager.finishRecordingWav()
+                }
                 val result = SpeechRecognitionResult(
                     recognizedText = "",
                     isFinal = true,
@@ -193,7 +204,11 @@ class SpeechRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun cancelListening() {
+    override fun discardListeningTurn() = resetListening(releaseRecorder = false)
+
+    override fun cancelListening() = resetListening(releaseRecorder = true)
+
+    private fun resetListening(releaseRecorder: Boolean) {
         synchronized(captureLock) {
             capture?.let { turn ->
                 turn.finalizer?.cancel()
@@ -202,7 +217,7 @@ class SpeechRepositoryImpl @Inject constructor(
                 turn.result.cancel()
             }
             capture = null
-            audioRecordManager.cancelRecording()
+            if (releaseRecorder) audioRecordManager.cancelRecording()
             sileroVadDetector.reset()
             _speechState.value = SpeechRecognitionState.IDLE
             _interimText.value = ""

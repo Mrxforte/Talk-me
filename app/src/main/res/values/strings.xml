@@ -257,7 +257,9 @@
     <string name="speaking_you_say_label">Siz aytyapsiz</string>
     <string name="speaking_tap_to_speak">Bosib gapiring</string>
     <string name="speaking_listening_prompt">Gapiring, tinglayapman…</string>
-    <string name="speaking_idle_live_hint">Mikrofonni bosib inglizcha gapiring…</string>
+    <string name="speaking_idle_live_hint">Mikrofon tayyor bo‘lganda inglizcha gapiring.</string>
+    <string name="speaking_playback_live_hint">Tutor gapini tugatgach suhbat davom etadi.</string>
+    <string name="speaking_muted_live_hint">Mikrofon ovozsiz rejimda.</string>
 
     <!-- Studio Exercise UI Strings -->
     <string name="studio_title_reading">Reading Studio</string>

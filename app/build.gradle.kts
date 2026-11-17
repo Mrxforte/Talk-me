@@ -21,13 +21,7 @@ android {
     versionCode = 1
     versionName = "1.0.0"
 
-    val prop = Properties()
-    val localPropFile = rootProject.file("local.properties")
-    if (localPropFile.exists()) {
-      localPropFile.inputStream().use { prop.load(it) }
-    }
-    val geminiApiKey = prop.getProperty("GEMINI_API_KEY") ?: System.getenv("GEMINI_API_KEY") ?: ""
-    buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+    buildConfigField("String", "GEMINI_API_KEY", "\"\"")
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -60,6 +54,14 @@ android {
       signingConfig = signingConfigs.getByName("release")
     }
     debug {
+      val prop = Properties()
+      val localPropFile = rootProject.file("local.properties")
+      if (localPropFile.exists()) {
+        localPropFile.inputStream().use { prop.load(it) }
+      }
+      val geminiApiKey = prop.getProperty("GEMINI_API_KEY") ?: System.getenv("GEMINI_API_KEY") ?: ""
+      buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+
       // Do not remove or modify this signingConfig assignment. It is necessary for Android apps in
       // AI Studio.
       signingConfig = signingConfigs.getByName("debugConfig")

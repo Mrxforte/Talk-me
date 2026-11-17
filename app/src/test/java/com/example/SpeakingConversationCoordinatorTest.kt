@@ -303,6 +303,49 @@ class SpeakingConversationCoordinatorTest {
     }
 
     @Test
+    fun `starting with a greeting opens the microphone after playback`() = runTest {
+        val speech = FakeLocalSpeechRepository()
+        val tts = FakeTtsProvider().apply { speakDelayMs = 400 }
+        val coordinator = createCoordinator(this, fakeSpeech = speech, fakeTts = tts)
+        val welcome = ConversationMessage(
+            turnId = "welcome",
+            role = ConversationRole.ASSISTANT,
+            text = "What is your name?"
+        )
+
+        coordinator.startConversation(welcome)
+        testScheduler.runCurrent()
+        assertTrue(coordinator.uiState.value.isAiSpeaking)
+        assertEquals(SpeechRecognitionState.IDLE, speech.speechState.value)
+
+        advanceUntilIdle()
+        assertEquals(listOf(welcome.text), tts.spokenTexts)
+        assertTrue(coordinator.uiState.value.isListeningOrSpeakingUser)
+        coordinator.releaseResources()
+    }
+
+    @Test
+    fun `pressing the microphone during the greeting hands the turn to the learner`() = runTest {
+        val speech = FakeLocalSpeechRepository()
+        val tts = FakeTtsProvider().apply { speakDelayMs = 400 }
+        val coordinator = createCoordinator(this, fakeSpeech = speech, fakeTts = tts)
+        val welcome = ConversationMessage(
+            turnId = "welcome",
+            role = ConversationRole.ASSISTANT,
+            text = "What is your name?"
+        )
+
+        coordinator.startConversation(welcome)
+        testScheduler.runCurrent()
+        coordinator.onMicrophoneButtonTapped()
+
+        advanceUntilIdle()
+        assertTrue(coordinator.uiState.value.isListeningOrSpeakingUser)
+        assertTrue(tts.spokenTexts.isEmpty())
+        coordinator.releaseResources()
+    }
+
+    @Test
     fun `TEST 1 - AI asks What is your name and user says My name is Alex`() = runTest {
         val fakeSpeech = FakeLocalSpeechRepository()
         val fakeAi = FakeContextAwareAiLearningService()

@@ -33,6 +33,7 @@ class ProAvatarView @JvmOverloads constructor(context: Context, attrs: Attribute
     private var portrait: Bitmap? = null
     private var action = ProAction.BUSY
     private var cue: TutorCue? = null
+    private var verticalCropBias = 0.5f
     private var origin = SystemClock.uptimeMillis()
     private var angle = 0f
     private var lift = 0f
@@ -43,17 +44,20 @@ class ProAvatarView @JvmOverloads constructor(context: Context, attrs: Attribute
     private var sine = 0f
     private val point = FloatArray(2)
 
-    internal fun render(state: ProLessonState) {
-        if (female != state.female || portrait == null) {
-            female = state.female
+    internal fun render(state: ProLessonState) = render(state.female, state.action, state.cue)
+
+    internal fun render(female: Boolean, action: ProAction, cue: TutorCue?, verticalCropBias: Float = 0.5f) {
+        this.verticalCropBias = verticalCropBias
+        if (this.female != female || portrait == null) {
+            this.female = female
             portrait = BitmapFactory.decodeResource(
                 resources, if (female) R.drawable.pro_avatar_girl else R.drawable.pro_avatar_boy
             )
             prepareDepths()
         }
-        if (state.action != action) origin = SystemClock.uptimeMillis()
-        action = state.action
-        cue = state.cue
+        if (this.action != action) origin = SystemClock.uptimeMillis()
+        this.action = action
+        this.cue = cue
         invalidate()
     }
 
@@ -70,7 +74,7 @@ class ProAvatarView @JvmOverloads constructor(context: Context, attrs: Attribute
         sine = sin(angle)
         scale = max(width.toFloat(), height * image.width.toFloat() / image.height)
         left = (width - scale) / 2f
-        top = (height - scale * ASPECT) / 2f
+        top = (height - scale * ASPECT) * verticalCropBias
         val mouth = if (talking) mouthShape(now, cue) else 0f
         val mouthY = if (female) 0.430f else 0.453f
         val mouthX = if (female) 0.500f else 0.511f

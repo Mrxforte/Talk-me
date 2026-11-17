@@ -469,6 +469,15 @@ class AiChatTranscriptAdapter(
 ) : ListAdapter<AiTutorMessage, AiChatTranscriptAdapter.MessageViewHolder>(DiffCallback) {
 
     private var studentDisplayName: String = "Azamat"
+    private var tutorName: String? = null
+    private var tutorPortrait = R.drawable.img_ai_tutor_avatar_1794304412196
+
+    fun updateTutor(name: String, @androidx.annotation.DrawableRes portrait: Int) {
+        if (name == tutorName && portrait == tutorPortrait) return
+        tutorName = name
+        tutorPortrait = portrait
+        if (itemCount > 0) notifyItemRangeChanged(0, itemCount)
+    }
 
     fun updateStudentName(name: String) {
         val clean = name.trim().ifBlank { "Azamat" }
@@ -509,7 +518,8 @@ class AiChatTranscriptAdapter(
                 binding.tvStudentAvatarBadge.visibility = View.GONE
 
                 binding.colBubbleContainer.gravity = android.view.Gravity.START
-                binding.tvSenderRole.text = binding.root.context.getString(R.string.speaking_ai_tutor_badge)
+                binding.tvSenderRole.text = tutorName ?: binding.root.context.getString(R.string.speaking_ai_tutor_badge)
+                binding.ivTutorAvatar.setImageResource(tutorPortrait)
                 binding.cardMessage.setBackgroundResource(R.drawable.bg_speaking_bubble_tutor)
                 binding.btnSpeakMessage.visibility = if (showSpeaker) View.VISIBLE else View.GONE
                 binding.rowStudentAudioBadge.visibility = View.GONE
@@ -527,7 +537,7 @@ class AiChatTranscriptAdapter(
                 onSpeakMessage(item.englishText)
             }
             binding.btnSpeakMessage.setOnClickListener(speakClickListener)
-            binding.cardMessage.setOnClickListener(if (showSpeaker) speakClickListener else null)
+            binding.cardMessage.setOnClickListener(if (showSpeaker && !isStudent) speakClickListener else null)
         }
     }
 

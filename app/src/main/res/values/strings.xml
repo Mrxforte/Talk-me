@@ -631,4 +631,15 @@
     <string name="pro_read_prompt">Qani, ekrandagi gaplarni ovoz chiqarib o‘qib ko‘ring. Men tinglayman.</string>
     <string name="pro_read_good">Zo‘r! Eshitilgan so‘zlarning %1$d foizi matnga mos keldi.</string>
     <string name="pro_read_retry">Eshitilgan so‘zlarning %1$d foizi matnga mos keldi. Keyingi safar har bir so‘zni shoshmasdan aytib ko‘ring.</string>
+    <string name="speaking_mic_processing">Javob tayyorlanmoqda…</string>
+    <string name="speaking_tutor_selector_format">%1$s ▾</string>
+    <string name="speaking_select_tutor">Tutorni tanlash</string>
+    <string name="speaking_mic_settings_message">Ovozli suhbat uchun TalkMe’ga mikrofon ruxsatini bering.</string>
+    <string name="speaking_mic_open_settings">Sozlamalarni ochish</string>
+    <string name="speaking_mic_send">Ovozli javobni yuborish</string>
+    <string name="speaking_mic_answer_now">Javob berishni boshlash</string>
+    <string-array name="speaking_tutor_names">
+        <item>Lera</item>
+        <item>Leo</item>
+    </string-array>
 </resources>

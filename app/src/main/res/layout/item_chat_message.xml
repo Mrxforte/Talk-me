@@ -14,6 +14,7 @@
         android:layout_width="34dp"
         android:layout_height="34dp"
         android:layout_marginEnd="8dp"
+        android:clipToOutline="true"
         app:cardBackgroundColor="@color/color_cosmic_card"
         app:cardCornerRadius="17dp"
         app:cardElevation="0dp"

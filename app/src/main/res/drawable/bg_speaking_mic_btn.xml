@@ -3,7 +3,7 @@
     android:color="@color/color_scrim_light_outline">
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/color_cta_button_bg" />
+            <solid android:color="@color/color_primary" />
             <stroke
                 android:width="2.5dp"
                 android:color="@color/color_primary_light" />

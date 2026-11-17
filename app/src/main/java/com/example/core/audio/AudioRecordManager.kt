@@ -34,8 +34,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 private const val TAG = "AudioRecordManager"
@@ -56,8 +54,7 @@ enum class AudioRecordingState {
  * Production Coroutine-based 16kHz Mono 16-bit PCM Audio recorder using Android's [AudioRecord].
  * - Uses structured concurrency with [SupervisorJob] + [Dispatchers.IO].
  * - Emits 32ms (512-sample) normalized float PCM frames (`-1.0f..1.0f`) to [sampleChunkFlow]
- *   with bounded buffering (`BufferOverflow.DROP_OLDEST`) for real-time local Silero VAD and
- *   Sherpa-ONNX streaming recognition.
+ *   with bounded buffering (`BufferOverflow.DROP_OLDEST`) for local voice activity detection.
  * - Never fabricates synthetic sine-wave amplitudes when idle or silent.
  * - Safely awaits read-loop completion via [cancelAndJoin] before releasing native [AudioRecord].
  */
@@ -83,7 +80,6 @@ class AudioRecordManager @Inject constructor(
     val sampleChunkFlow: SharedFlow<FloatArray> = _sampleChunkFlow.asSharedFlow()
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private val bufferMutex = Mutex()
     private val mutedAtomic = AtomicBoolean(false)
 
     @Volatile
@@ -112,6 +108,7 @@ class AudioRecordManager @Inject constructor(
         }
     }
 
+    @Synchronized
     @SuppressLint("MissingPermission")
     fun startRecording(): Boolean {
         if (!hasRecordPermission()) {
@@ -185,13 +182,14 @@ class AudioRecordManager @Inject constructor(
         _recordingState.value = AudioRecordingState.RECORDING
 
         recordJob?.cancel()
+        val recorder = audioRecord
         recordJob = scope.launch {
             val shortBuffer = ShortArray(VAD_FRAME_SAMPLES) // 32ms frames at 16kHz (512 samples)
             val byteBuffer = ByteArray(VAD_FRAME_SAMPLES * 2)
+            var consecutiveReadFailures = 0
 
             try {
                 while (isActive && _recordingState.value == AudioRecordingState.RECORDING) {
-                    val recorder = audioRecord
                     val readShorts = if (recorder != null && recorder.recordingState == AudioRecord.RECORDSTATE_RECORDING) {
                         try {
                             recorder.read(shortBuffer, 0, shortBuffer.size)
@@ -203,6 +201,7 @@ class AudioRecordManager @Inject constructor(
                     }
 
                     if (readShorts > 0) {
+                        consecutiveReadFailures = 0
                         if (mutedAtomic.get()) {
                             _amplitude.value = 0f
                             continue
@@ -220,8 +219,8 @@ class AudioRecordManager @Inject constructor(
                             byteBuffer[byteIdx + 1] = ((sample.toInt() shr 8) and 0xFF).toByte()
                         }
 
-                        bufferMutex.withLock {
-                            rawPcmOutputStream.write(byteBuffer, 0, readShorts * 2)
+                        synchronized(rawPcmOutputStream) {
+                            if (isActive) rawPcmOutputStream.write(byteBuffer, 0, readShorts * 2)
                         }
 
                         val rms = sqrt(sumSquare / readShorts)
@@ -229,14 +228,24 @@ class AudioRecordManager @Inject constructor(
                         _amplitude.value = normalizedAmp
                         _sampleChunkFlow.tryEmit(floatArray)
                     } else {
-                        // Do not emit fake amplitude when no hardware audio samples are read
+                        if (!isActive || _recordingState.value != AudioRecordingState.RECORDING) break
+                        consecutiveReadFailures++
+                        if (consecutiveReadFailures == 30) {
+                            _recordingState.compareAndSet(AudioRecordingState.RECORDING, AudioRecordingState.ERROR)
+                            _amplitude.value = 0f
+                            break
+                        }
                         delay(32L)
                     }
                 }
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                Log.w(TAG, "AudioRecord read loop terminated with notice", e)
+                if (isActive) {
+                    _recordingState.compareAndSet(AudioRecordingState.RECORDING, AudioRecordingState.ERROR)
+                    _amplitude.value = 0f
+                }
+                Log.w(TAG, "AudioRecord read loop terminated", e)
             }
         }
         return true
@@ -259,7 +268,7 @@ class AudioRecordManager @Inject constructor(
             byteBuffer[i * 2] = (shortVal.toInt() and 0xFF).toByte()
             byteBuffer[i * 2 + 1] = ((shortVal.toInt() shr 8) and 0xFF).toByte()
         }
-        bufferMutex.withLock {
+        synchronized(rawPcmOutputStream) {
             rawPcmOutputStream.write(byteBuffer, 0, byteBuffer.size)
         }
         val rms = sqrt(sumSquare / samples.size)
@@ -295,7 +304,7 @@ class AudioRecordManager @Inject constructor(
         try {
             audioRecord?.let { recorder ->
                 if (recorder.recordingState == AudioRecord.RECORDSTATE_RECORDING) {
-                    recorder.stop()
+                    runCatching { recorder.stop() }
                 }
                 recorder.release()
             }
@@ -306,21 +315,30 @@ class AudioRecordManager @Inject constructor(
         }
     }
 
-    suspend fun stopRecording(): FloatArray = withContext(Dispatchers.IO) {
-        _recordingState.value = AudioRecordingState.STOPPED
-        try {
-            recordJob?.cancelAndJoin()
-        } catch (_: Exception) {
-        } finally {
+    private suspend fun stopAndSnapshotPcm(): ByteArray = withContext(Dispatchers.IO) {
+        val job = synchronized(this@AudioRecordManager) {
+            _recordingState.value = AudioRecordingState.STOPPED
+            // Unblock AudioRecord.read before awaiting the read coroutine.
+            runCatching { audioRecord?.stop() }
+            recordJob
+        }
+        job?.cancelAndJoin()
+        synchronized(this@AudioRecordManager) {
+            if (recordJob !== job) return@synchronized ByteArray(0)
             recordJob = null
+            releaseAudioHardware()
+            _amplitude.value = 0f
+            synchronized(rawPcmOutputStream) { rawPcmOutputStream.toByteArray() }
         }
+    }
 
-        releaseAudioHardware()
-        _amplitude.value = 0f
+    suspend fun finishRecordingWav(): ByteArray {
+        val pcmBytes = stopAndSnapshotPcm()
+        return buildWavFromPcm(pcmBytes)
+    }
 
-        val pcmBytes = bufferMutex.withLock {
-            rawPcmOutputStream.toByteArray()
-        }
+    suspend fun stopRecording(): FloatArray {
+        val pcmBytes = stopAndSnapshotPcm()
         val totalShorts = pcmBytes.size / 2
         val fullFloatArray = FloatArray(totalShorts)
         for (i in 0 until totalShorts) {
@@ -329,18 +347,21 @@ class AudioRecordManager @Inject constructor(
             val sample = (high shl 8) or low
             fullFloatArray[i] = sample.toShort() / 32768.0f
         }
-        fullFloatArray
+        return fullFloatArray
     }
 
     /**
      * Returns the last recorded PCM buffer wrapped in a valid 16kHz 16-bit Mono RIFF/WAV header.
      */
     suspend fun getLastRecordedWavBytes(): ByteArray = withContext(Dispatchers.IO) {
-        val pcmData = bufferMutex.withLock {
+        val pcmData = synchronized(rawPcmOutputStream) {
             rawPcmOutputStream.toByteArray()
         }
-        if (pcmData.isEmpty()) return@withContext ByteArray(0)
+        buildWavFromPcm(pcmData)
+    }
 
+    private fun buildWavFromPcm(pcmData: ByteArray): ByteArray {
+        if (pcmData.isEmpty()) return ByteArray(0)
         val totalDataLen = pcmData.size + 36
         val byteRate = SAMPLE_RATE_HZ * 1 * 16 / 8
         val header = ByteArray(44)
@@ -393,9 +414,10 @@ class AudioRecordManager @Inject constructor(
         val wavBytes = ByteArray(44 + pcmData.size)
         System.arraycopy(header, 0, wavBytes, 0, 44)
         System.arraycopy(pcmData, 0, wavBytes, 44, pcmData.size)
-        wavBytes
+        return wavBytes
     }
 
+    @Synchronized
     fun cancelRecording() {
         _recordingState.value = AudioRecordingState.IDLE
         recordJob?.cancel()

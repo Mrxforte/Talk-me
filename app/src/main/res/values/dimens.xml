@@ -85,4 +85,6 @@
     <dimen name="pro_voice_wave_height">42dp</dimen>
     <dimen name="pro_voice_title">17sp</dimen>
     <dimen name="pro_voice_passage">20sp</dimen>
+    <dimen name="speaking_tutor_stage_height">240dp</dimen>
+    <dimen name="speaking_tutor_control_size">48dp</dimen>
 </resources>

@@ -1,15 +1,18 @@
 package com.example.data.repository
 
 import com.example.core.audio.AudioRecordManager
+import com.example.core.audio.AudioRecordingState
 import com.example.core.speech.SileroVadDetector
 import com.example.core.speech.VadState
 import com.example.domain.repository.SpeechRecognitionResult
 import com.example.domain.repository.SpeechRecognitionState
 import com.example.domain.repository.SpeechRepository
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -24,9 +27,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withContext
 
 /**
  * Pure-Kotlin speech capture + VAD pipeline for Gemini multimodal audio speaking turns:
@@ -65,15 +65,17 @@ class SpeechRepositoryImpl @Inject constructor(
         _utteranceFinalizedEvents.asSharedFlow()
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private val finalizationMutex = Mutex()
-    private val isFinalizingAtomic = AtomicBoolean(false)
+    private val captureLock = Any()
+    private var capture: Capture? = null
 
-    private var audioCollectJob: Job? = null
-    private var timerJob: Job? = null
-    private var startTimestamp = 0L
-
-    @Volatile
-    private var speechDetectedInCurrentTurn = false
+    private class Capture {
+        val startedAt = android.os.SystemClock.elapsedRealtime()
+        val result = CompletableDeferred<SpeechRecognitionResult>()
+        var collector: Job? = null
+        var timer: Job? = null
+        var finalizer: Job? = null
+        var heardSpeech = false
+    }
 
     override fun hasRecordPermission(): Boolean = audioRecordManager.hasRecordPermission()
 
@@ -81,117 +83,135 @@ class SpeechRepositoryImpl @Inject constructor(
         audioRecordManager.setMuted(muted)
     }
 
-    override fun startListening(): Boolean {
+    override fun startListening(): Boolean = synchronized(captureLock) {
         if (_speechState.value == SpeechRecognitionState.LISTENING_PASS_1) return true
+        if (_speechState.value == SpeechRecognitionState.PROCESSING_PASS_2) return false
 
-        isFinalizingAtomic.set(false)
-        speechDetectedInCurrentTurn = false
         _interimText.value = ""
         _finalText.value = ""
         _recordingDurationSeconds.value = 0
-        startTimestamp = System.currentTimeMillis()
 
         sileroVadDetector.initialize()
         sileroVadDetector.reset()
 
-        val started = audioRecordManager.startRecording()
-        if (!started) {
+        if (!audioRecordManager.startRecording()) {
             _speechState.value = SpeechRecognitionState.ERROR
             return false
         }
 
+        val turn = Capture()
+        capture = turn
         _speechState.value = SpeechRecognitionState.LISTENING_PASS_1
-
-        audioCollectJob?.cancel()
-        audioCollectJob = scope.launch {
+        turn.collector = scope.launch(start = CoroutineStart.UNDISPATCHED) {
             audioRecordManager.sampleChunkFlow.collect { chunk ->
-                if (_speechState.value != SpeechRecognitionState.LISTENING_PASS_1 || isFinalizingAtomic.get()) {
-                    return@collect
-                }
-
-                val vadResult = sileroVadDetector.acceptWaveform(chunk)
-
-                if (vadResult.isSpeechActive) {
-                    speechDetectedInCurrentTurn = true
-                }
-
-                if (vadResult.state == VadState.SPEECH_END && isFinalizingAtomic.compareAndSet(false, true)) {
-                    val segmentedSpeech = vadResult.completedSpeechSegment ?: FloatArray(0)
-                    launch {
-                        val result = finalizeRecognizedUtterance(
-                            hadSpeechFromVad = true,
-                            hasSegmentedSpeech = segmentedSpeech.isNotEmpty()
-                        )
-                        _utteranceFinalizedEvents.emit(result)
-                    }
+                synchronized(captureLock) {
+                    if (capture !== turn || turn.finalizer != null) return@collect
+                    val vadResult = sileroVadDetector.acceptWaveform(chunk)
+                    turn.heardSpeech = turn.heardSpeech || vadResult.isSpeechActive
+                    if (vadResult.state == VadState.SPEECH_END) finalize(turn, automatically = true)
                 }
             }
         }
-
-        timerJob?.cancel()
-        timerJob = scope.launch {
-            while (isActive && _speechState.value == SpeechRecognitionState.LISTENING_PASS_1) {
-                delay(1000L)
-                _recordingDurationSeconds.value += 1
+        turn.timer = scope.launch {
+            while (isActive) {
+                delay(1_000)
+                val timedOut = synchronized(captureLock) {
+                    if (capture !== turn || turn.finalizer != null) return@launch
+                    _recordingDurationSeconds.value += 1
+                    val recorderFailed = audioRecordManager.recordingState.value == AudioRecordingState.ERROR
+                    val limitReached = recorderFailed || _recordingDurationSeconds.value >= MAX_CAPTURE_SECONDS
+                    if (limitReached) finalize(turn, automatically = true)
+                    limitReached
+                }
+                if (timedOut) return@launch
             }
         }
-
-        return true
+        true
     }
 
-    override suspend fun stopListening(): SpeechRecognitionResult = withContext(Dispatchers.IO) {
-        isFinalizingAtomic.set(true)
-        val flushedSegment = sileroVadDetector.flushActiveSpeechSegment()
-        finalizeRecognizedUtterance(
-            hadSpeechFromVad = speechDetectedInCurrentTurn || flushedSegment.isNotEmpty(),
-            hasSegmentedSpeech = flushedSegment.isNotEmpty()
+    override suspend fun stopListening(): SpeechRecognitionResult {
+        val result = synchronized(captureLock) {
+            capture?.let { turn ->
+                finalize(turn, automatically = false)
+                turn.result
+            }
+        }
+        return result?.await() ?: SpeechRecognitionResult(
+            recognizedText = "", isFinal = true, recordingDurationMs = 0, processingDurationMs = 0,
+            hadSpeechDetectedByVad = false
         )
     }
 
-    private suspend fun finalizeRecognizedUtterance(
-        hadSpeechFromVad: Boolean,
-        hasSegmentedSpeech: Boolean
-    ): SpeechRecognitionResult = finalizationMutex.withLock {
-        val recDurationMs = (System.currentTimeMillis() - startTimestamp).coerceAtLeast(0L)
-        val processStart = System.currentTimeMillis()
-
+    /** Called with [captureLock] held. The finalizer is a sibling of the capture jobs. */
+    private fun finalize(turn: Capture, automatically: Boolean) {
+        if (turn.finalizer != null) return
+        val startedFinalizingAt = android.os.SystemClock.elapsedRealtime()
+        val hadSpeech = turn.heardSpeech || sileroVadDetector.flushActiveSpeechSegment().isNotEmpty()
+        val recorderFailed = audioRecordManager.recordingState.value == AudioRecordingState.ERROR
         _speechState.value = SpeechRecognitionState.PROCESSING_PASS_2
-        runCatching { timerJob?.cancelAndJoin() }
-        timerJob = null
-        runCatching { audioCollectJob?.cancelAndJoin() }
-        audioCollectJob = null
 
-        audioRecordManager.stopRecording()
-        val wavBytes = audioRecordManager.getLastRecordedWavBytes()
+        turn.finalizer = scope.launch {
+            try {
+                turn.timer?.cancelAndJoin()
+                turn.collector?.cancelAndJoin()
+                val wavBytes = audioRecordManager.finishRecordingWav()
+                val result = SpeechRecognitionResult(
+                    recognizedText = "",
+                    isFinal = true,
+                    recordingDurationMs = startedFinalizingAt - turn.startedAt,
+                    processingDurationMs = android.os.SystemClock.elapsedRealtime() - startedFinalizingAt,
+                    audioWavBytes = wavBytes,
+                    hadSpeechDetectedByVad = hadSpeech,
+                    sttErrorReason = if (recorderFailed) {
+                        "Mikrofondan ovoz olinmadi. Qayta urinib ko‘ring."
+                    } else null,
+                    finalizedAutomatically = automatically
+                )
+                publishResult(turn, result, automatically)
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                android.util.Log.w("SpeechRepository", "Could not finalize microphone recording", error)
+                publishResult(turn, SpeechRecognitionResult(
+                    recognizedText = "",
+                    isFinal = true,
+                    recordingDurationMs = startedFinalizingAt - turn.startedAt,
+                    processingDurationMs = 0,
+                    sttErrorReason = "Ovoz yozuvini yuborib bo‘lmadi. Qayta urinib ko‘ring.",
+                    finalizedAutomatically = automatically
+                ), automatically)
+            }
+        }
+    }
 
-        _finalText.value = ""
-        _speechState.value = SpeechRecognitionState.COMPLETED
-
-        val processDurationMs = (System.currentTimeMillis() - processStart).coerceAtLeast(0L)
-
-        SpeechRecognitionResult(
-            recognizedText = "",
-            isFinal = true,
-            recordingDurationMs = recDurationMs,
-            processingDurationMs = processDurationMs,
-            audioWavBytes = wavBytes,
-            hadSpeechDetectedByVad = hadSpeechFromVad || hasSegmentedSpeech
-        )
+    private fun publishResult(turn: Capture, result: SpeechRecognitionResult, automatically: Boolean) {
+        synchronized(captureLock) {
+            if (capture !== turn) return
+            _speechState.value = SpeechRecognitionState.COMPLETED
+            turn.result.complete(result)
+            if (automatically) _utteranceFinalizedEvents.tryEmit(result)
+        }
     }
 
     override fun cancelListening() {
-        isFinalizingAtomic.set(false)
-        speechDetectedInCurrentTurn = false
-        timerJob?.cancel()
-        timerJob = null
-        audioCollectJob?.cancel()
-        audioCollectJob = null
-        audioRecordManager.cancelRecording()
-        sileroVadDetector.reset()
+        synchronized(captureLock) {
+            capture?.let { turn ->
+                turn.finalizer?.cancel()
+                turn.timer?.cancel()
+                turn.collector?.cancel()
+                turn.result.cancel()
+            }
+            capture = null
+            audioRecordManager.cancelRecording()
+            sileroVadDetector.reset()
+            _speechState.value = SpeechRecognitionState.IDLE
+            _interimText.value = ""
+            _finalText.value = ""
+            _recordingDurationSeconds.value = 0
+        }
+    }
 
-        _speechState.value = SpeechRecognitionState.IDLE
-        _interimText.value = ""
-        _finalText.value = ""
-        _recordingDurationSeconds.value = 0
+    private companion object {
+        const val MAX_CAPTURE_SECONDS = 25
     }
 }

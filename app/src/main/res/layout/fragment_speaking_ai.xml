@@ -30,7 +30,7 @@
                 android:padding="13dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_arrow_back"
-                app:tint="@color/color_on_surface" />
+                android:tint="@color/color_on_surface" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -102,12 +102,13 @@
                 app:tint="@color/color_on_surface" />
         </LinearLayout>
 
-        <!-- 2. ROUNDED AI TUTOR CINEMATIC 3D CHARACTER STAGE CARD -->
+        <!-- 2. Animated tutor portrait and speaking state -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAiCharacterSection"
             android:layout_width="match_parent"
-            android:layout_height="208dp"
+            android:layout_height="@dimen/speaking_tutor_stage_height"
             android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:clipToOutline="true"
             app:cardBackgroundColor="@color/color_cosmic_card"
             app:cardCornerRadius="18dp"
             app:cardElevation="6dp"
@@ -118,13 +119,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <com.example.feature.pro.ProAvatarView
                     android:id="@+id/ivAiCharacterAvatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/speaking_ai_title"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_speaking_character_male" />
+                    android:contentDescription="@string/speaking_ai_title" />
 
                 <!-- Bottom Vignette Scrim -->
                 <View
@@ -161,6 +160,19 @@
                         android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSpeakingTutor"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/speaking_tutor_control_size"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:contentDescription="@string/speaking_select_tutor"
+                    android:text="@string/speaking_select_tutor"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_text_on_primary"
+                    app:backgroundTint="@color/color_primary" />
 
                 <!-- Bottom-Center Animated Waveform Bars -->
                 <com.example.core.ui.CosmicWaveformView
@@ -312,7 +324,7 @@
                     android:padding="19dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_mic"
-                    app:tint="@color/color_cta_button_text" />
+                    android:tint="@color/color_text_on_primary" />
             </FrameLayout>
 
             <TextView
@@ -328,11 +340,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <!-- 5. JETPACK COMPOSE MICROPHONE PERMISSION GATE -->
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/composePermissionGate"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </FrameLayout>

@@ -1,22 +1,38 @@
 package com.example.core.ai
 
+import android.util.Base64
 import android.util.Log
+import com.example.BuildConfig
 import com.example.domain.repository.AiLearningService
 import com.example.domain.repository.ReadingPassageResult
 import com.example.domain.repository.SpeakingAiResponse
 import com.example.feature.speaking.TutorPromptConfig
 import com.google.firebase.Firebase
 import com.google.firebase.ai.ai
-import com.google.firebase.ai.type.Content
 import com.google.firebase.ai.type.Schema
 import com.google.firebase.ai.type.content
 import com.google.firebase.ai.type.generationConfig
+import java.io.IOException
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlin.coroutines.resumeWithException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import org.json.JSONArray
 import org.json.JSONObject
 
 private const val TAG = "FirebaseAiLearning"
@@ -34,6 +50,10 @@ private const val GEMINI_MODEL_NAME = "gemini-3.8-flash"
  */
 @Singleton
 class FirebaseAiLearningService @Inject constructor() : AiLearningService {
+
+    private val speakingHttpClient by lazy {
+        OkHttpClient.Builder().callTimeout(45, TimeUnit.SECONDS).build()
+    }
 
     private val speakingSchema = Schema.obj(
         properties = mapOf(
@@ -125,59 +145,23 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
                 }
             }
 
-        val multiTurnContents = ArrayList<Content>(boundedHistory.size + 1)
-        for ((role, text) in boundedHistory) {
-            val cleanMsg = text.trim()
-            if (cleanMsg.isEmpty()) continue
-            val mappedRole = when (role.uppercase()) {
-                "USER", "STUDENT" -> "user"
-                else -> "model"
-            }
-            multiTurnContents.add(
-                content(role = mappedRole) {
-                    text(cleanMsg)
-                }
-            )
+        val mappedHistory = boundedHistory.mapNotNull { (role, text) ->
+            val clean = text.trim()
+            if (clean.isEmpty()) null
+            else (if (role.equals("USER", true) || role.equals("STUDENT", true)) "user" else "model") to clean
+        }
+        val latestText = exactRawTranscript.ifEmpty {
+            "Transcribe only the learner's audible words into studentTranscript. " +
+                "Leave it empty if speech is not intelligible. Then reply in spokenEnglishReply."
         }
 
-        // Append the latest user turn (inline WAV audio and/or exact rawTranscript)
-        multiTurnContents.add(
-            content(role = "user") {
-                if (hasAudioBytes && audioWavBytes != null) {
-                    inlineData(audioWavBytes, "audio/wav")
-                    if (exactRawTranscript.isNotEmpty()) {
-                        text(exactRawTranscript)
-                    } else {
-                        text(
-                            "Listen carefully to the learner's spoken audio above. " +
-                                "Transcribe the exact spoken words verbatim into `studentTranscript`, " +
-                                "and give a natural tutor reply in `spokenEnglishReply`."
-                        )
-                    }
-                } else {
-                    text(exactRawTranscript)
-                }
-            }
-        )
-
         try {
-            val model = Firebase.ai.generativeModel(
-                modelName = GEMINI_MODEL_NAME,
-                generationConfig = generationConfig {
-                    responseMimeType = "application/json"
-                    responseSchema = speakingSchema
-                },
-                systemInstruction = content {
-                    text(systemGuidance)
-                }
-            )
-
-            val response = withTimeout(45_000L) {
-                model.generateContent(multiTurnContents)
+            val rawJson = if (BuildConfig.DEBUG && BuildConfig.GEMINI_API_KEY.isNotBlank()) {
+                generateSpeakingWithDeveloperKey(systemGuidance, mappedHistory, latestText, audioWavBytes)
+            } else {
+                generateSpeakingWithFirebase(systemGuidance, mappedHistory, latestText, audioWavBytes)
             }
 
-            val rawJson = response.text
-                ?: throw IllegalStateException("Empty response from Speaking AI model.")
             val json = JSONObject(rawJson)
             val reply = json.optString("spokenEnglishReply", "").trim()
             if (reply.isEmpty()) {
@@ -203,6 +187,99 @@ class FirebaseAiLearningService @Inject constructor() : AiLearningService {
             Log.e(TAG, "Speaking AI Gemini request failed", e)
             Result.failure(e)
         }
+    }
+
+    private suspend fun generateSpeakingWithFirebase(
+        guidance: String,
+        history: List<Pair<String, String>>,
+        latestText: String,
+        audio: ByteArray?
+    ): String {
+        val turns = history.map { (role, message) -> content(role = role) { text(message) } } +
+            content(role = "user") {
+                if (audio != null && audio.isNotEmpty()) inlineData(audio, "audio/wav")
+                text(latestText)
+            }
+        val model = Firebase.ai.generativeModel(
+            modelName = GEMINI_MODEL_NAME,
+            generationConfig = generationConfig {
+                responseMimeType = "application/json"
+                responseSchema = speakingSchema
+            },
+            systemInstruction = content { text(guidance) }
+        )
+        return try {
+            withTimeout(45_000L) { model.generateContent(turns) }.text
+                ?: throw IOException("Empty response from Speaking AI model.")
+        } catch (timeout: TimeoutCancellationException) {
+            currentCoroutineContext().ensureActive()
+            throw java.net.SocketTimeoutException("Gemini speaking request timed out.").apply {
+                initCause(timeout)
+            }
+        }
+    }
+
+    private suspend fun generateSpeakingWithDeveloperKey(
+        guidance: String,
+        history: List<Pair<String, String>>,
+        latestText: String,
+        audio: ByteArray?
+    ): String {
+        val turns = JSONArray()
+        for ((role, message) in history) {
+            turns.put(JSONObject().put("role", role).put("parts", JSONArray().put(JSONObject().put("text", message))))
+        }
+        val latestParts = JSONArray()
+        if (audio != null && audio.isNotEmpty()) {
+            latestParts.put(JSONObject().put("inlineData", JSONObject()
+                .put("mimeType", "audio/wav")
+                .put("data", Base64.encodeToString(audio, Base64.NO_WRAP))))
+        }
+        latestParts.put(JSONObject().put("text", latestText))
+        turns.put(JSONObject().put("role", "user").put("parts", latestParts))
+
+        val payload = JSONObject()
+            .put("systemInstruction", JSONObject().put("parts", JSONArray().put(JSONObject().put("text", guidance))))
+            .put("contents", turns)
+            .put("generationConfig", JSONObject()
+                .put("responseMimeType", "application/json")
+                .put("responseJsonSchema", JSONObject()
+                    .put("type", "object")
+                    .put("required", JSONArray().put("spokenEnglishReply"))
+                    .put("properties", JSONObject()
+                        .put("studentTranscript", JSONObject().put("type", "string"))
+                        .put("spokenEnglishReply", JSONObject().put("type", "string"))
+                        .put("grammarAndVocabFeedbackUzbek", JSONObject().put("type", "string"))
+                        .put("accuracyScore", JSONObject().put("type", "integer")))))
+        val request = Request.Builder()
+            .url("https://generativelanguage.googleapis.com/v1beta/models/$GEMINI_MODEL_NAME:generateContent")
+            .header("x-goog-api-key", BuildConfig.GEMINI_API_KEY)
+            .post(payload.toString().toRequestBody("application/json".toMediaType()))
+            .build()
+
+        val body = suspendCancellableCoroutine<String> { continuation ->
+            val call = speakingHttpClient.newCall(request)
+            continuation.invokeOnCancellation { call.cancel() }
+            call.enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) = continuation.resumeWithException(e)
+
+                override fun onResponse(call: Call, response: Response) {
+                    val result = runCatching {
+                        response.use {
+                            if (!it.isSuccessful) throw IOException("Gemini HTTP ${it.code}")
+                            it.body?.string() ?: throw IOException("Empty HTTP response from Gemini.")
+                        }
+                    }
+                    continuation.resumeWith(result)
+                }
+            })
+        }
+        val parts = JSONObject(body).optJSONArray("candidates")?.optJSONObject(0)
+            ?.optJSONObject("content")?.optJSONArray("parts")
+            ?: throw IOException("Gemini returned no speaking candidate.")
+        return (0 until parts.length()).mapNotNull { index ->
+            parts.optJSONObject(index)?.takeUnless { it.optBoolean("thought") }?.optString("text")
+        }.joinToString("").ifBlank { throw IOException("Gemini returned no speaking response.") }
     }
 
     override suspend fun generateReadingPassage(

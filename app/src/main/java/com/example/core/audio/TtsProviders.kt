@@ -769,7 +769,8 @@ open class TtsManager(
         text: String,
         overrideSpeed: Float? = null,
         languageCode: String = "en",
-        overrideVoiceGender: String? = null
+        overrideVoiceGender: String? = null,
+        onSpeechCue: ((Int, Int) -> Unit)? = null
     ): Result<Unit> {
         if (languageCode.equals("uz", ignoreCase = true)) {
             runCatching { Log.d(TAG, "Skipping speakEnglish for Uzbek explanation text: ${text.trim()}") }
@@ -779,7 +780,8 @@ open class TtsManager(
             text = text,
             overrideSpeed = overrideSpeed,
             languageCode = languageCode,
-            overrideVoiceGender = overrideVoiceGender
+            overrideVoiceGender = overrideVoiceGender,
+            onSpeechCue = onSpeechCue
         )
     }
 
@@ -807,7 +809,8 @@ open class TtsManager(
         text = text,
         languageCode = languageCode,
         overrideVoiceGender = voiceGender,
-        onSpeechCue = onSpeechCue
+        onSpeechCue = onSpeechCue,
+        forceNative = true
     )
 
     private suspend fun speakInternal(
@@ -815,13 +818,14 @@ open class TtsManager(
         overrideSpeed: Float? = null,
         languageCode: String = "en",
         overrideVoiceGender: String? = null,
-        onSpeechCue: ((Int, Int) -> Unit)? = null
+        onSpeechCue: ((Int, Int) -> Unit)? = null,
+        forceNative: Boolean = false
     ): Result<Unit> {
         val cleanText = text.trim()
         if (cleanText.isEmpty()) return Result.success(Unit)
 
         val prefs = preferencesRepository.userPreferencesFlow.first()
-        if (!prefs.soundEnabled && onSpeechCue == null) {
+        if (!prefs.soundEnabled && !forceNative) {
             _playbackState.value = TtsPlaybackState.Idle
             return Result.success(Unit)
         }
@@ -846,7 +850,7 @@ open class TtsManager(
 
             val speed = overrideSpeed ?: prefs.speechSpeed
             val activeProvider: TtsProvider = if (
-                prefs.preferredTtsProvider.equals("GEMINI", ignoreCase = true)
+                !forceNative && prefs.preferredTtsProvider.equals("GEMINI", ignoreCase = true)
             ) {
                 geminiTtsProvider
             } else {
@@ -855,7 +859,7 @@ open class TtsManager(
 
             _playbackState.value = TtsPlaybackState.Playing(cleanText)
             try {
-                val native = nativeTtsProvider as? NativeTtsProvider
+                val native = activeProvider as? NativeTtsProvider
                 val result = if (onSpeechCue != null && native != null) {
                     native.speakWithCues(cleanText, speed, languageCode, onSpeechCue)
                 } else {

@@ -1,5 +1,6 @@
 package com.example.feature.speaking
 
+import android.os.SystemClock
 import com.example.core.audio.TtsManager
 import com.example.core.speech.VadState
 import com.example.domain.repository.AiLearningService
@@ -26,11 +27,8 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 /**
- * Production ConversationCoordinator orchestrating the backend-free, local offline STT +
- * context-aware Gemini AI Tutor + Android TTS turn-taking pipeline:
- *
- * Architecture:
- * `Android AudioRecord → Local Silero VAD → Local Sherpa-ONNX STT → Firebase Gemini AI → Android TextToSpeech → Automatic next listening turn`
+ * Coordinates local microphone capture, voice activity detection, Gemini audio turns,
+ * and tutor playback before automatically opening the next listening turn.
  *
  * State Machine (Section 9):
  * `IDLE → LISTENING → USER_SPEAKING → FINALIZING → AI_THINKING → AI_SPEAKING → LISTENING`
@@ -62,6 +60,11 @@ class ConversationCoordinator(
     private var activeGeminiJob: Job? = null
     private var activeTtsJob: Job? = null
 
+    private val _spokenRange = MutableStateFlow<SpokenRange?>(null)
+    internal val spokenRange = _spokenRange.asStateFlow()
+
+    internal data class SpokenRange(val turnId: String, val text: String, val timestampMs: Long)
+
     private var allowedVocabulary: List<String> = emptyList()
     private var allowedGrammar: List<String> = emptyList()
     private val sessionScores = mutableListOf<Int>()
@@ -90,7 +93,8 @@ class ConversationCoordinator(
             }
             launch {
                 speechRepository.speechState.collect { sttState ->
-                    val isCapturing = sttState == SpeechRecognitionState.LISTENING_PASS_1
+                    val isCapturing = sttState == SpeechRecognitionState.LISTENING_PASS_1 &&
+                        listeningTurnId.get() != null
                     _uiState.update { current ->
                         val updatedConvState = if (
                             sttState == SpeechRecognitionState.PROCESSING_PASS_2 &&
@@ -194,8 +198,12 @@ class ConversationCoordinator(
         }
     }
 
-    private suspend fun handleFinalizedSttResult(result: SpeechRecognitionResult) {
-        val finishedListeningTurn = listeningTurnId.getAndSet(null) ?: return
+    private suspend fun handleFinalizedSttResult(
+        result: SpeechRecognitionResult,
+        expectedTurnId: String? = listeningTurnId.get()
+    ) {
+        val finishedListeningTurn = expectedTurnId ?: return
+        if (!listeningTurnId.compareAndSet(finishedListeningTurn, null)) return
 
         // Ignore stale STT callback if user already stopped the conversation
         if (_uiState.value.conversationState is ConversationState.STOPPED) {
@@ -325,8 +333,14 @@ class ConversationCoordinator(
         }
     }
 
+    fun reportLessonLoadFailure() {
+        val message = "Suhbat mavzusini yuklab bo‘lmadi. Qayta urinib ko‘ring."
+        _uiState.update { it.copy(statusMessage = message) }
+    }
+
     fun setMicPermissionGranted(granted: Boolean) {
         _uiState.update { current ->
+            if (current.isMicPermissionGranted == granted) return@update current
             val clearedError = if (granted && current.lastError?.code == ConversationError.ErrorCode.MIC_PERMISSION_REQUIRED) {
                 null
             } else {
@@ -406,18 +420,10 @@ class ConversationCoordinator(
                 // Allow optional early finalization if user taps mic while actively speaking
                 finalizeCurrentListeningTurnNow()
             }
-            is ConversationState.LISTENING -> {
-                if (speechRepository.recordingDurationSeconds.value >= 1) {
-                    finalizeCurrentListeningTurnNow()
-                } else {
-                    stopConversation()
-                }
-            }
+            is ConversationState.LISTENING -> finalizeCurrentListeningTurnNow()
             is ConversationState.FINALIZING,
-            is ConversationState.AI_THINKING,
-            is ConversationState.AI_SPEAKING -> {
-                stopConversation()
-            }
+            is ConversationState.AI_THINKING -> Unit
+            is ConversationState.AI_SPEAKING -> startConversation()
             is ConversationState.IDLE,
             is ConversationState.STOPPED,
             is ConversationState.ERROR -> {
@@ -429,7 +435,7 @@ class ConversationCoordinator(
     /**
      * Starts automatic hands-free conversation (`IDLE -> LISTENING`).
      */
-    fun startConversation() {
+    fun startConversation(welcomeMessage: ConversationMessage? = null) {
         if (!_uiState.value.isMicPermissionGranted || !speechRepository.hasRecordPermission()) {
             val err = ConversationError(
                 code = ConversationError.ErrorCode.MIC_PERMISSION_REQUIRED,
@@ -450,6 +456,7 @@ class ConversationCoordinator(
         speechRepository.setMuted(false)
 
         // Stop any playing TTS before opening microphone so AI voice is never recorded
+        activeTurnId.set(null)
         activeTtsJob?.cancel()
         activeTtsJob = null
         ttsManager.stop()
@@ -462,7 +469,15 @@ class ConversationCoordinator(
             )
         }
 
-        startNextListeningTurn()
+        if (welcomeMessage == null) {
+            startNextListeningTurn()
+        } else {
+            speakAssistantResponseAndResumeIfActive(
+                turnId = welcomeMessage.turnId,
+                spokenText = welcomeMessage.text,
+                autoResumeListeningAfterTts = true
+            )
+        }
     }
 
     private fun startNextListeningTurn() {
@@ -522,7 +537,9 @@ class ConversationCoordinator(
                 )
             }
             val result = speechRepository.stopListening()
-            handleFinalizedSttResult(result)
+            if (!result.finalizedAutomatically) {
+                handleFinalizedSttResult(result, expectedTurnId = currentTurn)
+            }
         }
     }
 
@@ -990,6 +1007,7 @@ class ConversationCoordinator(
         if (clean.isEmpty()) return
 
         activeTtsJob?.cancel()
+        _spokenRange.value = null
         activeTurnId.set(turnId)
 
         activeTtsJob = scope.launch {
@@ -1024,7 +1042,12 @@ class ConversationCoordinator(
                 // Suspends until actual UtteranceProgressListener.onDone() / onError() callback
                 val speakResult = ttsManager.speakEnglish(
                     text = clean,
-                    overrideSpeed = targetSpeed
+                    overrideSpeed = targetSpeed,
+                    onSpeechCue = { start, end ->
+                        if (activeTurnId.get() == turnId && start in clean.indices && end in (start + 1)..clean.length) {
+                            _spokenRange.value = SpokenRange(turnId, clean.substring(start, end), SystemClock.uptimeMillis())
+                        }
+                    }
                 )
 
                 if (activeTurnId.compareAndSet(turnId, null)) {

@@ -80,3 +80,10 @@ Removed the experimental Image-to-Video feature per user request while retaining
   - `app/src/main/res/drawable/ic_experimental_movie.xml`
   - `app/src/main/res/drawable/ic_photo_add.xml`
 - Updated `nav_graph.xml`, `SettingsScreen.kt`, `fragment_settings.xml`, `ProfileScreen.kt`, `fragment_profile.xml`, `ExperimentalModule.kt`, and `strings.xml` to remove all navigation, UI rows, DI bindings, and string entries for Image-to-Video.
+
+### Speaking tutor stage and permission entry
+
+The production `speakingAiFragment` now renders its portraits with the shared `ProAvatarView`.
+The old image scaling animator was removed from the fragment and the duplicate permission
+overlay was removed from its XML. The microphone button uses a single permission launcher.
+Checked the speaking destination, ViewBinding references, and its layout smoke test.

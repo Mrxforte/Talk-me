@@ -125,3 +125,11 @@ This change requires Android build and device validation before merge.
 ## Approved TalkMe UI integration
 
 The Android navigation bar now presents Home, Lessons, Mistakes and Profile. The lesson destination uses the approved rule, reading, writing, listening, speaking and wrap-up sequence. The existing listening and speaking studios return to the lesson without replacing their audio engines. The lesson's draft and assessment summary use the existing preferences store. The mistake journal uses the existing Room table and the lesson library indexes existing vocabulary and grammar by section. No Room schema change or progress reset is required.
+
+### Speaking audio turn lifecycle
+
+The first microphone tap waits for lesson context, plays the tutor greeting, and opens the
+microphone after playback. Manual submission and voice activity detection share a single
+cancellable recording result. The 25-second capture limit bounds the WAV buffer.
+Speaking uses the Gemini API key from `local.properties` or the environment in debug builds
+when configured, and Firebase AI Logic otherwise. Release builds use Firebase AI Logic.

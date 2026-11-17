@@ -19,7 +19,8 @@ data class SpeechRecognitionResult(
     val processingDurationMs: Long,
     val audioWavBytes: ByteArray = ByteArray(0),
     val hadSpeechDetectedByVad: Boolean = true,
-    val sttErrorReason: String? = null
+    val sttErrorReason: String? = null,
+    val finalizedAutomatically: Boolean = false
 )
 
 /**

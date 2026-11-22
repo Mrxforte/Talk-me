@@ -36,7 +36,10 @@ namespace TalkMe.Avatar
                 if (System.Enum.TryParse<TalkMeAvatarBehaviour.Activity>(state, true, out var activity))
                     behaviour.SetActivity(activity);
                 behaviour.SetSpeechAmplitude(amplitude);
-                if (System.Enum.TryParse<TalkMeAvatarBehaviour.Emotion>(fields[1], true, out var emotion))
+                string mood = fields[1] == "JOYFUL" ? "Happy" :
+                    fields[1] == "CONCERNED" ? "Sad" :
+                    fields[1] == "FIRM" ? "Angry" : fields[1];
+                if (System.Enum.TryParse<TalkMeAvatarBehaviour.Emotion>(mood, true, out var emotion))
                     behaviour.SetEmotion(emotion);
                 behaviour.TriggerTopicGesture(fields[2]);
             }

@@ -12,7 +12,7 @@ class SpeakingAvatarMapperTest {
             tutorAmplitude = 0.3f
         )
         assertEquals(Avatar3dState.SPEAKING, command.state)
-        assertEquals(0.3f, command.speechAmplitude)
+        assertEquals(0.3f, command.speechAmplitude, 0.0001f)
     }
 
     @Test fun listeningUsesMicAmplitude() {
@@ -21,6 +21,6 @@ class SpeakingAvatarMapperTest {
             audioAmplitude = 0.4f
         )
         assertEquals(Avatar3dState.LISTENING, command.state)
-        assertEquals(0.4f, command.speechAmplitude)
+        assertEquals(0.4f, command.speechAmplitude, 0.0001f)
     }
 }

@@ -148,7 +148,7 @@ class LearningRepositoryImpl @Inject constructor(
                         "${currentTopic.orderIndex}. ${currentTopic.titleEnglish} — ${currentTopic.titleUzbek}"
                     }
                 } else {
-                    "1. A0"
+                    "1. A1"
                 },
                 currentSectionId = currentSection?.id ?: AppConstants.INITIAL_SECTION_ID,
                 currentSectionTitle = currentSection?.let {

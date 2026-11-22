@@ -162,7 +162,11 @@ class SpeechRepositoryImpl @Inject constructor(
                 turn.timer?.cancelAndJoin()
                 turn.collector?.cancelAndJoin()
                 val wavBytes = if (turn.keepRecorderOpen && !recorderFailed) {
-                    audioRecordManager.encodeSpeechSegment(segment)
+                    audioRecordManager.encodeSpeechSegment(segment).also {
+                        // Stop capture before Gemini/TTS; do not leave the microphone
+                        // recording the tutor voice between hands-free turns.
+                        audioRecordManager.cancelRecording()
+                    }
                 } else {
                     audioRecordManager.finishRecordingWav()
                 }
@@ -183,6 +187,7 @@ class SpeechRepositoryImpl @Inject constructor(
                 throw cancelled
             } catch (error: Exception) {
                 android.util.Log.w("SpeechRepository", "Could not finalize microphone recording", error)
+                audioRecordManager.cancelRecording()
                 publishResult(turn, SpeechRecognitionResult(
                     recognizedText = "",
                     isFinal = true,
@@ -204,7 +209,7 @@ class SpeechRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun discardListeningTurn() = resetListening(releaseRecorder = false)
+    override fun discardListeningTurn() = resetListening(releaseRecorder = true)
 
     override fun cancelListening() = resetListening(releaseRecorder = true)
 

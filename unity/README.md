@@ -21,13 +21,11 @@ or an actual rigged 3D character.
 ## Android integration
 - `Avatar3dCommand` encodes state, mood, gesture, and normalized amplitude.
 - `UnityAvatarBridge` accepts an injected `UnityMessageSender`.
-- Once a Unity Android library is available, implement the sender using the
-  compatible UnityPlayer messaging API.
-- Map Speaking UI states to avatar states and speech amplitude to audio level.
+- `UnityRuntimeSender` now dispatches to `UnityPlayer.UnitySendMessage` when Unity is installed and initialized; it is inert otherwise.
+- `SpeakingAiScreen` now maps actual conversation states and TTS amplitude through `SpeakingAvatarMapper` and `UnityAvatarBridge`.
+- **Still required:** add an exported `unityLibrary` module, initialize and display UnityPlayer, and provide a real character/scene; without these, only the native avatar is rendered.
 - Keep existing `ProAvatarView` as fallback if Unity is unavailable.
 - Do not change existing microphone, STT, Gemini or TTS lifecycles.
 
 ## Status
-This commit is an integration **scaffold only**. No .blend/.fbx/.glb assets,
-Unity scene, Unity Android export, APK, or runtime integration is included.
-Compilation and on-device performance have not been verified.
+The Android-to-Unity command dispatch path is now wired into the Speaking screen, but UnityPlayer rendering is **not** integrated. No .blend/.fbx/.glb assets, Unity scene, Unity Android export or APK is included. Compilation and on-device performance have not been verified.

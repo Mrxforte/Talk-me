@@ -10,6 +10,7 @@ namespace TalkMe.Avatar
     public sealed class TalkMeAvatarBridge : MonoBehaviour
     {
         [SerializeField] private Animator animator;
+        [SerializeField] private TalkMeAvatarBehaviour behaviour;
         [SerializeField] private SkinnedMeshRenderer faceRenderer;
         [SerializeField] private int jawBlendShapeIndex = -1;
 
@@ -30,6 +31,15 @@ namespace TalkMe.Avatar
                 out float amplitude)) return;
 
             amplitude = Mathf.Clamp01(amplitude);
+            if (behaviour != null)
+            {
+                if (System.Enum.TryParse<TalkMeAvatarBehaviour.Activity>(state, true, out var activity))
+                    behaviour.SetActivity(activity);
+                behaviour.SetSpeechAmplitude(amplitude);
+                if (System.Enum.TryParse<TalkMeAvatarBehaviour.Emotion>(fields[1], true, out var emotion))
+                    behaviour.SetEmotion(emotion);
+                behaviour.TriggerTopicGesture(fields[2]);
+            }
             if (animator != null)
             {
                 animator.CrossFade(state, 0.15f);

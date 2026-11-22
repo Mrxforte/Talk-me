@@ -97,7 +97,7 @@ class AudioRecordManager @Inject constructor(
                 context,
                 Manifest.permission.RECORD_AUDIO
             ) == PackageManager.PERMISSION_GRANTED
-        }.getOrDefault(true)
+        }.getOrDefault(false)
     }
 
     fun setMuted(muted: Boolean) {

@@ -1,0 +1,709 @@
+{
+  "schema_version": 1,
+  "range": "341–350",
+  "supersedes": "b1_lessons_341_400.json entries 341–350",
+  "status": "substantive drafts; pending editorial QA and app integration",
+  "role_play_included": false,
+  "lessons": [
+    {
+      "id": "b1-rebuild-341",
+      "level": "B1",
+      "global_order": 341,
+      "level_order": 41,
+      "title": "Present Simple Passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-340"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present Simple majhul nisbat: am/is/are + V3. Kim bajarganidan ko‘ra, ishning o‘zi muhim bo‘lganda ishlatamiz.",
+          "focus": "Present Simple Passive"
+        },
+        "examples": [
+          {
+            "english": "The room is cleaned every day.",
+            "uzbek": "Xona har kuni tozalanadi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "English is spoken in many countries.",
+            "uzbek": "Ko‘plab mamlakatlarda ingliz tilida gaplashiladi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "The room cleans every day.",
+              "The room is cleaned every day."
+            ],
+            "answer": "The room is cleaned every day."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Xona har kuni tozalanadi.",
+            "answers": [
+              "The room is cleaned every day."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "English is spoken in many countries.",
+            "options": [
+              "English is spoken in many countries.",
+              "The room is cleaned every day."
+            ],
+            "answer": "English is spoken in many countries."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The room is cleaned every day.",
+            "expected": "The room is cleaned every day."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Present Simple Passive» mavzusini o‘rgandingiz. Esda tuting: Present Simple majhul nisbat: am/is/are + V3. Kim bajarganidan ko‘ra, ishning o‘zi muhim bo‘lganda ishlatamiz. Endi misolni o‘zingiz ayting: The room is cleaned every day."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    },
+    {
+      "id": "b1-rebuild-342",
+      "level": "B1",
+      "global_order": 342,
+      "level_order": 42,
+      "title": "Past Simple Passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-341"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past Simple majhul nisbat: was/were + V3. Birlikda was, ko‘plikda were ishlatiladi.",
+          "focus": "Past Simple Passive"
+        },
+        "examples": [
+          {
+            "english": "The letter was sent yesterday.",
+            "uzbek": "Xat kecha yuborildi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "The windows were repaired last week.",
+            "uzbek": "Derazalar o‘tgan hafta ta’mirlandi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "The letter was send yesterday.",
+              "The letter was sent yesterday."
+            ],
+            "answer": "The letter was sent yesterday."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Xat kecha yuborildi.",
+            "answers": [
+              "The letter was sent yesterday."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The windows were repaired last week.",
+            "options": [
+              "The windows were repaired last week.",
+              "The letter was sent yesterday."
+            ],
+            "answer": "The windows were repaired last week."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The letter was sent yesterday.",
+            "expected": "The letter was sent yesterday."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Simple Passive» mavzusini o‘rgandingiz. Esda tuting: Past Simple majhul nisbat: was/were + V3. Birlikda was, ko‘plikda were ishlatiladi. Endi misolni o‘zingiz ayting: The letter was sent yesterday."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    },
+    {
+      "id": "b1-rebuild-343",
+      "level": "B1",
+      "global_order": 343,
+      "level_order": 43,
+      "title": "Future Simple Passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-342"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Kelajakdagi majhul nisbat: will be + V3. Will dan keyin be tushirib qoldirilmaydi.",
+          "focus": "Future Simple Passive"
+        },
+        "examples": [
+          {
+            "english": "The results will be announced tomorrow.",
+            "uzbek": "Natijalar ertaga e’lon qilinadi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "The road will be closed next week.",
+            "uzbek": "Yo‘l kelasi hafta yopiladi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "The results will announced tomorrow.",
+              "The results will be announced tomorrow."
+            ],
+            "answer": "The results will be announced tomorrow."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Natijalar ertaga e’lon qilinadi.",
+            "answers": [
+              "The results will be announced tomorrow."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The road will be closed next week.",
+            "options": [
+              "The road will be closed next week.",
+              "The results will be announced tomorrow."
+            ],
+            "answer": "The road will be closed next week."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The results will be announced tomorrow.",
+            "expected": "The results will be announced tomorrow."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Future Simple Passive» mavzusini o‘rgandingiz. Esda tuting: Kelajakdagi majhul nisbat: will be + V3. Will dan keyin be tushirib qoldirilmaydi. Endi misolni o‘zingiz ayting: The results will be announced tomorrow."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    },
+    {
+      "id": "b1-rebuild-344",
+      "level": "B1",
+      "global_order": 344,
+      "level_order": 44,
+      "title": "Present Perfect Passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-343"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present Perfect majhul nisbat: have/has been + V3. Hozirgi natija muhim bo‘lganda qo‘llanadi.",
+          "focus": "Present Perfect Passive"
+        },
+        "examples": [
+          {
+            "english": "The tickets have been sold.",
+            "uzbek": "Chiptalar sotib bo‘lingan.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "The report has been finished.",
+            "uzbek": "Hisobot tugallangan.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "The tickets have sold.",
+              "The tickets have been sold."
+            ],
+            "answer": "The tickets have been sold."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Chiptalar sotib bo‘lingan.",
+            "answers": [
+              "The tickets have been sold."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The report has been finished.",
+            "options": [
+              "The report has been finished.",
+              "The tickets have been sold."
+            ],
+            "answer": "The report has been finished."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The tickets have been sold.",
+            "expected": "The tickets have been sold."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Present Perfect Passive» mavzusini o‘rgandingiz. Esda tuting: Present Perfect majhul nisbat: have/has been + V3. Hozirgi natija muhim bo‘lganda qo‘llanadi. Endi misolni o‘zingiz ayting: The tickets have been sold."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    },
+    {
+      "id": "b1-rebuild-345",
+      "level": "B1",
+      "global_order": 345,
+      "level_order": 45,
+      "title": "Present Continuous Passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-344"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Hozir davom etayotgan majhul ish: am/is/are being + V3. Being so‘zi jarayon davom etayotganini ko‘rsatadi.",
+          "focus": "Present Continuous Passive"
+        },
+        "examples": [
+          {
+            "english": "The food is being prepared now.",
+            "uzbek": "Ovqat hozir tayyorlanmoqda.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "The house is being painted.",
+            "uzbek": "Uy bo‘yalmoqda.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "The food is prepared now.",
+              "The food is being prepared now."
+            ],
+            "answer": "The food is being prepared now."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Ovqat hozir tayyorlanmoqda.",
+            "answers": [
+              "The food is being prepared now."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The house is being painted.",
+            "options": [
+              "The house is being painted.",
+              "The food is being prepared now."
+            ],
+            "answer": "The house is being painted."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The food is being prepared now.",
+            "expected": "The food is being prepared now."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Present Continuous Passive» mavzusini o‘rgandingiz. Esda tuting: Hozir davom etayotgan majhul ish: am/is/are being + V3. Being so‘zi jarayon davom etayotganini ko‘rsatadi. Endi misolni o‘zingiz ayting: The food is being prepared now."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    },
+    {
+      "id": "b1-rebuild-346",
+      "level": "B1",
+      "global_order": 346,
+      "level_order": 46,
+      "title": "Past Continuous Passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-345"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "O‘tmishda davom etgan majhul ish: was/were being + V3. Bu shakl o‘tmishdagi jarayonni ta’kidlaydi.",
+          "focus": "Past Continuous Passive"
+        },
+        "examples": [
+          {
+            "english": "The car was being repaired when I arrived.",
+            "uzbek": "Men kelganimda mashina ta’mirlanayotgan edi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "The rooms were being cleaned at noon.",
+            "uzbek": "Tush paytida xonalar tozalanayotgan edi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "The car was repaired when I arrived.",
+              "The car was being repaired when I arrived."
+            ],
+            "answer": "The car was being repaired when I arrived."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men kelganimda mashina ta’mirlanayotgan edi.",
+            "answers": [
+              "The car was being repaired when I arrived."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The rooms were being cleaned at noon.",
+            "options": [
+              "The rooms were being cleaned at noon.",
+              "The car was being repaired when I arrived."
+            ],
+            "answer": "The rooms were being cleaned at noon."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The car was being repaired when I arrived.",
+            "expected": "The car was being repaired when I arrived."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Continuous Passive» mavzusini o‘rgandingiz. Esda tuting: O‘tmishda davom etgan majhul ish: was/were being + V3. Bu shakl o‘tmishdagi jarayonni ta’kidlaydi. Endi misolni o‘zingiz ayting: The car was being repaired when I arrived."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    },
+    {
+      "id": "b1-rebuild-347",
+      "level": "B1",
+      "global_order": 347,
+      "level_order": 47,
+      "title": "Passive with by",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-346"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ishni kim bajarganini ko‘rsatish kerak bo‘lsa, majhul gapda by + bajaruvchi ishlatiladi. Bajaruvchi muhim bo‘lmasa, by qismi tushiriladi.",
+          "focus": "Passive with by"
+        },
+        "examples": [
+          {
+            "english": "The bridge was built by local engineers.",
+            "uzbek": "Ko‘prik mahalliy muhandislar tomonidan qurilgan.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "The song was written by her brother.",
+            "uzbek": "Qo‘shiq uning akasi tomonidan yozilgan.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "The bridge was built from local engineers.",
+              "The bridge was built by local engineers."
+            ],
+            "answer": "The bridge was built by local engineers."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Ko‘prik mahalliy muhandislar tomonidan qurilgan.",
+            "answers": [
+              "The bridge was built by local engineers."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The song was written by her brother.",
+            "options": [
+              "The song was written by her brother.",
+              "The bridge was built by local engineers."
+            ],
+            "answer": "The song was written by her brother."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The bridge was built by local engineers.",
+            "expected": "The bridge was built by local engineers."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Passive with by» mavzusini o‘rgandingiz. Esda tuting: Ishni kim bajarganini ko‘rsatish kerak bo‘lsa, majhul gapda by + bajaruvchi ishlatiladi. Bajaruvchi muhim bo‘lmasa, by qismi tushiriladi. Endi misolni o‘zingiz ayting: The bridge was built by local engineers."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    },
+    {
+      "id": "b1-rebuild-348",
+      "level": "B1",
+      "global_order": 348,
+      "level_order": 48,
+      "title": "Passive: questions",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-347"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbat savolida yordamchi fe’l egadan oldinga chiqadi: Is it made? Was it sent?",
+          "focus": "Passive: questions"
+        },
+        "examples": [
+          {
+            "english": "Was the email sent yesterday?",
+            "uzbek": "Elektron xat kecha yuborildimi?",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "Are these books sold here?",
+            "uzbek": "Bu kitoblar shu yerda sotiladimi?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "The email was sent yesterday?",
+              "Was the email sent yesterday?"
+            ],
+            "answer": "Was the email sent yesterday?"
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Elektron xat kecha yuborildimi?",
+            "answers": [
+              "Was the email sent yesterday?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Are these books sold here?",
+            "options": [
+              "Are these books sold here?",
+              "Was the email sent yesterday?"
+            ],
+            "answer": "Are these books sold here?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Was the email sent yesterday?",
+            "expected": "Was the email sent yesterday?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Passive: questions» mavzusini o‘rgandingiz. Esda tuting: Majhul nisbat savolida yordamchi fe’l egadan oldinga chiqadi: Is it made? Was it sent? Endi misolni o‘zingiz ayting: Was the email sent yesterday?"
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    },
+    {
+      "id": "b1-rebuild-349",
+      "level": "B1",
+      "global_order": 349,
+      "level_order": 49,
+      "title": "Modal passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-348"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modal fe’l bilan majhul nisbat: modal + be + V3. Masalan: must be done, should be checked.",
+          "focus": "Modal passive"
+        },
+        "examples": [
+          {
+            "english": "The package should be delivered today.",
+            "uzbek": "Paket bugun yetkazilishi kerak.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "The form must be signed.",
+            "uzbek": "Shakl imzolanishi shart.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "The form must signed.",
+              "The form must be signed."
+            ],
+            "answer": "The form must be signed."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Paket bugun yetkazilishi kerak.",
+            "answers": [
+              "The package should be delivered today."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The form must be signed.",
+            "options": [
+              "The form must be signed.",
+              "The package should be delivered today."
+            ],
+            "answer": "The form must be signed."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The package should be delivered today.",
+            "expected": "The package should be delivered today."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Modal passive» mavzusini o‘rgandingiz. Esda tuting: Modal fe’l bilan majhul nisbat: modal + be + V3. Masalan: must be done, should be checked. Endi misolni o‘zingiz ayting: The package should be delivered today."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    },
+    {
+      "id": "b1-rebuild-350",
+      "level": "B1",
+      "global_order": 350,
+      "level_order": 50,
+      "title": "Active versus passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-349"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Active gapda bajaruvchi asosiy o‘rinda: Someone stole my bike. Passive gapda obyekt asosiy o‘ringa chiqadi: My bike was stolen.",
+          "focus": "Active versus passive"
+        },
+        "examples": [
+          {
+            "english": "Someone stole my bike.",
+            "uzbek": "Kimdir velosipedimni o‘g‘irladi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "My bike was stolen.",
+            "uzbek": "Velosipedim o‘g‘irlandi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Qoidaga mos to‘g‘ri gapni tanlang.",
+            "options": [
+              "My bike was stole.",
+              "My bike was stolen."
+            ],
+            "answer": "My bike was stolen."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Kimdir velosipedimni o‘g‘irladi.",
+            "answers": [
+              "Someone stole my bike."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "My bike was stolen.",
+            "options": [
+              "My bike was stolen.",
+              "Someone stole my bike."
+            ],
+            "answer": "My bike was stolen."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Someone stole my bike.",
+            "expected": "Someone stole my bike."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Active versus passive» mavzusini o‘rgandingiz. Esda tuting: Active gapda bajaruvchi asosiy o‘rinda: Someone stole my bike. Passive gapda obyekt asosiy o‘ringa chiqadi: My bike was stolen. Endi misolni o‘zingiz ayting: Someone stole my bike."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_requires_native_speaker_and_app_qa"
+    }
+  ]
+}

@@ -1011,7 +1011,7 @@ class ConversationCoordinator(
         activeTurnId.set(turnId)
 
         activeTtsJob = scope.launch {
-            // Discard recognition frames during playback while keeping the live recorder open.
+            // Fully release microphone during tutor playback to avoid acoustic echo.
             listeningTurnId.set(null)
             speechRepository.discardListeningTurn()
 
@@ -1044,6 +1044,7 @@ class ConversationCoordinator(
                 val speakResult = ttsManager.speakEnglish(
                     text = clean,
                     overrideSpeed = targetSpeed,
+                    forceNative = true,
                     onAudioLevel = { level ->
                         if (activeTurnId.get() == turnId) {
                             _spokenRange.value = SpokenRange(turnId, "", SystemClock.uptimeMillis(), level)

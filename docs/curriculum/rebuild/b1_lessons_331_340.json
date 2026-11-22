@@ -1,0 +1,699 @@
+{
+  "schema_version": 1,
+  "level": "B1",
+  "range": "331–340",
+  "role_play_included": false,
+  "status": "draft_requires_qa; not integrated into Android app",
+  "lessons": [
+    {
+      "id": "b1-rebuild-331",
+      "level": "B1",
+      "global_order": 331,
+      "level_order": 31,
+      "title": "Should: maslahat",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-330"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Should + fe’lning oddiy shakli maslahat bildiradi. Barcha shaxslar bilan should bir xil qoladi."
+        },
+        "examples": [
+          {
+            "english": "You should take a break.",
+            "uzbek": "Siz biroz dam olishingiz kerak.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "You should drink more water.",
+            "uzbek": "Siz ko‘proq suv ichishingiz kerak.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "You should to rest.",
+              "You should rest."
+            ],
+            "answer": "You should rest."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Siz biroz dam olishingiz kerak.",
+            "answers": [
+              "You should take a break."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "You should take a break.",
+            "options": [
+              "You should take a break.",
+              "You should drink more water."
+            ],
+            "answer": "You should take a break."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "You should take a break.",
+            "expected": "You should take a break."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: Should + fe’lning oddiy shakli maslahat bildiradi. Barcha shaxslar bilan should bir xil qoladi. Endi «You should take a break.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-332",
+      "level": "B1",
+      "global_order": 332,
+      "level_order": 32,
+      "title": "Shouldn't: tavsiya etmaslik",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-331"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Should not (shouldn't) + fe’l biror ishni qilmaslikni maslahat beradi; bu qat’iy taqiq emas."
+        },
+        "examples": [
+          {
+            "english": "You shouldn't stay up so late.",
+            "uzbek": "Siz bunchalik kech uxlamasligingiz kerak.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "He shouldn't skip breakfast.",
+            "uzbek": "U nonushtani o‘tkazib yubormasligi kerak.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "You shouldn't to worry.",
+              "You shouldn't worry."
+            ],
+            "answer": "You shouldn't worry."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Siz bunchalik kech uxlamasligingiz kerak.",
+            "answers": [
+              "You shouldn't stay up so late."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "You shouldn't stay up so late.",
+            "options": [
+              "You shouldn't stay up so late.",
+              "He shouldn't skip breakfast."
+            ],
+            "answer": "You shouldn't stay up so late."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "You shouldn't stay up so late.",
+            "expected": "You shouldn't stay up so late."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: Should not (shouldn't) + fe’l biror ishni qilmaslikni maslahat beradi; bu qat’iy taqiq emas. Endi «You shouldn't stay up so late.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-333",
+      "level": "B1",
+      "global_order": 333,
+      "level_order": 33,
+      "title": "Ought to: maslahat",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-332"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ought to + fe’l maslahat yoki ma’qul ishni bildiradi. Should bilan ma’nosi yaqin, ammo ought to dan keyin to saqlanadi."
+        },
+        "examples": [
+          {
+            "english": "You ought to check the address.",
+            "uzbek": "Siz manzilni tekshirishingiz kerak.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "We ought to leave early.",
+            "uzbek": "Biz ertaroq ketishimiz kerak.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "You ought check it.",
+              "You ought to check it."
+            ],
+            "answer": "You ought to check it."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Siz manzilni tekshirishingiz kerak.",
+            "answers": [
+              "You ought to check the address."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "You ought to check the address.",
+            "options": [
+              "You ought to check the address.",
+              "We ought to leave early."
+            ],
+            "answer": "You ought to check the address."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "You ought to check the address.",
+            "expected": "You ought to check the address."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: Ought to + fe’l maslahat yoki ma’qul ishni bildiradi. Should bilan ma’nosi yaqin, ammo ought to dan keyin to saqlanadi. Endi «You ought to check the address.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-334",
+      "level": "B1",
+      "global_order": 334,
+      "level_order": 34,
+      "title": "Must: majburiyat",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-333"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Must + fe’l kuchli talab yoki zaruratni bildiradi. Must dan keyin to ishlatilmaydi."
+        },
+        "examples": [
+          {
+            "english": "You must wear a seat belt.",
+            "uzbek": "Siz xavfsizlik kamarini taqishingiz shart.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I must finish this today.",
+            "uzbek": "Men buni bugun tugatishim shart.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "You must to stop.",
+              "You must stop."
+            ],
+            "answer": "You must stop."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Siz xavfsizlik kamarini taqishingiz shart.",
+            "answers": [
+              "You must wear a seat belt."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "You must wear a seat belt.",
+            "options": [
+              "You must wear a seat belt.",
+              "I must finish this today."
+            ],
+            "answer": "You must wear a seat belt."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "You must wear a seat belt.",
+            "expected": "You must wear a seat belt."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: Must + fe’l kuchli talab yoki zaruratni bildiradi. Must dan keyin to ishlatilmaydi. Endi «You must wear a seat belt.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-335",
+      "level": "B1",
+      "global_order": 335,
+      "level_order": 35,
+      "title": "Have to: tashqi talab",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-334"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Have to + fe’l tashqi qoida yoki vaziyat talab qilgan majburiyatni bildiradi. He/she/it bilan has to ishlatiladi."
+        },
+        "examples": [
+          {
+            "english": "I have to work on Saturday.",
+            "uzbek": "Men shanba kuni ishlashim kerak.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She has to wear a uniform.",
+            "uzbek": "U forma kiyishi kerak.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "She have to leave.",
+              "She has to leave."
+            ],
+            "answer": "She has to leave."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men shanba kuni ishlashim kerak.",
+            "answers": [
+              "I have to work on Saturday."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I have to work on Saturday.",
+            "options": [
+              "I have to work on Saturday.",
+              "She has to wear a uniform."
+            ],
+            "answer": "I have to work on Saturday."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I have to work on Saturday.",
+            "expected": "I have to work on Saturday."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: Have to + fe’l tashqi qoida yoki vaziyat talab qilgan majburiyatni bildiradi. He/she/it bilan has to ishlatiladi. Endi «I have to work on Saturday.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-336",
+      "level": "B1",
+      "global_order": 336,
+      "level_order": 36,
+      "title": "Mustn't: taqiq",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-335"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Mustn't + fe’l qat’iy taqiqni bildiradi. Bu don't have to (shart emas) bilan bir xil emas."
+        },
+        "examples": [
+          {
+            "english": "You mustn't park here.",
+            "uzbek": "Bu yerda mashina qo‘yishingiz mumkin emas.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "You mustn't touch that wire.",
+            "uzbek": "Siz u simga tegmasligingiz kerak.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "You don't have to park here.",
+              "You mustn't park here."
+            ],
+            "answer": "You mustn't park here."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Bu yerda mashina qo‘yishingiz mumkin emas.",
+            "answers": [
+              "You mustn't park here."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "You mustn't park here.",
+            "options": [
+              "You mustn't park here.",
+              "You mustn't touch that wire."
+            ],
+            "answer": "You mustn't park here."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "You mustn't park here.",
+            "expected": "You mustn't park here."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: Mustn't + fe’l qat’iy taqiqni bildiradi. Bu don't have to (shart emas) bilan bir xil emas. Endi «You mustn't park here.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-337",
+      "level": "B1",
+      "global_order": 337,
+      "level_order": 37,
+      "title": "Don't have to: shart emas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-336"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Don't/doesn't have to + fe’l ish majburiy emasligini bildiradi, taqiqni emas."
+        },
+        "examples": [
+          {
+            "english": "You don't have to come early.",
+            "uzbek": "Siz ertaroq kelishingiz shart emas.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "He doesn't have to pay today.",
+            "uzbek": "U bugun to‘lashi shart emas.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "He doesn't has to pay.",
+              "He doesn't have to pay."
+            ],
+            "answer": "He doesn't have to pay."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Siz ertaroq kelishingiz shart emas.",
+            "answers": [
+              "You don't have to come early."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "You don't have to come early.",
+            "options": [
+              "You don't have to come early.",
+              "He doesn't have to pay today."
+            ],
+            "answer": "You don't have to come early."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "You don't have to come early.",
+            "expected": "You don't have to come early."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: Don't/doesn't have to + fe’l ish majburiy emasligini bildiradi, taqiqni emas. Endi «You don't have to come early.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-338",
+      "level": "B1",
+      "global_order": 338,
+      "level_order": 38,
+      "title": "May va might: ehtimol",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-337"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "May/might + fe’l biror hodisa sodir bo‘lishi ehtimolini bildiradi. Ulardan keyin fe’lning oddiy shakli keladi."
+        },
+        "examples": [
+          {
+            "english": "She might arrive late.",
+            "uzbek": "U kech kelishi mumkin.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "It may rain tonight.",
+            "uzbek": "Bugun kechasi yomg‘ir yog‘ishi mumkin.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "She might arrives late.",
+              "She might arrive late."
+            ],
+            "answer": "She might arrive late."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U kech kelishi mumkin.",
+            "answers": [
+              "She might arrive late."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She might arrive late.",
+            "options": [
+              "She might arrive late.",
+              "It may rain tonight."
+            ],
+            "answer": "She might arrive late."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She might arrive late.",
+            "expected": "She might arrive late."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: May/might + fe’l biror hodisa sodir bo‘lishi ehtimolini bildiradi. Ulardan keyin fe’lning oddiy shakli keladi. Endi «She might arrive late.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-339",
+      "level": "B1",
+      "global_order": 339,
+      "level_order": 39,
+      "title": "Must be: kuchli taxmin",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-338"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Must be kuchli mantiqiy taxminni bildiradi: ko‘rgan dalillarga asoslanib xulosa qilamiz. Bu yerda must majburiyat emas."
+        },
+        "examples": [
+          {
+            "english": "He must be tired.",
+            "uzbek": "U charchagan bo‘lsa kerak.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "They must be at home.",
+            "uzbek": "Ular uyda bo‘lsa kerak.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "He must to be tired.",
+              "He must be tired."
+            ],
+            "answer": "He must be tired."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U charchagan bo‘lsa kerak.",
+            "answers": [
+              "He must be tired."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He must be tired.",
+            "options": [
+              "He must be tired.",
+              "They must be at home."
+            ],
+            "answer": "He must be tired."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He must be tired.",
+            "expected": "He must be tired."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: Must be kuchli mantiqiy taxminni bildiradi: ko‘rgan dalillarga asoslanib xulosa qilamiz. Bu yerda must majburiyat emas. Endi «He must be tired.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-340",
+      "level": "B1",
+      "global_order": 340,
+      "level_order": 40,
+      "title": "Can't be: imkonsiz taxmin",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-339"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Can't be dalillarga ko‘ra biror holatni imkonsiz yoki juda ishonarsiz deb baholashda ishlatiladi."
+        },
+        "examples": [
+          {
+            "english": "That can't be true.",
+            "uzbek": "Bu rost bo‘lishi mumkin emas.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She can't be at work; it's Sunday.",
+            "uzbek": "U ishda bo‘lishi mumkin emas; bugun yakshanba.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "That can't to be true.",
+              "That can't be true."
+            ],
+            "answer": "That can't be true."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Bu rost bo‘lishi mumkin emas.",
+            "answers": [
+              "That can't be true."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "That can't be true.",
+            "options": [
+              "That can't be true.",
+              "She can't be at work; it's Sunday."
+            ],
+            "answer": "That can't be true."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "That can't be true.",
+            "expected": "That can't be true."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Esda tuting: Can't be dalillarga ko‘ra biror holatni imkonsiz yoki juda ishonarsiz deb baholashda ishlatiladi. Endi «That can't be true.» gapini mustaqil ayting."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    }
+  ]
+}

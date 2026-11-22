@@ -808,7 +808,8 @@ open class TtsManager(
         languageCode: String = "en",
         overrideVoiceGender: String? = null,
         onSpeechCue: ((Int, Int) -> Unit)? = null,
-        onAudioLevel: ((Float) -> Unit)? = null
+        onAudioLevel: ((Float) -> Unit)? = null,
+        forceNative: Boolean = false
     ): Result<Unit> {
         if (languageCode.equals("uz", ignoreCase = true)) {
             runCatching { Log.d(TAG, "Skipping speakEnglish for Uzbek explanation text: ${text.trim()}") }
@@ -820,7 +821,8 @@ open class TtsManager(
             languageCode = languageCode,
             overrideVoiceGender = overrideVoiceGender,
             onSpeechCue = onSpeechCue,
-            onAudioLevel = onAudioLevel
+            onAudioLevel = onAudioLevel,
+            forceNative = forceNative
         )
     }
 

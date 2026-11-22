@@ -1,0 +1,4709 @@
+{
+  "schema_version": 1,
+  "count": 100,
+  "legacy_range": "441–540",
+  "status": "INCOMPLETE DRAFTS. Legacy numbers are NOT the final CEFR mapping. C1 final target is 431–515 (85 lessons). Reassign these by quality and topic; some may be excluded.",
+  "role_play_included": false,
+  "lessons": [
+    {
+      "id": "c1-legacy-441",
+      "legacy_global_order": 441,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "To some extent, I agree with the proposal.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "To some extent, I agree with the proposal.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "To some extent, I agree with the proposal."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "To some extent, I agree with the proposal."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "To some extent, I agree with the proposal."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "To some extent, I agree with the proposal.",
+            "expected": "To some extent, I agree with the proposal."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-442",
+      "legacy_global_order": 442,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "The argument is persuasive but incomplete.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The argument is persuasive but incomplete.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The argument is persuasive but incomplete."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The argument is persuasive but incomplete."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The argument is persuasive but incomplete."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The argument is persuasive but incomplete.",
+            "expected": "The argument is persuasive but incomplete."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-443",
+      "legacy_global_order": 443,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "There is a subtle distinction between the two views.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "There is a subtle distinction between the two views.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "There is a subtle distinction between the two views."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "There is a subtle distinction between the two views."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "There is a subtle distinction between the two views."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "There is a subtle distinction between the two views.",
+            "expected": "There is a subtle distinction between the two views."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-444",
+      "legacy_global_order": 444,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "I remain unconvinced by the available evidence.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I remain unconvinced by the available evidence.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I remain unconvinced by the available evidence."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I remain unconvinced by the available evidence."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I remain unconvinced by the available evidence."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I remain unconvinced by the available evidence.",
+            "expected": "I remain unconvinced by the available evidence."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-445",
+      "legacy_global_order": 445,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "It would be misleading to draw that conclusion.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "It would be misleading to draw that conclusion.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "It would be misleading to draw that conclusion."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "It would be misleading to draw that conclusion."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "It would be misleading to draw that conclusion."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "It would be misleading to draw that conclusion.",
+            "expected": "It would be misleading to draw that conclusion."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-446",
+      "legacy_global_order": 446,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "The issue is considerably more complex than it appears.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The issue is considerably more complex than it appears.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The issue is considerably more complex than it appears."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The issue is considerably more complex than it appears."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The issue is considerably more complex than it appears."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The issue is considerably more complex than it appears.",
+            "expected": "The issue is considerably more complex than it appears."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-447",
+      "legacy_global_order": 447,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "One could reasonably argue the opposite.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "One could reasonably argue the opposite.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "One could reasonably argue the opposite."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "One could reasonably argue the opposite."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "One could reasonably argue the opposite."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "One could reasonably argue the opposite.",
+            "expected": "One could reasonably argue the opposite."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-448",
+      "legacy_global_order": 448,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "The findings warrant further investigation.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The findings warrant further investigation.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The findings warrant further investigation."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The findings warrant further investigation."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The findings warrant further investigation."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The findings warrant further investigation.",
+            "expected": "The findings warrant further investigation."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-449",
+      "legacy_global_order": 449,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "The benefits should not be overstated.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The benefits should not be overstated.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The benefits should not be overstated."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The benefits should not be overstated."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The benefits should not be overstated."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The benefits should not be overstated.",
+            "expected": "The benefits should not be overstated."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-450",
+      "legacy_global_order": 450,
+      "proposed_level": "C1",
+      "proposed_topic": "Nuanced opinions",
+      "title": "The evidence points towards a different explanation.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Nuanced opinions mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The evidence points towards a different explanation.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The evidence points towards a different explanation."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The evidence points towards a different explanation."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The evidence points towards a different explanation."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The evidence points towards a different explanation.",
+            "expected": "The evidence points towards a different explanation."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Nuanced opinions mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-451",
+      "legacy_global_order": 451,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "The study highlights a significant limitation.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The study highlights a significant limitation.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The study highlights a significant limitation."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The study highlights a significant limitation."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The study highlights a significant limitation."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The study highlights a significant limitation.",
+            "expected": "The study highlights a significant limitation."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-452",
+      "legacy_global_order": 452,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "The results are consistent with earlier research.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The results are consistent with earlier research.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The results are consistent with earlier research."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The results are consistent with earlier research."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The results are consistent with earlier research."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The results are consistent with earlier research.",
+            "expected": "The results are consistent with earlier research."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-453",
+      "legacy_global_order": 453,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "The hypothesis remains open to question.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The hypothesis remains open to question.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The hypothesis remains open to question."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The hypothesis remains open to question."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The hypothesis remains open to question."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The hypothesis remains open to question.",
+            "expected": "The hypothesis remains open to question."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-454",
+      "legacy_global_order": 454,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "A more rigorous approach would be preferable.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "A more rigorous approach would be preferable.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "A more rigorous approach would be preferable."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "A more rigorous approach would be preferable."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "A more rigorous approach would be preferable."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "A more rigorous approach would be preferable.",
+            "expected": "A more rigorous approach would be preferable."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-455",
+      "legacy_global_order": 455,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "The sample may not be representative.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The sample may not be representative.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The sample may not be representative."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The sample may not be representative."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The sample may not be representative."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The sample may not be representative.",
+            "expected": "The sample may not be representative."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-456",
+      "legacy_global_order": 456,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "The data should be interpreted with caution.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The data should be interpreted with caution.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The data should be interpreted with caution."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The data should be interpreted with caution."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The data should be interpreted with caution."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The data should be interpreted with caution.",
+            "expected": "The data should be interpreted with caution."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-457",
+      "legacy_global_order": 457,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "This finding has broader implications.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "This finding has broader implications.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "This finding has broader implications."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "This finding has broader implications."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "This finding has broader implications."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "This finding has broader implications.",
+            "expected": "This finding has broader implications."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-458",
+      "legacy_global_order": 458,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "The conclusion rests on several assumptions.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The conclusion rests on several assumptions.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The conclusion rests on several assumptions."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The conclusion rests on several assumptions."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The conclusion rests on several assumptions."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The conclusion rests on several assumptions.",
+            "expected": "The conclusion rests on several assumptions."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-459",
+      "legacy_global_order": 459,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "The analysis fails to account for context.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The analysis fails to account for context.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The analysis fails to account for context."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The analysis fails to account for context."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The analysis fails to account for context."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The analysis fails to account for context.",
+            "expected": "The analysis fails to account for context."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-460",
+      "legacy_global_order": 460,
+      "proposed_level": "C1",
+      "proposed_topic": "Academic communication",
+      "title": "Further research is needed to establish causality.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Academic communication mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Further research is needed to establish causality.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Further research is needed to establish causality."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Further research is needed to establish causality."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Further research is needed to establish causality."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Further research is needed to establish causality.",
+            "expected": "Further research is needed to establish causality."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Academic communication mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-461",
+      "legacy_global_order": 461,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "Had I known earlier, I would have acted differently.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Had I known earlier, I would have acted differently.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Had I known earlier, I would have acted differently."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Had I known earlier, I would have acted differently."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Had I known earlier, I would have acted differently."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Had I known earlier, I would have acted differently.",
+            "expected": "Had I known earlier, I would have acted differently."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-462",
+      "legacy_global_order": 462,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "Not until Monday did we receive a reply.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Not until Monday did we receive a reply.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Not until Monday did we receive a reply."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Not until Monday did we receive a reply."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Not until Monday did we receive a reply."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Not until Monday did we receive a reply.",
+            "expected": "Not until Monday did we receive a reply."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-463",
+      "legacy_global_order": 463,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "Rarely have I encountered such a problem.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Rarely have I encountered such a problem.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Rarely have I encountered such a problem."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Rarely have I encountered such a problem."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Rarely have I encountered such a problem."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Rarely have I encountered such a problem.",
+            "expected": "Rarely have I encountered such a problem."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-464",
+      "legacy_global_order": 464,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "Were it not for your help, we would have failed.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Were it not for your help, we would have failed.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Were it not for your help, we would have failed."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Were it not for your help, we would have failed."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Were it not for your help, we would have failed."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Were it not for your help, we would have failed.",
+            "expected": "Were it not for your help, we would have failed."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-465",
+      "legacy_global_order": 465,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "What concerns me most is the lack of evidence.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "What concerns me most is the lack of evidence.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "What concerns me most is the lack of evidence."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "What concerns me most is the lack of evidence."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "What concerns me most is the lack of evidence."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "What concerns me most is the lack of evidence.",
+            "expected": "What concerns me most is the lack of evidence."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-466",
+      "legacy_global_order": 466,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "It was the timing that caused the difficulty.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "It was the timing that caused the difficulty.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "It was the timing that caused the difficulty."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "It was the timing that caused the difficulty."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "It was the timing that caused the difficulty."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "It was the timing that caused the difficulty.",
+            "expected": "It was the timing that caused the difficulty."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-467",
+      "legacy_global_order": 467,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "Having completed the task, she left.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Having completed the task, she left.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Having completed the task, she left."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Having completed the task, she left."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Having completed the task, she left."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Having completed the task, she left.",
+            "expected": "Having completed the task, she left."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-468",
+      "legacy_global_order": 468,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "The proposal, though ambitious, is feasible.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The proposal, though ambitious, is feasible.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The proposal, though ambitious, is feasible."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The proposal, though ambitious, is feasible."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The proposal, though ambitious, is feasible."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The proposal, though ambitious, is feasible.",
+            "expected": "The proposal, though ambitious, is feasible."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-469",
+      "legacy_global_order": 469,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "He is believed to have left the country.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "He is believed to have left the country.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "He is believed to have left the country."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "He is believed to have left the country."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "He is believed to have left the country."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He is believed to have left the country.",
+            "expected": "He is believed to have left the country."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-470",
+      "legacy_global_order": 470,
+      "proposed_level": "C1",
+      "proposed_topic": "Advanced grammar",
+      "title": "No sooner had we arrived than it started raining.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Advanced grammar mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "No sooner had we arrived than it started raining.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "No sooner had we arrived than it started raining."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "No sooner had we arrived than it started raining."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "No sooner had we arrived than it started raining."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "No sooner had we arrived than it started raining.",
+            "expected": "No sooner had we arrived than it started raining."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Advanced grammar mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-471",
+      "legacy_global_order": 471,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "I appreciate your perspective, although I disagree.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I appreciate your perspective, although I disagree.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I appreciate your perspective, although I disagree."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I appreciate your perspective, although I disagree."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I appreciate your perspective, although I disagree."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I appreciate your perspective, although I disagree.",
+            "expected": "I appreciate your perspective, although I disagree."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-472",
+      "legacy_global_order": 472,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "Could we revisit the terms of the agreement?",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Could we revisit the terms of the agreement?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Could we revisit the terms of the agreement?"
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Could we revisit the terms of the agreement?"
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Could we revisit the terms of the agreement?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Could we revisit the terms of the agreement?",
+            "expected": "Could we revisit the terms of the agreement?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-473",
+      "legacy_global_order": 473,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "We need to establish mutually acceptable conditions.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "We need to establish mutually acceptable conditions.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "We need to establish mutually acceptable conditions."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "We need to establish mutually acceptable conditions."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "We need to establish mutually acceptable conditions."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We need to establish mutually acceptable conditions.",
+            "expected": "We need to establish mutually acceptable conditions."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-474",
+      "legacy_global_order": 474,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "The proposed deadline is not realistically achievable.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The proposed deadline is not realistically achievable.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The proposed deadline is not realistically achievable."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The proposed deadline is not realistically achievable."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The proposed deadline is not realistically achievable."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The proposed deadline is not realistically achievable.",
+            "expected": "The proposed deadline is not realistically achievable."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-475",
+      "legacy_global_order": 475,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "I would suggest a phased implementation.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I would suggest a phased implementation.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I would suggest a phased implementation."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I would suggest a phased implementation."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I would suggest a phased implementation."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I would suggest a phased implementation.",
+            "expected": "I would suggest a phased implementation."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-476",
+      "legacy_global_order": 476,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "We should clarify our respective responsibilities.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "We should clarify our respective responsibilities.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "We should clarify our respective responsibilities."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "We should clarify our respective responsibilities."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "We should clarify our respective responsibilities."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We should clarify our respective responsibilities.",
+            "expected": "We should clarify our respective responsibilities."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-477",
+      "legacy_global_order": 477,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "The current arrangement leaves little room for flexibility.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The current arrangement leaves little room for flexibility.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The current arrangement leaves little room for flexibility."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The current arrangement leaves little room for flexibility."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The current arrangement leaves little room for flexibility."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The current arrangement leaves little room for flexibility.",
+            "expected": "The current arrangement leaves little room for flexibility."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-478",
+      "legacy_global_order": 478,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "I am willing to consider a compromise.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I am willing to consider a compromise.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I am willing to consider a compromise."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I am willing to consider a compromise."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I am willing to consider a compromise."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I am willing to consider a compromise.",
+            "expected": "I am willing to consider a compromise."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-479",
+      "legacy_global_order": 479,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "Let's identify the underlying concerns first.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Let's identify the underlying concerns first.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Let's identify the underlying concerns first."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Let's identify the underlying concerns first."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Let's identify the underlying concerns first."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Let's identify the underlying concerns first.",
+            "expected": "Let's identify the underlying concerns first."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-480",
+      "legacy_global_order": 480,
+      "proposed_level": "C1",
+      "proposed_topic": "Workplace negotiation",
+      "title": "We have reached a tentative agreement.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Workplace negotiation mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "We have reached a tentative agreement.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "We have reached a tentative agreement."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "We have reached a tentative agreement."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "We have reached a tentative agreement."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We have reached a tentative agreement.",
+            "expected": "We have reached a tentative agreement."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Workplace negotiation mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-481",
+      "legacy_global_order": 481,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The author implies rather than states the conclusion.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The author implies rather than states the conclusion.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The author implies rather than states the conclusion."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The author implies rather than states the conclusion."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The author implies rather than states the conclusion."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The author implies rather than states the conclusion.",
+            "expected": "The author implies rather than states the conclusion."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-482",
+      "legacy_global_order": 482,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The headline exaggerates the actual findings.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The headline exaggerates the actual findings.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The headline exaggerates the actual findings."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The headline exaggerates the actual findings."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The headline exaggerates the actual findings."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The headline exaggerates the actual findings.",
+            "expected": "The headline exaggerates the actual findings."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-483",
+      "legacy_global_order": 483,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The passage relies heavily on anecdotal evidence.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The passage relies heavily on anecdotal evidence.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The passage relies heavily on anecdotal evidence."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The passage relies heavily on anecdotal evidence."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The passage relies heavily on anecdotal evidence."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The passage relies heavily on anecdotal evidence.",
+            "expected": "The passage relies heavily on anecdotal evidence."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-484",
+      "legacy_global_order": 484,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The tone shifts from neutral to critical.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The tone shifts from neutral to critical.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The tone shifts from neutral to critical."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The tone shifts from neutral to critical."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The tone shifts from neutral to critical."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The tone shifts from neutral to critical.",
+            "expected": "The tone shifts from neutral to critical."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-485",
+      "legacy_global_order": 485,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The claim is supported by several examples.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The claim is supported by several examples.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The claim is supported by several examples."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The claim is supported by several examples."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The claim is supported by several examples."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The claim is supported by several examples.",
+            "expected": "The claim is supported by several examples."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-486",
+      "legacy_global_order": 486,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The source may have an underlying bias.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The source may have an underlying bias.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The source may have an underlying bias."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The source may have an underlying bias."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The source may have an underlying bias."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The source may have an underlying bias.",
+            "expected": "The source may have an underlying bias."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-487",
+      "legacy_global_order": 487,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The distinction is essential to the argument.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The distinction is essential to the argument.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The distinction is essential to the argument."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The distinction is essential to the argument."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The distinction is essential to the argument."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The distinction is essential to the argument.",
+            "expected": "The distinction is essential to the argument."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-488",
+      "legacy_global_order": 488,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The writer deliberately avoids a definitive answer.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The writer deliberately avoids a definitive answer.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The writer deliberately avoids a definitive answer."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The writer deliberately avoids a definitive answer."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The writer deliberately avoids a definitive answer."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The writer deliberately avoids a definitive answer.",
+            "expected": "The writer deliberately avoids a definitive answer."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-489",
+      "legacy_global_order": 489,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The evidence contradicts the initial assumption.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The evidence contradicts the initial assumption.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The evidence contradicts the initial assumption."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The evidence contradicts the initial assumption."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The evidence contradicts the initial assumption."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The evidence contradicts the initial assumption.",
+            "expected": "The evidence contradicts the initial assumption."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-490",
+      "legacy_global_order": 490,
+      "proposed_level": "C1",
+      "proposed_topic": "Critical reading",
+      "title": "The final paragraph qualifies the earlier claim.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Critical reading mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The final paragraph qualifies the earlier claim.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The final paragraph qualifies the earlier claim."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The final paragraph qualifies the earlier claim."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The final paragraph qualifies the earlier claim."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The final paragraph qualifies the earlier claim.",
+            "expected": "The final paragraph qualifies the earlier claim."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Critical reading mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-491",
+      "legacy_global_order": 491,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "I am writing to express my concern regarding the decision.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I am writing to express my concern regarding the decision.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I am writing to express my concern regarding the decision."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I am writing to express my concern regarding the decision."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I am writing to express my concern regarding the decision."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I am writing to express my concern regarding the decision.",
+            "expected": "I am writing to express my concern regarding the decision."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-492",
+      "legacy_global_order": 492,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "I would be grateful for clarification on this matter.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I would be grateful for clarification on this matter.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I would be grateful for clarification on this matter."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I would be grateful for clarification on this matter."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I would be grateful for clarification on this matter."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I would be grateful for clarification on this matter.",
+            "expected": "I would be grateful for clarification on this matter."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-493",
+      "legacy_global_order": 493,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "Please find the requested documents attached.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Please find the requested documents attached.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Please find the requested documents attached."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Please find the requested documents attached."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Please find the requested documents attached."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Please find the requested documents attached.",
+            "expected": "Please find the requested documents attached."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-494",
+      "legacy_global_order": 494,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "The purpose of this report is to evaluate the options.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The purpose of this report is to evaluate the options.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The purpose of this report is to evaluate the options."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The purpose of this report is to evaluate the options."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The purpose of this report is to evaluate the options."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The purpose of this report is to evaluate the options.",
+            "expected": "The purpose of this report is to evaluate the options."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-495",
+      "legacy_global_order": 495,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "In light of recent developments, we recommend a review.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "In light of recent developments, we recommend a review.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "In light of recent developments, we recommend a review."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "In light of recent developments, we recommend a review."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "In light of recent developments, we recommend a review."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "In light of recent developments, we recommend a review.",
+            "expected": "In light of recent developments, we recommend a review."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-496",
+      "legacy_global_order": 496,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "The following section outlines the key findings.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The following section outlines the key findings.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The following section outlines the key findings."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The following section outlines the key findings."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The following section outlines the key findings."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The following section outlines the key findings.",
+            "expected": "The following section outlines the key findings."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-497",
+      "legacy_global_order": 497,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "Several factors contributed to the outcome.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Several factors contributed to the outcome.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Several factors contributed to the outcome."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Several factors contributed to the outcome."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Several factors contributed to the outcome."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Several factors contributed to the outcome.",
+            "expected": "Several factors contributed to the outcome."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-498",
+      "legacy_global_order": 498,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "It is important to distinguish correlation from causation.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "It is important to distinguish correlation from causation.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "It is important to distinguish correlation from causation."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "It is important to distinguish correlation from causation."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "It is important to distinguish correlation from causation."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "It is important to distinguish correlation from causation.",
+            "expected": "It is important to distinguish correlation from causation."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-499",
+      "legacy_global_order": 499,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "The available evidence suggests a gradual improvement.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The available evidence suggests a gradual improvement.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The available evidence suggests a gradual improvement."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The available evidence suggests a gradual improvement."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The available evidence suggests a gradual improvement."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The available evidence suggests a gradual improvement.",
+            "expected": "The available evidence suggests a gradual improvement."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-500",
+      "legacy_global_order": 500,
+      "proposed_level": "C1",
+      "proposed_topic": "Formal writing",
+      "title": "I look forward to receiving your response.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Formal writing mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I look forward to receiving your response.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I look forward to receiving your response."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I look forward to receiving your response."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I look forward to receiving your response."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I look forward to receiving your response.",
+            "expected": "I look forward to receiving your response."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Formal writing mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-501",
+      "legacy_global_order": 501,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "We need to get to the bottom of this.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "We need to get to the bottom of this.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "We need to get to the bottom of this."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "We need to get to the bottom of this."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "We need to get to the bottom of this."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We need to get to the bottom of this.",
+            "expected": "We need to get to the bottom of this."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-502",
+      "legacy_global_order": 502,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "The plan is still up in the air.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The plan is still up in the air.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The plan is still up in the air."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The plan is still up in the air."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The plan is still up in the air."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The plan is still up in the air.",
+            "expected": "The plan is still up in the air."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-503",
+      "legacy_global_order": 503,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "She raised a valid point.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "She raised a valid point.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "She raised a valid point."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "She raised a valid point."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "She raised a valid point."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She raised a valid point.",
+            "expected": "She raised a valid point."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-504",
+      "legacy_global_order": 504,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "That explanation doesn't add up.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "That explanation doesn't add up.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "That explanation doesn't add up."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "That explanation doesn't add up."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "That explanation doesn't add up."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "That explanation doesn't add up.",
+            "expected": "That explanation doesn't add up."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-505",
+      "legacy_global_order": 505,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "We should keep an open mind.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "We should keep an open mind.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "We should keep an open mind."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "We should keep an open mind."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "We should keep an open mind."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We should keep an open mind.",
+            "expected": "We should keep an open mind."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-506",
+      "legacy_global_order": 506,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "The issue has come to light.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The issue has come to light.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The issue has come to light."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The issue has come to light."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The issue has come to light."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The issue has come to light.",
+            "expected": "The issue has come to light."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-507",
+      "legacy_global_order": 507,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "Let's put the matter into perspective.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Let's put the matter into perspective.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Let's put the matter into perspective."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Let's put the matter into perspective."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Let's put the matter into perspective."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Let's put the matter into perspective.",
+            "expected": "Let's put the matter into perspective."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-508",
+      "legacy_global_order": 508,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "The proposal is a step in the right direction.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The proposal is a step in the right direction.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The proposal is a step in the right direction."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The proposal is a step in the right direction."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The proposal is a step in the right direction."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The proposal is a step in the right direction.",
+            "expected": "The proposal is a step in the right direction."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-509",
+      "legacy_global_order": 509,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "He tends to jump to conclusions.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "He tends to jump to conclusions.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "He tends to jump to conclusions."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "He tends to jump to conclusions."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "He tends to jump to conclusions."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He tends to jump to conclusions.",
+            "expected": "He tends to jump to conclusions."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-510",
+      "legacy_global_order": 510,
+      "proposed_level": "C1",
+      "proposed_topic": "Idiomatic precision",
+      "title": "We need to strike a balance.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Idiomatic precision mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "We need to strike a balance.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "We need to strike a balance."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "We need to strike a balance."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "We need to strike a balance."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We need to strike a balance.",
+            "expected": "We need to strike a balance."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Idiomatic precision mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-511",
+      "legacy_global_order": 511,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "The long-term consequences remain uncertain.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The long-term consequences remain uncertain.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The long-term consequences remain uncertain."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The long-term consequences remain uncertain."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The long-term consequences remain uncertain."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The long-term consequences remain uncertain.",
+            "expected": "The long-term consequences remain uncertain."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-512",
+      "legacy_global_order": 512,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "This raises ethical questions about responsibility.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "This raises ethical questions about responsibility.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "This raises ethical questions about responsibility."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "This raises ethical questions about responsibility."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "This raises ethical questions about responsibility."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "This raises ethical questions about responsibility.",
+            "expected": "This raises ethical questions about responsibility."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-513",
+      "legacy_global_order": 513,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "Public opinion is divided on the issue.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Public opinion is divided on the issue.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Public opinion is divided on the issue."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Public opinion is divided on the issue."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Public opinion is divided on the issue."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Public opinion is divided on the issue.",
+            "expected": "Public opinion is divided on the issue."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-514",
+      "legacy_global_order": 514,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "The policy could have unintended consequences.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The policy could have unintended consequences.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The policy could have unintended consequences."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The policy could have unintended consequences."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The policy could have unintended consequences."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The policy could have unintended consequences.",
+            "expected": "The policy could have unintended consequences."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-515",
+      "legacy_global_order": 515,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "The outcome depends on how the rules are enforced.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The outcome depends on how the rules are enforced.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The outcome depends on how the rules are enforced."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The outcome depends on how the rules are enforced."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The outcome depends on how the rules are enforced."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The outcome depends on how the rules are enforced.",
+            "expected": "The outcome depends on how the rules are enforced."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-516",
+      "legacy_global_order": 516,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "The problem cannot be solved in isolation.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The problem cannot be solved in isolation.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The problem cannot be solved in isolation."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The problem cannot be solved in isolation."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The problem cannot be solved in isolation."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The problem cannot be solved in isolation.",
+            "expected": "The problem cannot be solved in isolation."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-517",
+      "legacy_global_order": 517,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "Several competing priorities must be considered.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Several competing priorities must be considered.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Several competing priorities must be considered."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Several competing priorities must be considered."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Several competing priorities must be considered."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Several competing priorities must be considered.",
+            "expected": "Several competing priorities must be considered."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-518",
+      "legacy_global_order": 518,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "The evidence is open to multiple interpretations.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The evidence is open to multiple interpretations.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The evidence is open to multiple interpretations."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The evidence is open to multiple interpretations."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The evidence is open to multiple interpretations."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The evidence is open to multiple interpretations.",
+            "expected": "The evidence is open to multiple interpretations."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-519",
+      "legacy_global_order": 519,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "The proposed solution addresses only part of the problem.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The proposed solution addresses only part of the problem.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The proposed solution addresses only part of the problem."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The proposed solution addresses only part of the problem."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The proposed solution addresses only part of the problem."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The proposed solution addresses only part of the problem.",
+            "expected": "The proposed solution addresses only part of the problem."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-520",
+      "legacy_global_order": 520,
+      "proposed_level": "C1",
+      "proposed_topic": "Complex discussion",
+      "title": "A sustainable approach requires broader cooperation.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Complex discussion mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "A sustainable approach requires broader cooperation.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "A sustainable approach requires broader cooperation."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "A sustainable approach requires broader cooperation."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "A sustainable approach requires broader cooperation."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "A sustainable approach requires broader cooperation.",
+            "expected": "A sustainable approach requires broader cooperation."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Complex discussion mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-521",
+      "legacy_global_order": 521,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "I regret to inform you that the request was declined.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I regret to inform you that the request was declined.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I regret to inform you that the request was declined."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I regret to inform you that the request was declined."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I regret to inform you that the request was declined."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I regret to inform you that the request was declined.",
+            "expected": "I regret to inform you that the request was declined."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-522",
+      "legacy_global_order": 522,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "I'm afraid that won't be possible at present.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I'm afraid that won't be possible at present.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I'm afraid that won't be possible at present."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I'm afraid that won't be possible at present."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I'm afraid that won't be possible at present."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'm afraid that won't be possible at present.",
+            "expected": "I'm afraid that won't be possible at present."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-523",
+      "legacy_global_order": 523,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "Would you be so kind as to confirm the details?",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Would you be so kind as to confirm the details?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Would you be so kind as to confirm the details?"
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Would you be so kind as to confirm the details?"
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Would you be so kind as to confirm the details?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Would you be so kind as to confirm the details?",
+            "expected": "Would you be so kind as to confirm the details?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-524",
+      "legacy_global_order": 524,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "Your cooperation would be greatly appreciated.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Your cooperation would be greatly appreciated.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Your cooperation would be greatly appreciated."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Your cooperation would be greatly appreciated."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Your cooperation would be greatly appreciated."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Your cooperation would be greatly appreciated.",
+            "expected": "Your cooperation would be greatly appreciated."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-525",
+      "legacy_global_order": 525,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "I take your point, but I have reservations.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I take your point, but I have reservations.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I take your point, but I have reservations."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I take your point, but I have reservations."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I take your point, but I have reservations."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I take your point, but I have reservations.",
+            "expected": "I take your point, but I have reservations."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-526",
+      "legacy_global_order": 526,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "The proposal merits careful consideration.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The proposal merits careful consideration.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The proposal merits careful consideration."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The proposal merits careful consideration."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The proposal merits careful consideration."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The proposal merits careful consideration.",
+            "expected": "The proposal merits careful consideration."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-527",
+      "legacy_global_order": 527,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "We acknowledge the concerns you have raised.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "We acknowledge the concerns you have raised.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "We acknowledge the concerns you have raised."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "We acknowledge the concerns you have raised."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "We acknowledge the concerns you have raised."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We acknowledge the concerns you have raised.",
+            "expected": "We acknowledge the concerns you have raised."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-528",
+      "legacy_global_order": 528,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "It would be premature to make a final decision.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "It would be premature to make a final decision.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "It would be premature to make a final decision."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "It would be premature to make a final decision."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "It would be premature to make a final decision."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "It would be premature to make a final decision.",
+            "expected": "It would be premature to make a final decision."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-529",
+      "legacy_global_order": 529,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "I would prefer not to speculate at this stage.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "I would prefer not to speculate at this stage.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "I would prefer not to speculate at this stage."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "I would prefer not to speculate at this stage."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "I would prefer not to speculate at this stage."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I would prefer not to speculate at this stage.",
+            "expected": "I would prefer not to speculate at this stage."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-530",
+      "legacy_global_order": 530,
+      "proposed_level": "C1",
+      "proposed_topic": "Register and tone",
+      "title": "Thank you for bringing this to our attention.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Register and tone mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Thank you for bringing this to our attention.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Thank you for bringing this to our attention."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Thank you for bringing this to our attention."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Thank you for bringing this to our attention."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Thank you for bringing this to our attention.",
+            "expected": "Thank you for bringing this to our attention."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Register and tone mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-531",
+      "legacy_global_order": 531,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "Taken together, the findings suggest a broader trend.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Taken together, the findings suggest a broader trend.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Taken together, the findings suggest a broader trend."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Taken together, the findings suggest a broader trend."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Taken together, the findings suggest a broader trend."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Taken together, the findings suggest a broader trend.",
+            "expected": "Taken together, the findings suggest a broader trend."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-532",
+      "legacy_global_order": 532,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "The two sources differ in their interpretation.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The two sources differ in their interpretation.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The two sources differ in their interpretation."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The two sources differ in their interpretation."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The two sources differ in their interpretation."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The two sources differ in their interpretation.",
+            "expected": "The two sources differ in their interpretation."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-533",
+      "legacy_global_order": 533,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "Both authors acknowledge the same limitation.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "Both authors acknowledge the same limitation.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "Both authors acknowledge the same limitation."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "Both authors acknowledge the same limitation."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "Both authors acknowledge the same limitation."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Both authors acknowledge the same limitation.",
+            "expected": "Both authors acknowledge the same limitation."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-534",
+      "legacy_global_order": 534,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "The evidence supports a qualified conclusion.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The evidence supports a qualified conclusion.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The evidence supports a qualified conclusion."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The evidence supports a qualified conclusion."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The evidence supports a qualified conclusion."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The evidence supports a qualified conclusion.",
+            "expected": "The evidence supports a qualified conclusion."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-535",
+      "legacy_global_order": 535,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "The central argument can be summarised in one sentence.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The central argument can be summarised in one sentence.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The central argument can be summarised in one sentence."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The central argument can be summarised in one sentence."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The central argument can be summarised in one sentence."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The central argument can be summarised in one sentence.",
+            "expected": "The central argument can be summarised in one sentence."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-536",
+      "legacy_global_order": 536,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "The examples illustrate a recurring pattern.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The examples illustrate a recurring pattern.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The examples illustrate a recurring pattern."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The examples illustrate a recurring pattern."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The examples illustrate a recurring pattern."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The examples illustrate a recurring pattern.",
+            "expected": "The examples illustrate a recurring pattern."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-537",
+      "legacy_global_order": 537,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "A key difference lies in the underlying assumptions.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "A key difference lies in the underlying assumptions.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "A key difference lies in the underlying assumptions."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "A key difference lies in the underlying assumptions."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "A key difference lies in the underlying assumptions."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "A key difference lies in the underlying assumptions.",
+            "expected": "A key difference lies in the underlying assumptions."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-538",
+      "legacy_global_order": 538,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "The strongest evidence comes from the second study.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The strongest evidence comes from the second study.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The strongest evidence comes from the second study."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The strongest evidence comes from the second study."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The strongest evidence comes from the second study."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The strongest evidence comes from the second study.",
+            "expected": "The strongest evidence comes from the second study."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-539",
+      "legacy_global_order": 539,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "The overall picture remains mixed.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "The overall picture remains mixed.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "The overall picture remains mixed."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "The overall picture remains mixed."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "The overall picture remains mixed."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The overall picture remains mixed.",
+            "expected": "The overall picture remains mixed."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    },
+    {
+      "id": "c1-legacy-540",
+      "legacy_global_order": 540,
+      "proposed_level": "C1",
+      "proposed_topic": "Synthesis and summary",
+      "title": "In conclusion, further evaluation is justified.",
+      "minutes": 9,
+      "stages": {
+        "rule": {
+          "uz": "Synthesis and summary mavzusida murakkab fikrni aniq, dalillarga asoslangan va vaziyatga mos shaklda ifodalash o‘rganiladi. Ushbu gapning sintaktik va uslubiy xususiyatlari alohida tahrir talab qiladi."
+        },
+        "examples": [
+          {
+            "english": "In conclusion, further evaluation is justified.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "read_and_analyse",
+            "english": "In conclusion, further evaluation is justified."
+          },
+          {
+            "skill": "writing",
+            "type": "reconstruct",
+            "answer": "In conclusion, further evaluation is justified."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_identify",
+            "audio_text": "In conclusion, further evaluation is justified."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "In conclusion, further evaluation is justified.",
+            "expected": "In conclusion, further evaluation is justified."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Synthesis and summary mavzusidagi ifodani o‘qish, tinglash, yozish va aytish orqali mustahkamlang."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_translation_grammar_and_qa"
+    }
+  ]
+}

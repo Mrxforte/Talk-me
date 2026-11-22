@@ -405,7 +405,11 @@ class SpeakingAiFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
             if (granted) {
                 viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
-                viewModel.onMicrophoneButtonTapped()
+                if (viewModel.uiState.value.isHandsFreeConversationActive) {
+                    viewModel.stopConversation()
+                } else {
+                    viewModel.startLiveSession()
+                }
             } else {
                 viewModel.onMicrophonePermissionRevoked()
                 requestMicrophone()
@@ -527,10 +531,10 @@ class SpeakingAiFragment : Fragment() {
     private fun updateMicrophoneVisualState(state: ConversationUiState) {
         binding.btnMicrophoneSpeak.isEnabled = !state.isLoading
         val microphoneAction = when {
-            state.isListeningOrSpeakingUser -> R.string.speaking_mic_send
+            state.isHandsFreeConversationActive -> R.string.speaking_live_stop
             state.isAiSpeaking -> R.string.speaking_mic_answer_now
             state.isLoading -> R.string.speaking_mic_processing
-            else -> R.string.speaking_tap_to_speak
+            else -> R.string.speaking_live_start
         }
         binding.tvTapToSpeakLabel.setText(microphoneAction)
         binding.btnMicrophoneSpeak.contentDescription = getText(microphoneAction)

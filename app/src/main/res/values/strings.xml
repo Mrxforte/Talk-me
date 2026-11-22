@@ -644,4 +644,6 @@
         <item>Lera</item>
         <item>Leo</item>
     </string-array>
+    <string name="speaking_live_start">Jonli suhbatni boshlash</string>
+    <string name="speaking_live_stop">Jonli suhbatni tugatish</string>
 </resources>

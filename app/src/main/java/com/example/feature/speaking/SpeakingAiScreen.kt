@@ -34,6 +34,8 @@ import com.example.core.ui.AiChatTranscriptAdapter
 import com.example.core.ui.CosmicWaveformView
 import com.example.core.ui.ProgressAnimator.animateProgressTo
 import com.example.databinding.FragmentSpeakingAiBinding
+import com.example.feature.avatar3d.UnityAvatarBridge
+import com.example.feature.avatar3d.UnityRuntimeSender
 import com.example.feature.pro.AvatarPerformance
 import com.example.feature.pro.ProAction
 import com.example.feature.pro.TutorCue
@@ -405,7 +407,11 @@ class SpeakingAiFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
             if (granted) {
                 viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
-                viewModel.onMicrophoneButtonTapped()
+                if (viewModel.uiState.value.isHandsFreeConversationActive) {
+                    viewModel.stopConversation()
+                } else {
+                    viewModel.startLiveSession()
+                }
             } else {
                 viewModel.onMicrophonePermissionRevoked()
                 requestMicrophone()
@@ -527,10 +533,10 @@ class SpeakingAiFragment : Fragment() {
     private fun updateMicrophoneVisualState(state: ConversationUiState) {
         binding.btnMicrophoneSpeak.isEnabled = !state.isLoading
         val microphoneAction = when {
-            state.isListeningOrSpeakingUser -> R.string.speaking_mic_send
+            state.isHandsFreeConversationActive -> R.string.speaking_live_stop
             state.isAiSpeaking -> R.string.speaking_mic_answer_now
             state.isLoading -> R.string.speaking_mic_processing
-            else -> R.string.speaking_tap_to_speak
+            else -> R.string.speaking_live_start
         }
         binding.tvTapToSpeakLabel.setText(microphoneAction)
         binding.btnMicrophoneSpeak.contentDescription = getText(microphoneAction)
@@ -558,6 +564,8 @@ class SpeakingAiFragment : Fragment() {
             binding.btnMicrophoneSpeak.scaleY = 1.0f
         }
     }
+
+    private val optionalUnityAvatar by lazy { UnityAvatarBridge(UnityRuntimeSender()) }
 
     private fun updateCharacterStage(state: ConversationUiState) {
         val ctx = context ?: return
@@ -590,6 +598,13 @@ class SpeakingAiFragment : Fragment() {
         if (spokenRange != null && (spokenRange.amplitude ?: 1f) > .04f) {
             avatarSpeakingTurnId = spokenRange.turnId
         }
+        optionalUnityAvatar.update(
+            SpeakingAvatarMapper.map(
+                state = state.conversationState,
+                audioAmplitude = if (state.isMuted) 0f else state.audioAmplitude,
+                tutorAmplitude = spokenRange?.amplitude ?: if (spokenRange != null) 0.55f else 0f
+            )
+        )
         val performingReply = speaking != null && avatarSpeakingTurnId == speaking.turnId
         binding.ivAiCharacterAvatar.render(
             female = femaleTutor,

@@ -1,0 +1,594 @@
+{
+  "schema_version": 1,
+  "course": "TalkMe A1 book-based starter",
+  "source": "G‘apporov and Qosimova, Ingliz tili grammatikasi (2010), adapted pedagogically; examples authored for TalkMe",
+  "scope": "Lessons only; no role plays",
+  "lessons": [
+    {
+      "id": "a1-book-001",
+      "level": "A1",
+      "order": 1,
+      "title": "Otlar: atrofimizdagi narsalar",
+      "grammar_focus": "Noun",
+      "prerequisites": [],
+      "estimated_minutes": 7,
+      "new_words": [
+        "book",
+        "pen",
+        "phone",
+        "apple",
+        "bag"
+      ],
+      "stages": {
+        "rule": {
+          "teacher_uz": "Ot — odam yoki narsaning nomi. Book — kitob, pen — ruchka. Avval narsani tanishni o‘rganamiz.",
+          "teacher_en": "A noun names a person or a thing."
+        },
+        "examples": [
+          {
+            "english": "book"
+          },
+          {
+            "english": "pen"
+          },
+          {
+            "english": "apple"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "To‘g‘ri ifodani tanlang.",
+            "options": [
+              "book",
+              "pen",
+              "phone"
+            ],
+            "answer": "book"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Namunani yozing.",
+            "expected": "book"
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_choose",
+            "audio_text": "book",
+            "options": [
+              "book",
+              "pen",
+              "phone"
+            ],
+            "answer": "book"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "book",
+            "expected": "book"
+          }
+        ],
+        "wrap_up": {
+          "teacher_uz": "Bugun narsalarning inglizcha nomlarini ayta oldingiz. Ertaga bitta narsa haqida gapiramiz."
+        }
+      },
+      "status": "editorial_draft_not_app_integrated"
+    },
+    {
+      "id": "a1-book-002",
+      "level": "A1",
+      "order": 2,
+      "title": "A book, an apple",
+      "grammar_focus": "a/an",
+      "prerequisites": [
+        "a1-book-001"
+      ],
+      "estimated_minutes": 7,
+      "new_words": [
+        "book",
+        "apple",
+        "egg",
+        "pen"
+      ],
+      "stages": {
+        "rule": {
+          "teacher_uz": "Bitta sanaladigan narsani ilk bor aytganda a yoki an ishlatamiz. A pen, an apple. Tanlash birinchi tovushga bog‘liq: unli tovush oldidan an.",
+          "teacher_en": "Use a before a consonant sound and an before a vowel sound."
+        },
+        "examples": [
+          {
+            "english": "a book"
+          },
+          {
+            "english": "an apple"
+          },
+          {
+            "english": "an egg"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "To‘g‘ri ifodani tanlang.",
+            "options": [
+              "a book",
+              "an apple",
+              "a pen"
+            ],
+            "answer": "an apple"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Namunani yozing.",
+            "expected": "an apple"
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_choose",
+            "audio_text": "an apple",
+            "options": [
+              "a book",
+              "an apple",
+              "a pen"
+            ],
+            "answer": "an apple"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "an apple",
+            "expected": "an apple"
+          }
+        ],
+        "wrap_up": {
+          "teacher_uz": "Bugun a book va an apple deyishni o‘rgandingiz. Bu ikki kichik so‘zning tanlovi tovushga bog‘liq."
+        }
+      },
+      "status": "editorial_draft_not_app_integrated"
+    },
+    {
+      "id": "a1-book-003",
+      "level": "A1",
+      "order": 3,
+      "title": "Bir kitob, ikki kitob",
+      "grammar_focus": "plural -s",
+      "prerequisites": [
+        "a1-book-002"
+      ],
+      "estimated_minutes": 7,
+      "new_words": [
+        "book",
+        "pen",
+        "apple"
+      ],
+      "stages": {
+        "rule": {
+          "teacher_uz": "Bir dona book, ikki dona books. Ko‘p oddiy sanaladigan otlarga -s qo‘shiladi. Barcha otlar bunday emas; istisnolar keyingi darslarda.",
+          "teacher_en": "Most regular countable nouns add -s in the plural."
+        },
+        "examples": [
+          {
+            "english": "book → books"
+          },
+          {
+            "english": "pen → pens"
+          },
+          {
+            "english": "apple → apples"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "To‘g‘ri ifodani tanlang.",
+            "options": [
+              "books",
+              "pens",
+              "apples"
+            ],
+            "answer": "books"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Namunani yozing.",
+            "expected": "books"
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_choose",
+            "audio_text": "books",
+            "options": [
+              "books",
+              "pens",
+              "apples"
+            ],
+            "answer": "books"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "books",
+            "expected": "books"
+          }
+        ],
+        "wrap_up": {
+          "teacher_uz": "Bugun bir va ko‘p narsani farqladingiz. Endi books va pens so‘zlarini taniysiz."
+        }
+      },
+      "status": "editorial_draft_not_app_integrated"
+    },
+    {
+      "id": "a1-book-004",
+      "level": "A1",
+      "order": 4,
+      "title": "Bir, ikki, uch",
+      "grammar_focus": "numbers 1–10",
+      "prerequisites": [
+        "a1-book-003"
+      ],
+      "estimated_minutes": 7,
+      "new_words": [
+        "one",
+        "two",
+        "three",
+        "four",
+        "five"
+      ],
+      "stages": {
+        "rule": {
+          "teacher_uz": "Sonni narsadan oldin aytamiz: one book, two books. One bilan birlik, two va undan ko‘p sonlar bilan ko‘plik keladi.",
+          "teacher_en": "Put the number before the noun: one book, two books."
+        },
+        "examples": [
+          {
+            "english": "one book"
+          },
+          {
+            "english": "two pens"
+          },
+          {
+            "english": "three apples"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "To‘g‘ri ifodani tanlang.",
+            "options": [
+              "one book",
+              "two books",
+              "three pens"
+            ],
+            "answer": "two books"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Namunani yozing.",
+            "expected": "two books"
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_choose",
+            "audio_text": "two books",
+            "options": [
+              "one book",
+              "two books",
+              "three pens"
+            ],
+            "answer": "two books"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "two books",
+            "expected": "two books"
+          }
+        ],
+        "wrap_up": {
+          "teacher_uz": "Bugun son va otni birlashtirdingiz: one book, two books. Bu sizga xarid qilishda yordam beradi."
+        }
+      },
+      "status": "editorial_draft_not_app_integrated"
+    },
+    {
+      "id": "a1-book-005",
+      "level": "A1",
+      "order": 5,
+      "title": "Va: and",
+      "grammar_focus": "and",
+      "prerequisites": [
+        "a1-book-004"
+      ],
+      "estimated_minutes": 7,
+      "new_words": [
+        "and",
+        "book",
+        "pen",
+        "apple"
+      ],
+      "stages": {
+        "rule": {
+          "teacher_uz": "And — va. Ikki narsani bog‘laydi: a book and a pen. Oldin bilgan so‘zlaringizdan uzunroq ibora yasaysiz.",
+          "teacher_en": "And joins two words or phrases."
+        },
+        "examples": [
+          {
+            "english": "a book and a pen"
+          },
+          {
+            "english": "two books and one pen"
+          },
+          {
+            "english": "an apple and a book"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "To‘g‘ri ifodani tanlang.",
+            "options": [
+              "a book and a pen",
+              "two books and one pen",
+              "an apple and a book"
+            ],
+            "answer": "a book and a pen"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Namunani yozing.",
+            "expected": "a book and a pen"
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_choose",
+            "audio_text": "a book and a pen",
+            "options": [
+              "a book and a pen",
+              "two books and one pen",
+              "an apple and a book"
+            ],
+            "answer": "a book and a pen"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "a book and a pen",
+            "expected": "a book and a pen"
+          }
+        ],
+        "wrap_up": {
+          "teacher_uz": "Bugun and bilan ikkita narsani birlashtirdingiz. Endi ro‘yxatni inglizcha ayta olasiz."
+        }
+      },
+      "status": "editorial_draft_not_app_integrated"
+    },
+    {
+      "id": "a1-book-006",
+      "level": "A1",
+      "order": 6,
+      "title": "Men va siz: I, you",
+      "grammar_focus": "I / you",
+      "prerequisites": [
+        "a1-book-005"
+      ],
+      "estimated_minutes": 7,
+      "new_words": [
+        "I",
+        "you"
+      ],
+      "stages": {
+        "rule": {
+          "teacher_uz": "I — men. You — sen yoki siz. I o‘zingizga, you esa suhbatdoshingizga tegishli. Hozir faqat kimni bildirayotganini ajratamiz.",
+          "teacher_en": "I refers to the speaker; you refers to the listener."
+        },
+        "examples": [
+          {
+            "english": "I"
+          },
+          {
+            "english": "you"
+          },
+          {
+            "english": "I → men"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "To‘g‘ri ifodani tanlang.",
+            "options": [
+              "I",
+              "you",
+              "I"
+            ],
+            "answer": "you"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Namunani yozing.",
+            "expected": "you"
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_choose",
+            "audio_text": "you",
+            "options": [
+              "I",
+              "you",
+              "I"
+            ],
+            "answer": "you"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "you",
+            "expected": "you"
+          }
+        ],
+        "wrap_up": {
+          "teacher_uz": "Bugun I va you ni ajratishni o‘rgandingiz. Keyingi darsda ular bilan gap tuzamiz."
+        }
+      },
+      "status": "editorial_draft_not_app_integrated"
+    },
+    {
+      "id": "a1-book-007",
+      "level": "A1",
+      "order": 7,
+      "title": "I am / You are",
+      "grammar_focus": "to be",
+      "prerequisites": [
+        "a1-book-006"
+      ],
+      "estimated_minutes": 7,
+      "new_words": [
+        "am",
+        "are"
+      ],
+      "stages": {
+        "rule": {
+          "teacher_uz": "I bilan am, you bilan are ishlatiladi. I am Ali. You are Ali. Inglizchada bu so‘zlarni tashlab ketmaymiz.",
+          "teacher_en": "Use am with I and are with you."
+        },
+        "examples": [
+          {
+            "english": "I am Ali."
+          },
+          {
+            "english": "You are Ali."
+          },
+          {
+            "english": "I am here."
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "To‘g‘ri ifodani tanlang.",
+            "options": [
+              "I am Ali.",
+              "You are Ali.",
+              "You are here."
+            ],
+            "answer": "I am Ali."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Namunani yozing.",
+            "expected": "I am Ali."
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_choose",
+            "audio_text": "I am Ali.",
+            "options": [
+              "I am Ali.",
+              "You are Ali.",
+              "You are here."
+            ],
+            "answer": "I am Ali."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I am Ali.",
+            "expected": "I am Ali."
+          }
+        ],
+        "wrap_up": {
+          "teacher_uz": "Bugun I am va you are yordamida kim ekaningizni ayta oldingiz."
+        }
+      },
+      "status": "editorial_draft_not_app_integrated"
+    },
+    {
+      "id": "a1-book-008",
+      "level": "A1",
+      "order": 8,
+      "title": "Are you...?",
+      "grammar_focus": "to be question",
+      "prerequisites": [
+        "a1-book-007"
+      ],
+      "estimated_minutes": 7,
+      "new_words": [
+        "are",
+        "yes",
+        "no"
+      ],
+      "stages": {
+        "rule": {
+          "teacher_uz": "Savol berish uchun are ni you dan oldinga o‘tkazamiz: You are Ali. → Are you Ali? Javob: Yes, I am. yoki No, I'm not.",
+          "teacher_en": "Move are before you to ask a question."
+        },
+        "examples": [
+          {
+            "english": "Are you Ali?"
+          },
+          {
+            "english": "Yes, I am."
+          },
+          {
+            "english": "No, I'm not."
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "To‘g‘ri ifodani tanlang.",
+            "options": [
+              "Are you Ali?",
+              "Yes, I am.",
+              "No, I'm not."
+            ],
+            "answer": "Are you Ali?"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Namunani yozing.",
+            "expected": "Are you Ali?"
+          },
+          {
+            "skill": "listening",
+            "type": "listen_and_choose",
+            "audio_text": "Are you Ali?",
+            "options": [
+              "Are you Ali?",
+              "Yes, I am.",
+              "No, I'm not."
+            ],
+            "answer": "Are you Ali?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Are you Ali?",
+            "expected": "Are you Ali?"
+          }
+        ],
+        "wrap_up": {
+          "teacher_uz": "Bugun savol berishni va qisqa javob qaytarishni mashq qildingiz. Endi oddiy tanishuvga tayyorsiz."
+        }
+      },
+      "status": "editorial_draft_not_app_integrated"
+    }
+  ]
+}

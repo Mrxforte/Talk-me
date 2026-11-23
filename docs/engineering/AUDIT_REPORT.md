@@ -40,3 +40,13 @@ Transcript visibility can be toggled without navigation. API settings use a smal
 No avatar renderer, Unity runtime, lessons, login or bottom navigation is included.
 
 Validation evidence and remaining gaps are recorded in `docs/VALIDATION.md`.
+
+## 2.0.1: actionable API failures
+
+Increment versionCode to 3. Previously HTTP 400/401/403/404 were all mapped to AUTH,
+which hid invalid request, project permission and missing-model failures. The client now
+classifies provider status/error-info metadata into distinct issues and propagates a safe
+ApiDiagnostic through the ViewModel. UI strings describe the issue and display HTTP/status
+codes; the model is visible in the key-entry modal. Only public allowlisted codes survive,
+never raw error messages or credentials. New tests cover error distinctions and diagnostic
+cleanup between sessions. The user's real key/account is not available to the test suite.

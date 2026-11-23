@@ -15,8 +15,8 @@ android {
         applicationId = "com.aistudio.talkme.xkpqvr"
         minSdk = 26
         targetSdk = 36
-        versionCode = 2
-        versionName = "2.0.0-whisper"
+        versionCode = 3
+        versionName = "2.0.1-whisper"
         ndk { abiFilters.addAll(listOf("arm64-v8a", "x86_64")) }
         externalNativeBuild.cmake {
             arguments.add("-DWHISPER_SOURCE_DIR=${layout.buildDirectory.dir("whisperSource").get().asFile.absolutePath}")

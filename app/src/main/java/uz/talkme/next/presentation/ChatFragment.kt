@@ -89,6 +89,7 @@ class ChatFragment : Fragment() {
             val pad = resources.getDimensionPixelSize(R.dimen.space_large)
             setPadding(pad, pad, pad, pad)
             addView(TextView(context).apply { setText(R.string.key_note) })
+            addView(TextView(context).apply { text = getString(R.string.api_model, ChatViewModel.MODEL) })
             addView(field)
             addView(TextView(context).apply {
                 text = getString(R.string.cost, String.format(Locale.US, "%.4f", model.state.value.estimatedUsd))
@@ -121,17 +122,28 @@ class ChatFragment : Fragment() {
             Phase.ERROR -> R.string.error
         })
         ui.details.visibility = if (state.issue == null) View.GONE else View.VISIBLE
-        state.issue?.let { ui.details.setText(when (it) {
+        state.issue?.let { issue ->
+            val label = getString(when (issue) {
             Issue.PERMISSION -> R.string.permission_error
             Issue.MODEL -> R.string.model_error
             Issue.MICROPHONE -> R.string.mic_error
             Issue.NETWORK -> R.string.network_error
             Issue.AUTH -> R.string.auth_error
+            Issue.API_PERMISSION -> R.string.api_permission_error
+            Issue.GEMINI_MODEL -> R.string.gemini_model_error
+            Issue.BILLING -> R.string.billing_error
+            Issue.REQUEST -> R.string.request_error
+            Issue.SERVER -> R.string.server_error
             Issue.QUOTA -> R.string.quota_error
             Issue.RESPONSE -> R.string.response_error
             Issue.TTS -> R.string.tts_error
             Issue.FOCUS -> R.string.focus_error
-        }) }
+            })
+            ui.details.text = state.diagnostic?.let { diagnostic ->
+                val code = listOf(diagnostic.status, diagnostic.reason).filter { it.isNotBlank() }.distinct().joinToString(" · ")
+                getString(R.string.api_error_details, label, diagnostic.httpCode, code)
+            } ?: label
+        }
         ui.userText.text = state.partial.ifBlank { state.userText.ifBlank { getString(R.string.empty_user) } }
         ui.assistantText.text = state.assistantText.ifBlank { getString(R.string.empty_assistant) }
         val action = when {

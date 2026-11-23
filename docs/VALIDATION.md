@@ -3,7 +3,7 @@
 ## Completed
 
 - `:app:assembleDebug :app:testDebugUnitTest :app:lintDebug`: **BUILD SUCCESSFUL**.
-- **16 unit/render tests, 0 failures, 0 errors**.
+- **23 unit/render tests, 0 failures, 0 errors**.
 - Lint: **0 errors**, 16 warnings about newer dependency versions, backup metadata and unused resources.
 - The final development APK compiles Whisper and GGML math targets with `-O3`; generated Ninja flags were inspected. No Android speed benchmark is claimed.
 - Hilt generation, single-destination navigation resources, native CMake compilation and APK packaging succeeded.
@@ -44,8 +44,16 @@ No Gemini API key was supplied and no paid inference request was made. The API t
 
 ## Debug artifact
 
-Application ID: `com.aistudio.talkme.xkpqvr`; versionCode 2; versionName `2.0.0-whisper`.
-APK bytes: 71944588.
-SHA-256: `b5cf6415297344dc3e4eb3e9fd498fab563a77a410b8f56bdeefcc573739f27a`.
+Application ID: `com.aistudio.talkme.xkpqvr`; versionCode 3; versionName `2.0.1-whisper`.
+APK bytes: 69245820.
+SHA-256: `2c859a27eead356b407ebb66361e6ff22371e09497e3b422aff562b43cd716d8`.
 
 Previous main is preserved at `archive/talkme-before-voice-v2-2026-11-24`.
+
+## API diagnostic regression checks in 2.0.1
+
+Mock HTTP 404 remains a model failure instead of authentication. Google error-info invalid-key
+reasons, project/service restrictions, billing prerequisites, bad request payloads and temporary
+server failures are distinguished. Raw provider messages and arbitrary secret-like status/reason
+values are excluded from display. Diagnostics survive failure and clear at the next session.
+These tests do not diagnose or validate the user's actual API account or key.

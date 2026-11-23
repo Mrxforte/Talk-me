@@ -60,7 +60,7 @@ before future releases. See [docs/COSTS.md](docs/COSTS.md).
 ## Upgrade and previous version
 
 This replaces the previous learning product at the user's request. Application ID
-`com.aistudio.talkme.xkpqvr` is preserved and versionCode is increased to 2. The rebuild
+`com.aistudio.talkme.xkpqvr` is preserved and versionCode is increased to 3. The rebuild
 never deletes or resets existing on-device lesson databases/preferences; the voice-only
 app simply does not expose the previous lesson screens.
 
@@ -84,3 +84,17 @@ avatars, keyboard composer or bottom navigation.
 
 Detailed specification: [docs/MASTER_PROMPT.md](docs/MASTER_PROMPT.md).
 Licenses: [docs/THIRD_PARTY.md](docs/THIRD_PARTY.md).
+
+## 2.0.1 API diagnostics
+
+The settings modal displays the actual selected model. The text model remains
+`gemini-2.5-flash-lite`; this patch does not silently move users to a higher-cost model.
+Google's deprecation documentation checked on 2026-11-24 lists Flash-Lite as still available.
+Actual model access remains dependent on the user's own project and key.
+
+HTTP 404/model-not-found, 401/invalid key, 403/project permission, 402/billing, 429/quota,
+400/request or prerequisites, and 5xx/service failures now have separate messages. Only
+allowlisted provider status/reason codes are displayed; raw server messages and keys are
+never included. An old screenshot containing the generic message is insufficient to
+identify the user's exact account problem. Reproduce with this build and report only the
+HTTP/status code, never the API key.

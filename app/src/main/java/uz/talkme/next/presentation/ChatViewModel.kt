@@ -40,7 +40,7 @@ class ChatViewModel @Inject constructor(
                 catch (_: Exception) { throw ChatFailure(Issue.TTS) }
                 if (generation == token) listen()
             } catch (e: CancellationException) { throw e }
-            catch (e: ChatFailure) { fail(e.issue) }
+            catch (e: ChatFailure) { fail(e.issue, e.diagnostic) }
         }
     }
 
@@ -93,7 +93,7 @@ class ChatViewModel @Inject constructor(
                     onDone = { viewModelScope.launch { if (generation == token) listen() } },
                     onFailure = { viewModelScope.launch { if (generation == token) fail(Issue.TTS) } })
             } catch (e: CancellationException) { throw e }
-            catch (e: ChatFailure) { if (generation == token) fail(e.issue) }
+            catch (e: ChatFailure) { if (generation == token) fail(e.issue, e.diagnostic) }
             catch (_: Exception) { if (generation == token) fail(Issue.NETWORK) }
         }
     }
@@ -118,11 +118,11 @@ class ChatViewModel @Inject constructor(
         job?.cancel(); job = null
         input.stop(); output.stop()
         key = ""
-        mutableState.update { it.copy(phase = Phase.IDLE, active = false, partial = "", level = 0f, issue = null) }
+        mutableState.update { it.copy(phase = Phase.IDLE, active = false, partial = "", level = 0f, issue = null, diagnostic = null) }
     }
-    fun fail(issue: Issue) {
+    fun fail(issue: Issue, diagnostic: ApiDiagnostic? = null) {
         stop()
-        mutableState.update { it.copy(phase = Phase.ERROR, issue = issue) }
+        mutableState.update { it.copy(phase = Phase.ERROR, issue = issue, diagnostic = diagnostic) }
     }
     override fun onCleared() {
         stop(); input.close(); output.close(); tutor.close()

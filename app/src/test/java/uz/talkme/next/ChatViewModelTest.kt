@@ -70,6 +70,18 @@ class ChatViewModelTest {
         vm.stop()
     }
 
+    @Test fun `safe API diagnostics reach the screen and clear on a new session`() = runTest(dispatcher) {
+        val vm = ChatViewModel(Input(), Output(), Client())
+        val diagnostic = ApiDiagnostic(404, "NOT_FOUND")
+        vm.fail(Issue.GEMINI_MODEL, diagnostic)
+        assertEquals(diagnostic, vm.state.value.diagnostic)
+        assertEquals(Issue.GEMINI_MODEL, vm.state.value.issue)
+        vm.start("secret"); runCurrent()
+        assertNull(vm.state.value.diagnostic)
+        assertNull(vm.state.value.issue)
+        vm.stop()
+    }
+
     private class Input : SpeechInput {
         var final: (String) -> Unit = {}
         override suspend fun prepare() = Unit

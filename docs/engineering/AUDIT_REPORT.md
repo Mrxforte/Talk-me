@@ -50,3 +50,13 @@ ApiDiagnostic through the ViewModel. UI strings describe the issue and display H
 codes; the model is visible in the key-entry modal. Only public allowlisted codes survive,
 never raw error messages or credentials. New tests cover error distinctions and diagnostic
 cleanup between sessions. The user's real key/account is not available to the test suite.
+
+## 2.0.2: no end-user credential entry
+
+At the user's request, remove the API-key dialog, EditText, header settings button and
+credential state from ChatFragment/ViewModel. TutorClient.reply no longer accepts a key.
+Hilt supplies a data adapter configured from BuildConfig. Only personal debug builds read
+GEMINI_API_KEY from ignored local.properties or the developer environment; release keys
+remain empty. No actual credential is supplied or committed. Public owner-key distribution
+still requires a server-side gateway, which is not provisioned here. Missing configuration
+is an explicit setup issue and performs no audio initialization or HTTP request.

@@ -32,18 +32,19 @@
     <string name="model_error">Ovoz modelini ochib bo‘lmadi. Bo‘sh xotirani tekshiring va ilovani qayta ishga tushiring.</string>
     <string name="mic_error">Mikrofondan ovoz olinmadi. Boshqa yozuv ilovalarini yoping va telefonning mikrofon maxfiylik tugmasini tekshiring.</string>
     <string name="network_error">Gemini bilan ulanish uzildi. Internetni tekshirib, suhbatni qayta boshlang.</string>
-    <string name="auth_error">Gemini API kaliti noto‘g‘ri, muddati tugagan yoki bekor qilingan. Google AI Studio kalitini qayta tekshiring.</string>
-    <string name="api_permission_error">Gemini bu loyihaga kirishga ruxsat bermadi. Kalit cheklovlari, Generative Language API va loyiha ruxsatlarini tekshiring.</string>
-    <string name="gemini_model_error">Tanlangan Gemini modeli topilmadi yoki hisobingizda mavjud emas. Sozlamalarda ko‘rsatilgan model nomini tekshiring.</string>
-    <string name="billing_error">Gemini billing yoki hisob balansi talabini bajarmadi. Kalit tegishli Google Cloud loyihasining billing holatini tekshiring.</string>
+    <string name="auth_error">Suhbat xizmatiga ulanish tasdiqlanmadi. Ilovani tayyorlagan dasturchi ulanishni tekshirishi kerak.</string>
+    <string name="api_permission_error">Suhbat xizmatining loyiha ruxsati rad etildi. Dasturchi ulanish sozlamalarini tekshirishi kerak.</string>
+    <string name="gemini_model_error">Suhbat uchun tanlangan AI modeli mavjud emas. Dasturchi model sozlamalarini tekshirishi kerak.</string>
+    <string name="billing_error">Suhbat xizmatining hisob balansi yoki to‘lov sozlamasi sababli javob olinmadi. Ilovani tayyorlagan dasturchiga murojaat qiling.</string>
     <string name="request_error">Gemini so‘rovni qabul qilmadi. Ilovaning eng yangi versiyasini o‘rnating; pastdagi xato kodi sababni aniqlashga yordam beradi.</string>
     <string name="server_error">Gemini xizmatida vaqtinchalik xato. Birozdan so‘ng qayta urinib ko‘ring.</string>
     <string name="api_error_details">%1$s\nHTTP %2$d · %3$s</string>
     <string name="api_model">AI modeli: %1$s</string>
-    <string name="quota_error">Gemini limitiga yetildi. Billing va foydalanish limitlarini tekshiring.</string>
+    <string name="quota_error">Hozircha suhbat xizmatining foydalanish limitiga yetildi. Birozdan so‘ng qayta urinib ko‘ring.</string>
     <string name="response_error">AI o‘qish mumkin bo‘lgan javob qaytarmadi. Suhbatni qayta boshlang.</string>
     <string name="tts_error">Telefonda oflayn inglizcha ovoz topilmadi yoki ovoz ijrosi uzildi. Matnni ovozga aylantirish sozlamalarida inglizcha ovoz paketini o‘rnating va qayta urinib ko‘ring.</string>
     <string name="focus_error">Boshqa ilova ovozdan foydalanyapti. Uni yopib, qayta urinib ko‘ring.</string>
+    <string name="setup_error">Suhbat xizmatiga ulanish hali tayyor emas. Ilovani tayyorlagan dasturchi ulanishni sozlashi kerak.</string>
     <string name="live_subtitle">Jonli suhbat</string>
     <string name="partner">Lera bilan inglizcha suhbat</string>
     <string name="settings">Suhbat sozlamalari</string>
@@ -53,6 +54,6 @@
     <string name="begin">Boshlash</string>
     <string name="orb_description">Suhbatning ovoz indikatori</string>
     <string name="session_duration">Suhbat davomiyligi</string>
-    <string name="version">TalkMe · 2.0.1</string>
+    <string name="version">TalkMe · 2.0.2</string>
     <string name="quiet_hint">Bir marta boshlang. Erkin suhbatlashing.</string>
 </resources>

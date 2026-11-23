@@ -23,19 +23,27 @@ Microphone capture pauses while transcribing, waiting for AI and speaking. Liste
 resumes automatically. Tap the mic to interrupt, mute or resume. This is an economical
 turn-based conversation, not automatic full-duplex voice interruption.
 
-## Install and test
+## No API-key prompts
 
-1. Install the debug APK on a **64-bit Android 8.0+** device (arm64-v8a, or x86_64 emulator).
-2. Ensure the phone has an installed **offline English TTS voice**.
-3. Tap the central microphone, enter your own Gemini key inside the app, and allow microphone access.
-4. Speak English and pause briefly. Whisper decodes locally, then Gemini replies.
+The application never asks end users for an API key. The credential field/modal and its
+header button have been removed. Tap the microphone to begin; only Android's microphone
+permission may be requested.
 
-The key is memory-only and is never compiled into the APK or committed. The settings
-icon opens a small API-key modal. Transcript visibility toggles on the same screen.
-All microphone, decode, HTTP and playback work stops on pause/end.
+For a PERSONAL development build, the developer configures the connection once:
 
-Public distribution using a shared owner key requires an authenticated, rate-limited
-API gateway. Do not put a shared paid API key in an APK. Local STT/TTS can remain unchanged.
+1. Copy `local.properties.example` to `local.properties` and retain your Android SDK path.
+2. Set `GEMINI_API_KEY` there, or in the developer computer's environment.
+3. Build the debug APK. `local.properties` and real credentials are not committed to GitHub.
+4. Install on a 64-bit Android 8.0+ device with an offline English TTS voice.
+
+No credential was supplied for this repository/session, so the default build reports that
+the conversation service has not been configured. Removing a prompt does not create API
+access. STT/TTS remain local; Gemini responses need a configured, valid account.
+
+The key is embedded only in a personal DEBUG build and can be extracted from that APK.
+Do not publicly distribute that build with an owner's paid key. Release builds deliberately
+have an empty key; a public end-user release needs an authenticated API gateway or other
+server-side credential setup. That server is not provisioned by this change.
 
 ## Android Studio / CLI
 
@@ -54,13 +62,13 @@ GitHub Actions uploads a debug APK artifact after successful checks.
 
 The default text model is `gemini-2.5-flash-lite`, with a 160-output-token limit and
 approximately 6,000-character bounded repeated history. Token usage and an estimated
-session cost are visible in the settings modal. Prices and availability must be checked
+session cost remain available in internal UI state for developer diagnostics. Prices and availability must be checked
 before future releases. See [docs/COSTS.md](docs/COSTS.md).
 
 ## Upgrade and previous version
 
 This replaces the previous learning product at the user's request. Application ID
-`com.aistudio.talkme.xkpqvr` is preserved and versionCode is increased to 3. The rebuild
+`com.aistudio.talkme.xkpqvr` is preserved and versionCode is increased to 4. The rebuild
 never deletes or resets existing on-device lesson databases/preferences; the voice-only
 app simply does not expose the previous lesson screens.
 
@@ -98,3 +106,11 @@ allowlisted provider status/reason codes are displayed; raw server messages and 
 never included. An old screenshot containing the generic message is insufficient to
 identify the user's exact account problem. Reproduce with this build and report only the
 HTTP/status code, never the API key.
+
+## 2.0.2 developer-configured connection
+
+API-key entry, the settings/credential button, and credential arguments in the presentation
+and domain APIs are removed. The data adapter owns the development credential supplied by
+Hilt. If absent, the ViewModel reports a setup issue before loading audio models or issuing
+requests. Errors direct connection problems to the developer rather than asking end users
+to supply credentials. The microphone, transcript toggle, end control and B design remain.

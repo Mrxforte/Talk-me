@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import uz.talkme.next.audio.LocalSpeechOutput
 import uz.talkme.next.audio.WhisperSpeechInput
+import uz.talkme.next.BuildConfig
 import uz.talkme.next.domain.SpeechInput
 import uz.talkme.next.domain.SpeechOutput
 import uz.talkme.next.domain.TutorClient
@@ -21,5 +22,5 @@ object VoiceModule {
     @Provides @ViewModelScoped
     fun output(@ApplicationContext context: Context): SpeechOutput = LocalSpeechOutput(context)
     @Provides @ViewModelScoped
-    fun tutor(): TutorClient = GeminiTutorClient()
+    fun tutor(): TutorClient = GeminiTutorClient(apiKey = BuildConfig.GEMINI_API_KEY)
 }

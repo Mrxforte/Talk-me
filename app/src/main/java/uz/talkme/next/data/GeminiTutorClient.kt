@@ -17,11 +17,14 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 class GeminiTutorClient(
+    private val apiKey: String = "",
     private val client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(15, TimeUnit.SECONDS).callTimeout(45, TimeUnit.SECONDS).build(),
     private val baseUrl: String = "https://generativelanguage.googleapis.com"
 ) : TutorClient {
-    override suspend fun reply(apiKey: String, model: String, history: List<Turn>): Reply {
+    override val isConfigured: Boolean get() = apiKey.isNotBlank()
+    override suspend fun reply(model: String, history: List<Turn>): Reply {
+        if (!isConfigured) throw ChatFailure(Issue.SETUP)
         require(model.matches(Regex("[a-zA-Z0-9._-]+")))
         val request = Request.Builder()
             .url("$baseUrl/v1beta/models/$model:generateContent")

@@ -28,8 +28,8 @@ Rejalashtirish uchun $0.01–0.03 / foydalanuvchi-soat oralig'i ishlatilsa,
 Bu o'lchangan natija emas: suhbatlar soni, haqiqiy tokenizatsiya va javoblar uzunligiga
 bog'liq senariy. Kengroq xotira yoki uzun javoblar ko'proq xarajat qiladi.
 
-Ilova usageMetadata dagi haqiqiy token sonlarini yig'adi. Hisoblagich shu tarif bilan
-taxminiy dollar qiymatini ko'rsatadi; yakuniy hisob-kitob provayder billingida tekshiriladi.
+Ilova usageMetadata dagi haqiqiy token sonlarini yig'adi. Dasturchilar uchun ichki holatda shu tarif bilan
+taxminiy dollar qiymati hisoblanadi; yakuniy hisob-kitob provayder billingida tekshiriladi.
 
 ## Gemini Live bilan solishtirish
 

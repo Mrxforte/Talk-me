@@ -1,12 +1,21 @@
 import java.io.File
 import java.net.URI
 import java.security.MessageDigest
+import java.util.Properties
 
 plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 }
+val localConfiguration = Properties().apply {
+    val localFile = rootProject.file("local.properties")
+    if (localFile.exists()) localFile.inputStream().use { load(it) }
+}
+val developmentGeminiKey = providers.environmentVariable("GEMINI_API_KEY").orNull?.trim().orEmpty()
+    .ifBlank { localConfiguration.getProperty("GEMINI_API_KEY", "").trim() }
+fun javaString(value: String): String = "\"" + value.replace("\\", "\\\\")
+    .replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t") + "\""
 android {
     namespace = "uz.talkme.next"
     compileSdk { version = release(36) { minorApiLevel = 1 } }
@@ -15,8 +24,9 @@ android {
         applicationId = "com.aistudio.talkme.xkpqvr"
         minSdk = 26
         targetSdk = 36
-        versionCode = 3
-        versionName = "2.0.1-whisper"
+        versionCode = 4
+        versionName = "2.0.2-whisper"
+        buildConfigField("String", "GEMINI_API_KEY", "\"\"")
         ndk { abiFilters.addAll(listOf("arm64-v8a", "x86_64")) }
         externalNativeBuild.cmake {
             arguments.add("-DWHISPER_SOURCE_DIR=${layout.buildDirectory.dir("whisperSource").get().asFile.absolutePath}")
@@ -28,7 +38,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildFeatures { viewBinding = true }
+    buildFeatures { viewBinding = true; buildConfig = true }
     testOptions { unitTests.isIncludeAndroidResources = true }
     signingConfigs {
         create("release") {
@@ -47,6 +57,8 @@ android {
     buildTypes {
         release { signingConfig = signingConfigs.getByName("release") }
         debug {
+            // Personal development builds only. Release never embeds this key.
+            buildConfigField("String", "GEMINI_API_KEY", javaString(developmentGeminiKey))
             // Preserve the supplied development certificate; fresh clones use Gradle's debug key.
             if (rootProject.file("debug.keystore").exists()) signingConfig = signingConfigs.getByName("debugConfig")
         }

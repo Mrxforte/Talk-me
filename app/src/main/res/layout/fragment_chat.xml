@@ -16,9 +16,6 @@
         </LinearLayout>
         <Chronometer android:id="@+id/timer" style="@style/Caption" android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:contentDescription="@string/session_duration" />
-        <ImageButton android:id="@+id/keyButton" android:layout_width="@dimen/touch" android:layout_height="@dimen/touch"
-            android:background="?android:attr/selectableItemBackgroundBorderless" android:src="@drawable/ic_settings"
-            android:padding="@dimen/space_medium" android:contentDescription="@string/settings" />
     </LinearLayout>
 
     <uz.talkme.next.presentation.VoiceOrbView android:id="@+id/orb"

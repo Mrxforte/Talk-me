@@ -1,18 +1,13 @@
 package uz.talkme.next.presentation
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.SystemClock
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,15 +21,12 @@ import kotlinx.coroutines.launch
 import uz.talkme.next.R
 import uz.talkme.next.databinding.FragmentChatBinding
 import uz.talkme.next.domain.*
-import java.util.Locale
 
 @AndroidEntryPoint
 class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
     private val binding get() = checkNotNull(_binding)
     private val model: ChatViewModel by viewModels()
-    private var apiKey = ""
-    private var keyDialog: AlertDialog? = null
     private var transcriptVisible = true
     private var wasActive = false
     private val permission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -54,7 +46,6 @@ class ChatFragment : Fragment() {
         }
         binding.micButton.setOnClickListener { if (model.state.value.active) model.microphone() else start() }
         binding.endButton.setOnClickListener { model.stop() }
-        binding.keyButton.setOnClickListener { showKeyDialog(false) }
         binding.transcriptButton.setOnClickListener {
             transcriptVisible = !transcriptVisible
             binding.transcriptScroll.visibility = if (transcriptVisible) View.VISIBLE else View.GONE
@@ -70,44 +61,10 @@ class ChatFragment : Fragment() {
         }
     }
     private fun start() {
-        if (apiKey.isBlank()) { showKeyDialog(true); return }
         if (requireContext().checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             permission.launch(Manifest.permission.RECORD_AUDIO); return
         }
-        model.start(apiKey)
-    }
-    private fun showKeyDialog(startAfter: Boolean) {
-        if (keyDialog?.isShowing == true) return
-        model.stop()
-        val field = EditText(requireContext()).apply {
-            setText(apiKey); hint = getString(R.string.key_hint)
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
-        }
-        val content = LinearLayout(requireContext()).apply {
-            orientation = LinearLayout.VERTICAL
-            val pad = resources.getDimensionPixelSize(R.dimen.space_large)
-            setPadding(pad, pad, pad, pad)
-            addView(TextView(context).apply { setText(R.string.key_note) })
-            addView(TextView(context).apply { text = getString(R.string.api_model, ChatViewModel.MODEL) })
-            addView(field)
-            addView(TextView(context).apply {
-                text = getString(R.string.cost, String.format(Locale.US, "%.4f", model.state.value.estimatedUsd))
-            })
-        }
-        keyDialog = AlertDialog.Builder(requireContext()).setTitle(R.string.version).setView(content)
-            .setNegativeButton(R.string.cancel, null).setPositiveButton(R.string.save, null).create().also { dialog ->
-                dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-                dialog.setOnShowListener {
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val value = field.text.toString().trim()
-                        if (value.isBlank()) { field.error = getString(R.string.key_hint); return@setOnClickListener }
-                        apiKey = value; field.text.clear(); dialog.dismiss()
-                        if (startAfter) start()
-                    }
-                }
-                dialog.show()
-            }
+        model.start()
     }
     private fun render(state: ChatState) {
         val ui = _binding ?: return
@@ -138,6 +95,7 @@ class ChatFragment : Fragment() {
             Issue.RESPONSE -> R.string.response_error
             Issue.TTS -> R.string.tts_error
             Issue.FOCUS -> R.string.focus_error
+            Issue.SETUP -> R.string.setup_error
             })
             ui.details.text = state.diagnostic?.let { diagnostic ->
                 val code = listOf(diagnostic.status, diagnostic.reason).filter { it.isNotBlank() }.distinct().joinToString(" · ")
@@ -172,10 +130,8 @@ class ChatFragment : Fragment() {
         super.onPause()
     }
     override fun onDestroyView() {
-        keyDialog?.dismiss(); keyDialog = null
         binding.orb.animateWhileVisible(false)
         _binding = null
         super.onDestroyView()
     }
-    override fun onDestroy() { apiKey = ""; super.onDestroy() }
 }

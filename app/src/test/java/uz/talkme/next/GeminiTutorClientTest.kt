@@ -11,13 +11,24 @@ import uz.talkme.next.data.GeminiTutorClient
 import uz.talkme.next.domain.*
 
 class GeminiTutorClientTest {
+    @Test fun `missing developer configuration makes no HTTP request`() = runTest {
+        val server = MockWebServer(); server.start()
+        val client = GeminiTutorClient(baseUrl = server.url("").toString().trimEnd('/'))
+        try {
+            assertFalse(client.isConfigured)
+            client.reply("gemini-2.5-flash-lite", listOf(Turn("user", "hello")))
+            fail("Expected setup failure")
+        } catch (e: ChatFailure) { assertEquals(Issue.SETUP, e.issue) }
+        finally { assertEquals(0, server.requestCount); client.close(); server.shutdown() }
+    }
+
     @Test fun `request contains only text and key is a header`() = runTest {
         val server = MockWebServer()
         server.enqueue(MockResponse().setBody("""{"candidates":[{"content":{"parts":[{"text":"Hi!"}]}}],"usageMetadata":{"promptTokenCount":100,"candidatesTokenCount":8}}"""))
         server.start()
-        val client = GeminiTutorClient(baseUrl = server.url("").toString().trimEnd('/'))
+        val client = GeminiTutorClient(apiKey = "test-secret", baseUrl = server.url("").toString().trimEnd('/'))
         try {
-            val reply = client.reply("test-secret", "gemini-2.5-flash-lite", listOf(Turn("user", "hello")))
+            val reply = client.reply("gemini-2.5-flash-lite", listOf(Turn("user", "hello")))
             val request = server.takeRequest()
             assertEquals("test-secret", request.getHeader("x-goog-api-key"))
             assertFalse(request.path!!.contains("test-secret"))
@@ -44,9 +55,9 @@ class GeminiTutorClientTest {
         val server = MockWebServer()
         server.enqueue(MockResponse().setResponseCode(429))
         server.start()
-        val client = GeminiTutorClient(baseUrl = server.url("").toString().trimEnd('/'))
+        val client = GeminiTutorClient(apiKey = "test-secret", baseUrl = server.url("").toString().trimEnd('/'))
         try {
-            client.reply("test", "gemini-2.5-flash-lite", listOf(Turn("user", "hello")))
+            client.reply("gemini-2.5-flash-lite", listOf(Turn("user", "hello")))
             fail("Expected quota failure")
         } catch (e: ChatFailure) { assertEquals(Issue.QUOTA, e.issue) }
         finally { client.close(); server.shutdown() }
@@ -55,9 +66,9 @@ class GeminiTutorClientTest {
         val server = MockWebServer()
         server.enqueue(MockResponse().setResponseCode(404).setBody("""{"error":{"code":404,"status":"NOT_FOUND","message":"Model not found"}}"""))
         server.start()
-        val client = GeminiTutorClient(baseUrl = server.url("").toString().trimEnd('/'))
+        val client = GeminiTutorClient(apiKey = "test-secret", baseUrl = server.url("").toString().trimEnd('/'))
         try {
-            client.reply("test", "gemini-2.5-flash-lite", listOf(Turn("user", "hello")))
+            client.reply("gemini-2.5-flash-lite", listOf(Turn("user", "hello")))
             fail("Expected model failure")
         } catch (e: ChatFailure) {
             assertEquals(Issue.GEMINI_MODEL, e.issue)

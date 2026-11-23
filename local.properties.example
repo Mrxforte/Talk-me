@@ -1,0 +1,3 @@
+# Copy to local.properties on your own development computer. Never commit real credentials.
+# sdk.dir=/absolute/path/to/Android/Sdk
+GEMINI_API_KEY=

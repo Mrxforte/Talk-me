@@ -3,8 +3,8 @@
 ## Completed
 
 - `:app:assembleDebug :app:testDebugUnitTest :app:lintDebug`: **BUILD SUCCESSFUL**.
-- **23 unit/render tests, 0 failures, 0 errors**.
-- Lint: **0 errors**, 16 warnings about newer dependency versions, backup metadata and unused resources.
+- **25 unit/render tests, 0 failures, 0 errors**.
+- Lint: **0 errors**, 28 warnings about newer dependency versions, backup metadata and unused resources.
 - The final development APK compiles Whisper and GGML math targets with `-O3`; generated Ninja flags were inspected. No Android speed benchmark is claimed.
 - Hilt generation, single-destination navigation resources, native CMake compilation and APK packaging succeeded.
 - arm64-v8a and x86_64 libraries are genuine Android 26 ELF binaries built by NDK r27c.
@@ -44,9 +44,9 @@ No Gemini API key was supplied and no paid inference request was made. The API t
 
 ## Debug artifact
 
-Application ID: `com.aistudio.talkme.xkpqvr`; versionCode 3; versionName `2.0.1-whisper`.
-APK bytes: 69245820.
-SHA-256: `2c859a27eead356b407ebb66361e6ff22371e09497e3b422aff562b43cd716d8`.
+Application ID: `com.aistudio.talkme.xkpqvr`; versionCode 4; versionName `2.0.2-whisper`.
+APK bytes: 69235272.
+SHA-256: `fcbf8dac7a5abd8e97b8910a445cb72400c10e11f11aac1d38fce3ec0d699aec`.
 
 Previous main is preserved at `archive/talkme-before-voice-v2-2026-11-24`.
 
@@ -57,3 +57,14 @@ reasons, project/service restrictions, billing prerequisites, bad request payloa
 server failures are distinguished. Raw provider messages and arbitrary secret-like status/reason
 values are excluded from display. Diagnostics survive failure and clear at the next session.
 These tests do not diagnose or validate the user's actual API account or key.
+
+## 2.0.2: no credential-entry flow
+
+The view render asserts there is no editable entry field. The header settings/key button
+and credential modal are removed. Unit tests show that an unconfigured data adapter makes
+no HTTP request and that the ViewModel performs no audio preparation and reports SETUP.
+Presentation/domain APIs no longer pass API keys. The debug build reads developer-local
+configuration; release builds have an empty key by default. No provider connection or
+public gateway is provisioned in this change.
+
+Developer credential present in this verification build: **false**. No secret value is recorded.

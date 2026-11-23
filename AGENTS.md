@@ -27,7 +27,7 @@ voice-conversation screen. The previous product remains on the archive branch li
 - Design B: procedural mint orb, transparent transcripts directly on the background, floating controls.
 - No card/bubble fill, border, shadow or tinted panel behind transcript text.
 - Microphone button starts, mutes/resumes, and interrupts the current reply. End is a separate control.
-- Keep credentials out of code, logs, backups and saved state. The personal testing build uses an in-memory user-entered key.
+- Keep credentials out of code, logs, backups and saved state. The app must never ask the end user for a key. Personal debug builds read a developer key from ignored local.properties or the developer environment; release builds never embed it.
 - Bound repeated text context and answer length; no paid silence streaming. Do not claim a guaranteed hourly cost.
 
 ## Data and history

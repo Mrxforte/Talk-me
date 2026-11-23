@@ -23,11 +23,10 @@ class ChatViewModel @Inject constructor(
     private val conversation = Conversation()
     private var job: Job? = null
     private var generation = 0L
-    private var key = ""
 
-    fun start(apiKey: String) {
+    fun start() {
         stop()
-        key = apiKey
+        if (!tutor.isConfigured) { fail(Issue.SETUP); return }
         conversation.clear()
         mutableState.value = ChatState(phase = Phase.PREPARING, active = true)
         val token = generation
@@ -79,7 +78,7 @@ class ChatViewModel @Inject constructor(
         val token = generation
         job = viewModelScope.launch {
             try {
-                val reply = tutor.reply(key, MODEL, conversation.snapshot())
+                val reply = tutor.reply(MODEL, conversation.snapshot())
                 if (generation != token || !state.value.active) return@launch
                 conversation.addModel(reply.text)
                 mutableState.update { it.copy(
@@ -117,7 +116,6 @@ class ChatViewModel @Inject constructor(
         generation++
         job?.cancel(); job = null
         input.stop(); output.stop()
-        key = ""
         mutableState.update { it.copy(phase = Phase.IDLE, active = false, partial = "", level = 0f, issue = null, diagnostic = null) }
     }
     fun fail(issue: Issue, diagnostic: ApiDiagnostic? = null) {

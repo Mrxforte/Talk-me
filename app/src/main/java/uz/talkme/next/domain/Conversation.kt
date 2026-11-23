@@ -29,7 +29,7 @@ class Conversation(private val maximumCharacters: Int = 6000) {
 enum class Phase { IDLE, PREPARING, LISTENING, TRANSCRIBING, THINKING, SPEAKING, MUTED, ERROR }
 enum class Issue {
     PERMISSION, MODEL, MICROPHONE, NETWORK, AUTH, API_PERMISSION, GEMINI_MODEL,
-    BILLING, REQUEST, SERVER, QUOTA, RESPONSE, TTS, FOCUS
+    BILLING, REQUEST, SERVER, QUOTA, RESPONSE, TTS, FOCUS, SETUP
 }
 data class ApiDiagnostic(val httpCode: Int, val status: String, val reason: String = "")
 data class ChatState(
@@ -49,7 +49,8 @@ data class ChatState(
 data class Reply(val text: String, val inputTokens: Long, val outputTokens: Long)
 class ChatFailure(val issue: Issue, val diagnostic: ApiDiagnostic? = null) : Exception(issue.name)
 interface TutorClient {
-    suspend fun reply(apiKey: String, model: String, history: List<Turn>): Reply
+    val isConfigured: Boolean
+    suspend fun reply(model: String, history: List<Turn>): Reply
     fun close()
 }
 interface SpeechInput {

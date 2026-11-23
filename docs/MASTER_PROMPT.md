@@ -13,7 +13,7 @@ UI: charcoal background; ivory text; restrained mint accents; large procedural v
 clear state labels; plain user and assistant text directly on the background. No cards,
 bubbles, borders, shadows or tinted panels behind transcript text. Three floating controls:
 transcript visibility toggle, central microphone, and end conversation. Header has TalkMe,
-Jonli suhbat, session timer and a small settings icon. API-key setup belongs in a modal.
+Jonli suhbat and a session timer. Never show API-key fields, credential dialogs or a settings control for keys.
 All labels/colors/spacing are Android resources; hit targets are at least 48dp.
 
 Use **open-source local Whisper via whisper.cpp**, replacing Vosk. Pin whisper.cpp v1.7.6
@@ -42,9 +42,7 @@ voice, network loss, authentication/model errors and quota limits. Stop all audi
 requests on pause/end. Ignore late callbacks using session generations. Observe flows with
 viewLifecycleOwner.repeatOnLifecycle and clear the binding in onDestroyView.
 
-For this personal test build, enter the user's own API key inside the app and keep it in
-memory only. Never put credentials in source, saved state, preferences, URLs or logs.
-A public shared-key deployment needs an authenticated rate-limited gateway; STT/TTS stay local.
+For a personal DEBUG build, read a developer credential from ignored local.properties or the developer environment. Do not ask the app user for credentials. Keep credential ownership inside the data adapter, outside presentation/domain APIs. Never commit real credentials or embed them in release builds. A missing configuration must produce a service-not-ready state before audio initialization or requests. A public shared-key deployment needs an authenticated rate-limited gateway; that server must be provisioned separately. STT/TTS stay local.
 
 Verify the actual Android APK, unit tests, native JNI decoding/cancellation, transparent
 layout rendering, resource references and Android lint. Do not claim physical-device,

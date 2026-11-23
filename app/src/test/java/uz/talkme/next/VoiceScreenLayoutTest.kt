@@ -27,6 +27,9 @@ class VoiceScreenLayoutTest {
         val transcript = root.findViewById<ViewGroup>(R.id.transcriptScroll)
         assertNull(transcript.background)
         assertNull(transcript.getChildAt(0).background)
+        fun hasEntryField(view: View): Boolean = view is android.widget.EditText ||
+            (view is ViewGroup && (0 until view.childCount).any { hasEntryField(view.getChildAt(it)) })
+        assertFalse(hasEntryField(root))
         root.findViewById<TextView>(R.id.userText).text = "I want to speak English confidently."
         root.findViewById<TextView>(R.id.assistantText).text = "Of course! What would you like to talk about?"
         root.findViewById<TextView>(R.id.status).setText(R.string.listening)
@@ -39,7 +42,7 @@ class VoiceScreenLayoutTest {
         root.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
             View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY))
         root.layout(0, 0, width, height)
-        for (id in listOf(R.id.micButton, R.id.endButton, R.id.transcriptButton, R.id.keyButton)) {
+        for (id in listOf(R.id.micButton, R.id.endButton, R.id.transcriptButton)) {
             val control = root.findViewById<View>(id)
             assertTrue(control.width >= 48 * density)
             assertTrue(control.height >= 48 * density)

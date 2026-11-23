@@ -24,3 +24,7 @@ compile, tests and lint check the replacement's references and navigation resour
 
 Legacy on-device database/preferences files are not cleared or migrated destructively.
 Git replacement affects source history, not the device's application data directory.
+
+## 2.0.2 credential UI removal
+
+Remove ChatFragment's key-entry dialog, editable credential field and header settings button. Remove presentation-owned key storage and key arguments from TutorClient.reply. Replace these with developer debug configuration in the data adapter. No credential is written to Git. Tests check that the screen contains no editable entry field and that missing configuration performs no audio preparation or HTTP request.

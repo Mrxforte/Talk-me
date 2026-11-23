@@ -94,6 +94,17 @@ class FakeLocalSpeechRepository : SpeechRepository {
     var permissionGranted: Boolean = true
     var startCount: Int = 0
     var cancelCount: Int = 0
+    var manualStartCount: Int = 0
+
+    override fun startManualListening(): Boolean {
+        manualStartCount++
+        return startListening()
+    }
+
+    fun prepareManualTranscript(text: String) {
+        _finalText.value = text
+        _vadState.value = VadState.SPEECH_END
+    }
 
     override fun hasRecordPermission(): Boolean = permissionGranted
 
@@ -273,6 +284,47 @@ class FakeUserPreferencesRepository(
 @OptIn(ExperimentalCoroutinesApi::class)
 class SpeakingConversationCoordinatorTest {
 
+    @Test
+    fun `manual first tap records and second tap sends once without reopening the microphone`() = runTest {
+        val speech = FakeLocalSpeechRepository()
+        val ai = FakeContextAwareAiLearningService()
+        val coordinator = createCoordinator(this, fakeSpeech = speech, fakeAi = ai)
+        coordinator.onMicrophoneButtonTapped()
+        testScheduler.runCurrent()
+        assertTrue(coordinator.uiState.value.isManualRecording)
+        assertFalse(coordinator.uiState.value.isHandsFreeConversationActive)
+        assertEquals(1, speech.manualStartCount)
+        speech.prepareManualTranscript("My name is Alex.")
+        testScheduler.runCurrent()
+        assertEquals(0, ai.callCount.get())
+        assertTrue(coordinator.uiState.value.isListeningOrSpeakingUser)
+        coordinator.onMicrophoneButtonTapped()
+        coordinator.onMicrophoneButtonTapped()
+        advanceUntilIdle()
+        assertEquals(1, ai.callCount.get())
+        assertEquals(1, speech.startCount)
+        assertEquals(ConversationState.IDLE, coordinator.uiState.value.conversationState)
+        assertFalse(coordinator.uiState.value.isManualRecording)
+        coordinator.releaseResources()
+    }
+
+    @Test
+    fun `stopping a queued manual send discards it without sending to Gemini`() = runTest {
+        val speech = FakeLocalSpeechRepository()
+        val ai = FakeContextAwareAiLearningService()
+        val coordinator = createCoordinator(this, fakeSpeech = speech, fakeAi = ai)
+        coordinator.onMicrophoneButtonTapped()
+        testScheduler.runCurrent()
+        speech.prepareManualTranscript("Do not send this.")
+        coordinator.onMicrophoneButtonTapped()
+        coordinator.stopConversation()
+        advanceUntilIdle()
+        assertEquals(0, ai.callCount.get())
+        assertFalse(coordinator.uiState.value.isManualRecording)
+        assertEquals(ConversationState.STOPPED, coordinator.uiState.value.conversationState)
+        coordinator.releaseResources()
+    }
+
     @Before
     fun setUp() {
         TalkMeConversationLogger.isLoggingEnabled = false
@@ -367,8 +419,8 @@ class SpeakingConversationCoordinatorTest {
             speakWelcome = false
         )
 
-        // One tap starts listening
-        coordinator.onMicrophoneButtonTapped()
+        // Explicitly enable the optional automatic conversation API.
+        coordinator.startConversation()
         advanceUntilIdle()
         assertTrue(coordinator.uiState.value.conversationState is ConversationState.LISTENING)
 
@@ -516,8 +568,8 @@ class SpeakingConversationCoordinatorTest {
         val fakeTts = FakeTtsProvider()
         val coordinator = createCoordinator(this, fakeSpeech, fakeAi, fakeTts)
 
-        // Single microphone tap starts the entire 10-turn session
-        coordinator.onMicrophoneButtonTapped()
+        // The automatic API starts the entire 10-turn session; the UI uses manual capture.
+        coordinator.startConversation()
         advanceUntilIdle()
 
         for (turn in 1..10) {

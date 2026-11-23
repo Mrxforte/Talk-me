@@ -1,5 +1,15 @@
 # TalkMe Android Architecture, Code Quality & Clean Architecture Audit Report
 
+## 2026-11-23: Explicit Speaking recording and submission
+
+The microphone's second tap previously stopped the conversation and discarded
+its audio. It now finalizes and submits a manual recording. Capture starts only
+after a learner tap, survives VAD pauses, and returns to idle after tutor playback.
+Pending initialization, permission, cancellation and duplicate-submission paths
+are handled without changing the database or curriculum. See
+[MANUAL_SPEAKING.md](MANUAL_SPEAKING.md) for behavior and verification scope.
+
+
 **Date:** 2026-11-12  
 **Target Platform:** Android (API 24 to 36)  
 **Architecture:** Single-Activity, XML Views, Jetpack Navigation, ViewBinding, Room Database, Hilt DI, Kotlin Coroutines & Flow  

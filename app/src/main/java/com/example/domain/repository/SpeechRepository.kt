@@ -48,6 +48,8 @@ interface SpeechRepository {
     fun hasRecordPermission(): Boolean
     fun setMuted(muted: Boolean)
     fun startListening(): Boolean
+    /** Records the complete turn until the learner explicitly taps Send. */
+    fun startManualListening(): Boolean = startListening()
     fun startLiveListening(): Boolean = startListening()
     fun discardListeningTurn() = cancelListening()
     suspend fun stopListening(): SpeechRecognitionResult

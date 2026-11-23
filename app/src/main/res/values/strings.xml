@@ -646,4 +646,8 @@
     </string-array>
     <string name="speaking_live_start">Jonli suhbatni boshlash</string>
     <string name="speaking_live_stop">Jonli suhbatni tugatish</string>
+    <string name="speaking_manual_start">Ovoz yozish</string>
+    <string name="speaking_manual_send">To‘xtatish va yuborish</string>
+    <string name="speaking_manual_recording_hint">Ovoz yozilmoqda. Tugatgach, yuborish tugmasini bosing.</string>
+    <string name="speaking_manual_ready_hint">Yozuv tayyor. Yuborish uchun mikrofonni bosing.</string>
 </resources>

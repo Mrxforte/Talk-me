@@ -232,6 +232,7 @@ data class ConversationUiState(
     val learnerLevel: String = "A0_A1",
     val conversationState: ConversationState = ConversationState.IDLE,
     val isHandsFreeConversationActive: Boolean = false,
+    val isManualRecording: Boolean = false,
     val isAudioCaptureActuallyRunning: Boolean = false,
     val isMuted: Boolean = false,
     val isKeyboardInputVisible: Boolean = false,

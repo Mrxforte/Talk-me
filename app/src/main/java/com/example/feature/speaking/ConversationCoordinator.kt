@@ -35,7 +35,7 @@ import kotlinx.coroutines.withContext
  * (plus `STOPPED` and `ERROR`)
  *
  * Key Guarantees:
- * - One tap starts automatic hands-free turn-taking; no second microphone tap is required.
+ * - Explicit microphone taps record and submit a manual turn; hands-free mode remains an opt-in API.
  * - Enforces `rawTranscript == displayedUserMessage == geminiStudentUtterance` (Section 3).
  * - Never invents user speech on silence or STT no-match (Tests 6 & 7).
  * - Never injects fabricated AI responses when Gemini fails; preserves the user transcript and offers safe retry (Test 10).
@@ -99,6 +99,7 @@ class ConversationCoordinator(
                     _uiState.update { current ->
                         val updatedConvState = if (
                             sttState == SpeechRecognitionState.PROCESSING_PASS_2 &&
+                            !current.isManualRecording &&
                             (current.conversationState is ConversationState.LISTENING ||
                                 current.conversationState is ConversationState.USER_SPEAKING)
                         ) {
@@ -158,6 +159,7 @@ class ConversationCoordinator(
                             }
                         }
                         VadState.SPEECH_END -> {
+                            if (current.isManualRecording) return@collect
                             TalkMeConversationLogger.logFinalizingStarted(currentListeningTurn)
                             _uiState.update { state ->
                                 state.copy(
@@ -205,6 +207,7 @@ class ConversationCoordinator(
     ) {
         val finishedListeningTurn = expectedTurnId ?: return
         if (!listeningTurnId.compareAndSet(finishedListeningTurn, null)) return
+        _uiState.update { it.copy(isManualRecording = false) }
 
         // Ignore stale STT callback if user already stopped the conversation
         if (_uiState.value.conversationState is ConversationState.STOPPED) {
@@ -380,9 +383,8 @@ class ConversationCoordinator(
     }
 
     /**
-     * ONE TAP starts automatic hands-free conversation (`IDLE -> LISTENING`).
-     * If the user is currently speaking in `USER_SPEAKING`, tapping finalizes the current utterance immediately.
-     * Otherwise tapping while idle in `LISTENING` stops the conversation (`-> STOPPED`).
+     * First tap records a manual turn; the second tap finalizes and submits it.
+     * Tutor playback can be interrupted to record another turn. Processing taps are ignored.
      */
     fun onMicrophoneButtonTapped() {
         val current = _uiState.value
@@ -409,13 +411,28 @@ class ConversationCoordinator(
             is ConversationState.LISTENING -> finalizeCurrentListeningTurnNow()
             is ConversationState.FINALIZING,
             is ConversationState.AI_THINKING -> Unit
-            is ConversationState.AI_SPEAKING -> startConversation()
+            is ConversationState.AI_SPEAKING -> startManualRecording()
             is ConversationState.IDLE,
             is ConversationState.STOPPED,
             is ConversationState.ERROR -> {
-                startConversation()
+                startManualRecording()
             }
         }
+    }
+
+    private fun startManualRecording() {
+        // An explicit recording may intentionally repeat the tutor's last sentence.
+        lastTutorPlayback = null
+        activeTurnId.set(null)
+        activeTtsJob?.cancel()
+        activeTtsJob = null
+        _spokenRange.value = null
+        ttsManager.stop()
+        speechRepository.setMuted(false)
+        _uiState.update {
+            it.copy(isHandsFreeConversationActive = false, isManualRecording = true, lastError = null)
+        }
+        startNextListeningTurn(manual = true)
     }
 
     /**
@@ -450,6 +467,7 @@ class ConversationCoordinator(
         _uiState.update {
             it.copy(
                 isHandsFreeConversationActive = true,
+                isManualRecording = false,
                 provisionalTranscript = "",
                 lastError = null
             )
@@ -466,7 +484,7 @@ class ConversationCoordinator(
         }
     }
 
-    private fun startNextListeningTurn() {
+    private fun startNextListeningTurn(manual: Boolean = false) {
         // Ensure TTS is completely stopped before opening the microphone
         ttsManager.stop()
         speechRepository.discardListeningTurn()
@@ -475,7 +493,7 @@ class ConversationCoordinator(
         listeningTurnId.set(turnId)
         TalkMeConversationLogger.logListeningStarted(turnId)
 
-        val started = speechRepository.startLiveListening()
+        val started = if (manual) speechRepository.startManualListening() else speechRepository.startLiveListening()
         if (!started) {
             listeningTurnId.compareAndSet(turnId, null)
             val err = ConversationError(
@@ -487,6 +505,7 @@ class ConversationCoordinator(
                 it.copy(
                     conversationState = ConversationState.ERROR(err),
                     isHandsFreeConversationActive = false,
+                    isManualRecording = false,
                     isAudioCaptureActuallyRunning = false,
                     lastError = err,
                     statusMessage = err.userMessageUzbek
@@ -515,13 +534,17 @@ class ConversationCoordinator(
      */
     fun finalizeCurrentListeningTurnNow() {
         val currentTurn = listeningTurnId.get() ?: return
+        if (_uiState.value.conversationState !is ConversationState.LISTENING &&
+            _uiState.value.conversationState !is ConversationState.USER_SPEAKING) return
+        _uiState.update {
+            it.copy(
+                conversationState = ConversationState.FINALIZING(currentTurn),
+                isManualRecording = false,
+                statusMessage = "⏳ Nutq yakunlandi, matn aniqlanmoqda..."
+            )
+        }
         scope.launch {
-            _uiState.update {
-                it.copy(
-                    conversationState = ConversationState.FINALIZING(currentTurn),
-                    statusMessage = "⏳ Nutq yakunlandi, matn aniqlanmoqda..."
-                )
-            }
+            if (listeningTurnId.get() != currentTurn) return@launch
             val result = speechRepository.stopListening()
             if (!result.finalizedAutomatically) {
                 handleFinalizedSttResult(result, expectedTurnId = currentTurn)
@@ -553,6 +576,7 @@ class ConversationCoordinator(
             current.copy(
                 conversationState = ConversationState.STOPPED,
                 isHandsFreeConversationActive = false,
+                isManualRecording = false,
                 isAudioCaptureActuallyRunning = false,
                 provisionalTranscript = "",
                 audioAmplitude = 0f,
@@ -1171,6 +1195,7 @@ class ConversationCoordinator(
             it.copy(
                 conversationState = ConversationState.STOPPED,
                 isHandsFreeConversationActive = false,
+                isManualRecording = false,
                 isAudioCaptureActuallyRunning = false,
                 provisionalTranscript = "",
                 audioAmplitude = 0f

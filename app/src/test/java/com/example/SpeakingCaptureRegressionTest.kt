@@ -32,15 +32,24 @@ class SpeakingCaptureRegressionTest {
     fun voiceActivityFinalizesAndPublishesRecordedWav() = assertCapturedSpeech(live = false)
 
     @Test
-    fun liveUtterancePublishesWavWithoutClosingTheRecorder() = assertCapturedSpeech(live = true)
+    fun liveUtterancePublishesWavAndReleasesRecorderBeforeTutorPlayback() = assertCapturedSpeech(live = true)
 
-    private fun assertCapturedSpeech(live: Boolean) = runBlocking {
+    @Test
+    fun manualUtteranceKeepsRecordingAcrossVadSpeechEndUntilSend() = assertCapturedSpeech(live = false, manual = true)
+
+    private fun assertCapturedSpeech(live: Boolean, manual: Boolean = false) = runBlocking {
         val context = RuntimeEnvironment.getApplication()
         shadowOf(context).grantPermissions(Manifest.permission.RECORD_AUDIO)
         val recorder = AudioRecordManager(context)
         val repository = SpeechRepositoryImpl(recorder, SileroVadDetector())
         val finalized = async(start = CoroutineStart.UNDISPATCHED) {
-            withTimeout(6_000) { repository.utteranceFinalizedEvents.first() }
+            withTimeout(6_000) {
+                if (manual) {
+                    repository.vadState.first { it == com.example.domain.model.VadState.SPEECH_END }
+                    assertEquals(AudioRecordingState.RECORDING, recorder.recordingState.value)
+                    repository.stopListening()
+                } else repository.utteranceFinalizedEvents.first()
+            }
         }
 
         val beginAudio = CountDownLatch(1)
@@ -66,22 +75,29 @@ class SpeakingCaptureRegressionTest {
         })
 
         try {
-            assertTrue(if (live) repository.startLiveListening() else repository.startListening())
+            assertTrue(when {
+                manual -> repository.startManualListening()
+                live -> repository.startLiveListening()
+                else -> repository.startListening()
+            })
             beginAudio.countDown()
 
             val result = finalized.await()
-            assertTrue(result.finalizedAutomatically)
+            assertEquals(!manual, result.finalizedAutomatically)
             assertTrue(result.hadSpeechDetectedByVad)
             assertTrue(result.audioWavBytes.size > 4096)
             assertArrayEquals("RIFF".toByteArray(), result.audioWavBytes.copyOf(4))
             assertArrayEquals(result.audioWavBytes, repository.stopListening().audioWavBytes)
             if (live) {
-                assertEquals(AudioRecordingState.RECORDING, recorder.recordingState.value)
+                // Hands-free turns release capture before Gemini/TTS so the tutor cannot record itself.
+                assertEquals(AudioRecordingState.IDLE, recorder.recordingState.value)
                 repository.discardListeningTurn()
-                assertEquals(AudioRecordingState.RECORDING, recorder.recordingState.value)
+                assertEquals(AudioRecordingState.IDLE, recorder.recordingState.value)
                 assertTrue(repository.startLiveListening())
+                assertEquals(AudioRecordingState.RECORDING, recorder.recordingState.value)
                 val silent = repository.stopListening()
                 assertTrue(silent.audioWavBytes.isEmpty())
+                assertEquals(AudioRecordingState.IDLE, recorder.recordingState.value)
             }
         } finally {
             beginAudio.countDown()

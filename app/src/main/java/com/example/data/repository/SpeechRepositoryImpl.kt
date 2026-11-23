@@ -68,13 +68,14 @@ class SpeechRepositoryImpl @Inject constructor(
     private val captureLock = Any()
     private var capture: Capture? = null
 
-    private class Capture(val keepRecorderOpen: Boolean) {
+    private class Capture(val keepRecorderOpen: Boolean, val manual: Boolean = false) {
         val startedAt = android.os.SystemClock.elapsedRealtime()
         val result = CompletableDeferred<SpeechRecognitionResult>()
         var collector: Job? = null
         var timer: Job? = null
         var finalizer: Job? = null
         var heardSpeech = false
+        var energeticFrames = 0
     }
 
     override fun hasRecordPermission(): Boolean = audioRecordManager.hasRecordPermission()
@@ -87,7 +88,9 @@ class SpeechRepositoryImpl @Inject constructor(
 
     override fun startLiveListening(): Boolean = startListening(keepRecorderOpen = true)
 
-    private fun startListening(keepRecorderOpen: Boolean): Boolean = synchronized(captureLock) {
+    override fun startManualListening(): Boolean = startListening(keepRecorderOpen = false, manual = true)
+
+    private fun startListening(keepRecorderOpen: Boolean, manual: Boolean = false): Boolean = synchronized(captureLock) {
         if (_speechState.value == SpeechRecognitionState.LISTENING_PASS_1) return true
         if (_speechState.value == SpeechRecognitionState.PROCESSING_PASS_2) return false
 
@@ -103,7 +106,7 @@ class SpeechRepositoryImpl @Inject constructor(
             return false
         }
 
-        val turn = Capture(keepRecorderOpen)
+        val turn = Capture(keepRecorderOpen, manual)
         capture = turn
         _speechState.value = SpeechRecognitionState.LISTENING_PASS_1
         turn.collector = scope.launch(start = CoroutineStart.UNDISPATCHED) {
@@ -112,7 +115,11 @@ class SpeechRepositoryImpl @Inject constructor(
                     if (capture !== turn || turn.finalizer != null) return@collect
                     val vadResult = sileroVadDetector.acceptWaveform(chunk)
                     turn.heardSpeech = turn.heardSpeech || vadResult.isSpeechActive
-                    if (vadResult.state == VadState.SPEECH_END) {
+                    if (turn.manual && chunk.isNotEmpty() &&
+                        chunk.sumOf { (it * it).toDouble() } / chunk.size > MANUAL_VOICE_ENERGY_FLOOR) {
+                        turn.energeticFrames++
+                    }
+                    if (!turn.manual && vadResult.state == VadState.SPEECH_END) {
                         finalize(turn, automatically = true, completedSpeech = vadResult.completedSpeechSegment)
                     }
                 }
@@ -126,7 +133,7 @@ class SpeechRepositoryImpl @Inject constructor(
                     _recordingDurationSeconds.value += 1
                     val recorderFailed = audioRecordManager.recordingState.value == AudioRecordingState.ERROR
                     val limitReached = recorderFailed || _recordingDurationSeconds.value >= MAX_CAPTURE_SECONDS
-                    if (limitReached) finalize(turn, automatically = true)
+                    if (limitReached) finalize(turn, automatically = !turn.manual)
                     limitReached
                 }
                 if (timedOut) return@launch
@@ -153,7 +160,8 @@ class SpeechRepositoryImpl @Inject constructor(
         if (turn.finalizer != null) return
         val startedFinalizingAt = android.os.SystemClock.elapsedRealtime()
         val segment = completedSpeech ?: sileroVadDetector.flushActiveSpeechSegment()
-        val hadSpeech = turn.heardSpeech || segment.isNotEmpty()
+        val hadSpeech = turn.heardSpeech || segment.isNotEmpty() ||
+            (turn.manual && turn.energeticFrames >= MIN_MANUAL_VOICE_FRAMES)
         val recorderFailed = audioRecordManager.recordingState.value == AudioRecordingState.ERROR
         _speechState.value = SpeechRecognitionState.PROCESSING_PASS_2
 
@@ -233,5 +241,7 @@ class SpeechRepositoryImpl @Inject constructor(
 
     private companion object {
         const val MAX_CAPTURE_SECONDS = 25
+        const val MANUAL_VOICE_ENERGY_FLOOR = .0001
+        const val MIN_MANUAL_VOICE_FRAMES = 3
     }
 }

@@ -111,6 +111,7 @@ class SpeakingAiViewModel @Inject constructor(
     private var isInitializingSession = false
     private var isSessionReady = false
     private var startWhenReady = false
+    private var manualStartWhenReady = false
 
     init {
         startSessionTimer()
@@ -183,12 +184,16 @@ class SpeakingAiViewModel @Inject constructor(
                     speakWelcome = false
                 )
                 isSessionReady = true
-                if (startWhenReady) startLiveSession()
+                if (manualStartWhenReady) {
+                    manualStartWhenReady = false
+                    coordinator.onMicrophoneButtonTapped()
+                } else if (startWhenReady) startLiveSession()
             } catch (error: kotlinx.coroutines.CancellationException) {
                 throw error
             } catch (error: Exception) {
                 android.util.Log.w("SpeakingAi", "Could not load speaking lesson", error)
                 startWhenReady = false
+                manualStartWhenReady = false
                 coordinator.reportLessonLoadFailure()
             } finally {
                 isInitializingSession = false
@@ -215,11 +220,12 @@ class SpeakingAiViewModel @Inject constructor(
     }
 
     fun onMicrophoneButtonTapped() {
-        if (isSessionReady) coordinator.onMicrophoneButtonTapped() else startLiveSession()
+        if (isSessionReady) coordinator.onMicrophoneButtonTapped() else manualStartWhenReady = true
     }
 
     fun stopConversation() {
         startWhenReady = false
+        manualStartWhenReady = false
         coordinator.stopConversation()
     }
 
@@ -289,16 +295,22 @@ class SpeakingAiFragment : Fragment() {
     private val viewModel: SpeakingAiViewModel by viewModels()
     private lateinit var transcriptAdapter: AiChatTranscriptAdapter
     private var femaleTutor = false
-    private var requestedMicPermission = false
+    private var recordAfterPermissionGrant = false
     private var avatarSpeakingTurnId: String? = null
 
     private val requestAudioPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
+        val shouldRecord = recordAfterPermissionGrant
+        recordAfterPermissionGrant = false
         val requestedTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
         if (isGranted) {
             viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
-            if (isResumed) viewModel.startLiveSession()
+            recordAfterPermissionGrant = shouldRecord
+            if (shouldRecord && isResumed) {
+                recordAfterPermissionGrant = false
+                viewModel.onMicrophoneButtonTapped()
+            }
         } else {
             viewModel.onMicrophonePermissionRevoked()
             if (isAdded && !shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)) {
@@ -399,7 +411,7 @@ class SpeakingAiFragment : Fragment() {
             navigateBackSafely()
         }
 
-        // 3. One-tap Microphone button: starts or stops hands-free conversation
+        // First tap records; the next tap sends the completed audio turn.
         binding.btnMicrophoneSpeak.setOnClickListener {
             val granted = ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -407,13 +419,10 @@ class SpeakingAiFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
             if (granted) {
                 viewModel.onMicrophonePermissionGranted(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
-                if (viewModel.uiState.value.isHandsFreeConversationActive) {
-                    viewModel.stopConversation()
-                } else {
-                    viewModel.startLiveSession()
-                }
+                viewModel.onMicrophoneButtonTapped()
             } else {
                 viewModel.onMicrophonePermissionRevoked()
+                recordAfterPermissionGrant = true
                 requestMicrophone()
             }
         }
@@ -492,7 +501,10 @@ class SpeakingAiFragment : Fragment() {
         binding.waveformUserLive.setAmplitude(if (state.isMuted) 0f else state.audioAmplitude)
 
 
-        val liveText = when (val convState = state.conversationState) {
+        val liveText = if (state.isManualRecording) {
+            getString(if (state.isAudioCaptureActuallyRunning) R.string.speaking_manual_recording_hint
+                else R.string.speaking_manual_ready_hint)
+        } else when (val convState = state.conversationState) {
             is ConversationState.LISTENING -> {
                 if (state.isAudioCaptureActuallyRunning) {
                     if (state.isMuted) {
@@ -532,12 +544,7 @@ class SpeakingAiFragment : Fragment() {
 
     private fun updateMicrophoneVisualState(state: ConversationUiState) {
         binding.btnMicrophoneSpeak.isEnabled = !state.isLoading
-        val microphoneAction = when {
-            state.isHandsFreeConversationActive -> R.string.speaking_live_stop
-            state.isAiSpeaking -> R.string.speaking_mic_answer_now
-            state.isLoading -> R.string.speaking_mic_processing
-            else -> R.string.speaking_live_start
-        }
+        val microphoneAction = microphoneAction(state)
         binding.tvTapToSpeakLabel.setText(microphoneAction)
         binding.btnMicrophoneSpeak.contentDescription = getText(microphoneAction)
         if (state.isListeningOrSpeakingUser) {
@@ -563,6 +570,13 @@ class SpeakingAiFragment : Fragment() {
             binding.btnMicrophoneSpeak.scaleX = 1.0f
             binding.btnMicrophoneSpeak.scaleY = 1.0f
         }
+    }
+
+    private fun microphoneAction(state: ConversationUiState): Int = when {
+        state.isManualRecording || state.isListeningOrSpeakingUser -> R.string.speaking_manual_send
+        state.isLoading -> R.string.speaking_mic_processing
+        state.isAiSpeaking -> R.string.speaking_mic_answer_now
+        else -> R.string.speaking_manual_start
     }
 
     private val optionalUnityAvatar by lazy { UnityAvatarBridge(UnityRuntimeSender()) }
@@ -642,14 +656,16 @@ class SpeakingAiFragment : Fragment() {
                 arguments?.getString(AppConstants.ARG_TOPIC_ID),
                 arguments?.getString(AppConstants.ARG_SECTION_ID)
             )
-            viewModel.startLiveSession()
-        } else if (!requestedMicPermission) {
-            requestMicrophone()
+            if (recordAfterPermissionGrant) {
+                recordAfterPermissionGrant = false
+                viewModel.onMicrophoneButtonTapped()
+            }
+        } else {
+            viewModel.onMicrophonePermissionRevoked()
         }
     }
 
     private fun requestMicrophone() {
-        requestedMicPermission = true
         requestAudioPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
     }
 

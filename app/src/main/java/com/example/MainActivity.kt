@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -82,12 +83,22 @@ class MainActivity : AppCompatActivity() {
             R.id.mistakesFragment,
             R.id.profileFragment
         )
-        navController.addOnDestinationChangedListener { _, destination, arguments ->
-            val isLessonStageSpeaking = destination.id == R.id.speakingAiFragment &&
-                arguments?.getInt(com.example.core.common.AppConstants.ARG_LESSON_FLOW_STAGE) == 5
-            isBottomNavVisible = destination.id in topLevelDestinations && !isLessonStageSpeaking
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val isSpeakingScreen = destination.id == R.id.speakingAiFragment
+            isBottomNavVisible = (destination.id in topLevelDestinations) && !isSpeakingScreen
             binding.bottomNavigation.visibility =
                 if (isBottomNavVisible) View.VISIBLE else View.GONE
+            
+            val navParams = binding.navHostFragment.layoutParams as ConstraintLayout.LayoutParams
+            if (isBottomNavVisible) {
+                navParams.bottomToTop = R.id.bottom_navigation
+                navParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+            } else {
+                navParams.bottomToTop = ConstraintLayout.LayoutParams.UNSET
+                navParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+            }
+            binding.navHostFragment.layoutParams = navParams
+
             applyRootAndBottomBarInsets()
         }
 

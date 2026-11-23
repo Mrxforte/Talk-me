@@ -11,7 +11,9 @@ import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.util.Base64
 import android.util.Log
+import com.example.BuildConfig
 import com.example.domain.repository.TtsProvider
 import com.example.domain.repository.UserPreferencesRepository
 import com.google.firebase.Firebase
@@ -24,11 +26,15 @@ import com.google.firebase.ai.type.Voice
 import com.google.firebase.ai.type.generationConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
+import org.json.JSONArray
+import org.json.JSONObject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +44,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -286,6 +291,10 @@ class NativeTtsProvider @Inject constructor(
         onSpeechCue: ((Int, Int) -> Unit)?
     ): Result<Unit> {
         if (text.isBlank()) return Result.success(Unit)
+        if (languageCode.equals("uz", ignoreCase = true)) {
+            Log.w(TAG, "NativeTtsProvider received Uzbek language request; native system TTS does not support natural Uzbek speech. Aborting system TTS for Uzbek.")
+            return Result.failure(IllegalStateException("Native system TTS does not support Uzbek"))
+        }
         val utteranceId = "talkme_utt_${UUID.randomUUID()}"
         val completionDeferred = CompletableDeferred<Result<Unit>>()
         pendingUtterances[utteranceId] = completionDeferred
@@ -430,14 +439,6 @@ class GeminiTtsProvider @Inject constructor(
         text: String,
         speechRate: Float,
         languageCode: String
-    ): Result<Unit> = speakWithPlaybackCues(text, speechRate, languageCode, null, null)
-
-    internal suspend fun speakWithPlaybackCues(
-        text: String,
-        speechRate: Float,
-        languageCode: String,
-        onAudioLevel: ((Float) -> Unit)?,
-        onSpeechCue: ((Int, Int) -> Unit)?
     ): Result<Unit> {
         val cleanText = text.trim()
         if (cleanText.isEmpty()) return Result.success(Unit)
@@ -456,11 +457,19 @@ class GeminiTtsProvider @Inject constructor(
                 val cacheKey = "${voiceName.lowercase()}_${languageCode.lowercase()}_${cleanText.hashCode()}"
                 val cacheFile = File(ttsCacheDir, "tts_$cacheKey.enc")
 
-                val pcmBytes = if (cacheFile.exists() && cacheFile.length() > 64L) {
-                    readObfuscatedBytes(cacheFile)
+                val cachedPcm = if (cacheFile.exists() && cacheFile.length() > 128L) {
+                    val bytes = readObfuscatedBytes(cacheFile)
+                    if (bytes.size > 128) bytes else {
+                        cacheFile.delete()
+                        ByteArray(0)
+                    }
+                } else ByteArray(0)
+
+                val pcmBytes = if (cachedPcm.isNotEmpty()) {
+                    cachedPcm
                 } else {
                     val generatedPcm = fetchGeminiTtsPcm(cleanText, voiceName, languageCode)
-                    if (generatedPcm.isNotEmpty()) {
+                    if (generatedPcm.size > 128) {
                         writeObfuscatedBytes(cacheFile, generatedPcm)
                     }
                     generatedPcm
@@ -471,21 +480,27 @@ class GeminiTtsProvider @Inject constructor(
                 }
 
                 if (pcmBytes.isEmpty()) {
+                    Log.w(TAG, "Gemini TTS returned empty audio payload for: '$cleanText'")
                     throw IllegalStateException("Gemini TTS returned empty audio payload")
                 }
 
-                playPcmBytes(pcmBytes, speechRate, token, onAudioLevel)
+                playPcmBytes(pcmBytes, speechRate, token)
                 Result.success(Unit)
             } catch (e: CancellationException) {
                 stopAudioTrackOnly()
                 throw e
             } catch (e: Exception) {
-                Log.w(TAG, "Gemini TTS failed ($voiceName); falling back to NativeTtsProvider", e)
+                Log.w(TAG, "Gemini TTS failed ($voiceName)", e)
                 if (activePlaybackToken != token) {
                     return@withContext Result.success(Unit)
                 }
-                nativeFallback.applyVoiceGender(preferredVoiceGender)
-                nativeFallback.speakWithCues(cleanText, speechRate, languageCode, onSpeechCue)
+                if (languageCode.equals("uz", ignoreCase = true)) {
+                    Log.w(TAG, "Uzbek TTS playback failed in GeminiTtsProvider; skipping NativeTtsProvider fallback because System TTS lacks Uzbek support.")
+                    Result.failure(e)
+                } else {
+                    nativeFallback.applyVoiceGender(preferredVoiceGender)
+                    nativeFallback.speakWithLanguage(cleanText, speechRate, languageCode)
+                }
             }
         }
     }
@@ -507,19 +522,148 @@ class GeminiTtsProvider @Inject constructor(
             speechConfig = speechCfg
         }
 
-        val model = Firebase.ai(backend = GenerativeBackend.googleAI()).generativeModel(
-            modelName = GEMINI_TTS_MODEL,
-            generationConfig = config
-        )
+        val candidateModels = listOf(GEMINI_TTS_MODEL, "gemini-2.5-flash", "gemini-2.0-flash")
 
-        val response = withTimeout(30_000L) {
-            model.generateContent(text)
+        // Attempt 1: Standard Firebase.ai (Vertex AI for Firebase)
+        for (modelName in candidateModels) {
+            try {
+                val model = Firebase.ai.generativeModel(
+                    modelName = modelName,
+                    generationConfig = config
+                )
+                val response = withTimeout(20_000L) {
+                    model.generateContent(text)
+                }
+                val parts = response.candidates.firstOrNull()?.content?.parts.orEmpty()
+                for (part in parts) {
+                    if (part is InlineDataPart && part.inlineData.isNotEmpty()) {
+                        Log.i(TAG, "Successfully generated Firebase.ai TTS audio ($modelName, $voiceName)")
+                        return part.inlineData
+                    }
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Firebase.ai TTS attempt failed for $modelName: ${e.message}")
+            }
         }
 
-        val parts = response.candidates.firstOrNull()?.content?.parts.orEmpty()
-        for (part in parts) {
-            if (part is InlineDataPart && part.inlineData.isNotEmpty()) {
-                return part.inlineData
+        // Attempt 2: Firebase.ai with googleAI backend
+        for (modelName in candidateModels) {
+            try {
+                val model = Firebase.ai(backend = GenerativeBackend.googleAI()).generativeModel(
+                    modelName = modelName,
+                    generationConfig = config
+                )
+                val response = withTimeout(20_000L) {
+                    model.generateContent(text)
+                }
+                val parts = response.candidates.firstOrNull()?.content?.parts.orEmpty()
+                for (part in parts) {
+                    if (part is InlineDataPart && part.inlineData.isNotEmpty()) {
+                        Log.i(TAG, "Successfully generated Firebase.ai (googleAI) TTS audio ($modelName, $voiceName)")
+                        return part.inlineData
+                    }
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Firebase.ai (googleAI) TTS attempt failed for $modelName: ${e.message}")
+            }
+        }
+
+        // Attempt 3: Direct Gemini REST API using GEMINI_API_KEY from BuildConfig/local.properties
+        val apiKey = BuildConfig.GEMINI_API_KEY
+        if (apiKey.isNotBlank()) {
+            val restPcm = fetchGeminiTtsViaRestApi(text, voiceName, languageCode, apiKey)
+            if (restPcm.isNotEmpty()) {
+                Log.i(TAG, "Successfully generated Gemini TTS audio via direct REST API fallback ($voiceName)")
+                return restPcm
+            }
+        }
+
+        return ByteArray(0)
+    }
+
+    private fun fetchGeminiTtsViaRestApi(
+        text: String,
+        voiceName: String,
+        languageCode: String,
+        apiKey: String
+    ): ByteArray {
+        if (apiKey.isBlank()) return ByteArray(0)
+        val candidateModels = listOf(GEMINI_TTS_MODEL, "gemini-2.5-flash", "gemini-2.0-flash")
+        for (modelName in candidateModels) {
+            val endpointUrl = "https://generativelanguage.googleapis.com/v1beta/models/$modelName:generateContent?key=$apiKey"
+            try {
+                val jsonBody = JSONObject().apply {
+                    put("contents", JSONArray().apply {
+                        put(JSONObject().apply {
+                            put("parts", JSONArray().apply {
+                                put(JSONObject().apply {
+                                    put("text", text)
+                                })
+                            })
+                        })
+                    })
+                    put("generationConfig", JSONObject().apply {
+                        put("responseModalities", JSONArray().apply {
+                            put("AUDIO")
+                        })
+                        val speechConfigObj = JSONObject().apply {
+                            put("voiceConfig", JSONObject().apply {
+                                put("prebuiltVoiceConfig", JSONObject().apply {
+                                    put("voiceName", voiceName)
+                                })
+                            })
+                            if (!languageCode.equals("uz", ignoreCase = true)) {
+                                put("languageCode", "en-US")
+                            }
+                        }
+                        put("speechConfig", speechConfigObj)
+                    })
+                }
+
+                val url = URL(endpointUrl)
+                val conn = (url.openConnection() as HttpURLConnection).apply {
+                    requestMethod = "POST"
+                    doOutput = true
+                    connectTimeout = 15_000
+                    readTimeout = 25_000
+                    setRequestProperty("Content-Type", "application/json; charset=utf-8")
+                }
+
+                try {
+                    conn.outputStream.use { os ->
+                        os.write(jsonBody.toString().toByteArray(Charsets.UTF_8))
+                    }
+
+                    val responseCode = conn.responseCode
+                    if (responseCode == 200) {
+                        val responseString = conn.inputStream.bufferedReader().use { it.readText() }
+                        val rootObj = JSONObject(responseString)
+                        val candidates = rootObj.optJSONArray("candidates") ?: continue
+                        if (candidates.length() > 0) {
+                            val firstCand = candidates.getJSONObject(0)
+                            val content = firstCand.optJSONObject("content") ?: continue
+                            val parts = content.optJSONArray("parts") ?: continue
+                            for (i in 0 until parts.length()) {
+                                val part = parts.getJSONObject(i)
+                                val inlineData = part.optJSONObject("inlineData")
+                                if (inlineData != null) {
+                                    val base64Data = inlineData.optString("data", "")
+                                    if (base64Data.isNotEmpty()) {
+                                        Log.i(TAG, "Gemini REST API ($modelName) successfully generated PCM audio for $voiceName")
+                                        return Base64.decode(base64Data, Base64.DEFAULT)
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        val errStr = conn.errorStream?.bufferedReader()?.use { it.readText() } ?: ""
+                        Log.w(TAG, "Gemini REST API ($modelName) HTTP error code $responseCode: $errStr")
+                    }
+                } finally {
+                    conn.disconnect()
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Direct Gemini REST API request failed for $modelName", e)
             }
         }
         return ByteArray(0)
@@ -528,8 +672,7 @@ class GeminiTtsProvider @Inject constructor(
     private suspend fun playPcmBytes(
         pcmBytes: ByteArray,
         speechRate: Float,
-        token: String,
-        onAudioLevel: ((Float) -> Unit)?
+        token: String
     ) = withContext(Dispatchers.IO) {
         val clampedRate = speechRate.coerceIn(0.75f, 1.50f)
         val minBuf = AudioTrack.getMinBufferSize(
@@ -559,15 +702,6 @@ class GeminiTtsProvider @Inject constructor(
         activeAudioTrack = track
         requestTransientAudioFocus()
 
-        val levelJob = onAudioLevel?.let { observer ->
-            launch {
-                while (isActive && activePlaybackToken == token) {
-                    val frame = runCatching { track.playbackHeadPosition }.getOrDefault(0)
-                    observer(if (frame > 0) pcmPlaybackLevel(pcmBytes, frame) else 0f)
-                    delay(32L)
-                }
-            }
-        }
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && clampedRate != 1.0f) {
                 runCatching {
@@ -598,8 +732,6 @@ class GeminiTtsProvider @Inject constructor(
                 delay(40L)
             }
         } finally {
-            levelJob?.cancel()
-            onAudioLevel?.invoke(0f)
             if (activeAudioTrack === track) {
                 activeAudioTrack = null
             }
@@ -613,22 +745,6 @@ class GeminiTtsProvider @Inject constructor(
             runCatching { track.release() }
             abandonAudioFocus()
         }
-    }
-
-    private fun pcmPlaybackLevel(bytes: ByteArray, frame: Int): Float {
-        if (frame >= bytes.size / 2) return 0f
-        val offset = frame * 2
-        val end = minOf(bytes.size - 1, offset + PCM_SAMPLE_RATE_HZ / 20 * 2)
-        var energy = 0.0
-        var samples = 0
-        for (index in offset until end step 2) {
-            val pcm = ((bytes[index + 1].toInt() shl 8) or (bytes[index].toInt() and 0xff)).toShort().toInt()
-            energy += pcm.toDouble() * pcm
-            samples++
-        }
-        if (samples == 0) return 0f
-        val rms = kotlin.math.sqrt(energy / samples)
-        return ((rms - 220) / 3_200).toFloat().coerceIn(0f, 1f)
     }
 
     private fun stopAudioTrackOnly() {
@@ -807,9 +923,9 @@ open class TtsManager(
         overrideSpeed: Float? = null,
         languageCode: String = "en",
         overrideVoiceGender: String? = null,
-        onSpeechCue: ((Int, Int) -> Unit)? = null,
+        forceNative: Boolean = false,
         onAudioLevel: ((Float) -> Unit)? = null,
-        forceNative: Boolean = false
+        onSpeechCue: ((Int, Int) -> Unit)? = null
     ): Result<Unit> {
         if (languageCode.equals("uz", ignoreCase = true)) {
             runCatching { Log.d(TAG, "Skipping speakEnglish for Uzbek explanation text: ${text.trim()}") }
@@ -832,12 +948,16 @@ open class TtsManager(
     suspend fun speakUzbek(
         text: String,
         overrideSpeed: Float? = null,
-        overrideVoiceGender: String? = null
+        overrideVoiceGender: String? = null,
+        onAudioLevel: ((Float) -> Unit)? = null,
+        onSpeechCue: ((Int, Int) -> Unit)? = null
     ): Result<Unit> = speakInternal(
         text = text,
         overrideSpeed = overrideSpeed,
         languageCode = "uz",
-        overrideVoiceGender = overrideVoiceGender
+        overrideVoiceGender = overrideVoiceGender,
+        onSpeechCue = onSpeechCue,
+        onAudioLevel = onAudioLevel
     )
 
     /** Native TTS range callbacks drive the Pro avatar as the words are played. */
@@ -851,7 +971,7 @@ open class TtsManager(
         languageCode = languageCode,
         overrideVoiceGender = voiceGender,
         onSpeechCue = onSpeechCue,
-        forceNative = true
+        onAudioLevel = null
     )
 
     private suspend fun speakInternal(
@@ -860,14 +980,14 @@ open class TtsManager(
         languageCode: String = "en",
         overrideVoiceGender: String? = null,
         onSpeechCue: ((Int, Int) -> Unit)? = null,
-        forceNative: Boolean = false,
-        onAudioLevel: ((Float) -> Unit)? = null
+        onAudioLevel: ((Float) -> Unit)? = null,
+        forceNative: Boolean = false
     ): Result<Unit> {
         val cleanText = text.trim()
         if (cleanText.isEmpty()) return Result.success(Unit)
 
         val prefs = preferencesRepository.userPreferencesFlow.first()
-        if (!prefs.soundEnabled && !forceNative) {
+        if (!prefs.soundEnabled && onSpeechCue == null) {
             _playbackState.value = TtsPlaybackState.Idle
             return Result.success(Unit)
         }
@@ -892,7 +1012,10 @@ open class TtsManager(
 
             val speed = overrideSpeed ?: prefs.speechSpeed
             val activeProvider: TtsProvider = if (
-                !forceNative && prefs.preferredTtsProvider.equals("GEMINI", ignoreCase = true)
+                !forceNative && (
+                    languageCode.equals("uz", ignoreCase = true) ||
+                    prefs.preferredTtsProvider.equals("GEMINI", ignoreCase = true)
+                )
             ) {
                 geminiTtsProvider
             } else {
@@ -901,13 +1024,11 @@ open class TtsManager(
 
             _playbackState.value = TtsPlaybackState.Playing(cleanText)
             try {
-                val native = activeProvider as? NativeTtsProvider
-                val result = when {
-                    onSpeechCue != null && native != null ->
-                        native.speakWithCues(cleanText, speed, languageCode, onSpeechCue)
-                    activeProvider is GeminiTtsProvider && (onAudioLevel != null || onSpeechCue != null) ->
-                        activeProvider.speakWithPlaybackCues(cleanText, speed, languageCode, onAudioLevel, onSpeechCue)
-                    else -> activeProvider.speakWithLanguage(cleanText, speed, languageCode)
+                val native = nativeTtsProvider as? NativeTtsProvider
+                val result = if (onSpeechCue != null && native != null) {
+                    native.speakWithCues(cleanText, speed, languageCode, onSpeechCue)
+                } else {
+                    activeProvider.speakWithLanguage(cleanText, speed, languageCode)
                 }
                 if (activeUtteranceToken == token) {
                     result.fold(

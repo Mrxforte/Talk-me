@@ -5,11 +5,12 @@
 - `:app:assembleDebug :app:testDebugUnitTest :app:lintDebug`: **BUILD SUCCESSFUL**.
 - **16 unit/render tests, 0 failures, 0 errors**.
 - Lint: **0 errors**, 16 warnings about newer dependency versions, backup metadata and unused resources.
+- The final development APK compiles Whisper and GGML math targets with `-O3`; generated Ninja flags were inspected. No Android speed benchmark is claimed.
 - Hilt generation, single-destination navigation resources, native CMake compilation and APK packaging succeeded.
 - arm64-v8a and x86_64 libraries are genuine Android 26 ELF binaries built by NDK r27c.
 - Every packaged native ELF LOAD segment has 16,384-byte alignment; no 16 KB library warnings.
 - Packaged Whisper model SHA-256 matches the pinned original artifact. No Vosk/JNA library or model is packaged.
-- APK signature verified with Android build-tools `apksigner verify`.
+- APK signature verified with Android build-tools `apksigner verify`; its development certificate matches the previous TalkMe debug build.
 - Android layout rendered with Robolectric native graphics at 393×852dp. The transcript ScrollView and its content
   have null backgrounds. Controls meet 48dp targets and have content descriptions. This is a view render,
   not a physical-device screenshot or an end-to-end app launch.
@@ -45,6 +46,6 @@ No Gemini API key was supplied and no paid inference request was made. The API t
 
 Application ID: `com.aistudio.talkme.xkpqvr`; versionCode 2; versionName `2.0.0-whisper`.
 APK bytes: 71944588.
-SHA-256: `0f5c9e2f731632eea882577d71800c74f368a372e4280707143fb8e6c3875cf2`.
+SHA-256: `b5cf6415297344dc3e4eb3e9fd498fab563a77a410b8f56bdeefcc573739f27a`.
 
 Previous main is preserved at `archive/talkme-before-voice-v2-2026-11-24`.

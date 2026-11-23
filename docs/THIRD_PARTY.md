@@ -10,7 +10,7 @@
 | Kotlin coroutines | 1.10.2 | Apache 2.0 | https://github.com/Kotlin/kotlinx.coroutines |
 | Gradle wrapper | 9.3.1 | Apache 2.0 | https://github.com/gradle/gradle |
 
-Full license texts: APACHE-2.0.txt and WHISPER-MIT.txt in this directory.
+Full license texts: APACHE-2.0.txt, WHISPER-MIT.txt and OPENAI-WHISPER-MIT.txt in this directory.
 The model and source archive hashes are in tools/model.sha256 and tools/whisper.sha256.
 The native source and model are downloaded at build time, not committed as large binaries.
 No Vosk/JNA runtime is included in this version.

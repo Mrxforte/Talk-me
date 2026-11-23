@@ -1,174 +1,129 @@
-import com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy
-import java.util.Properties
+import java.io.File
+import java.net.URI
+import java.security.MessageDigest
 
 plugins {
-  alias(libs.plugins.android.application)
-  alias(libs.plugins.kotlin.compose)
-  alias(libs.plugins.google.devtools.ksp)
-  alias(libs.plugins.secrets)
-  alias(libs.plugins.google.services)
-  alias(libs.plugins.hilt.android)
+    id("com.android.application")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
-
 android {
-  namespace = "com.example"
-  compileSdk { version = release(36) { minorApiLevel = 1 } }
-
-  defaultConfig {
-    applicationId = "com.aistudio.talkme.xkpqvr"
-    minSdk = 24
-    targetSdk = 36
-    versionCode = 1
-    versionName = "1.0.0"
-
-    buildConfigField("String", "GEMINI_API_KEY", "\"\"")
-
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-  }
-
-  // Do not remove or modify these signingConfigs. They are necessary for building, installing,
-  // and updating Android apps in AI Studio.
-  signingConfigs {
-    create("release") {
-      val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
-      storeFile = file(keystorePath)
-      storePassword = System.getenv("STORE_PASSWORD")
-      keyAlias = "upload"
-      keyPassword = System.getenv("KEY_PASSWORD")
+    namespace = "uz.talkme.next"
+    compileSdk { version = release(36) { minorApiLevel = 1 } }
+    ndkVersion = "27.2.12479018"
+    defaultConfig {
+        applicationId = "com.aistudio.talkme.xkpqvr"
+        minSdk = 26
+        targetSdk = 36
+        versionCode = 2
+        versionName = "2.0.0-whisper"
+        ndk { abiFilters.addAll(listOf("arm64-v8a", "x86_64")) }
+        externalNativeBuild.cmake {
+            arguments.add("-DWHISPER_SOURCE_DIR=${layout.buildDirectory.dir("whisperSource").get().asFile.absolutePath}")
+            arguments.add("-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON")
+            arguments.add("-DANDROID_STL=c++_shared")
+        }
     }
-    create("debugConfig") {
-      storeFile = file("${rootDir}/debug.keystore")
-      storePassword = "android"
-      keyAlias = "androiddebugkey"
-      keyPassword = "android"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-  }
-
-  buildTypes {
-    release {
-      isCrunchPngs = false
-      isMinifyEnabled = false
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      // Do not remove or modify this signingConfig assignment. It is necessary for Android apps in
-      // AI Studio.
-      signingConfig = signingConfigs.getByName("release")
+    buildFeatures { viewBinding = true }
+    testOptions { unitTests.isIncludeAndroidResources = true }
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks")
+            storePassword = System.getenv("STORE_PASSWORD")
+            keyAlias = "upload"
+            keyPassword = System.getenv("KEY_PASSWORD")
+        }
+        create("debugConfig") {
+            storeFile = file("${rootDir}/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
     }
-    debug {
-      val prop = Properties()
-      val localPropFile = rootProject.file("local.properties")
-      if (localPropFile.exists()) {
-        localPropFile.inputStream().use { prop.load(it) }
-      }
-      val geminiApiKey = prop.getProperty("GEMINI_API_KEY") ?: System.getenv("GEMINI_API_KEY") ?: ""
-      buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
-
-      // Do not remove or modify this signingConfig assignment. It is necessary for Android apps in
-      // AI Studio.
-      signingConfig = signingConfigs.getByName("debugConfig")
+    buildTypes {
+        release { signingConfig = signingConfigs.getByName("release") }
+        debug {
+            // Preserve the supplied development certificate; fresh clones use Gradle's debug key.
+            if (rootProject.file("debug.keystore").exists()) signingConfig = signingConfigs.getByName("debugConfig")
+        }
     }
-  }
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-  }
-  buildFeatures {
-    viewBinding = true
-    buildConfig = true
-    compose = true
-  }
-  testOptions { unitTests { isIncludeAndroidResources = true } }
-  dependenciesInfo {
-    includeInApk = false
-    includeInBundle = true
-  }
+    sourceSets.getByName("main").assets.srcDir(layout.buildDirectory.dir("speechAssets").get().asFile)
+    externalNativeBuild { cmake { path = file("src/main/cpp/CMakeLists.txt"); version = "3.22.1" } }
+    androidResources { noCompress.add("bin") }
+    packaging { jniLibs.useLegacyPackaging = false }
 }
 
-secrets {
-  propertiesFileName = ".env"
-  defaultPropertiesFileName = ".env.example"
-  ignoreList.add("FIREBASE_APPCHECK_DEBUG_TOKEN")
+// Both artifacts are pinned and verified. Downloads happen only at build time.
+fun verifyDownload(file: File, expected: String) {
+    val digest = MessageDigest.getInstance("SHA-256")
+    file.inputStream().use { source ->
+        val buffer = ByteArray(65536)
+        while (true) { val size = source.read(buffer); if (size < 0) break; digest.update(buffer, 0, size) }
+    }
+    check(digest.digest().joinToString("") { "%02x".format(it) } == expected) {
+        "SHA-256 mismatch: ${file.name}. Delete app/build/downloads and retry."
+    }
 }
-
-googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.WARN }
+val prepareSpeechModel by tasks.registering {
+    val destination = layout.buildDirectory.file("speechAssets/whisper/ggml-base.en-q5_1.bin")
+    inputs.file(rootProject.file("tools/model.sha256"))
+    outputs.file(destination)
+    doLast {
+        val cached = layout.buildDirectory.file("downloads/ggml-base.en-q5_1.bin").get().asFile
+        cached.parentFile.mkdirs()
+        if (!cached.exists()) URI("https://huggingface.co/ggerganov/whisper.cpp/resolve/c521a4b02f422512d734391fdf08bb08c0862f68/ggml-base.en-q5_1.bin")
+            .toURL().openStream().use { source -> cached.outputStream().use { source.copyTo(it) } }
+        verifyDownload(cached, rootProject.file("tools/model.sha256").readText().trim())
+        destination.get().asFile.parentFile.mkdirs()
+        cached.copyTo(destination.get().asFile, overwrite = true)
+    }
+}
+val prepareWhisperSource by tasks.registering {
+    val destination = layout.buildDirectory.dir("whisperSource")
+    inputs.file(rootProject.file("tools/whisper.sha256"))
+    outputs.dir(destination)
+    doLast {
+        val cached = layout.buildDirectory.file("downloads/whisper-v1.7.6.tar.gz").get().asFile
+        cached.parentFile.mkdirs()
+        if (!cached.exists()) URI("https://github.com/ggml-org/whisper.cpp/archive/refs/tags/v1.7.6.tar.gz")
+            .toURL().openStream().use { source -> cached.outputStream().use { source.copyTo(it) } }
+        verifyDownload(cached, rootProject.file("tools/whisper.sha256").readText().trim())
+        copy {
+            from(tarTree(resources.gzip(cached)))
+            include("whisper.cpp-1.7.6/**")
+            eachFile { path = path.removePrefix("whisper.cpp-1.7.6/") }
+            includeEmptyDirs = false
+            into(destination)
+        }
+    }
+}
+tasks.named("preBuild").configure { dependsOn(prepareSpeechModel, prepareWhisperSource) }
+tasks.configureEach { if (name.startsWith("configureCMake")) dependsOn(prepareWhisperSource) }
 
 dependencies {
-  if (findProject(":unityLibrary") != null) {
-    implementation(project(":unityLibrary"))
-  }
-  implementation(platform(libs.firebase.bom))
-  implementation(libs.androidx.core.ktx)
-  implementation(libs.androidx.appcompat)
-  implementation(libs.google.material)
-  implementation(libs.androidx.constraintlayout)
-  implementation(libs.androidx.fragment.ktx)
-  implementation(libs.androidx.recyclerview)
-  implementation(libs.androidx.navigation.fragment.ktx)
-  implementation(libs.androidx.navigation.ui.ktx)
-  implementation(libs.androidx.lifecycle.runtime.ktx)
-  implementation(libs.androidx.lifecycle.viewmodel.ktx)
-  implementation(libs.androidx.datastore.preferences)
-  implementation(libs.androidx.room.ktx)
-  implementation(libs.androidx.room.runtime)
-  implementation(libs.hilt.android)
-  implementation(libs.firebase.ai)
-  implementation(libs.firebase.appcheck.recaptcha)
-  implementation(libs.firebase.appcheck.debug)
-  implementation(libs.kotlinx.coroutines.android)
-  implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.moshi.kotlin)
-  implementation(libs.okhttp)
-  implementation(libs.logging.interceptor)
-  implementation("com.google.code.gson:gson:2.11.0")
+    implementation("androidx.activity:activity-ktx:1.10.1")
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.9")
+    implementation("com.google.dagger:hilt-android:2.60.1")
+    ksp("com.google.dagger:hilt-compiler:2.60.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.json:json:20240303")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    testImplementation("org.robolectric:robolectric:4.16.1")
+}
 
-  implementation(platform(libs.androidx.compose.bom))
-  implementation(libs.androidx.activity.compose)
-  implementation(libs.androidx.compose.ui)
-  implementation(libs.androidx.compose.ui.graphics)
-  implementation(libs.androidx.compose.ui.tooling.preview)
-  implementation(libs.androidx.compose.material3)
-  implementation(libs.androidx.compose.material.icons.core)
-  implementation(libs.androidx.compose.material.icons.extended)
-
-  implementation(libs.accompanist.permissions)
-  implementation(libs.androidx.lifecycle.runtime.compose)
-  implementation(libs.androidx.lifecycle.viewmodel.compose)
-  implementation(libs.androidx.navigation.compose)
-
-  // Unused template dependencies commented out per optimization rules:
-  // implementation(platform(libs.androidx.compose.bom))
-  // implementation(libs.androidx.activity.compose)
-  // implementation(libs.androidx.camera.camera2)
-  // implementation(libs.androidx.camera.core)
-  // implementation(libs.androidx.camera.lifecycle)
-  // implementation(libs.androidx.camera.view)
-  // implementation(libs.androidx.compose.material.icons.core)
-  // implementation(libs.androidx.compose.material.icons.extended)
-  // implementation(libs.androidx.compose.material3)
-  // implementation(libs.androidx.compose.ui)
-  // implementation(libs.androidx.compose.ui.graphics)
-  // implementation(libs.androidx.compose.ui.tooling.preview)
-  // implementation(libs.coil.compose)
-  // implementation(libs.converter.moshi)
-  // implementation(libs.firebase.firestore)
-  // implementation(libs.firebase.auth)
-  // implementation(libs.androidx.credentials)
-  // implementation(libs.androidx.credentials.play.services)
-  // implementation(libs.googleid)
-  // implementation(libs.logging.interceptor)
-  // implementation(libs.okhttp)
-  // implementation(libs.play.services.location)
-  // implementation(libs.retrofit)
-
-  testImplementation(libs.androidx.core)
-  testImplementation(libs.androidx.junit)
-  testImplementation(libs.junit)
-  testImplementation(libs.kotlinx.coroutines.test)
-  testImplementation(libs.robolectric)
-  androidTestImplementation(libs.androidx.espresso.core)
-  androidTestImplementation(libs.androidx.junit)
-  androidTestImplementation(libs.androidx.runner)
-
-  "ksp"(libs.androidx.room.compiler)
-  "ksp"(libs.moshi.kotlin.codegen)
-  "ksp"(libs.hilt.compiler)
+tasks.withType<org.gradle.api.tasks.testing.Test>().configureEach {
+    systemProperty("robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2")
+    listOf("http.proxyHost", "http.proxyPort", "https.proxyHost", "https.proxyPort", "javax.net.ssl.trustStore").forEach { key ->
+        System.getProperty(key)?.let { systemProperty(key, it) }
+    }
 }

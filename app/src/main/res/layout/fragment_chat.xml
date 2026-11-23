@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/root"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="@dimen/space_large">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="@dimen/touch"
+        android:gravity="center_vertical" android:orientation="horizontal">
+        <ImageView android:layout_width="@dimen/brand_icon" android:layout_height="@dimen/brand_icon"
+            android:src="@drawable/ic_wave" android:importantForAccessibility="no" />
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_marginStart="@dimen/space_medium" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/app_name" android:textColor="@color/text_primary"
+                android:textSize="@dimen/title" android:fontFamily="sans-serif-medium" />
+            <TextView style="@style/Caption" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/live_subtitle" />
+        </LinearLayout>
+        <Chronometer android:id="@+id/timer" style="@style/Caption" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:contentDescription="@string/session_duration" />
+        <ImageButton android:id="@+id/keyButton" android:layout_width="@dimen/touch" android:layout_height="@dimen/touch"
+            android:background="?android:attr/selectableItemBackgroundBorderless" android:src="@drawable/ic_settings"
+            android:padding="@dimen/space_medium" android:contentDescription="@string/settings" />
+    </LinearLayout>
+
+    <uz.talkme.next.presentation.VoiceOrbView android:id="@+id/orb"
+        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:minHeight="@dimen/stage_min" android:importantForAccessibility="no" />
+    <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="@color/text_primary" android:textSize="@dimen/status_size" android:fontFamily="sans-serif-medium"
+        android:gravity="center" android:accessibilityLiveRegion="polite" android:text="@string/idle" />
+    <TextView style="@style/Caption" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="center" android:text="@string/partner" android:layout_marginTop="@dimen/space_small" />
+    <TextView android:id="@+id/details" style="@style/Caption" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:textColor="@color/danger" android:gravity="center"
+        android:visibility="gone" android:layout_marginTop="@dimen/space_small" />
+
+    <!-- Deliberately transparent: no card, bubble, fill, stroke, shadow, or tinted panel. -->
+    <ScrollView android:id="@+id/transcriptScroll" android:layout_width="match_parent"
+        android:layout_height="0dp" android:layout_weight="0.62" android:minHeight="@dimen/transcript_min"
+        android:layout_marginTop="@dimen/space_large" android:fillViewport="true" android:overScrollMode="never"
+        android:scrollbars="none">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center_vertical" android:orientation="vertical">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="@string/you" android:textSize="@dimen/label" android:textColor="@color/text_secondary"
+                android:letterSpacing="0.15" />
+            <TextView android:id="@+id/userText" style="@style/Body" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_small"
+                android:text="@string/empty_user" android:textIsSelectable="true" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_large" android:text="@string/assistant"
+                android:textSize="@dimen/label" android:textColor="@color/accent" android:letterSpacing="0.15" />
+            <TextView android:id="@+id/assistantText" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small" android:text="@string/empty_assistant"
+                android:textColor="@color/text_primary" android:textSize="@dimen/reply"
+                android:lineSpacingExtra="@dimen/space_tiny" android:textIsSelectable="true" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView style="@style/Caption" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_medium" android:text="@string/quiet_hint" android:gravity="center" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_large" android:orientation="horizontal" android:gravity="center_vertical">
+        <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+        <ImageButton android:id="@+id/transcriptButton" android:layout_width="@dimen/touch" android:layout_height="@dimen/touch"
+            android:padding="@dimen/space_medium" android:background="@drawable/control_surface"
+            android:src="@drawable/ic_transcript" android:contentDescription="@string/hide_transcript" />
+        <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+        <ImageButton android:id="@+id/micButton" android:layout_width="@dimen/control_main" android:layout_height="@dimen/control_main"
+            android:padding="@dimen/control_main_padding" android:background="@drawable/control_mic"
+            android:src="@drawable/ic_mic" android:contentDescription="@string/start" />
+        <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+        <ImageButton android:id="@+id/endButton" android:layout_width="@dimen/touch" android:layout_height="@dimen/touch"
+            android:padding="@dimen/space_medium" android:background="@drawable/control_end"
+            android:src="@drawable/ic_end" android:contentDescription="@string/end" android:enabled="false" />
+        <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+    </LinearLayout>
+    <TextView android:id="@+id/actionLabel" style="@style/Caption" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="@dimen/space_medium"
+        android:gravity="center" android:text="@string/begin" />
+</LinearLayout>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/pro_voice_card" />
-    <stroke android:width="@dimen/pro_voice_border" android:color="@color/pro_voice_mint" />
-    <corners android:radius="@dimen/pro_voice_card_radius" />
-</shape>

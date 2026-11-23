@@ -1,90 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Spacing -->
-    <dimen name="spacing_xxs">2dp</dimen>
-    <dimen name="spacing_xs">4dp</dimen>
-    <dimen name="spacing_small">8dp</dimen>
-    <dimen name="spacing_medium">16dp</dimen>
-    <dimen name="spacing_large">24dp</dimen>
-    <dimen name="spacing_xl">32dp</dimen>
-    <dimen name="spacing_xxl">48dp</dimen>
-
-    <!-- Corner Radii -->
-    <dimen name="radius_small">8dp</dimen>
-    <dimen name="radius_medium">12dp</dimen>
-    <dimen name="radius_card_medium">16dp</dimen>
-    <dimen name="radius_card_large">24dp</dimen>
-    <dimen name="radius_pill">999dp</dimen>
-
-    <!-- Elevations & Strokes -->
-    <dimen name="elevation_none">0dp</dimen>
-    <dimen name="elevation_small">2dp</dimen>
-    <dimen name="elevation_card">4dp</dimen>
-    <dimen name="elevation_hero">8dp</dimen>
-    <dimen name="stroke_thin">1dp</dimen>
-    <dimen name="stroke_medium">2dp</dimen>
-
-    <!-- Typography -->
-    <dimen name="text_size_caption">12sp</dimen>
-    <dimen name="text_size_body_small">13sp</dimen>
-    <dimen name="text_size_body">16sp</dimen>
-    <dimen name="text_size_medium">16sp</dimen>
-    <dimen name="text_size_subtitle">17sp</dimen>
-    <dimen name="text_size_title">20sp</dimen>
-    <dimen name="text_size_heading">24sp</dimen>
-    <dimen name="text_size_display">30sp</dimen>
-    <dimen name="text_size_flip_word">32sp</dimen>
-
-    <!-- Component Sizes -->
-    <dimen name="touch_target_min">48dp</dimen>
-    <dimen name="locked_lesson_card_min_height">140dp</dimen>
-    <dimen name="locked_lesson_art_height">76dp</dimen>
-    <dimen name="button_height_primary">54dp</dimen>
-    <dimen name="avatar_size_small">40dp</dimen>
-    <dimen name="avatar_size_medium">56dp</dimen>
-    <dimen name="avatar_size_large">80dp</dimen>
-    <dimen name="icon_size_small">20dp</dimen>
-    <dimen name="icon_size_medium">24dp</dimen>
-    <dimen name="icon_size_large">36dp</dimen>
-    <dimen name="icon_size_xl">56dp</dimen>
-    <dimen name="progress_height_small">6dp</dimen>
-    <dimen name="progress_height_medium">10dp</dimen>
-    <dimen name="flip_card_height">430dp</dimen>
-    <dimen name="chart_height">260dp</dimen>
-
-    <!-- Reusable card, navigation, and compact control scale. -->
-    <dimen name="spacing_card_inset">20dp</dimen>
-    <dimen name="spacing_section_gap">24dp</dimen>
-    <dimen name="spacing_nav_item">8dp</dimen>
-    <dimen name="radius_card_compact">14dp</dimen>
-    <dimen name="radius_nav_indicator">16dp</dimen>
-    <dimen name="radius_button">14dp</dimen>
-    <dimen name="text_size_overline">11sp</dimen>
-    <dimen name="text_size_button">15sp</dimen>
-    <dimen name="text_size_hero">28sp</dimen>
-    <dimen name="button_height_compact">48dp</dimen>
-    <dimen name="vocab_card_art_height">168dp</dimen>
-    <dimen name="vocab_lock_medallion_size">58dp</dimen>
-    <dimen name="vocab_lock_icon_size">28dp</dimen>
-    <dimen name="vocab_badge_min_size">26dp</dimen>
-    <dimen name="nav_item_min_height">48dp</dimen>
-    <dimen name="nav_item_min_width">48dp</dimen>
-    <dimen name="stroke_card">1dp</dimen>
-    <dimen name="locked_curriculum_card_height">158dp</dimen>
-    <dimen name="curriculum_lock_size">112dp</dimen>
-    <dimen name="curriculum_art_height">126dp</dimen>
-
-
-    <dimen name="pro_voice_zero">0dp</dimen>
-    <dimen name="pro_voice_border">1dp</dimen>
-    <dimen name="pro_voice_card_radius">20dp</dimen>
-    <dimen name="pro_voice_control">78dp</dimen>
-    <dimen name="pro_voice_icon">30dp</dimen>
-    <dimen name="pro_voice_fade">105dp</dimen>
-    <dimen name="pro_voice_wave_width">196dp</dimen>
-    <dimen name="pro_voice_wave_height">42dp</dimen>
-    <dimen name="pro_voice_title">17sp</dimen>
-    <dimen name="pro_voice_passage">20sp</dimen>
-    <dimen name="speaking_tutor_stage_height">240dp</dimen>
-    <dimen name="speaking_tutor_control_size">48dp</dimen>
+    <dimen name="space_small">8dp</dimen>
+    <dimen name="space_medium">16dp</dimen>
+    <dimen name="space_large">24dp</dimen>
+    <dimen name="touch">56dp</dimen>
+    <dimen name="radius">24dp</dimen>
+    <dimen name="title">26sp</dimen>
+    <dimen name="body">17sp</dimen>
+    <dimen name="caption">13sp</dimen>
+    <dimen name="orb">88dp</dimen>
+    <dimen name="avatar_min">120dp</dimen>
+    <dimen name="space_tiny">4dp</dimen>
+    <dimen name="control_main">76dp</dimen>
+    <dimen name="icon">24dp</dimen>
+    <dimen name="brand_icon">28dp</dimen>
+    <dimen name="control_main_padding">22dp</dimen>
+    <dimen name="stage_min">180dp</dimen>
+    <dimen name="transcript_min">92dp</dimen>
+    <dimen name="label">11sp</dimen>
+    <dimen name="reply">20sp</dimen>
+    <dimen name="status_size">24sp</dimen>
 </resources>

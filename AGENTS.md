@@ -1,57 +1,45 @@
-# TalkMe Android — Repository Instructions for AI Agents & Engineers
+# TalkMe Android — Voice v2
 
-Welcome to the TalkMe Android project. All engineers, AI coding agents, and automated workflows operating in this repository must adhere strictly to these rules.
+The user authorized replacing the previous learning application with one economical
+voice-conversation screen. The previous product remains on the archive branch linked in README.
 
----
+## Stack and architecture
 
-## 1. Core Architecture & Stack Rules
-- **UI Framework:** Android XML Views with ViewBinding.
-- **Single Activity Architecture:** `MainActivity.kt` is the sole application Activity host. Feature destinations are Jetpack Fragments managed by `res/navigation/nav_graph.xml`.
-- **Do Not Migrate to Jetpack Compose:** Do NOT convert existing XML screens to Jetpack Compose unless explicitly instructed by the user.
-- **Clean Architecture Boundaries:**
-  - `presentation`: Activities, Fragments, Adapters, ViewModels, and UI state models (`UiState`).
-  - `domain`: Pure Kotlin business logic, domain models, and repository contracts. Zero dependencies on UI or Data/Room/Retrofit.
-  - `data`: Repository implementations, local Room database, DAOs, and network sources.
-- **Dependency Injection:** Hilt (`@AndroidEntryPoint`, `@HiltViewModel`, `@Inject`). Do not introduce secondary DI frameworks.
+- Kotlin, XML Views, ViewBinding. Do not introduce Compose without a user request.
+- One MainActivity hosts ChatFragment through `res/navigation/nav_graph.xml`.
+- Use Hilt for dependency injection, ViewModel/StateFlow for state, and pure Kotlin domain contracts.
+- ViewModels must not retain Activities, Fragments, Views, bindings or short-lived Contexts.
+- Learner-facing strings are natural Uzbek Latin; technical code/comments are English.
+- Strings, colors and UI dimensions belong in Android resources. Touch targets are at least 48dp.
 
----
+## Audio and lifecycle
 
-## 2. Memory & Lifecycle Invariants
-- **ViewBinding Cleanup:** Every Fragment **MUST** override `onDestroyView()` and set `_binding = null`.
-- **Flow Observation:** In Fragments, observe Flows strictly inside `viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED)`.
-- **Audio Cleanup:** Audio playback and TTS synthesis must stop on Fragment `onPause()` and ViewModel `onCleared()`.
-- **ViewModels:** ViewModels must never hold references to an `Activity`, `Fragment`, `View`, `ViewBinding`, or short-lived `Context`.
+- Local whisper.cpp is the speech recognizer. Do not silently restore Vosk or paid STT.
+- Whisper is utterance based, not a native incremental streaming decoder. Do not fabricate partial transcripts.
+- Endpoint detection is adaptive energy based; do not advertise it as neural VAD.
+- Stop microphone, requests and playback on pause/end; cancel native decoding using its epoch callback.
+- Release the Whisper context on its single owner worker after pending calls finish.
+- Fragment binding must be nulled in onDestroyView; flows use viewLifecycleOwner.repeatOnLifecycle(STARTED).
 
----
+## Product constraints
 
-## 3. UI Resources & Styling Rules
-- **Strings:** All user-visible labels, errors, and messages must reside in `res/values/strings.xml`. Use formatted string arguments (`%1$s`, `%1$d`).
-- **Colors:** Use semantic color tokens in `res/values/colors.xml` (`color_cosmic_background`, `color_cosmic_card`, `color_neon_cyan`, etc.). Never write raw hex color literals in layout XML or Kotlin code.
-- **Dimensions:** Spacing, radii, and typography must use `@dimen/...` tokens. Touch targets must be at least **48dp x 48dp**.
-- **Learner vs Code Language:** Technical code, architecture, and comments are written in professional English. Learner-facing explanations and instructions are written in natural, accurate Uzbek (Latin script).
+- Keep one conversation screen. No lessons/profile/dashboard/bottom navigation.
+- Design B: procedural mint orb, transparent transcripts directly on the background, floating controls.
+- No card/bubble fill, border, shadow or tinted panel behind transcript text.
+- Microphone button starts, mutes/resumes, and interrupts the current reply. End is a separate control.
+- Keep credentials out of code, logs, backups and saved state. The personal testing build uses an in-memory user-entered key.
+- Bound repeated text context and answer length; no paid silence streaming. Do not claim a guaranteed hourly cost.
 
----
+## Data and history
 
-## 4. Curriculum & Pedagogical Standards
-- **A0–C2 Curriculum:** The app contains 400 lessons across 20 curriculum batches (`CurriculumSeedData` through `CurriculumPartiya18To20SeedData`).
-- **4-Stage Universal Lesson Layout:**
-  1. **Qoida:** Grammatical rule, Uzbek explanation, formula, contrast, interactive visual showcase.
-  2. **Misollar:** 3 highlighted sentences with TTS audio and Uzbek translation.
-  3. **Mashqlar:** 3 interactive fill-in-the-blank questions with live feedback.
-  4. **Wrap-up:** Summary takeaways, core sentence model, and golden completion star.
-- **Data Preservation:** Never delete or reset existing user learning progress, streak days, or database records.
+- Preserve application ID `com.aistudio.talkme.xkpqvr` and increment versionCode for releases.
+- Do not delete or reset existing database or preference files. The voice-only app does not open legacy Room databases.
+- Record intentional product removals in `docs/engineering/REMOVAL_LOG.md` and architecture changes in AUDIT_REPORT.
+- Never rewrite main history or force-push an unrelated branch head. Preserve the prior version before replacement.
 
----
+## Verification
 
-## 5. Performance & Dead Code Removal
-- **RecyclerViews:** All adapters must extend `ListAdapter` with a dedicated `DiffUtil.ItemCallback`. Never use unconstrained `notifyDataSetChanged()`.
-- **Dead Code Safety:** Verify AST references, navigation graph, and manifest before deleting code. Record any removals in `docs/engineering/REMOVAL_LOG.md`.
-- **Evidence-Based Claims:** Never claim performance improvements without reproducible benchmark or test evidence.
-
----
-
-## 6. Mandatory Quality Verification Gates
-Before finishing any turn:
-1. Run `compile_applet` — build must succeed.
-2. Run `gradle :app:testDebugUnitTest` — all unit & Robolectric tests must pass (`BUILD SUCCESSFUL`).
-3. Check `docs/engineering/DEFINITION_OF_DONE.md` compliance.
+- Run `:app:assembleDebug`, `:app:testDebugUnitTest`, `:app:lintDebug` and inspect results.
+- Run compile_applet when exposed by the host; if unavailable, record that limit and the actual Gradle build evidence.
+- Review `docs/engineering/DEFINITION_OF_DONE.md`.
+- Distinguish compile/unit/render/recorded-audio evidence from physical Android microphone and paid Gemini tests.

@@ -1,0 +1,2447 @@
+{
+  "schema_version": 1,
+  "role_play_included": false,
+  "status": "incomplete_draft: requires Uzbek translations, differentiated exercises, CEFR QA and Android integration",
+  "level": "B2",
+  "range": "401–440",
+  "lessons": [
+    {
+      "id": "b2-rebuild-401",
+      "level": "B2",
+      "global_order": 401,
+      "level_order": 1,
+      "title": "B2 argumentation 1",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The main advantage is flexibility.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The main advantage is flexibility."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The main advantage is flexibility."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The main advantage is flexibility.",
+            "options": [
+              "The main advantage is flexibility.",
+              "One drawback is the higher cost."
+            ],
+            "answer": "The main advantage is flexibility."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The main advantage is flexibility.",
+            "expected": "The main advantage is flexibility."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-402",
+      "level": "B2",
+      "global_order": 402,
+      "level_order": 2,
+      "title": "B2 argumentation 2",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-401"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "One drawback is the higher cost.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "One drawback is the higher cost."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "One drawback is the higher cost."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "One drawback is the higher cost.",
+            "options": [
+              "One drawback is the higher cost.",
+              "I strongly believe this is necessary."
+            ],
+            "answer": "One drawback is the higher cost."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "One drawback is the higher cost.",
+            "expected": "One drawback is the higher cost."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-403",
+      "level": "B2",
+      "global_order": 403,
+      "level_order": 3,
+      "title": "B2 argumentation 3",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-402"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I strongly believe this is necessary.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I strongly believe this is necessary."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I strongly believe this is necessary."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I strongly believe this is necessary.",
+            "options": [
+              "I strongly believe this is necessary.",
+              "There is evidence to support this view."
+            ],
+            "answer": "I strongly believe this is necessary."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I strongly believe this is necessary.",
+            "expected": "I strongly believe this is necessary."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-404",
+      "level": "B2",
+      "global_order": 404,
+      "level_order": 4,
+      "title": "B2 argumentation 4",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-403"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "There is evidence to support this view.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "There is evidence to support this view."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "There is evidence to support this view."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "There is evidence to support this view.",
+            "options": [
+              "There is evidence to support this view.",
+              "Nevertheless, we should consider the risks."
+            ],
+            "answer": "There is evidence to support this view."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "There is evidence to support this view.",
+            "expected": "There is evidence to support this view."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-405",
+      "level": "B2",
+      "global_order": 405,
+      "level_order": 5,
+      "title": "B2 argumentation 5",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-404"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Nevertheless, we should consider the risks.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Nevertheless, we should consider the risks."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Nevertheless, we should consider the risks."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Nevertheless, we should consider the risks.",
+            "options": [
+              "Nevertheless, we should consider the risks.",
+              "In contrast, the second approach is simpler."
+            ],
+            "answer": "Nevertheless, we should consider the risks."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Nevertheless, we should consider the risks.",
+            "expected": "Nevertheless, we should consider the risks."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-406",
+      "level": "B2",
+      "global_order": 406,
+      "level_order": 6,
+      "title": "B2 argumentation 6",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-405"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "In contrast, the second approach is simpler.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "In contrast, the second approach is simpler."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "In contrast, the second approach is simpler."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "In contrast, the second approach is simpler.",
+            "options": [
+              "In contrast, the second approach is simpler.",
+              "The results depend on several factors."
+            ],
+            "answer": "In contrast, the second approach is simpler."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "In contrast, the second approach is simpler.",
+            "expected": "In contrast, the second approach is simpler."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-407",
+      "level": "B2",
+      "global_order": 407,
+      "level_order": 7,
+      "title": "B2 argumentation 7",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-406"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The results depend on several factors.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The results depend on several factors."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The results depend on several factors."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The results depend on several factors.",
+            "options": [
+              "The results depend on several factors.",
+              "This raises an important question."
+            ],
+            "answer": "The results depend on several factors."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The results depend on several factors.",
+            "expected": "The results depend on several factors."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-408",
+      "level": "B2",
+      "global_order": 408,
+      "level_order": 8,
+      "title": "B2 argumentation 8",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-407"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "This raises an important question.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "This raises an important question."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "This raises an important question."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "This raises an important question.",
+            "options": [
+              "This raises an important question.",
+              "We need to weigh the benefits and costs."
+            ],
+            "answer": "This raises an important question."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "This raises an important question.",
+            "expected": "This raises an important question."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-409",
+      "level": "B2",
+      "global_order": 409,
+      "level_order": 9,
+      "title": "B2 argumentation 9",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-408"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "We need to weigh the benefits and costs.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "We need to weigh the benefits and costs."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "We need to weigh the benefits and costs."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "We need to weigh the benefits and costs.",
+            "options": [
+              "We need to weigh the benefits and costs.",
+              "Overall, the proposal seems reasonable."
+            ],
+            "answer": "We need to weigh the benefits and costs."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We need to weigh the benefits and costs.",
+            "expected": "We need to weigh the benefits and costs."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-410",
+      "level": "B2",
+      "global_order": 410,
+      "level_order": 10,
+      "title": "B2 argumentation 10",
+      "grammar_focus": "B2 argumentation",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-409"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Dalil keltirishda fikr, sabab, misol va xulosani mantiqan bog‘lash muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Overall, the proposal seems reasonable.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Overall, the proposal seems reasonable."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Overall, the proposal seems reasonable."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Overall, the proposal seems reasonable.",
+            "options": [
+              "Overall, the proposal seems reasonable.",
+              "The main advantage is flexibility."
+            ],
+            "answer": "Overall, the proposal seems reasonable."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Overall, the proposal seems reasonable.",
+            "expected": "Overall, the proposal seems reasonable."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 argumentation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-411",
+      "level": "B2",
+      "global_order": 411,
+      "level_order": 11,
+      "title": "B2 work and society 1",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-410"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Remote work has changed many routines.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Remote work has changed many routines."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Remote work has changed many routines."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Remote work has changed many routines.",
+            "options": [
+              "Remote work has changed many routines.",
+              "The policy is likely to affect everyone."
+            ],
+            "answer": "Remote work has changed many routines."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Remote work has changed many routines.",
+            "expected": "Remote work has changed many routines."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-412",
+      "level": "B2",
+      "global_order": 412,
+      "level_order": 12,
+      "title": "B2 work and society 2",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-411"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The policy is likely to affect everyone.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The policy is likely to affect everyone."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The policy is likely to affect everyone."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The policy is likely to affect everyone.",
+            "options": [
+              "The policy is likely to affect everyone.",
+              "Employees are expected to meet deadlines."
+            ],
+            "answer": "The policy is likely to affect everyone."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The policy is likely to affect everyone.",
+            "expected": "The policy is likely to affect everyone."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-413",
+      "level": "B2",
+      "global_order": 413,
+      "level_order": 13,
+      "title": "B2 work and society 3",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-412"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Employees are expected to meet deadlines.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Employees are expected to meet deadlines."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Employees are expected to meet deadlines."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Employees are expected to meet deadlines.",
+            "options": [
+              "Employees are expected to meet deadlines.",
+              "The company aims to reduce waste."
+            ],
+            "answer": "Employees are expected to meet deadlines."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Employees are expected to meet deadlines.",
+            "expected": "Employees are expected to meet deadlines."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-414",
+      "level": "B2",
+      "global_order": 414,
+      "level_order": 14,
+      "title": "B2 work and society 4",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-413"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The company aims to reduce waste.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The company aims to reduce waste."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The company aims to reduce waste."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The company aims to reduce waste.",
+            "options": [
+              "The company aims to reduce waste.",
+              "Demand has increased significantly."
+            ],
+            "answer": "The company aims to reduce waste."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The company aims to reduce waste.",
+            "expected": "The company aims to reduce waste."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-415",
+      "level": "B2",
+      "global_order": 415,
+      "level_order": 15,
+      "title": "B2 work and society 5",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-414"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Demand has increased significantly.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Demand has increased significantly."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Demand has increased significantly."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Demand has increased significantly.",
+            "options": [
+              "Demand has increased significantly.",
+              "The decision was widely criticised."
+            ],
+            "answer": "Demand has increased significantly."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Demand has increased significantly.",
+            "expected": "Demand has increased significantly."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-416",
+      "level": "B2",
+      "global_order": 416,
+      "level_order": 16,
+      "title": "B2 work and society 6",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-415"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The decision was widely criticised.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The decision was widely criticised."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The decision was widely criticised."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The decision was widely criticised.",
+            "options": [
+              "The decision was widely criticised.",
+              "We should address the underlying issue."
+            ],
+            "answer": "The decision was widely criticised."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The decision was widely criticised.",
+            "expected": "The decision was widely criticised."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-417",
+      "level": "B2",
+      "global_order": 417,
+      "level_order": 17,
+      "title": "B2 work and society 7",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-416"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "We should address the underlying issue.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "We should address the underlying issue."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "We should address the underlying issue."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "We should address the underlying issue.",
+            "options": [
+              "We should address the underlying issue.",
+              "The survey revealed several patterns."
+            ],
+            "answer": "We should address the underlying issue."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We should address the underlying issue.",
+            "expected": "We should address the underlying issue."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-418",
+      "level": "B2",
+      "global_order": 418,
+      "level_order": 18,
+      "title": "B2 work and society 8",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-417"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The survey revealed several patterns.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The survey revealed several patterns."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The survey revealed several patterns."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The survey revealed several patterns.",
+            "options": [
+              "The survey revealed several patterns.",
+              "Access to education remains unequal."
+            ],
+            "answer": "The survey revealed several patterns."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The survey revealed several patterns.",
+            "expected": "The survey revealed several patterns."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-419",
+      "level": "B2",
+      "global_order": 419,
+      "level_order": 19,
+      "title": "B2 work and society 9",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-418"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Access to education remains unequal.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Access to education remains unequal."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Access to education remains unequal."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Access to education remains unequal.",
+            "options": [
+              "Access to education remains unequal.",
+              "The new system could improve efficiency."
+            ],
+            "answer": "Access to education remains unequal."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Access to education remains unequal.",
+            "expected": "Access to education remains unequal."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-420",
+      "level": "B2",
+      "global_order": 420,
+      "level_order": 20,
+      "title": "B2 work and society 10",
+      "grammar_focus": "B2 work and society",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-419"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ijtimoiy va ish mavzularida aniq, xolis va sababli fikr bildirishni o‘rganamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The new system could improve efficiency.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The new system could improve efficiency."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The new system could improve efficiency."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The new system could improve efficiency.",
+            "options": [
+              "The new system could improve efficiency.",
+              "Remote work has changed many routines."
+            ],
+            "answer": "The new system could improve efficiency."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The new system could improve efficiency.",
+            "expected": "The new system could improve efficiency."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 work and society» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-421",
+      "level": "B2",
+      "global_order": 421,
+      "level_order": 21,
+      "title": "B2 complex grammar 1",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-420"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "If I had known, I would have called.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "If I had known, I would have called."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "If I had known, I would have called."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "If I had known, I would have called.",
+            "options": [
+              "If I had known, I would have called.",
+              "I wish I hadn't said that."
+            ],
+            "answer": "If I had known, I would have called."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "If I had known, I would have called.",
+            "expected": "If I had known, I would have called."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-422",
+      "level": "B2",
+      "global_order": 422,
+      "level_order": 22,
+      "title": "B2 complex grammar 2",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-421"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I wish I hadn't said that.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I wish I hadn't said that."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I wish I hadn't said that."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I wish I hadn't said that.",
+            "options": [
+              "I wish I hadn't said that.",
+              "He denied taking the money."
+            ],
+            "answer": "I wish I hadn't said that."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I wish I hadn't said that.",
+            "expected": "I wish I hadn't said that."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-423",
+      "level": "B2",
+      "global_order": 423,
+      "level_order": 23,
+      "title": "B2 complex grammar 3",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-422"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "He denied taking the money.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "He denied taking the money."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "He denied taking the money."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He denied taking the money.",
+            "options": [
+              "He denied taking the money.",
+              "She suggested postponing the meeting."
+            ],
+            "answer": "He denied taking the money."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He denied taking the money.",
+            "expected": "He denied taking the money."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-424",
+      "level": "B2",
+      "global_order": 424,
+      "level_order": 24,
+      "title": "B2 complex grammar 4",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-423"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "She suggested postponing the meeting.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "She suggested postponing the meeting."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "She suggested postponing the meeting."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She suggested postponing the meeting.",
+            "options": [
+              "She suggested postponing the meeting.",
+              "Not only did he apologise, but he also helped."
+            ],
+            "answer": "She suggested postponing the meeting."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She suggested postponing the meeting.",
+            "expected": "She suggested postponing the meeting."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-425",
+      "level": "B2",
+      "global_order": 425,
+      "level_order": 25,
+      "title": "B2 complex grammar 5",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-424"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Not only did he apologise, but he also helped.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Not only did he apologise, but he also helped."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Not only did he apologise, but he also helped."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Not only did he apologise, but he also helped.",
+            "options": [
+              "Not only did he apologise, but he also helped.",
+              "The report is believed to be accurate."
+            ],
+            "answer": "Not only did he apologise, but he also helped."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Not only did he apologise, but he also helped.",
+            "expected": "Not only did he apologise, but he also helped."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-426",
+      "level": "B2",
+      "global_order": 426,
+      "level_order": 26,
+      "title": "B2 complex grammar 6",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-425"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The report is believed to be accurate.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The report is believed to be accurate."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The report is believed to be accurate."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The report is believed to be accurate.",
+            "options": [
+              "The report is believed to be accurate.",
+              "I'd rather you didn't tell anyone."
+            ],
+            "answer": "The report is believed to be accurate."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The report is believed to be accurate.",
+            "expected": "The report is believed to be accurate."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-427",
+      "level": "B2",
+      "global_order": 427,
+      "level_order": 27,
+      "title": "B2 complex grammar 7",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-426"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I'd rather you didn't tell anyone.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I'd rather you didn't tell anyone."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I'd rather you didn't tell anyone."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'd rather you didn't tell anyone.",
+            "options": [
+              "I'd rather you didn't tell anyone.",
+              "By next June, I will have graduated."
+            ],
+            "answer": "I'd rather you didn't tell anyone."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'd rather you didn't tell anyone.",
+            "expected": "I'd rather you didn't tell anyone."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-428",
+      "level": "B2",
+      "global_order": 428,
+      "level_order": 28,
+      "title": "B2 complex grammar 8",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-427"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "By next June, I will have graduated.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "By next June, I will have graduated."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "By next June, I will have graduated."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "By next June, I will have graduated.",
+            "options": [
+              "By next June, I will have graduated.",
+              "She must have forgotten the appointment."
+            ],
+            "answer": "By next June, I will have graduated."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "By next June, I will have graduated.",
+            "expected": "By next June, I will have graduated."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-429",
+      "level": "B2",
+      "global_order": 429,
+      "level_order": 29,
+      "title": "B2 complex grammar 9",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-428"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "She must have forgotten the appointment.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "She must have forgotten the appointment."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "She must have forgotten the appointment."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She must have forgotten the appointment.",
+            "options": [
+              "She must have forgotten the appointment.",
+              "The project should have been completed earlier."
+            ],
+            "answer": "She must have forgotten the appointment."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She must have forgotten the appointment.",
+            "expected": "She must have forgotten the appointment."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-430",
+      "level": "B2",
+      "global_order": 430,
+      "level_order": 30,
+      "title": "B2 complex grammar 10",
+      "grammar_focus": "B2 complex grammar",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-429"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Murakkab B2 grammatikasi vaqt, shart, taxmin yoki ta’kid o‘rtasidagi nozik farqlarni ifodalaydi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The project should have been completed earlier.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The project should have been completed earlier."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The project should have been completed earlier."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The project should have been completed earlier.",
+            "options": [
+              "The project should have been completed earlier.",
+              "If I had known, I would have called."
+            ],
+            "answer": "The project should have been completed earlier."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The project should have been completed earlier.",
+            "expected": "The project should have been completed earlier."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 complex grammar» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-431",
+      "level": "B2",
+      "global_order": 431,
+      "level_order": 31,
+      "title": "B2 communication 1",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-430"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Could you clarify your main concern?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Could you clarify your main concern?"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Could you clarify your main concern?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Could you clarify your main concern?",
+            "options": [
+              "Could you clarify your main concern?",
+              "I see your point, but I disagree."
+            ],
+            "answer": "Could you clarify your main concern?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Could you clarify your main concern?",
+            "expected": "Could you clarify your main concern?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-432",
+      "level": "B2",
+      "global_order": 432,
+      "level_order": 32,
+      "title": "B2 communication 2",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-431"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I see your point, but I disagree.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I see your point, but I disagree."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I see your point, but I disagree."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I see your point, but I disagree.",
+            "options": [
+              "I see your point, but I disagree.",
+              "That depends on what you mean."
+            ],
+            "answer": "I see your point, but I disagree."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I see your point, but I disagree.",
+            "expected": "I see your point, but I disagree."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-433",
+      "level": "B2",
+      "global_order": 433,
+      "level_order": 33,
+      "title": "B2 communication 3",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-432"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "That depends on what you mean.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "That depends on what you mean."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "That depends on what you mean."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "That depends on what you mean.",
+            "options": [
+              "That depends on what you mean.",
+              "Would you mind elaborating on that?"
+            ],
+            "answer": "That depends on what you mean."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "That depends on what you mean.",
+            "expected": "That depends on what you mean."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-434",
+      "level": "B2",
+      "global_order": 434,
+      "level_order": 34,
+      "title": "B2 communication 4",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-433"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Would you mind elaborating on that?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Would you mind elaborating on that?"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Would you mind elaborating on that?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Would you mind elaborating on that?",
+            "options": [
+              "Would you mind elaborating on that?",
+              "I'm not entirely convinced by this argument."
+            ],
+            "answer": "Would you mind elaborating on that?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Would you mind elaborating on that?",
+            "expected": "Would you mind elaborating on that?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-435",
+      "level": "B2",
+      "global_order": 435,
+      "level_order": 35,
+      "title": "B2 communication 5",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-434"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I'm not entirely convinced by this argument.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I'm not entirely convinced by this argument."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I'm not entirely convinced by this argument."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'm not entirely convinced by this argument.",
+            "options": [
+              "I'm not entirely convinced by this argument.",
+              "We seem to have reached an agreement."
+            ],
+            "answer": "I'm not entirely convinced by this argument."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'm not entirely convinced by this argument.",
+            "expected": "I'm not entirely convinced by this argument."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-436",
+      "level": "B2",
+      "global_order": 436,
+      "level_order": 36,
+      "title": "B2 communication 6",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-435"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "We seem to have reached an agreement.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "We seem to have reached an agreement."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "We seem to have reached an agreement."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "We seem to have reached an agreement.",
+            "options": [
+              "We seem to have reached an agreement.",
+              "I'd like to draw attention to one issue."
+            ],
+            "answer": "We seem to have reached an agreement."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We seem to have reached an agreement.",
+            "expected": "We seem to have reached an agreement."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-437",
+      "level": "B2",
+      "global_order": 437,
+      "level_order": 37,
+      "title": "B2 communication 7",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-436"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I'd like to draw attention to one issue.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I'd like to draw attention to one issue."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I'd like to draw attention to one issue."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'd like to draw attention to one issue.",
+            "options": [
+              "I'd like to draw attention to one issue.",
+              "From my perspective, the risks are manageable."
+            ],
+            "answer": "I'd like to draw attention to one issue."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'd like to draw attention to one issue.",
+            "expected": "I'd like to draw attention to one issue."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-438",
+      "level": "B2",
+      "global_order": 438,
+      "level_order": 38,
+      "title": "B2 communication 8",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-437"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "From my perspective, the risks are manageable.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "From my perspective, the risks are manageable."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "From my perspective, the risks are manageable."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "From my perspective, the risks are manageable.",
+            "options": [
+              "From my perspective, the risks are manageable.",
+              "Let's consider an alternative solution."
+            ],
+            "answer": "From my perspective, the risks are manageable."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "From my perspective, the risks are manageable.",
+            "expected": "From my perspective, the risks are manageable."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-439",
+      "level": "B2",
+      "global_order": 439,
+      "level_order": 39,
+      "title": "B2 communication 9",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-438"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Let's consider an alternative solution.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Let's consider an alternative solution."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Let's consider an alternative solution."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Let's consider an alternative solution.",
+            "options": [
+              "Let's consider an alternative solution.",
+              "To sum up, we need more evidence."
+            ],
+            "answer": "Let's consider an alternative solution."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Let's consider an alternative solution.",
+            "expected": "Let's consider an alternative solution."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b2-rebuild-440",
+      "level": "B2",
+      "global_order": 440,
+      "level_order": 40,
+      "title": "B2 communication 10",
+      "grammar_focus": "B2 communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b2-rebuild-439"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Munozarada qarshi fikrni hurmat bilan bildirish, aniqlashtirish va xulosa chiqarish muhim.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "To sum up, we need more evidence.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "To sum up, we need more evidence."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "To sum up, we need more evidence."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "To sum up, we need more evidence.",
+            "options": [
+              "To sum up, we need more evidence.",
+              "Could you clarify your main concern?"
+            ],
+            "answer": "To sum up, we need more evidence."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "To sum up, we need more evidence.",
+            "expected": "To sum up, we need more evidence."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B2 communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    }
+  ]
+}

@@ -1,0 +1,2406 @@
+{
+  "schema_version": 1,
+  "level": "B1",
+  "range": "301–400",
+  "status": "outline only, not completed lessons",
+  "lessons": [
+    {
+      "id": "b1-rebuild-301",
+      "level": "B1",
+      "global_order": 301,
+      "level_order": 1,
+      "title": "Past continuous: Meaning and form",
+      "grammar_focus": "Past continuous",
+      "minutes": 8,
+      "prerequisites": [],
+      "stages": {
+        "rule": {
+          "uz": "Past continuous mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past continuous mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-302",
+      "level": "B1",
+      "global_order": 302,
+      "level_order": 2,
+      "title": "Past continuous: Affirmative examples",
+      "grammar_focus": "Past continuous",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-301"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past continuous mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past continuous mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-303",
+      "level": "B1",
+      "global_order": 303,
+      "level_order": 3,
+      "title": "Past continuous: Negatives and questions",
+      "grammar_focus": "Past continuous",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-302"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past continuous mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past continuous mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-304",
+      "level": "B1",
+      "global_order": 304,
+      "level_order": 4,
+      "title": "Past continuous: Real-life application",
+      "grammar_focus": "Past continuous",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-303"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past continuous mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past continuous mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-305",
+      "level": "B1",
+      "global_order": 305,
+      "level_order": 5,
+      "title": "Past perfect: Meaning and form",
+      "grammar_focus": "Past perfect",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-304"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past perfect mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past perfect mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-306",
+      "level": "B1",
+      "global_order": 306,
+      "level_order": 6,
+      "title": "Past perfect: Affirmative examples",
+      "grammar_focus": "Past perfect",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-305"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past perfect mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past perfect mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-307",
+      "level": "B1",
+      "global_order": 307,
+      "level_order": 7,
+      "title": "Past perfect: Negatives and questions",
+      "grammar_focus": "Past perfect",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-306"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past perfect mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past perfect mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-308",
+      "level": "B1",
+      "global_order": 308,
+      "level_order": 8,
+      "title": "Past perfect: Real-life application",
+      "grammar_focus": "Past perfect",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-307"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past perfect mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past perfect mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-309",
+      "level": "B1",
+      "global_order": 309,
+      "level_order": 9,
+      "title": "Used to: Meaning and form",
+      "grammar_focus": "Used to",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-308"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Used to mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Used to mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-310",
+      "level": "B1",
+      "global_order": 310,
+      "level_order": 10,
+      "title": "Used to: Affirmative examples",
+      "grammar_focus": "Used to",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-309"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Used to mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Used to mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-311",
+      "level": "B1",
+      "global_order": 311,
+      "level_order": 11,
+      "title": "Used to: Negatives and questions",
+      "grammar_focus": "Used to",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-310"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Used to mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Used to mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-312",
+      "level": "B1",
+      "global_order": 312,
+      "level_order": 12,
+      "title": "Used to: Real-life application",
+      "grammar_focus": "Used to",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-311"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Used to mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Used to mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-313",
+      "level": "B1",
+      "global_order": 313,
+      "level_order": 13,
+      "title": "Present perfect continuous: Meaning and form",
+      "grammar_focus": "Present perfect continuous",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-312"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present perfect continuous mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Present perfect continuous mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-314",
+      "level": "B1",
+      "global_order": 314,
+      "level_order": 14,
+      "title": "Present perfect continuous: Affirmative examples",
+      "grammar_focus": "Present perfect continuous",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-313"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present perfect continuous mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Present perfect continuous mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-315",
+      "level": "B1",
+      "global_order": 315,
+      "level_order": 15,
+      "title": "Present perfect continuous: Negatives and questions",
+      "grammar_focus": "Present perfect continuous",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-314"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present perfect continuous mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Present perfect continuous mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-316",
+      "level": "B1",
+      "global_order": 316,
+      "level_order": 16,
+      "title": "Present perfect continuous: Real-life application",
+      "grammar_focus": "Present perfect continuous",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-315"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present perfect continuous mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Present perfect continuous mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-317",
+      "level": "B1",
+      "global_order": 317,
+      "level_order": 17,
+      "title": "For and since: Meaning and form",
+      "grammar_focus": "For and since",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-316"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "For and since mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "For and since mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-318",
+      "level": "B1",
+      "global_order": 318,
+      "level_order": 18,
+      "title": "For and since: Affirmative examples",
+      "grammar_focus": "For and since",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-317"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "For and since mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "For and since mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-319",
+      "level": "B1",
+      "global_order": 319,
+      "level_order": 19,
+      "title": "For and since: Negatives and questions",
+      "grammar_focus": "For and since",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-318"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "For and since mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "For and since mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-320",
+      "level": "B1",
+      "global_order": 320,
+      "level_order": 20,
+      "title": "For and since: Real-life application",
+      "grammar_focus": "For and since",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-319"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "For and since mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "For and since mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-321",
+      "level": "B1",
+      "global_order": 321,
+      "level_order": 21,
+      "title": "Future arrangements: Meaning and form",
+      "grammar_focus": "Future arrangements",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-320"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future arrangements mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future arrangements mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-322",
+      "level": "B1",
+      "global_order": 322,
+      "level_order": 22,
+      "title": "Future arrangements: Affirmative examples",
+      "grammar_focus": "Future arrangements",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-321"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future arrangements mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future arrangements mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-323",
+      "level": "B1",
+      "global_order": 323,
+      "level_order": 23,
+      "title": "Future arrangements: Negatives and questions",
+      "grammar_focus": "Future arrangements",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-322"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future arrangements mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future arrangements mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-324",
+      "level": "B1",
+      "global_order": 324,
+      "level_order": 24,
+      "title": "Future arrangements: Real-life application",
+      "grammar_focus": "Future arrangements",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-323"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future arrangements mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future arrangements mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-325",
+      "level": "B1",
+      "global_order": 325,
+      "level_order": 25,
+      "title": "Future possibility: Meaning and form",
+      "grammar_focus": "Future possibility",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-324"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future possibility mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future possibility mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-326",
+      "level": "B1",
+      "global_order": 326,
+      "level_order": 26,
+      "title": "Future possibility: Affirmative examples",
+      "grammar_focus": "Future possibility",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-325"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future possibility mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future possibility mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-327",
+      "level": "B1",
+      "global_order": 327,
+      "level_order": 27,
+      "title": "Future possibility: Negatives and questions",
+      "grammar_focus": "Future possibility",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-326"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future possibility mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future possibility mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-328",
+      "level": "B1",
+      "global_order": 328,
+      "level_order": 28,
+      "title": "Future possibility: Real-life application",
+      "grammar_focus": "Future possibility",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-327"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future possibility mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future possibility mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-329",
+      "level": "B1",
+      "global_order": 329,
+      "level_order": 29,
+      "title": "First conditional: Meaning and form",
+      "grammar_focus": "First conditional",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-328"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "First conditional mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "First conditional mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-330",
+      "level": "B1",
+      "global_order": 330,
+      "level_order": 30,
+      "title": "First conditional: Affirmative examples",
+      "grammar_focus": "First conditional",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-329"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "First conditional mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "First conditional mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-331",
+      "level": "B1",
+      "global_order": 331,
+      "level_order": 31,
+      "title": "First conditional: Negatives and questions",
+      "grammar_focus": "First conditional",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-330"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "First conditional mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "First conditional mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-332",
+      "level": "B1",
+      "global_order": 332,
+      "level_order": 32,
+      "title": "First conditional: Real-life application",
+      "grammar_focus": "First conditional",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-331"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "First conditional mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "First conditional mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-333",
+      "level": "B1",
+      "global_order": 333,
+      "level_order": 33,
+      "title": "Second conditional: Meaning and form",
+      "grammar_focus": "Second conditional",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-332"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Second conditional mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Second conditional mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-334",
+      "level": "B1",
+      "global_order": 334,
+      "level_order": 34,
+      "title": "Second conditional: Affirmative examples",
+      "grammar_focus": "Second conditional",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-333"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Second conditional mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Second conditional mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-335",
+      "level": "B1",
+      "global_order": 335,
+      "level_order": 35,
+      "title": "Second conditional: Negatives and questions",
+      "grammar_focus": "Second conditional",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-334"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Second conditional mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Second conditional mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-336",
+      "level": "B1",
+      "global_order": 336,
+      "level_order": 36,
+      "title": "Second conditional: Real-life application",
+      "grammar_focus": "Second conditional",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-335"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Second conditional mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Second conditional mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-337",
+      "level": "B1",
+      "global_order": 337,
+      "level_order": 37,
+      "title": "Wishes: Meaning and form",
+      "grammar_focus": "Wishes",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-336"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Wishes mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Wishes mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-338",
+      "level": "B1",
+      "global_order": 338,
+      "level_order": 38,
+      "title": "Wishes: Affirmative examples",
+      "grammar_focus": "Wishes",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-337"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Wishes mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Wishes mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-339",
+      "level": "B1",
+      "global_order": 339,
+      "level_order": 39,
+      "title": "Wishes: Negatives and questions",
+      "grammar_focus": "Wishes",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-338"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Wishes mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Wishes mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-340",
+      "level": "B1",
+      "global_order": 340,
+      "level_order": 40,
+      "title": "Wishes: Real-life application",
+      "grammar_focus": "Wishes",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-339"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Wishes mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Wishes mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-341",
+      "level": "B1",
+      "global_order": 341,
+      "level_order": 41,
+      "title": "Modals of advice: Meaning and form",
+      "grammar_focus": "Modals of advice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-340"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of advice mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of advice mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-342",
+      "level": "B1",
+      "global_order": 342,
+      "level_order": 42,
+      "title": "Modals of advice: Affirmative examples",
+      "grammar_focus": "Modals of advice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-341"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of advice mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of advice mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-343",
+      "level": "B1",
+      "global_order": 343,
+      "level_order": 43,
+      "title": "Modals of advice: Negatives and questions",
+      "grammar_focus": "Modals of advice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-342"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of advice mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of advice mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-344",
+      "level": "B1",
+      "global_order": 344,
+      "level_order": 44,
+      "title": "Modals of advice: Real-life application",
+      "grammar_focus": "Modals of advice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-343"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of advice mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of advice mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-345",
+      "level": "B1",
+      "global_order": 345,
+      "level_order": 45,
+      "title": "Modals of obligation: Meaning and form",
+      "grammar_focus": "Modals of obligation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-344"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of obligation mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of obligation mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-346",
+      "level": "B1",
+      "global_order": 346,
+      "level_order": 46,
+      "title": "Modals of obligation: Affirmative examples",
+      "grammar_focus": "Modals of obligation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-345"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of obligation mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of obligation mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-347",
+      "level": "B1",
+      "global_order": 347,
+      "level_order": 47,
+      "title": "Modals of obligation: Negatives and questions",
+      "grammar_focus": "Modals of obligation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-346"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of obligation mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of obligation mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-348",
+      "level": "B1",
+      "global_order": 348,
+      "level_order": 48,
+      "title": "Modals of obligation: Real-life application",
+      "grammar_focus": "Modals of obligation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-347"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of obligation mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of obligation mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-349",
+      "level": "B1",
+      "global_order": 349,
+      "level_order": 49,
+      "title": "Modals of deduction: Meaning and form",
+      "grammar_focus": "Modals of deduction",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-348"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of deduction mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of deduction mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-350",
+      "level": "B1",
+      "global_order": 350,
+      "level_order": 50,
+      "title": "Modals of deduction: Affirmative examples",
+      "grammar_focus": "Modals of deduction",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-349"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of deduction mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of deduction mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-351",
+      "level": "B1",
+      "global_order": 351,
+      "level_order": 51,
+      "title": "Modals of deduction: Negatives and questions",
+      "grammar_focus": "Modals of deduction",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-350"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of deduction mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of deduction mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-352",
+      "level": "B1",
+      "global_order": 352,
+      "level_order": 52,
+      "title": "Modals of deduction: Real-life application",
+      "grammar_focus": "Modals of deduction",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-351"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Modals of deduction mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Modals of deduction mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-353",
+      "level": "B1",
+      "global_order": 353,
+      "level_order": 53,
+      "title": "Present passive: Meaning and form",
+      "grammar_focus": "Present passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-352"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present passive mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Present passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-354",
+      "level": "B1",
+      "global_order": 354,
+      "level_order": 54,
+      "title": "Present passive: Affirmative examples",
+      "grammar_focus": "Present passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-353"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present passive mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Present passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-355",
+      "level": "B1",
+      "global_order": 355,
+      "level_order": 55,
+      "title": "Present passive: Negatives and questions",
+      "grammar_focus": "Present passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-354"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present passive mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Present passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-356",
+      "level": "B1",
+      "global_order": 356,
+      "level_order": 56,
+      "title": "Present passive: Real-life application",
+      "grammar_focus": "Present passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-355"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present passive mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Present passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-357",
+      "level": "B1",
+      "global_order": 357,
+      "level_order": 57,
+      "title": "Past passive: Meaning and form",
+      "grammar_focus": "Past passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-356"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past passive mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-358",
+      "level": "B1",
+      "global_order": 358,
+      "level_order": 58,
+      "title": "Past passive: Affirmative examples",
+      "grammar_focus": "Past passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-357"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past passive mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-359",
+      "level": "B1",
+      "global_order": 359,
+      "level_order": 59,
+      "title": "Past passive: Negatives and questions",
+      "grammar_focus": "Past passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-358"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past passive mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-360",
+      "level": "B1",
+      "global_order": 360,
+      "level_order": 60,
+      "title": "Past passive: Real-life application",
+      "grammar_focus": "Past passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-359"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past passive mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Past passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-361",
+      "level": "B1",
+      "global_order": 361,
+      "level_order": 61,
+      "title": "Future passive: Meaning and form",
+      "grammar_focus": "Future passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-360"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future passive mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-362",
+      "level": "B1",
+      "global_order": 362,
+      "level_order": 62,
+      "title": "Future passive: Affirmative examples",
+      "grammar_focus": "Future passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-361"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future passive mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-363",
+      "level": "B1",
+      "global_order": 363,
+      "level_order": 63,
+      "title": "Future passive: Negatives and questions",
+      "grammar_focus": "Future passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-362"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future passive mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-364",
+      "level": "B1",
+      "global_order": 364,
+      "level_order": 64,
+      "title": "Future passive: Real-life application",
+      "grammar_focus": "Future passive",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-363"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Future passive mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Future passive mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-365",
+      "level": "B1",
+      "global_order": 365,
+      "level_order": 65,
+      "title": "Reported statements: Meaning and form",
+      "grammar_focus": "Reported statements",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-364"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported statements mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported statements mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-366",
+      "level": "B1",
+      "global_order": 366,
+      "level_order": 66,
+      "title": "Reported statements: Affirmative examples",
+      "grammar_focus": "Reported statements",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-365"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported statements mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported statements mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-367",
+      "level": "B1",
+      "global_order": 367,
+      "level_order": 67,
+      "title": "Reported statements: Negatives and questions",
+      "grammar_focus": "Reported statements",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-366"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported statements mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported statements mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-368",
+      "level": "B1",
+      "global_order": 368,
+      "level_order": 68,
+      "title": "Reported statements: Real-life application",
+      "grammar_focus": "Reported statements",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-367"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported statements mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported statements mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-369",
+      "level": "B1",
+      "global_order": 369,
+      "level_order": 69,
+      "title": "Reported questions: Meaning and form",
+      "grammar_focus": "Reported questions",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-368"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported questions mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported questions mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-370",
+      "level": "B1",
+      "global_order": 370,
+      "level_order": 70,
+      "title": "Reported questions: Affirmative examples",
+      "grammar_focus": "Reported questions",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-369"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported questions mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported questions mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-371",
+      "level": "B1",
+      "global_order": 371,
+      "level_order": 71,
+      "title": "Reported questions: Negatives and questions",
+      "grammar_focus": "Reported questions",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-370"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported questions mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported questions mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-372",
+      "level": "B1",
+      "global_order": 372,
+      "level_order": 72,
+      "title": "Reported questions: Real-life application",
+      "grammar_focus": "Reported questions",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-371"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported questions mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported questions mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-373",
+      "level": "B1",
+      "global_order": 373,
+      "level_order": 73,
+      "title": "Reported commands: Meaning and form",
+      "grammar_focus": "Reported commands",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-372"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported commands mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported commands mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-374",
+      "level": "B1",
+      "global_order": 374,
+      "level_order": 74,
+      "title": "Reported commands: Affirmative examples",
+      "grammar_focus": "Reported commands",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-373"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported commands mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported commands mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-375",
+      "level": "B1",
+      "global_order": 375,
+      "level_order": 75,
+      "title": "Reported commands: Negatives and questions",
+      "grammar_focus": "Reported commands",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-374"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported commands mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported commands mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-376",
+      "level": "B1",
+      "global_order": 376,
+      "level_order": 76,
+      "title": "Reported commands: Real-life application",
+      "grammar_focus": "Reported commands",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-375"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Reported commands mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Reported commands mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-377",
+      "level": "B1",
+      "global_order": 377,
+      "level_order": 77,
+      "title": "Relative clauses: Meaning and form",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-376"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Relative clauses mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Relative clauses mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-378",
+      "level": "B1",
+      "global_order": 378,
+      "level_order": 78,
+      "title": "Relative clauses: Affirmative examples",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-377"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Relative clauses mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Relative clauses mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-379",
+      "level": "B1",
+      "global_order": 379,
+      "level_order": 79,
+      "title": "Relative clauses: Negatives and questions",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-378"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Relative clauses mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Relative clauses mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-380",
+      "level": "B1",
+      "global_order": 380,
+      "level_order": 80,
+      "title": "Relative clauses: Real-life application",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-379"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Relative clauses mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Relative clauses mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-381",
+      "level": "B1",
+      "global_order": 381,
+      "level_order": 81,
+      "title": "Relative adverbs: Meaning and form",
+      "grammar_focus": "Relative adverbs",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-380"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Relative adverbs mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Relative adverbs mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-382",
+      "level": "B1",
+      "global_order": 382,
+      "level_order": 82,
+      "title": "Relative adverbs: Affirmative examples",
+      "grammar_focus": "Relative adverbs",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-381"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Relative adverbs mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Relative adverbs mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-383",
+      "level": "B1",
+      "global_order": 383,
+      "level_order": 83,
+      "title": "Relative adverbs: Negatives and questions",
+      "grammar_focus": "Relative adverbs",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-382"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Relative adverbs mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Relative adverbs mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-384",
+      "level": "B1",
+      "global_order": 384,
+      "level_order": 84,
+      "title": "Relative adverbs: Real-life application",
+      "grammar_focus": "Relative adverbs",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-383"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Relative adverbs mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Relative adverbs mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-385",
+      "level": "B1",
+      "global_order": 385,
+      "level_order": 85,
+      "title": "Linking contrast: Meaning and form",
+      "grammar_focus": "Linking contrast",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-384"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Linking contrast mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Linking contrast mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-386",
+      "level": "B1",
+      "global_order": 386,
+      "level_order": 86,
+      "title": "Linking contrast: Affirmative examples",
+      "grammar_focus": "Linking contrast",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-385"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Linking contrast mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Linking contrast mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-387",
+      "level": "B1",
+      "global_order": 387,
+      "level_order": 87,
+      "title": "Linking contrast: Negatives and questions",
+      "grammar_focus": "Linking contrast",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-386"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Linking contrast mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Linking contrast mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-388",
+      "level": "B1",
+      "global_order": 388,
+      "level_order": 88,
+      "title": "Linking contrast: Real-life application",
+      "grammar_focus": "Linking contrast",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-387"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Linking contrast mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Linking contrast mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-389",
+      "level": "B1",
+      "global_order": 389,
+      "level_order": 89,
+      "title": "Linking reasons: Meaning and form",
+      "grammar_focus": "Linking reasons",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-388"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Linking reasons mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Linking reasons mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-390",
+      "level": "B1",
+      "global_order": 390,
+      "level_order": 90,
+      "title": "Linking reasons: Affirmative examples",
+      "grammar_focus": "Linking reasons",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-389"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Linking reasons mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Linking reasons mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-391",
+      "level": "B1",
+      "global_order": 391,
+      "level_order": 91,
+      "title": "Linking reasons: Negatives and questions",
+      "grammar_focus": "Linking reasons",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-390"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Linking reasons mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Linking reasons mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-392",
+      "level": "B1",
+      "global_order": 392,
+      "level_order": 92,
+      "title": "Linking reasons: Real-life application",
+      "grammar_focus": "Linking reasons",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-391"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Linking reasons mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Linking reasons mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-393",
+      "level": "B1",
+      "global_order": 393,
+      "level_order": 93,
+      "title": "Sequencing events: Meaning and form",
+      "grammar_focus": "Sequencing events",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-392"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Sequencing events mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Sequencing events mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-394",
+      "level": "B1",
+      "global_order": 394,
+      "level_order": 94,
+      "title": "Sequencing events: Affirmative examples",
+      "grammar_focus": "Sequencing events",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-393"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Sequencing events mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Sequencing events mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-395",
+      "level": "B1",
+      "global_order": 395,
+      "level_order": 95,
+      "title": "Sequencing events: Negatives and questions",
+      "grammar_focus": "Sequencing events",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-394"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Sequencing events mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Sequencing events mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-396",
+      "level": "B1",
+      "global_order": 396,
+      "level_order": 96,
+      "title": "Sequencing events: Real-life application",
+      "grammar_focus": "Sequencing events",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-395"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Sequencing events mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Sequencing events mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-397",
+      "level": "B1",
+      "global_order": 397,
+      "level_order": 97,
+      "title": "Formal requests: Meaning and form",
+      "grammar_focus": "Formal requests",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-396"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Formal requests mavzusining meaning and form bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Formal requests mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-398",
+      "level": "B1",
+      "global_order": 398,
+      "level_order": 98,
+      "title": "Formal requests: Affirmative examples",
+      "grammar_focus": "Formal requests",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-397"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Formal requests mavzusining affirmative examples bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Formal requests mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-399",
+      "level": "B1",
+      "global_order": 399,
+      "level_order": 99,
+      "title": "Formal requests: Negatives and questions",
+      "grammar_focus": "Formal requests",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-398"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Formal requests mavzusining negatives and questions bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Formal requests mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    },
+    {
+      "id": "b1-rebuild-400",
+      "level": "B1",
+      "global_order": 400,
+      "level_order": 100,
+      "title": "Formal requests: Real-life application",
+      "grammar_focus": "Formal requests",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-399"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Formal requests mavzusining real-life application bosqichi. To‘liq o‘zbekcha qoida hali tahrirda."
+        },
+        "examples": [],
+        "exercises": [],
+        "wrap_up": {
+          "uz": "Formal requests mavzusini mustahkamlash bosqichi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "outline_only_not_a_complete_lesson"
+    }
+  ]
+}

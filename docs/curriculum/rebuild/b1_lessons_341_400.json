@@ -1,0 +1,3669 @@
+{
+  "schema_version": 1,
+  "role_play_included": false,
+  "status": "incomplete_draft: requires Uzbek translations, differentiated exercises, CEFR QA and Android integration",
+  "level": "B1",
+  "range": "341–400",
+  "lessons": [
+    {
+      "id": "b1-rebuild-341",
+      "level": "B1",
+      "global_order": 341,
+      "level_order": 41,
+      "title": "Passive voice 1",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-340"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The room is cleaned daily.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The room is cleaned daily."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The room is cleaned daily."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The room is cleaned daily.",
+            "options": [
+              "The room is cleaned daily.",
+              "The letter was sent yesterday."
+            ],
+            "answer": "The room is cleaned daily."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The room is cleaned daily.",
+            "expected": "The room is cleaned daily."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-342",
+      "level": "B1",
+      "global_order": 342,
+      "level_order": 42,
+      "title": "Passive voice 2",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-341"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The letter was sent yesterday.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The letter was sent yesterday."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The letter was sent yesterday."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The letter was sent yesterday.",
+            "options": [
+              "The letter was sent yesterday.",
+              "The report will be published soon."
+            ],
+            "answer": "The letter was sent yesterday."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The letter was sent yesterday.",
+            "expected": "The letter was sent yesterday."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-343",
+      "level": "B1",
+      "global_order": 343,
+      "level_order": 43,
+      "title": "Passive voice 3",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-342"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The report will be published soon.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The report will be published soon."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The report will be published soon."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The report will be published soon.",
+            "options": [
+              "The report will be published soon.",
+              "The tickets have been sold."
+            ],
+            "answer": "The report will be published soon."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The report will be published soon.",
+            "expected": "The report will be published soon."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-344",
+      "level": "B1",
+      "global_order": 344,
+      "level_order": 44,
+      "title": "Passive voice 4",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-343"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The tickets have been sold.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The tickets have been sold."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The tickets have been sold."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The tickets have been sold.",
+            "options": [
+              "The tickets have been sold.",
+              "The food is being prepared."
+            ],
+            "answer": "The tickets have been sold."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The tickets have been sold.",
+            "expected": "The tickets have been sold."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-345",
+      "level": "B1",
+      "global_order": 345,
+      "level_order": 45,
+      "title": "Passive voice 5",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-344"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The food is being prepared.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The food is being prepared."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The food is being prepared."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The food is being prepared.",
+            "options": [
+              "The food is being prepared.",
+              "The car was being repaired."
+            ],
+            "answer": "The food is being prepared."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The food is being prepared.",
+            "expected": "The food is being prepared."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-346",
+      "level": "B1",
+      "global_order": 346,
+      "level_order": 46,
+      "title": "Passive voice 6",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-345"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The car was being repaired.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The car was being repaired."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The car was being repaired."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The car was being repaired.",
+            "options": [
+              "The car was being repaired.",
+              "This bridge was built in 2000."
+            ],
+            "answer": "The car was being repaired."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The car was being repaired.",
+            "expected": "The car was being repaired."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-347",
+      "level": "B1",
+      "global_order": 347,
+      "level_order": 47,
+      "title": "Passive voice 7",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-346"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "This bridge was built in 2000.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "This bridge was built in 2000."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "This bridge was built in 2000."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "This bridge was built in 2000.",
+            "options": [
+              "This bridge was built in 2000.",
+              "English is spoken here."
+            ],
+            "answer": "This bridge was built in 2000."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "This bridge was built in 2000.",
+            "expected": "This bridge was built in 2000."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-348",
+      "level": "B1",
+      "global_order": 348,
+      "level_order": 48,
+      "title": "Passive voice 8",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-347"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "English is spoken here.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "English is spoken here."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "English is spoken here."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "English is spoken here.",
+            "options": [
+              "English is spoken here.",
+              "The package should be delivered today."
+            ],
+            "answer": "English is spoken here."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "English is spoken here.",
+            "expected": "English is spoken here."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-349",
+      "level": "B1",
+      "global_order": 349,
+      "level_order": 49,
+      "title": "Passive voice 9",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-348"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The package should be delivered today.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The package should be delivered today."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The package should be delivered today."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The package should be delivered today.",
+            "options": [
+              "The package should be delivered today.",
+              "The documents must be signed."
+            ],
+            "answer": "The package should be delivered today."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The package should be delivered today.",
+            "expected": "The package should be delivered today."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-350",
+      "level": "B1",
+      "global_order": 350,
+      "level_order": 50,
+      "title": "Passive voice 10",
+      "grammar_focus": "Passive voice",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-349"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Majhul nisbatda diqqat ishni kim bajarganiga emas, harakatning natijasi yoki obyektiga qaratiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The documents must be signed.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The documents must be signed."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The documents must be signed."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The documents must be signed.",
+            "options": [
+              "The documents must be signed.",
+              "The room is cleaned daily."
+            ],
+            "answer": "The documents must be signed."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The documents must be signed.",
+            "expected": "The documents must be signed."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Passive voice» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-351",
+      "level": "B1",
+      "global_order": 351,
+      "level_order": 51,
+      "title": "Reported speech 1",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-350"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "She said she was tired.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "She said she was tired."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "She said she was tired."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She said she was tired.",
+            "options": [
+              "She said she was tired.",
+              "He told me he needed help."
+            ],
+            "answer": "She said she was tired."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She said she was tired.",
+            "expected": "She said she was tired."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-352",
+      "level": "B1",
+      "global_order": 352,
+      "level_order": 52,
+      "title": "Reported speech 2",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-351"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "He told me he needed help.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "He told me he needed help."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "He told me he needed help."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He told me he needed help.",
+            "options": [
+              "He told me he needed help.",
+              "They said they would arrive late."
+            ],
+            "answer": "He told me he needed help."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He told me he needed help.",
+            "expected": "He told me he needed help."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-353",
+      "level": "B1",
+      "global_order": 353,
+      "level_order": 53,
+      "title": "Reported speech 3",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-352"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "They said they would arrive late.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "They said they would arrive late."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "They said they would arrive late."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "They said they would arrive late.",
+            "options": [
+              "They said they would arrive late.",
+              "She asked if I was ready."
+            ],
+            "answer": "They said they would arrive late."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "They said they would arrive late.",
+            "expected": "They said they would arrive late."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-354",
+      "level": "B1",
+      "global_order": 354,
+      "level_order": 54,
+      "title": "Reported speech 4",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-353"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "She asked if I was ready.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "She asked if I was ready."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "She asked if I was ready."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She asked if I was ready.",
+            "options": [
+              "She asked if I was ready.",
+              "He asked where I lived."
+            ],
+            "answer": "She asked if I was ready."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She asked if I was ready.",
+            "expected": "She asked if I was ready."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-355",
+      "level": "B1",
+      "global_order": 355,
+      "level_order": 55,
+      "title": "Reported speech 5",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-354"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "He asked where I lived.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "He asked where I lived."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "He asked where I lived."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He asked where I lived.",
+            "options": [
+              "He asked where I lived.",
+              "The teacher told us to wait."
+            ],
+            "answer": "He asked where I lived."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He asked where I lived.",
+            "expected": "He asked where I lived."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-356",
+      "level": "B1",
+      "global_order": 356,
+      "level_order": 56,
+      "title": "Reported speech 6",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-355"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The teacher told us to wait.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The teacher told us to wait."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The teacher told us to wait."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The teacher told us to wait.",
+            "options": [
+              "The teacher told us to wait.",
+              "She advised me not to worry."
+            ],
+            "answer": "The teacher told us to wait."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The teacher told us to wait.",
+            "expected": "The teacher told us to wait."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-357",
+      "level": "B1",
+      "global_order": 357,
+      "level_order": 57,
+      "title": "Reported speech 7",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-356"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "She advised me not to worry.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "She advised me not to worry."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "She advised me not to worry."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She advised me not to worry.",
+            "options": [
+              "She advised me not to worry.",
+              "He said he had lost his keys."
+            ],
+            "answer": "She advised me not to worry."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She advised me not to worry.",
+            "expected": "She advised me not to worry."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-358",
+      "level": "B1",
+      "global_order": 358,
+      "level_order": 58,
+      "title": "Reported speech 8",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-357"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "He said he had lost his keys.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "He said he had lost his keys."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "He said he had lost his keys."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He said he had lost his keys.",
+            "options": [
+              "He said he had lost his keys.",
+              "They asked whether we could come."
+            ],
+            "answer": "He said he had lost his keys."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He said he had lost his keys.",
+            "expected": "He said he had lost his keys."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-359",
+      "level": "B1",
+      "global_order": 359,
+      "level_order": 59,
+      "title": "Reported speech 9",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-358"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "They asked whether we could come.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "They asked whether we could come."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "They asked whether we could come."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "They asked whether we could come.",
+            "options": [
+              "They asked whether we could come.",
+              "I told her that I agreed."
+            ],
+            "answer": "They asked whether we could come."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "They asked whether we could come.",
+            "expected": "They asked whether we could come."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-360",
+      "level": "B1",
+      "global_order": 360,
+      "level_order": 60,
+      "title": "Reported speech 10",
+      "grammar_focus": "Reported speech",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-359"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ko‘chirma gapni o‘zlashtirma gapga aylantirganda zamon, olmosh va vaqt ifodalarini kontekstga mos o‘zgartiramiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I told her that I agreed.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I told her that I agreed."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I told her that I agreed."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I told her that I agreed.",
+            "options": [
+              "I told her that I agreed.",
+              "She said she was tired."
+            ],
+            "answer": "I told her that I agreed."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I told her that I agreed.",
+            "expected": "I told her that I agreed."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Reported speech» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-361",
+      "level": "B1",
+      "global_order": 361,
+      "level_order": 61,
+      "title": "Relative clauses 1",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-360"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The woman who called is my teacher.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The woman who called is my teacher."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The woman who called is my teacher."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The woman who called is my teacher.",
+            "options": [
+              "The woman who called is my teacher.",
+              "This is the book that I bought."
+            ],
+            "answer": "The woman who called is my teacher."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The woman who called is my teacher.",
+            "expected": "The woman who called is my teacher."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-362",
+      "level": "B1",
+      "global_order": 362,
+      "level_order": 62,
+      "title": "Relative clauses 2",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-361"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "This is the book that I bought.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "This is the book that I bought."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "This is the book that I bought."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "This is the book that I bought.",
+            "options": [
+              "This is the book that I bought.",
+              "The place where I grew up is quiet."
+            ],
+            "answer": "This is the book that I bought."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "This is the book that I bought.",
+            "expected": "This is the book that I bought."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-363",
+      "level": "B1",
+      "global_order": 363,
+      "level_order": 63,
+      "title": "Relative clauses 3",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-362"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The place where I grew up is quiet.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The place where I grew up is quiet."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The place where I grew up is quiet."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The place where I grew up is quiet.",
+            "options": [
+              "The place where I grew up is quiet.",
+              "I remember the day when we met."
+            ],
+            "answer": "The place where I grew up is quiet."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The place where I grew up is quiet.",
+            "expected": "The place where I grew up is quiet."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-364",
+      "level": "B1",
+      "global_order": 364,
+      "level_order": 64,
+      "title": "Relative clauses 4",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-363"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I remember the day when we met.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I remember the day when we met."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I remember the day when we met."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I remember the day when we met.",
+            "options": [
+              "I remember the day when we met.",
+              "The man whose car broke down is here."
+            ],
+            "answer": "I remember the day when we met."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I remember the day when we met.",
+            "expected": "I remember the day when we met."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-365",
+      "level": "B1",
+      "global_order": 365,
+      "level_order": 65,
+      "title": "Relative clauses 5",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-364"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The man whose car broke down is here.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The man whose car broke down is here."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The man whose car broke down is here."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The man whose car broke down is here.",
+            "options": [
+              "The man whose car broke down is here.",
+              "The laptop which I use is old."
+            ],
+            "answer": "The man whose car broke down is here."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The man whose car broke down is here.",
+            "expected": "The man whose car broke down is here."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-366",
+      "level": "B1",
+      "global_order": 366,
+      "level_order": 66,
+      "title": "Relative clauses 6",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-365"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The laptop which I use is old.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The laptop which I use is old."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The laptop which I use is old."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The laptop which I use is old.",
+            "options": [
+              "The laptop which I use is old.",
+              "That's the friend I told you about."
+            ],
+            "answer": "The laptop which I use is old."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The laptop which I use is old.",
+            "expected": "The laptop which I use is old."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-367",
+      "level": "B1",
+      "global_order": 367,
+      "level_order": 67,
+      "title": "Relative clauses 7",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-366"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "That's the friend I told you about.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "That's the friend I told you about."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "That's the friend I told you about."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "That's the friend I told you about.",
+            "options": [
+              "That's the friend I told you about.",
+              "The restaurant that opened is busy."
+            ],
+            "answer": "That's the friend I told you about."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "That's the friend I told you about.",
+            "expected": "That's the friend I told you about."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-368",
+      "level": "B1",
+      "global_order": 368,
+      "level_order": 68,
+      "title": "Relative clauses 8",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-367"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The restaurant that opened is busy.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The restaurant that opened is busy."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The restaurant that opened is busy."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The restaurant that opened is busy.",
+            "options": [
+              "The restaurant that opened is busy.",
+              "I know someone who speaks four languages."
+            ],
+            "answer": "The restaurant that opened is busy."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The restaurant that opened is busy.",
+            "expected": "The restaurant that opened is busy."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-369",
+      "level": "B1",
+      "global_order": 369,
+      "level_order": 69,
+      "title": "Relative clauses 9",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-368"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I know someone who speaks four languages.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I know someone who speaks four languages."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I know someone who speaks four languages."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I know someone who speaks four languages.",
+            "options": [
+              "I know someone who speaks four languages.",
+              "This is the reason why I left."
+            ],
+            "answer": "I know someone who speaks four languages."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I know someone who speaks four languages.",
+            "expected": "I know someone who speaks four languages."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-370",
+      "level": "B1",
+      "global_order": 370,
+      "level_order": 70,
+      "title": "Relative clauses 10",
+      "grammar_focus": "Relative clauses",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-369"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Aniqlovchi ergash gap ot yoki odam haqida qo‘shimcha ma’lumot beradi; who, which, that, where kabi so‘zlar ishlatiladi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "This is the reason why I left.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "This is the reason why I left."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "This is the reason why I left."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "This is the reason why I left.",
+            "options": [
+              "This is the reason why I left.",
+              "The woman who called is my teacher."
+            ],
+            "answer": "This is the reason why I left."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "This is the reason why I left.",
+            "expected": "This is the reason why I left."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Relative clauses» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-371",
+      "level": "B1",
+      "global_order": 371,
+      "level_order": 71,
+      "title": "Linking ideas 1",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-370"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Although it was late, we continued.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Although it was late, we continued."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Although it was late, we continued."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Although it was late, we continued.",
+            "options": [
+              "Although it was late, we continued.",
+              "Despite the rain, we went out."
+            ],
+            "answer": "Although it was late, we continued."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Although it was late, we continued.",
+            "expected": "Although it was late, we continued."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-372",
+      "level": "B1",
+      "global_order": 372,
+      "level_order": 72,
+      "title": "Linking ideas 2",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-371"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Despite the rain, we went out.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Despite the rain, we went out."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Despite the rain, we went out."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Despite the rain, we went out.",
+            "options": [
+              "Despite the rain, we went out.",
+              "I stayed home because I was tired."
+            ],
+            "answer": "Despite the rain, we went out."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Despite the rain, we went out.",
+            "expected": "Despite the rain, we went out."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-373",
+      "level": "B1",
+      "global_order": 373,
+      "level_order": 73,
+      "title": "Linking ideas 3",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-372"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I stayed home because I was tired.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I stayed home because I was tired."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I stayed home because I was tired."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I stayed home because I was tired.",
+            "options": [
+              "I stayed home because I was tired.",
+              "The bus was late, so I walked."
+            ],
+            "answer": "I stayed home because I was tired."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I stayed home because I was tired.",
+            "expected": "I stayed home because I was tired."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-374",
+      "level": "B1",
+      "global_order": 374,
+      "level_order": 74,
+      "title": "Linking ideas 4",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-373"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "The bus was late, so I walked.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "The bus was late, so I walked."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "The bus was late, so I walked."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The bus was late, so I walked.",
+            "options": [
+              "The bus was late, so I walked.",
+              "However, the second option is cheaper."
+            ],
+            "answer": "The bus was late, so I walked."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The bus was late, so I walked.",
+            "expected": "The bus was late, so I walked."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-375",
+      "level": "B1",
+      "global_order": 375,
+      "level_order": 75,
+      "title": "Linking ideas 5",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-374"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "However, the second option is cheaper.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "However, the second option is cheaper."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "However, the second option is cheaper."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "However, the second option is cheaper.",
+            "options": [
+              "However, the second option is cheaper.",
+              "In addition, the hotel has free Wi-Fi."
+            ],
+            "answer": "However, the second option is cheaper."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "However, the second option is cheaper.",
+            "expected": "However, the second option is cheaper."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-376",
+      "level": "B1",
+      "global_order": 376,
+      "level_order": 76,
+      "title": "Linking ideas 6",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-375"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "In addition, the hotel has free Wi-Fi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "In addition, the hotel has free Wi-Fi."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "In addition, the hotel has free Wi-Fi."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "In addition, the hotel has free Wi-Fi.",
+            "options": [
+              "In addition, the hotel has free Wi-Fi.",
+              "For example, you could practise daily."
+            ],
+            "answer": "In addition, the hotel has free Wi-Fi."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "In addition, the hotel has free Wi-Fi.",
+            "expected": "In addition, the hotel has free Wi-Fi."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-377",
+      "level": "B1",
+      "global_order": 377,
+      "level_order": 77,
+      "title": "Linking ideas 7",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-376"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "For example, you could practise daily.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "For example, you could practise daily."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "For example, you could practise daily."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "For example, you could practise daily.",
+            "options": [
+              "For example, you could practise daily.",
+              "First, read the instructions carefully."
+            ],
+            "answer": "For example, you could practise daily."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "For example, you could practise daily.",
+            "expected": "For example, you could practise daily."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-378",
+      "level": "B1",
+      "global_order": 378,
+      "level_order": 78,
+      "title": "Linking ideas 8",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-377"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "First, read the instructions carefully.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "First, read the instructions carefully."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "First, read the instructions carefully."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "First, read the instructions carefully.",
+            "options": [
+              "First, read the instructions carefully.",
+              "Finally, check your answers."
+            ],
+            "answer": "First, read the instructions carefully."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "First, read the instructions carefully.",
+            "expected": "First, read the instructions carefully."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-379",
+      "level": "B1",
+      "global_order": 379,
+      "level_order": 79,
+      "title": "Linking ideas 9",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-378"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Finally, check your answers.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Finally, check your answers."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Finally, check your answers."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Finally, check your answers.",
+            "options": [
+              "Finally, check your answers.",
+              "On the other hand, it takes more time."
+            ],
+            "answer": "Finally, check your answers."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Finally, check your answers.",
+            "expected": "Finally, check your answers."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-380",
+      "level": "B1",
+      "global_order": 380,
+      "level_order": 80,
+      "title": "Linking ideas 10",
+      "grammar_focus": "Linking ideas",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-379"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Bog‘lovchi va kirish so‘zlar fikrlar orasidagi sabab, zidlik, misol yoki ketma-ketlikni ko‘rsatadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "On the other hand, it takes more time.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "On the other hand, it takes more time."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "On the other hand, it takes more time."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "On the other hand, it takes more time.",
+            "options": [
+              "On the other hand, it takes more time.",
+              "Although it was late, we continued."
+            ],
+            "answer": "On the other hand, it takes more time."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "On the other hand, it takes more time.",
+            "expected": "On the other hand, it takes more time."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Linking ideas» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-381",
+      "level": "B1",
+      "global_order": 381,
+      "level_order": 81,
+      "title": "Practical communication 1",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-380"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I'd like to make an appointment.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I'd like to make an appointment."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I'd like to make an appointment."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'd like to make an appointment.",
+            "options": [
+              "I'd like to make an appointment.",
+              "Could you tell me how to get there?"
+            ],
+            "answer": "I'd like to make an appointment."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'd like to make an appointment.",
+            "expected": "I'd like to make an appointment."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-382",
+      "level": "B1",
+      "global_order": 382,
+      "level_order": 82,
+      "title": "Practical communication 2",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-381"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Could you tell me how to get there?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Could you tell me how to get there?"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Could you tell me how to get there?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Could you tell me how to get there?",
+            "options": [
+              "Could you tell me how to get there?",
+              "I'm writing to ask for more information."
+            ],
+            "answer": "Could you tell me how to get there?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Could you tell me how to get there?",
+            "expected": "Could you tell me how to get there?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-383",
+      "level": "B1",
+      "global_order": 383,
+      "level_order": 83,
+      "title": "Practical communication 3",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-382"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I'm writing to ask for more information.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I'm writing to ask for more information."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I'm writing to ask for more information."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'm writing to ask for more information.",
+            "options": [
+              "I'm writing to ask for more information.",
+              "I would appreciate your help."
+            ],
+            "answer": "I'm writing to ask for more information."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'm writing to ask for more information.",
+            "expected": "I'm writing to ask for more information."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-384",
+      "level": "B1",
+      "global_order": 384,
+      "level_order": 84,
+      "title": "Practical communication 4",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-383"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I would appreciate your help.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I would appreciate your help."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I would appreciate your help."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I would appreciate your help.",
+            "options": [
+              "I would appreciate your help.",
+              "I'm afraid I can't attend the meeting."
+            ],
+            "answer": "I would appreciate your help."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I would appreciate your help.",
+            "expected": "I would appreciate your help."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-385",
+      "level": "B1",
+      "global_order": 385,
+      "level_order": 85,
+      "title": "Practical communication 5",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-384"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I'm afraid I can't attend the meeting.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I'm afraid I can't attend the meeting."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I'm afraid I can't attend the meeting."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'm afraid I can't attend the meeting.",
+            "options": [
+              "I'm afraid I can't attend the meeting.",
+              "Would it be possible to change the date?"
+            ],
+            "answer": "I'm afraid I can't attend the meeting."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'm afraid I can't attend the meeting.",
+            "expected": "I'm afraid I can't attend the meeting."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-386",
+      "level": "B1",
+      "global_order": 386,
+      "level_order": 86,
+      "title": "Practical communication 6",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-385"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Would it be possible to change the date?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Would it be possible to change the date?"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Would it be possible to change the date?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Would it be possible to change the date?",
+            "options": [
+              "Would it be possible to change the date?",
+              "I have a problem with my order."
+            ],
+            "answer": "Would it be possible to change the date?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Would it be possible to change the date?",
+            "expected": "Would it be possible to change the date?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-387",
+      "level": "B1",
+      "global_order": 387,
+      "level_order": 87,
+      "title": "Practical communication 7",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-386"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I have a problem with my order.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I have a problem with my order."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I have a problem with my order."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I have a problem with my order.",
+            "options": [
+              "I have a problem with my order.",
+              "I'd like to request a refund."
+            ],
+            "answer": "I have a problem with my order."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I have a problem with my order.",
+            "expected": "I have a problem with my order."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-388",
+      "level": "B1",
+      "global_order": 388,
+      "level_order": 88,
+      "title": "Practical communication 8",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-387"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I'd like to request a refund.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I'd like to request a refund."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I'd like to request a refund."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'd like to request a refund.",
+            "options": [
+              "I'd like to request a refund.",
+              "In my opinion, this is the best option."
+            ],
+            "answer": "I'd like to request a refund."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'd like to request a refund.",
+            "expected": "I'd like to request a refund."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-389",
+      "level": "B1",
+      "global_order": 389,
+      "level_order": 89,
+      "title": "Practical communication 9",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-388"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "In my opinion, this is the best option.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "In my opinion, this is the best option."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "In my opinion, this is the best option."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "In my opinion, this is the best option.",
+            "options": [
+              "In my opinion, this is the best option.",
+              "Could you explain what you mean?"
+            ],
+            "answer": "In my opinion, this is the best option."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "In my opinion, this is the best option.",
+            "expected": "In my opinion, this is the best option."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-390",
+      "level": "B1",
+      "global_order": 390,
+      "level_order": 90,
+      "title": "Practical communication 10",
+      "grammar_focus": "Practical communication",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-389"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Muloyim so‘rov va rasmiy yozishmada could, would va ehtiyotkor iboralar qo‘llanadi.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Could you explain what you mean?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Could you explain what you mean?"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Could you explain what you mean?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Could you explain what you mean?",
+            "options": [
+              "Could you explain what you mean?",
+              "I'd like to make an appointment."
+            ],
+            "answer": "Could you explain what you mean?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Could you explain what you mean?",
+            "expected": "Could you explain what you mean?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "«Practical communication» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-391",
+      "level": "B1",
+      "global_order": 391,
+      "level_order": 91,
+      "title": "B1 consolidation 1",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-390"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I have been working since Monday.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I have been working since Monday."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I have been working since Monday."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I have been working since Monday.",
+            "options": [
+              "I have been working since Monday.",
+              "If I were you, I'd wait."
+            ],
+            "answer": "I have been working since Monday."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I have been working since Monday.",
+            "expected": "I have been working since Monday."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-392",
+      "level": "B1",
+      "global_order": 392,
+      "level_order": 92,
+      "title": "B1 consolidation 2",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-391"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "If I were you, I'd wait.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "If I were you, I'd wait."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "If I were you, I'd wait."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "If I were you, I'd wait.",
+            "options": [
+              "If I were you, I'd wait.",
+              "You don't have to come early."
+            ],
+            "answer": "If I were you, I'd wait."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "If I were you, I'd wait.",
+            "expected": "If I were you, I'd wait."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-393",
+      "level": "B1",
+      "global_order": 393,
+      "level_order": 93,
+      "title": "B1 consolidation 3",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-392"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "You don't have to come early.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "You don't have to come early."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "You don't have to come early."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "You don't have to come early.",
+            "options": [
+              "You don't have to come early.",
+              "She might arrive late."
+            ],
+            "answer": "You don't have to come early."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "You don't have to come early.",
+            "expected": "You don't have to come early."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-394",
+      "level": "B1",
+      "global_order": 394,
+      "level_order": 94,
+      "title": "B1 consolidation 4",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-393"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "She might arrive late.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "She might arrive late."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "She might arrive late."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She might arrive late.",
+            "options": [
+              "She might arrive late.",
+              "I used to walk to school."
+            ],
+            "answer": "She might arrive late."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She might arrive late.",
+            "expected": "She might arrive late."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-395",
+      "level": "B1",
+      "global_order": 395,
+      "level_order": 95,
+      "title": "B1 consolidation 5",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-394"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I used to walk to school.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I used to walk to school."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I used to walk to school."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I used to walk to school.",
+            "options": [
+              "I used to walk to school.",
+              "I had finished before she arrived."
+            ],
+            "answer": "I used to walk to school."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I used to walk to school.",
+            "expected": "I used to walk to school."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-396",
+      "level": "B1",
+      "global_order": 396,
+      "level_order": 96,
+      "title": "B1 consolidation 6",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-395"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I had finished before she arrived.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I had finished before she arrived."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I had finished before she arrived."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I had finished before she arrived.",
+            "options": [
+              "I had finished before she arrived.",
+              "I'll call when I arrive."
+            ],
+            "answer": "I had finished before she arrived."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I had finished before she arrived.",
+            "expected": "I had finished before she arrived."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-397",
+      "level": "B1",
+      "global_order": 397,
+      "level_order": 97,
+      "title": "B1 consolidation 7",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-396"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I'll call when I arrive.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I'll call when I arrive."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I'll call when I arrive."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'll call when I arrive.",
+            "options": [
+              "I'll call when I arrive.",
+              "I wish I could drive."
+            ],
+            "answer": "I'll call when I arrive."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'll call when I arrive.",
+            "expected": "I'll call when I arrive."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-398",
+      "level": "B1",
+      "global_order": 398,
+      "level_order": 98,
+      "title": "B1 consolidation 8",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-397"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "I wish I could drive.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "I wish I could drive."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "I wish I could drive."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I wish I could drive.",
+            "options": [
+              "I wish I could drive.",
+              "Have you ever visited Samarkand?"
+            ],
+            "answer": "I wish I could drive."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I wish I could drive.",
+            "expected": "I wish I could drive."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-399",
+      "level": "B1",
+      "global_order": 399,
+      "level_order": 99,
+      "title": "B1 consolidation 9",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-398"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "Have you ever visited Samarkand?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "Have you ever visited Samarkand?"
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "Have you ever visited Samarkand?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Have you ever visited Samarkand?",
+            "options": [
+              "Have you ever visited Samarkand?",
+              "We were eating when he called."
+            ],
+            "answer": "Have you ever visited Samarkand?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Have you ever visited Samarkand?",
+            "expected": "Have you ever visited Samarkand?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    },
+    {
+      "id": "b1-rebuild-400",
+      "level": "B1",
+      "global_order": 400,
+      "level_order": 100,
+      "title": "B1 consolidation 10",
+      "grammar_focus": "B1 consolidation",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-399"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldingi B1 qoidalarini birlashtirib, kontekstga qarab to‘g‘ri shaklni tanlashni mashq qilamiz.",
+          "editorial_note": "Topic-level explanation only; sentence-specific rule and Uzbek translation require authoring."
+        },
+        "examples": [
+          {
+            "english": "We were eating when he called.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "recognition",
+            "prompt_uz": "Gapni o‘qing va mazmunini tushunishga harakat qiling.",
+            "english": "We were eating when he called."
+          },
+          {
+            "skill": "writing",
+            "type": "copy_then_complete",
+            "prompt_uz": "Gapni to‘g‘ri yozing.",
+            "answers": [
+              "We were eating when he called."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "We were eating when he called.",
+            "options": [
+              "We were eating when he called.",
+              "I have been working since Monday."
+            ],
+            "answer": "We were eating when he called."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We were eating when he called.",
+            "expected": "We were eating when he called."
+          }
+        ],
+        "wrap_up": {
+          "uz": "«B1 consolidation» mavzusidagi gapni tinglab, takrorlab va yozib mashq qildingiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "incomplete_draft_requires_uz_translation_and_qa"
+    }
+  ]
+}

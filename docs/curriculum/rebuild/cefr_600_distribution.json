@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "total_lessons": 600,
+  "role_play_included": false,
+  "levels": [
+    {
+      "level": "A0",
+      "name": "Absolute Beginner",
+      "count": 86,
+      "start": 1,
+      "end": 86
+    },
+    {
+      "level": "A1",
+      "name": "Beginner",
+      "count": 86,
+      "start": 87,
+      "end": 172
+    },
+    {
+      "level": "A2",
+      "name": "Elementary",
+      "count": 86,
+      "start": 173,
+      "end": 258
+    },
+    {
+      "level": "B1",
+      "name": "Intermediate",
+      "count": 86,
+      "start": 259,
+      "end": 344
+    },
+    {
+      "level": "B2",
+      "name": "Upper-Intermediate",
+      "count": 86,
+      "start": 345,
+      "end": 430
+    },
+    {
+      "level": "C1",
+      "name": "Advanced",
+      "count": 85,
+      "start": 431,
+      "end": 515
+    },
+    {
+      "level": "C2",
+      "name": "Proficiency",
+      "count": 85,
+      "start": 516,
+      "end": 600
+    }
+  ],
+  "migration_status": "planned_not_applied",
+  "notes": [
+    "Existing drafts have inaccurate CEFR labels and must be reviewed and reassigned by pedagogical content, not by global number alone.",
+    "Global order is target curriculum order, not current filenames or IDs.",
+    "No claim that 600 completed lessons exist."
+  ]
+}

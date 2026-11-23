@@ -1,0 +1,1389 @@
+{
+  "schema_version": 1,
+  "level": "B1",
+  "range": "311–330",
+  "status": "draft_requires_qa; not Android integrated",
+  "role_play_included": false,
+  "lessons": [
+    {
+      "id": "b1-rebuild-311",
+      "level": "B1",
+      "global_order": 311,
+      "level_order": 11,
+      "title": "Present Perfect Continuous: shakl",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-310"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Hozirgacha davom etayotgan harakatni have/has been + fe’l-ing bilan ifodalaymiz. I/you/we/they — have, he/she/it — has."
+        },
+        "examples": [
+          {
+            "english": "I have been studying for two hours.",
+            "uzbek": "Men ikki soatdan beri o‘qiyapman.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She has been working all day.",
+            "uzbek": "U kun bo‘yi ishlayapti.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "I have been study.",
+              "I have been studying."
+            ],
+            "answer": "I have been studying."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men ikki soatdan beri o‘qiyapman.",
+            "answers": [
+              "I have been studying for two hours."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I have been studying for two hours.",
+            "options": [
+              "I have been studying for two hours.",
+              "She has been working all day."
+            ],
+            "answer": "I have been studying for two hours."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I have been studying for two hours.",
+            "expected": "I have been studying for two hours."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Hozirgacha davom etayotgan harakatni have/has been + fe’l-ing bilan ifodalaymiz. I/you/we/they — have, he/she/it — has. Misolni qayta ayting: I have been studying for two hours."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-312",
+      "level": "B1",
+      "global_order": 312,
+      "level_order": 12,
+      "title": "Present Perfect Continuous: for",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-311"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "For davomiylikni bildiradi: for ten minutes, for two years. Uni have/has been + -ing bilan ishlatish mumkin."
+        },
+        "examples": [
+          {
+            "english": "We have been waiting for thirty minutes.",
+            "uzbek": "Biz o‘ttiz daqiqadan beri kutyapmiz.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "He has been reading for an hour.",
+            "uzbek": "U bir soatdan beri o‘qiyapti.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "for Monday",
+              "for two hours"
+            ],
+            "answer": "for two hours"
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Biz o‘ttiz daqiqadan beri kutyapmiz.",
+            "answers": [
+              "We have been waiting for thirty minutes."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "We have been waiting for thirty minutes.",
+            "options": [
+              "We have been waiting for thirty minutes.",
+              "He has been reading for an hour."
+            ],
+            "answer": "We have been waiting for thirty minutes."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We have been waiting for thirty minutes.",
+            "expected": "We have been waiting for thirty minutes."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: For davomiylikni bildiradi: for ten minutes, for two years. Uni have/has been + -ing bilan ishlatish mumkin. Misolni qayta ayting: We have been waiting for thirty minutes."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-313",
+      "level": "B1",
+      "global_order": 313,
+      "level_order": 13,
+      "title": "Present Perfect Continuous: since",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-312"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Since harakat boshlangan vaqtni bildiradi: since Monday, since 2020. For esa vaqt davomiyligini bildiradi."
+        },
+        "examples": [
+          {
+            "english": "She has been living here since 2020.",
+            "uzbek": "U 2020-yildan beri shu yerda yashayapti.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I have been working since morning.",
+            "uzbek": "Men ertalabdan beri ishlayapman.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "since three hours",
+              "since Monday"
+            ],
+            "answer": "since Monday"
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U 2020-yildan beri shu yerda yashayapti.",
+            "answers": [
+              "She has been living here since 2020."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She has been living here since 2020.",
+            "options": [
+              "She has been living here since 2020.",
+              "I have been working since morning."
+            ],
+            "answer": "She has been living here since 2020."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She has been living here since 2020.",
+            "expected": "She has been living here since 2020."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Since harakat boshlangan vaqtni bildiradi: since Monday, since 2020. For esa vaqt davomiyligini bildiradi. Misolni qayta ayting: She has been living here since 2020."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-314",
+      "level": "B1",
+      "global_order": 314,
+      "level_order": 14,
+      "title": "Present Perfect Continuous: savol",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-313"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Savolda have/has egadan oldinga o‘tadi: Have you been studying? Davomiylikni so‘rash uchun How long ishlatiladi."
+        },
+        "examples": [
+          {
+            "english": "How long have you been learning English?",
+            "uzbek": "Qancha vaqtdan beri ingliz tilini o‘rganyapsiz?",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "Has she been waiting long?",
+            "uzbek": "U uzoq vaqtdan beri kutyaptimi?",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "How long you have been learning?",
+              "How long have you been learning?"
+            ],
+            "answer": "How long have you been learning?"
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Qancha vaqtdan beri ingliz tilini o‘rganyapsiz?",
+            "answers": [
+              "How long have you been learning English?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "How long have you been learning English?",
+            "options": [
+              "How long have you been learning English?",
+              "Has she been waiting long?"
+            ],
+            "answer": "How long have you been learning English?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "How long have you been learning English?",
+            "expected": "How long have you been learning English?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Savolda have/has egadan oldinga o‘tadi: Have you been studying? Davomiylikni so‘rash uchun How long ishlatiladi. Misolni qayta ayting: How long have you been learning English?"
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-315",
+      "level": "B1",
+      "global_order": 315,
+      "level_order": 15,
+      "title": "Present Perfect va Continuous farqi",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-314"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Present Perfect (have + V3) ko‘pincha natija yoki tugallangan miqdorni, Present Perfect Continuous (have been + -ing) esa jarayon va davomiylikni ta’kidlaydi."
+        },
+        "examples": [
+          {
+            "english": "I have written three emails.",
+            "uzbek": "Men uchta elektron xat yozdim.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I have been writing emails all morning.",
+            "uzbek": "Men ertalabdan beri elektron xatlar yozyapman.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "I have been wrote three emails.",
+              "I have written three emails."
+            ],
+            "answer": "I have written three emails."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men uchta elektron xat yozdim.",
+            "answers": [
+              "I have written three emails."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I have written three emails.",
+            "options": [
+              "I have written three emails.",
+              "I have been writing emails all morning."
+            ],
+            "answer": "I have written three emails."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I have written three emails.",
+            "expected": "I have written three emails."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Present Perfect (have + V3) ko‘pincha natija yoki tugallangan miqdorni, Present Perfect Continuous (have been + -ing) esa jarayon va davomiylikni ta’kidlaydi. Misolni qayta ayting: I have written three emails."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-316",
+      "level": "B1",
+      "global_order": 316,
+      "level_order": 16,
+      "title": "Present Perfect Continuous: inkor",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-315"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Inkor: haven't/hasn't been + fe’l-ing. Bu davom etib kelayotgan holatning yo‘qligini yoki sodir bo‘lmayotganini bildiradi."
+        },
+        "examples": [
+          {
+            "english": "I haven't been sleeping well.",
+            "uzbek": "Men yaxshi uxlay olmayapman (so‘nggi paytlarda).",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "He hasn't been exercising recently.",
+            "uzbek": "U oxirgi paytlarda mashq qilmayapti.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "She hasn't been work.",
+              "She hasn't been working."
+            ],
+            "answer": "She hasn't been working."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men yaxshi uxlay olmayapman (so‘nggi paytlarda).",
+            "answers": [
+              "I haven't been sleeping well."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I haven't been sleeping well.",
+            "options": [
+              "I haven't been sleeping well.",
+              "He hasn't been exercising recently."
+            ],
+            "answer": "I haven't been sleeping well."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I haven't been sleeping well.",
+            "expected": "I haven't been sleeping well."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Inkor: haven't/hasn't been + fe’l-ing. Bu davom etib kelayotgan holatning yo‘qligini yoki sodir bo‘lmayotganini bildiradi. Misolni qayta ayting: I haven't been sleeping well."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-317",
+      "level": "B1",
+      "global_order": 317,
+      "level_order": 17,
+      "title": "Future arrangement: Present Continuous",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-316"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldindan kelishilgan yaqin kelajak rejasi uchun Present Continuous ishlatiladi: am/is/are + -ing va kelajak vaqt ifodasi."
+        },
+        "examples": [
+          {
+            "english": "I'm meeting Anna tomorrow.",
+            "uzbek": "Men ertaga Anna bilan uchrashaman.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "We're flying on Friday.",
+            "uzbek": "Biz juma kuni samolyotda uchamiz.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "I meeting Anna tomorrow.",
+              "I'm meeting Anna tomorrow."
+            ],
+            "answer": "I'm meeting Anna tomorrow."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men ertaga Anna bilan uchrashaman.",
+            "answers": [
+              "I'm meeting Anna tomorrow."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'm meeting Anna tomorrow.",
+            "options": [
+              "I'm meeting Anna tomorrow.",
+              "We're flying on Friday."
+            ],
+            "answer": "I'm meeting Anna tomorrow."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'm meeting Anna tomorrow.",
+            "expected": "I'm meeting Anna tomorrow."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Oldindan kelishilgan yaqin kelajak rejasi uchun Present Continuous ishlatiladi: am/is/are + -ing va kelajak vaqt ifodasi. Misolni qayta ayting: I'm meeting Anna tomorrow."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-318",
+      "level": "B1",
+      "global_order": 318,
+      "level_order": 18,
+      "title": "Timetable: Present Simple",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-317"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Jadval va rasmiy vaqtlar haqida Present Simple ishlatiladi: The bus arrives at nine. Bu kelajak jadvalini ham ifodalaydi."
+        },
+        "examples": [
+          {
+            "english": "The train leaves at six.",
+            "uzbek": "Poyezd soat oltida jo‘naydi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "The lesson starts at ten.",
+            "uzbek": "Dars soat o‘nda boshlanadi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "The train leave at six.",
+              "The train leaves at six."
+            ],
+            "answer": "The train leaves at six."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Poyezd soat oltida jo‘naydi.",
+            "answers": [
+              "The train leaves at six."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "The train leaves at six.",
+            "options": [
+              "The train leaves at six.",
+              "The lesson starts at ten."
+            ],
+            "answer": "The train leaves at six."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The train leaves at six.",
+            "expected": "The train leaves at six."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Jadval va rasmiy vaqtlar haqida Present Simple ishlatiladi: The bus arrives at nine. Bu kelajak jadvalini ham ifodalaydi. Misolni qayta ayting: The train leaves at six."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-319",
+      "level": "B1",
+      "global_order": 319,
+      "level_order": 19,
+      "title": "Will: tezkor qaror",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-318"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Gapirish paytida qabul qilingan qaror uchun will + fe’lning oddiy shakli ishlatiladi. I'll — I will qisqartmasi."
+        },
+        "examples": [
+          {
+            "english": "I'll answer the phone.",
+            "uzbek": "Men telefonga javob beraman.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I'll carry your bag.",
+            "uzbek": "Sumkangizni ko‘tarib beraman.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "I will to help.",
+              "I will help."
+            ],
+            "answer": "I will help."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men telefonga javob beraman.",
+            "answers": [
+              "I'll answer the phone."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'll answer the phone.",
+            "options": [
+              "I'll answer the phone.",
+              "I'll carry your bag."
+            ],
+            "answer": "I'll answer the phone."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'll answer the phone.",
+            "expected": "I'll answer the phone."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Gapirish paytida qabul qilingan qaror uchun will + fe’lning oddiy shakli ishlatiladi. I'll — I will qisqartmasi. Misolni qayta ayting: I'll answer the phone."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-320",
+      "level": "B1",
+      "global_order": 320,
+      "level_order": 20,
+      "title": "Going to: niyat",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-319"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldindan o‘ylangan niyat va reja uchun am/is/are going to + fe’lning oddiy shakli ishlatiladi."
+        },
+        "examples": [
+          {
+            "english": "I'm going to apply for a job.",
+            "uzbek": "Men ishga ariza topshirmoqchiman.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She's going to learn to drive.",
+            "uzbek": "U mashina haydashni o‘rganmoqchi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "She going to study.",
+              "She's going to study."
+            ],
+            "answer": "She's going to study."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men ishga ariza topshirmoqchiman.",
+            "answers": [
+              "I'm going to apply for a job."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'm going to apply for a job.",
+            "options": [
+              "I'm going to apply for a job.",
+              "She's going to learn to drive."
+            ],
+            "answer": "I'm going to apply for a job."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'm going to apply for a job.",
+            "expected": "I'm going to apply for a job."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Oldindan o‘ylangan niyat va reja uchun am/is/are going to + fe’lning oddiy shakli ishlatiladi. Misolni qayta ayting: I'm going to apply for a job."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-321",
+      "level": "B1",
+      "global_order": 321,
+      "level_order": 21,
+      "title": "Will va going to: farq",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-320"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Hozirgi belgiga asoslangan bashoratda going to, shaxsiy taxminlarda esa ko‘pincha will ishlatiladi."
+        },
+        "examples": [
+          {
+            "english": "Look at those clouds! It's going to rain.",
+            "uzbek": "Ana u bulutlarga qarang! Yomg‘ir yog‘moqchi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I think it will rain tomorrow.",
+            "uzbek": "Menimcha, ertaga yomg‘ir yog‘adi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "It going to rain.",
+              "It's going to rain."
+            ],
+            "answer": "It's going to rain."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Ana u bulutlarga qarang! Yomg‘ir yog‘moqchi.",
+            "answers": [
+              "Look at those clouds! It's going to rain."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Look at those clouds! It's going to rain.",
+            "options": [
+              "Look at those clouds! It's going to rain.",
+              "I think it will rain tomorrow."
+            ],
+            "answer": "Look at those clouds! It's going to rain."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Look at those clouds! It's going to rain.",
+            "expected": "Look at those clouds! It's going to rain."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Hozirgi belgiga asoslangan bashoratda going to, shaxsiy taxminlarda esa ko‘pincha will ishlatiladi. Misolni qayta ayting: Look at those clouds! It's going to rain."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-322",
+      "level": "B1",
+      "global_order": 322,
+      "level_order": 22,
+      "title": "May va might: ehtimol",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-321"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "May va might ehtimolni bildiradi. Ulardan keyin fe’lning oddiy shakli keladi: might go, may come."
+        },
+        "examples": [
+          {
+            "english": "We might travel next month.",
+            "uzbek": "Biz kelasi oy sayohat qilishimiz mumkin.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She may arrive late.",
+            "uzbek": "U kech kelishi mumkin.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "She might arrives late.",
+              "She might arrive late."
+            ],
+            "answer": "She might arrive late."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Biz kelasi oy sayohat qilishimiz mumkin.",
+            "answers": [
+              "We might travel next month."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "We might travel next month.",
+            "options": [
+              "We might travel next month.",
+              "She may arrive late."
+            ],
+            "answer": "We might travel next month."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We might travel next month.",
+            "expected": "We might travel next month."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: May va might ehtimolni bildiradi. Ulardan keyin fe’lning oddiy shakli keladi: might go, may come. Misolni qayta ayting: We might travel next month."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-323",
+      "level": "B1",
+      "global_order": 323,
+      "level_order": 23,
+      "title": "Future: when bilan",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-322"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Kelajak haqida gapirilsa ham, when/as soon as dan keyingi vaqt ergash gapida odatda Present Simple ishlatiladi; asosiy gapda will kelishi mumkin."
+        },
+        "examples": [
+          {
+            "english": "I'll call you when I arrive.",
+            "uzbek": "Yetib kelganimda sizga qo‘ng‘iroq qilaman.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "We'll eat when she comes.",
+            "uzbek": "U kelganda ovqatlanamiz.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "I'll call when I will arrive.",
+              "I'll call when I arrive."
+            ],
+            "answer": "I'll call when I arrive."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Yetib kelganimda sizga qo‘ng‘iroq qilaman.",
+            "answers": [
+              "I'll call you when I arrive."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I'll call you when I arrive.",
+            "options": [
+              "I'll call you when I arrive.",
+              "We'll eat when she comes."
+            ],
+            "answer": "I'll call you when I arrive."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I'll call you when I arrive.",
+            "expected": "I'll call you when I arrive."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Kelajak haqida gapirilsa ham, when/as soon as dan keyingi vaqt ergash gapida odatda Present Simple ishlatiladi; asosiy gapda will kelishi mumkin. Misolni qayta ayting: I'll call you when I arrive."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-324",
+      "level": "B1",
+      "global_order": 324,
+      "level_order": 24,
+      "title": "Future: unless",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-323"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Unless — agar ... bo‘lmasa degani. Unless dan keyin kelajak ma’nosida ham odatda Present Simple keladi."
+        },
+        "examples": [
+          {
+            "english": "We won't go unless it stops raining.",
+            "uzbek": "Yomg‘ir to‘xtamasa, bormaymiz.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "Unless you hurry, you'll be late.",
+            "uzbek": "Shoshilmasangiz, kechikasiz.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "Unless you will hurry, you'll be late.",
+              "Unless you hurry, you'll be late."
+            ],
+            "answer": "Unless you hurry, you'll be late."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Yomg‘ir to‘xtamasa, bormaymiz.",
+            "answers": [
+              "We won't go unless it stops raining."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "We won't go unless it stops raining.",
+            "options": [
+              "We won't go unless it stops raining.",
+              "Unless you hurry, you'll be late."
+            ],
+            "answer": "We won't go unless it stops raining."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "We won't go unless it stops raining.",
+            "expected": "We won't go unless it stops raining."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Unless — agar ... bo‘lmasa degani. Unless dan keyin kelajak ma’nosida ham odatda Present Simple keladi. Misolni qayta ayting: We won't go unless it stops raining."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-325",
+      "level": "B1",
+      "global_order": 325,
+      "level_order": 25,
+      "title": "First conditional: tuzilish",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-324"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Haqiqiy kelajak ehtimoli: If + Present Simple, will + fe’l. If qismida odatda will ishlatilmaydi."
+        },
+        "examples": [
+          {
+            "english": "If it rains, we'll stay home.",
+            "uzbek": "Yomg‘ir yog‘sa, uyda qolamiz.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "If I finish early, I'll call.",
+            "uzbek": "Erta tugatsam, qo‘ng‘iroq qilaman.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "If it will rain, we'll stay home.",
+              "If it rains, we'll stay home."
+            ],
+            "answer": "If it rains, we'll stay home."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Yomg‘ir yog‘sa, uyda qolamiz.",
+            "answers": [
+              "If it rains, we'll stay home."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "If it rains, we'll stay home.",
+            "options": [
+              "If it rains, we'll stay home.",
+              "If I finish early, I'll call."
+            ],
+            "answer": "If it rains, we'll stay home."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "If it rains, we'll stay home.",
+            "expected": "If it rains, we'll stay home."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Haqiqiy kelajak ehtimoli: If + Present Simple, will + fe’l. If qismida odatda will ishlatilmaydi. Misolni qayta ayting: If it rains, we'll stay home."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-326",
+      "level": "B1",
+      "global_order": 326,
+      "level_order": 26,
+      "title": "First conditional: inkor",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-325"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Shart qismida don't/doesn't, natija qismida won't ishlatish mumkin: If + Present Simple, will/won't + fe’l."
+        },
+        "examples": [
+          {
+            "english": "If you don't study, you won't pass.",
+            "uzbek": "O‘qimasangiz, imtihondan o‘tmaysiz.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "If she doesn't hurry, she'll miss the bus.",
+            "uzbek": "U shoshilmasa, avtobusga ulgurmaydi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "If she won't hurry, she'll miss the bus.",
+              "If she doesn't hurry, she'll miss the bus."
+            ],
+            "answer": "If she doesn't hurry, she'll miss the bus."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "O‘qimasangiz, imtihondan o‘tmaysiz.",
+            "answers": [
+              "If you don't study, you won't pass."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "If you don't study, you won't pass.",
+            "options": [
+              "If you don't study, you won't pass.",
+              "If she doesn't hurry, she'll miss the bus."
+            ],
+            "answer": "If you don't study, you won't pass."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "If you don't study, you won't pass.",
+            "expected": "If you don't study, you won't pass."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Shart qismida don't/doesn't, natija qismida won't ishlatish mumkin: If + Present Simple, will/won't + fe’l. Misolni qayta ayting: If you don't study, you won't pass."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-327",
+      "level": "B1",
+      "global_order": 327,
+      "level_order": 27,
+      "title": "Second conditional: tasavvur",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-326"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Hozirgi yoki kelajakdagi xayoliy vaziyat: If + Past Simple, would + fe’l. I'd — I would."
+        },
+        "examples": [
+          {
+            "english": "If I had more time, I'd read more.",
+            "uzbek": "Vaqtim ko‘proq bo‘lsa, ko‘proq kitob o‘qirdim.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "If I knew the answer, I'd tell you.",
+            "uzbek": "Javobni bilsam, sizga aytardim.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "If I would have time, I'd read.",
+              "If I had time, I'd read."
+            ],
+            "answer": "If I had time, I'd read."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Vaqtim ko‘proq bo‘lsa, ko‘proq kitob o‘qirdim.",
+            "answers": [
+              "If I had more time, I'd read more."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "If I had more time, I'd read more.",
+            "options": [
+              "If I had more time, I'd read more.",
+              "If I knew the answer, I'd tell you."
+            ],
+            "answer": "If I had more time, I'd read more."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "If I had more time, I'd read more.",
+            "expected": "If I had more time, I'd read more."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Hozirgi yoki kelajakdagi xayoliy vaziyat: If + Past Simple, would + fe’l. I'd — I would. Misolni qayta ayting: If I had more time, I'd read more."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-328",
+      "level": "B1",
+      "global_order": 328,
+      "level_order": 28,
+      "title": "Second conditional: were",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-327"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Xayoliy maslahatda If I were you, I'd ... qolipi juda ko‘p ishlatiladi. Were bu yerda rasmiy va keng qabul qilingan shakl."
+        },
+        "examples": [
+          {
+            "english": "If I were you, I'd ask for help.",
+            "uzbek": "Sizning o‘rningizda bo‘lsam, yordam so‘rardim.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "If she were here, she'd help.",
+            "uzbek": "U shu yerda bo‘lsa, yordam berardi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "If I would be you, I'd wait.",
+              "If I were you, I'd wait."
+            ],
+            "answer": "If I were you, I'd wait."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Sizning o‘rningizda bo‘lsam, yordam so‘rardim.",
+            "answers": [
+              "If I were you, I'd ask for help."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "If I were you, I'd ask for help.",
+            "options": [
+              "If I were you, I'd ask for help.",
+              "If she were here, she'd help."
+            ],
+            "answer": "If I were you, I'd ask for help."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "If I were you, I'd ask for help.",
+            "expected": "If I were you, I'd ask for help."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Xayoliy maslahatda If I were you, I'd ... qolipi juda ko‘p ishlatiladi. Were bu yerda rasmiy va keng qabul qilingan shakl. Misolni qayta ayting: If I were you, I'd ask for help."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-329",
+      "level": "B1",
+      "global_order": 329,
+      "level_order": 29,
+      "title": "Wish: hozirgi istak",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-328"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Hozirgi vaziyat boshqacha bo‘lishini istaganda wish + Past Simple ishlatiladi. Bu shakl o‘tmish vaqtini anglatmaydi."
+        },
+        "examples": [
+          {
+            "english": "I wish I spoke English better.",
+            "uzbek": "Inglizchada yaxshiroq gapira olsam edi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I wish I had more free time.",
+            "uzbek": "Bo‘sh vaqtim ko‘proq bo‘lsa edi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "I wish I have more time.",
+              "I wish I had more time."
+            ],
+            "answer": "I wish I had more time."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Inglizchada yaxshiroq gapira olsam edi.",
+            "answers": [
+              "I wish I spoke English better."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I wish I spoke English better.",
+            "options": [
+              "I wish I spoke English better.",
+              "I wish I had more free time."
+            ],
+            "answer": "I wish I spoke English better."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I wish I spoke English better.",
+            "expected": "I wish I spoke English better."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Hozirgi vaziyat boshqacha bo‘lishini istaganda wish + Past Simple ishlatiladi. Bu shakl o‘tmish vaqtini anglatmaydi. Misolni qayta ayting: I wish I spoke English better."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    },
+    {
+      "id": "b1-rebuild-330",
+      "level": "B1",
+      "global_order": 330,
+      "level_order": 30,
+      "title": "Wish: could",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-329"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Hozir ega bo‘lmagan qobiliyat yoki imkoniyatni istash uchun wish + could + fe’l ishlatiladi."
+        },
+        "examples": [
+          {
+            "english": "I wish I could drive.",
+            "uzbek": "Mashina hayday olsam edi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She wishes she could travel more.",
+            "uzbek": "U ko‘proq sayohat qila olsa edi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "To‘g‘ri shaklni tanlang.",
+            "options": [
+              "I wish I can drive.",
+              "I wish I could drive."
+            ],
+            "answer": "I wish I could drive."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Mashina hayday olsam edi.",
+            "answers": [
+              "I wish I could drive."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I wish I could drive.",
+            "options": [
+              "I wish I could drive.",
+              "She wishes she could travel more."
+            ],
+            "answer": "I wish I could drive."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I wish I could drive.",
+            "expected": "I wish I could drive."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi asosiy qoida: Hozir ega bo‘lmagan qobiliyat yoki imkoniyatni istash uchun wish + could + fe’l ishlatiladi. Misolni qayta ayting: I wish I could drive."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_requires_qa"
+    }
+  ]
+}

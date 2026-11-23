@@ -1,0 +1,708 @@
+{
+  "schema_version": 1,
+  "range": "351–360",
+  "supersedes": "b1_lessons_341_400.json entries 351–360",
+  "role_play_included": false,
+  "lessons": [
+    {
+      "id": "b1-rebuild-351",
+      "level": "B1",
+      "global_order": 351,
+      "level_order": 51,
+      "title": "Reported statements: said",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-350"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "O‘tmishda aytilgan gapni qayta hikoya qilganda said (that) ishlatiladi. Asl gapdagi am/is ko‘pincha was ga, need esa needed ga o‘zgaradi.",
+          "focus": "Reported statements: said"
+        },
+        "examples": [
+          {
+            "english": "She said she was tired.",
+            "uzbek": "U charchaganini aytdi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "He said he needed help.",
+            "uzbek": "U yordamga muhtojligini aytdi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "She said she is tired yesterday.",
+              "She said she was tired."
+            ],
+            "answer": "She said she was tired."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U charchaganini aytdi.",
+            "answers": [
+              "She said she was tired."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He said he needed help.",
+            "options": [
+              "He said he needed help.",
+              "She said she was tired."
+            ],
+            "answer": "He said he needed help."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She said she was tired.",
+            "expected": "She said she was tired."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported statements: said. O‘tmishda aytilgan gapni qayta hikoya qilganda said (that) ishlatiladi. Asl gapdagi am/is ko‘pincha was ga, need esa needed ga o‘zgaradi. Mashq uchun: She said she was tired."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    },
+    {
+      "id": "b1-rebuild-352",
+      "level": "B1",
+      "global_order": 352,
+      "level_order": 52,
+      "title": "Reported statements: told",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-351"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Tell fe’lidan keyin kimga aytilgani ko‘rsatiladi: told me, told us. Say esa bunday obyektni majburiy talab qilmaydi.",
+          "focus": "Reported statements: told"
+        },
+        "examples": [
+          {
+            "english": "He told me he was busy.",
+            "uzbek": "U menga bandligini aytdi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "They told us they were ready.",
+            "uzbek": "Ular bizga tayyor ekanliklarini aytishdi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "He told that he was busy.",
+              "He told me he was busy."
+            ],
+            "answer": "He told me he was busy."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U menga bandligini aytdi.",
+            "answers": [
+              "He told me he was busy."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "They told us they were ready.",
+            "options": [
+              "They told us they were ready.",
+              "He told me he was busy."
+            ],
+            "answer": "They told us they were ready."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He told me he was busy.",
+            "expected": "He told me he was busy."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported statements: told. Tell fe’lidan keyin kimga aytilgani ko‘rsatiladi: told me, told us. Say esa bunday obyektni majburiy talab qilmaydi. Mashq uchun: He told me he was busy."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    },
+    {
+      "id": "b1-rebuild-353",
+      "level": "B1",
+      "global_order": 353,
+      "level_order": 53,
+      "title": "Reported speech: will to would",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-352"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "O‘tmishdagi said bilan kelajak rejasi haqida xabar berilganda will ko‘pincha would ga o‘zgaradi.",
+          "focus": "Reported speech: will to would"
+        },
+        "examples": [
+          {
+            "english": "She said she would call later.",
+            "uzbek": "U keyinroq qo‘ng‘iroq qilishini aytdi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "He said he would come soon.",
+            "uzbek": "U tez orada kelishini aytdi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "She said she will call yesterday.",
+              "She said she would call later."
+            ],
+            "answer": "She said she would call later."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U keyinroq qo‘ng‘iroq qilishini aytdi.",
+            "answers": [
+              "She said she would call later."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He said he would come soon.",
+            "options": [
+              "He said he would come soon.",
+              "She said she would call later."
+            ],
+            "answer": "He said he would come soon."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She said she would call later.",
+            "expected": "She said she would call later."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported speech: will to would. O‘tmishdagi said bilan kelajak rejasi haqida xabar berilganda will ko‘pincha would ga o‘zgaradi. Mashq uchun: She said she would call later."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    },
+    {
+      "id": "b1-rebuild-354",
+      "level": "B1",
+      "global_order": 354,
+      "level_order": 54,
+      "title": "Reported speech: past perfect",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-353"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Oldinroq sodir bo‘lgan harakatni o‘tmishda qayta hikoya qilishda Past Perfect (had + V3) ishlatilishi mumkin.",
+          "focus": "Reported speech: past perfect"
+        },
+        "examples": [
+          {
+            "english": "He said he had lost his keys.",
+            "uzbek": "U kalitlarini yo‘qotganini aytdi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She said she had finished the work.",
+            "uzbek": "U ishni tugatganini aytdi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "He said he has lost his keys yesterday.",
+              "He said he had lost his keys."
+            ],
+            "answer": "He said he had lost his keys."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U kalitlarini yo‘qotganini aytdi.",
+            "answers": [
+              "He said he had lost his keys."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She said she had finished the work.",
+            "options": [
+              "She said she had finished the work.",
+              "He said he had lost his keys."
+            ],
+            "answer": "She said she had finished the work."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He said he had lost his keys.",
+            "expected": "He said he had lost his keys."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported speech: past perfect. Oldinroq sodir bo‘lgan harakatni o‘tmishda qayta hikoya qilishda Past Perfect (had + V3) ishlatilishi mumkin. Mashq uchun: He said he had lost his keys."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    },
+    {
+      "id": "b1-rebuild-355",
+      "level": "B1",
+      "global_order": 355,
+      "level_order": 55,
+      "title": "Reported yes/no questions",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-354"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ha/yo‘q savollarini qayta aytishda asked if/whether + ega + fe’l ishlatiladi. So‘z tartibi oddiy darak gapdek bo‘ladi.",
+          "focus": "Reported yes/no questions"
+        },
+        "examples": [
+          {
+            "english": "She asked if I was ready.",
+            "uzbek": "U mendan tayyormiligimni so‘radi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "He asked whether we could come.",
+            "uzbek": "U biz kela olishimizni so‘radi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "She asked if was I ready.",
+              "She asked if I was ready."
+            ],
+            "answer": "She asked if I was ready."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U mendan tayyormiligimni so‘radi.",
+            "answers": [
+              "She asked if I was ready."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He asked whether we could come.",
+            "options": [
+              "He asked whether we could come.",
+              "She asked if I was ready."
+            ],
+            "answer": "He asked whether we could come."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She asked if I was ready.",
+            "expected": "She asked if I was ready."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported yes/no questions. Ha/yo‘q savollarini qayta aytishda asked if/whether + ega + fe’l ishlatiladi. So‘z tartibi oddiy darak gapdek bo‘ladi. Mashq uchun: She asked if I was ready."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    },
+    {
+      "id": "b1-rebuild-356",
+      "level": "B1",
+      "global_order": 356,
+      "level_order": 56,
+      "title": "Reported wh-questions",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-355"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Wh-savolni qayta aytganda so‘roq so‘zi saqlanadi, lekin undan keyin darak gap tartibi keladi: where I lived, why I was late.",
+          "focus": "Reported wh-questions"
+        },
+        "examples": [
+          {
+            "english": "He asked where I lived.",
+            "uzbek": "U qayerda yashashimni so‘radi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She asked why I was late.",
+            "uzbek": "U nega kechikkanimni so‘radi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "He asked where did I live.",
+              "He asked where I lived."
+            ],
+            "answer": "He asked where I lived."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U qayerda yashashimni so‘radi.",
+            "answers": [
+              "He asked where I lived."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She asked why I was late.",
+            "options": [
+              "She asked why I was late.",
+              "He asked where I lived."
+            ],
+            "answer": "She asked why I was late."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He asked where I lived.",
+            "expected": "He asked where I lived."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported wh-questions. Wh-savolni qayta aytganda so‘roq so‘zi saqlanadi, lekin undan keyin darak gap tartibi keladi: where I lived, why I was late. Mashq uchun: He asked where I lived."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    },
+    {
+      "id": "b1-rebuild-357",
+      "level": "B1",
+      "global_order": 357,
+      "level_order": 57,
+      "title": "Reported commands",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-356"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Buyruq yoki iltimosni qayta aytishda told/asked + odam + to + fe’l ishlatiladi.",
+          "focus": "Reported commands"
+        },
+        "examples": [
+          {
+            "english": "The teacher told us to wait.",
+            "uzbek": "O‘qituvchi bizga kutishni buyurdi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She asked me to close the door.",
+            "uzbek": "U mendan eshikni yopishni so‘radi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "The teacher told us wait.",
+              "The teacher told us to wait."
+            ],
+            "answer": "The teacher told us to wait."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "O‘qituvchi bizga kutishni buyurdi.",
+            "answers": [
+              "The teacher told us to wait."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She asked me to close the door.",
+            "options": [
+              "She asked me to close the door.",
+              "The teacher told us to wait."
+            ],
+            "answer": "She asked me to close the door."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The teacher told us to wait.",
+            "expected": "The teacher told us to wait."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported commands. Buyruq yoki iltimosni qayta aytishda told/asked + odam + to + fe’l ishlatiladi. Mashq uchun: The teacher told us to wait."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    },
+    {
+      "id": "b1-rebuild-358",
+      "level": "B1",
+      "global_order": 358,
+      "level_order": 58,
+      "title": "Reported negative commands",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-357"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Inkor buyruq yoki iltimosda told/asked + odam + not to + fe’l ishlatiladi.",
+          "focus": "Reported negative commands"
+        },
+        "examples": [
+          {
+            "english": "She told me not to worry.",
+            "uzbek": "U menga xavotir olmaslikni aytdi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "He asked us not to shout.",
+            "uzbek": "U bizdan baqirmaslikni so‘radi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "She told me to not worrying.",
+              "She told me not to worry."
+            ],
+            "answer": "She told me not to worry."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U menga xavotir olmaslikni aytdi.",
+            "answers": [
+              "She told me not to worry."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He asked us not to shout.",
+            "options": [
+              "He asked us not to shout.",
+              "She told me not to worry."
+            ],
+            "answer": "He asked us not to shout."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She told me not to worry.",
+            "expected": "She told me not to worry."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported negative commands. Inkor buyruq yoki iltimosda told/asked + odam + not to + fe’l ishlatiladi. Mashq uchun: She told me not to worry."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    },
+    {
+      "id": "b1-rebuild-359",
+      "level": "B1",
+      "global_order": 359,
+      "level_order": 59,
+      "title": "Reported advice",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-358"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Maslahatni qayta yetkazishda advised + odam + to + fe’l ishlatiladi.",
+          "focus": "Reported advice"
+        },
+        "examples": [
+          {
+            "english": "The doctor advised me to rest.",
+            "uzbek": "Shifokor menga dam olishni maslahat berdi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "My friend advised me to practise daily.",
+            "uzbek": "Do‘stim menga har kuni mashq qilishni maslahat berdi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "The doctor advised me rest.",
+              "The doctor advised me to rest."
+            ],
+            "answer": "The doctor advised me to rest."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Shifokor menga dam olishni maslahat berdi.",
+            "answers": [
+              "The doctor advised me to rest."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "My friend advised me to practise daily.",
+            "options": [
+              "My friend advised me to practise daily.",
+              "The doctor advised me to rest."
+            ],
+            "answer": "My friend advised me to practise daily."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "The doctor advised me to rest.",
+            "expected": "The doctor advised me to rest."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported advice. Maslahatni qayta yetkazishda advised + odam + to + fe’l ishlatiladi. Mashq uchun: The doctor advised me to rest."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    },
+    {
+      "id": "b1-rebuild-360",
+      "level": "B1",
+      "global_order": 360,
+      "level_order": 60,
+      "title": "Reported speech: time words",
+      "minutes": 9,
+      "prerequisites": [
+        "b1-rebuild-359"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "O‘tmishda qayta hikoya qilinganda tomorrow → the next day, yesterday → the day before kabi vaqt so‘zlari kontekstga mos o‘zgaradi.",
+          "focus": "Reported speech: time words"
+        },
+        "examples": [
+          {
+            "english": "He said he would return the next day.",
+            "uzbek": "U ertasi kuni qaytishini aytdi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She said she had arrived the day before.",
+            "uzbek": "U bir kun oldin yetib kelganini aytdi.",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "O‘zlashtirma gapning to‘g‘ri shaklini tanlang.",
+            "options": [
+              "He said he would return tomorrow yesterday.",
+              "He said he would return the next day."
+            ],
+            "answer": "He said he would return the next day."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U ertasi kuni qaytishini aytdi.",
+            "answers": [
+              "He said he would return the next day."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She said she had arrived the day before.",
+            "options": [
+              "She said she had arrived the day before.",
+              "He said he would return the next day."
+            ],
+            "answer": "She said she had arrived the day before."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He said he would return the next day.",
+            "expected": "He said he would return the next day."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugungi mavzu: Reported speech: time words. O‘tmishda qayta hikoya qilinganda tomorrow → the next day, yesterday → the day before kabi vaqt so‘zlari kontekstga mos o‘zgaradi. Mashq uchun: He said he would return the next day."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "substantive_draft_pending_editorial_and_integration_qa"
+    }
+  ]
+}

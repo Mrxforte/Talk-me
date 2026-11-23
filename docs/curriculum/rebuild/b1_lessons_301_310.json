@@ -1,0 +1,707 @@
+{
+  "schema_version": 1,
+  "level": "B1",
+  "range": "301–310",
+  "note": "Substantive lessons replacing corresponding outline slots; draft pending app integration and editorial QA",
+  "role_play_included": false,
+  "lessons": [
+    {
+      "id": "b1-rebuild-301",
+      "level": "B1",
+      "global_order": 301,
+      "level_order": 1,
+      "title": "Past Continuous: asos",
+      "minutes": 8,
+      "prerequisites": [],
+      "stages": {
+        "rule": {
+          "uz": "O‘tmishda ma’lum bir paytda davom etayotgan ishni was/were + fe’l-ing bilan ifodalaymiz. I/he/she/it bilan was, you/we/they bilan were ishlatiladi.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "I was reading at eight.",
+            "uzbek": "Men soat sakkizda o‘qiyotgan edim.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I was reading.",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "I was reading.",
+              "I were reading."
+            ],
+            "answer": "I was reading."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men soat sakkizda o‘qiyotgan edim.",
+            "answers": [
+              "I was reading at eight."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I was reading at eight.",
+            "options": [
+              "I was reading at eight.",
+              "I were reading."
+            ],
+            "answer": "I was reading at eight."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I was reading at eight.",
+            "expected": "I was reading at eight."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Continuous: asos» mavzusini mashq qildingiz. Muhim qoida: O‘tmishda ma’lum bir paytda davom etayotgan ishni was/were + fe’l-ing bilan ifodalaymiz. I/he/she/it bilan was, you/we/they bilan were ishlatiladi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    },
+    {
+      "id": "b1-rebuild-302",
+      "level": "B1",
+      "global_order": 302,
+      "level_order": 2,
+      "title": "Past Continuous: ikki harakat",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-301"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Davom etayotgan harakat uchun Past Continuous, uni bo‘lgan qisqa hodisa uchun Past Simple ishlatiladi. When she called — u qo‘ng‘iroq qilganida.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "I was cooking when she called.",
+            "uzbek": "U qo‘ng‘iroq qilganida ovqat pishirayotgan edim.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I was cooking when she called.",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "I was cooking when she called.",
+              "I cooked when she was calling."
+            ],
+            "answer": "I was cooking when she called."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U qo‘ng‘iroq qilganida ovqat pishirayotgan edim.",
+            "answers": [
+              "I was cooking when she called."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I was cooking when she called.",
+            "options": [
+              "I was cooking when she called.",
+              "I cooked when she was calling."
+            ],
+            "answer": "I was cooking when she called."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I was cooking when she called.",
+            "expected": "I was cooking when she called."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Continuous: ikki harakat» mavzusini mashq qildingiz. Muhim qoida: Davom etayotgan harakat uchun Past Continuous, uni bo‘lgan qisqa hodisa uchun Past Simple ishlatiladi. When she called — u qo‘ng‘iroq qilganida."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    },
+    {
+      "id": "b1-rebuild-303",
+      "level": "B1",
+      "global_order": 303,
+      "level_order": 3,
+      "title": "Past Continuous: inkor",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-302"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past Continuous inkorida was/were dan keyin not keladi: wasn't / weren't + fe’l-ing. He wasn't working.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "She wasn't sleeping.",
+            "uzbek": "U uxlayotgan emas edi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "She wasn't sleeping.",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "She wasn't sleeping.",
+              "She didn't sleeping."
+            ],
+            "answer": "She wasn't sleeping."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U uxlayotgan emas edi.",
+            "answers": [
+              "She wasn't sleeping."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "She wasn't sleeping.",
+            "options": [
+              "She wasn't sleeping.",
+              "She didn't sleeping."
+            ],
+            "answer": "She wasn't sleeping."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "She wasn't sleeping.",
+            "expected": "She wasn't sleeping."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Continuous: inkor» mavzusini mashq qildingiz. Muhim qoida: Past Continuous inkorida was/were dan keyin not keladi: wasn't / weren't + fe’l-ing. He wasn't working."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    },
+    {
+      "id": "b1-rebuild-304",
+      "level": "B1",
+      "global_order": 304,
+      "level_order": 4,
+      "title": "Past Continuous: savol",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-303"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Savolda was yoki were egadan oldinga o‘tadi: Were you studying? Qisqa javob: Yes, I was. / No, I wasn't.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "Were you studying at nine?",
+            "uzbek": "Soat to‘qqizda o‘qiyotgan edingizmi?",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "Were you studying?",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "Were you studying?",
+              "Did you studying?"
+            ],
+            "answer": "Were you studying?"
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Soat to‘qqizda o‘qiyotgan edingizmi?",
+            "answers": [
+              "Were you studying at nine?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Were you studying at nine?",
+            "options": [
+              "Were you studying at nine?",
+              "Did you studying?"
+            ],
+            "answer": "Were you studying at nine?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Were you studying at nine?",
+            "expected": "Were you studying at nine?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Continuous: savol» mavzusini mashq qildingiz. Muhim qoida: Savolda was yoki were egadan oldinga o‘tadi: Were you studying? Qisqa javob: Yes, I was. / No, I wasn't."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    },
+    {
+      "id": "b1-rebuild-305",
+      "level": "B1",
+      "global_order": 305,
+      "level_order": 5,
+      "title": "Past Perfect: asos",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-304"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "O‘tmishda boshqa bir voqeadan ham oldin tugagan ishni had + fe’lning uchinchi shakli (V3) bilan ifodalaymiz.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "I had finished before she arrived.",
+            "uzbek": "U kelishidan oldin tugatgan edim.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I had finished.",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "I had finished.",
+              "I have finished yesterday."
+            ],
+            "answer": "I had finished."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "U kelishidan oldin tugatgan edim.",
+            "answers": [
+              "I had finished before she arrived."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I had finished before she arrived.",
+            "options": [
+              "I had finished before she arrived.",
+              "I have finished yesterday."
+            ],
+            "answer": "I had finished before she arrived."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I had finished before she arrived.",
+            "expected": "I had finished before she arrived."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Perfect: asos» mavzusini mashq qildingiz. Muhim qoida: O‘tmishda boshqa bir voqeadan ham oldin tugagan ishni had + fe’lning uchinchi shakli (V3) bilan ifodalaymiz."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    },
+    {
+      "id": "b1-rebuild-306",
+      "level": "B1",
+      "global_order": 306,
+      "level_order": 6,
+      "title": "Past Perfect: tartib",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-305"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Ikki o‘tgan voqeadan qaysi biri oldin sodir bo‘lganini ko‘rsatamiz. Film oldin boshlangan: had started. Biz keyin yetib kelganmiz: arrived.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "When we arrived, the film had started.",
+            "uzbek": "Biz yetib kelganimizda film allaqachon boshlangan edi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "The film had started before we arrived.",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "The film had started before we arrived.",
+              "The film has started before we arrived yesterday."
+            ],
+            "answer": "The film had started before we arrived."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Biz yetib kelganimizda film allaqachon boshlangan edi.",
+            "answers": [
+              "When we arrived, the film had started."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "When we arrived, the film had started.",
+            "options": [
+              "When we arrived, the film had started.",
+              "The film has started before we arrived yesterday."
+            ],
+            "answer": "When we arrived, the film had started."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "When we arrived, the film had started.",
+            "expected": "When we arrived, the film had started."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Perfect: tartib» mavzusini mashq qildingiz. Muhim qoida: Ikki o‘tgan voqeadan qaysi biri oldin sodir bo‘lganini ko‘rsatamiz. Film oldin boshlangan: had started. Biz keyin yetib kelganmiz: arrived."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    },
+    {
+      "id": "b1-rebuild-307",
+      "level": "B1",
+      "global_order": 307,
+      "level_order": 7,
+      "title": "Past Perfect: inkor",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-306"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Past Perfect inkorida had not (hadn't) + V3 ishlatiladi. Had barcha shaxslar uchun bir xil.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "He hadn't eaten before the trip.",
+            "uzbek": "Safardan oldin u ovqatlanmagan edi.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "He hadn't eaten.",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "He hadn't eaten.",
+              "He hadn't ate."
+            ],
+            "answer": "He hadn't eaten."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Safardan oldin u ovqatlanmagan edi.",
+            "answers": [
+              "He hadn't eaten before the trip."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "He hadn't eaten before the trip.",
+            "options": [
+              "He hadn't eaten before the trip.",
+              "He hadn't ate."
+            ],
+            "answer": "He hadn't eaten before the trip."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "He hadn't eaten before the trip.",
+            "expected": "He hadn't eaten before the trip."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Perfect: inkor» mavzusini mashq qildingiz. Muhim qoida: Past Perfect inkorida had not (hadn't) + V3 ishlatiladi. Had barcha shaxslar uchun bir xil."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    },
+    {
+      "id": "b1-rebuild-308",
+      "level": "B1",
+      "global_order": 308,
+      "level_order": 8,
+      "title": "Past Perfect: savol",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-307"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Savol had bilan boshlanadi: Had + ega + V3? Qisqa javob: Yes, I had. / No, I hadn't.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "Had you met her before?",
+            "uzbek": "Siz u bilan ilgari uchrashganmidingiz?",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "Had you met her before?",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "Had you met her before?",
+              "Did you had met her before?"
+            ],
+            "answer": "Had you met her before?"
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Siz u bilan ilgari uchrashganmidingiz?",
+            "answers": [
+              "Had you met her before?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Had you met her before?",
+            "options": [
+              "Had you met her before?",
+              "Did you had met her before?"
+            ],
+            "answer": "Had you met her before?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Had you met her before?",
+            "expected": "Had you met her before?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Past Perfect: savol» mavzusini mashq qildingiz. Muhim qoida: Savol had bilan boshlanadi: Had + ega + V3? Qisqa javob: Yes, I had. / No, I hadn't."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    },
+    {
+      "id": "b1-rebuild-309",
+      "level": "B1",
+      "global_order": 309,
+      "level_order": 9,
+      "title": "Used to: eski odat",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-308"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Used to + fe’lning oddiy shakli o‘tmishda odat bo‘lgan, hozir esa davom etmasligi mumkin bo‘lgan holatni bildiradi.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "I used to walk to school.",
+            "uzbek": "Men ilgari maktabga piyoda borardim.",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "I used to walk to school.",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "I used to walk to school.",
+              "I used to walked to school."
+            ],
+            "answer": "I used to walk to school."
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Men ilgari maktabga piyoda borardim.",
+            "answers": [
+              "I used to walk to school."
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "I used to walk to school.",
+            "options": [
+              "I used to walk to school.",
+              "I used to walked to school."
+            ],
+            "answer": "I used to walk to school."
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "I used to walk to school.",
+            "expected": "I used to walk to school."
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Used to: eski odat» mavzusini mashq qildingiz. Muhim qoida: Used to + fe’lning oddiy shakli o‘tmishda odat bo‘lgan, hozir esa davom etmasligi mumkin bo‘lgan holatni bildiradi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    },
+    {
+      "id": "b1-rebuild-310",
+      "level": "B1",
+      "global_order": 310,
+      "level_order": 10,
+      "title": "Used to: inkor va savol",
+      "minutes": 8,
+      "prerequisites": [
+        "b1-rebuild-309"
+      ],
+      "stages": {
+        "rule": {
+          "uz": "Savolda Did + ega + use to + fe’l? Inkor: didn't use to + fe’l. Did dan keyin used emas, use yoziladi.",
+          "focus": "Bitta grammatik farqni tushunish"
+        },
+        "examples": [
+          {
+            "english": "Did you use to live here?",
+            "uzbek": "Siz ilgari shu yerda yashaganmisiz?",
+            "tts_language": "en-US"
+          },
+          {
+            "english": "Did you use to live here?",
+            "uzbek": "To‘g‘ri tuzilgan namuna",
+            "tts_language": "en-US"
+          }
+        ],
+        "exercises": [
+          {
+            "skill": "reading",
+            "type": "choose",
+            "prompt_uz": "Grammatik jihatdan to‘g‘ri gapni tanlang.",
+            "options": [
+              "Did you use to live here?",
+              "Did you used to live here?"
+            ],
+            "answer": "Did you use to live here?"
+          },
+          {
+            "skill": "writing",
+            "type": "translate_type",
+            "prompt_uz": "Siz ilgari shu yerda yashaganmisiz?",
+            "answers": [
+              "Did you use to live here?"
+            ]
+          },
+          {
+            "skill": "listening",
+            "type": "listen_choose",
+            "audio_text": "Did you use to live here?",
+            "options": [
+              "Did you use to live here?",
+              "Did you used to live here?"
+            ],
+            "answer": "Did you use to live here?"
+          },
+          {
+            "skill": "speaking",
+            "type": "repeat",
+            "audio_text": "Did you use to live here?",
+            "expected": "Did you use to live here?"
+          }
+        ],
+        "wrap_up": {
+          "uz": "Bugun «Used to: inkor va savol» mavzusini mashq qildingiz. Muhim qoida: Savolda Did + ega + use to + fe’l? Inkor: didn't use to + fe’l. Did dan keyin used emas, use yoziladi."
+        }
+      },
+      "role_play": null,
+      "editorial_status": "draft_review_required"
+    }
+  ]
+}

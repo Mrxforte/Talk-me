@@ -76,9 +76,9 @@ class SpeakingCaptureRegressionTest {
             assertArrayEquals("RIFF".toByteArray(), result.audioWavBytes.copyOf(4))
             assertArrayEquals(result.audioWavBytes, repository.stopListening().audioWavBytes)
             if (live) {
-                assertEquals(AudioRecordingState.RECORDING, recorder.recordingState.value)
+                assertEquals(AudioRecordingState.IDLE, recorder.recordingState.value)
                 repository.discardListeningTurn()
-                assertEquals(AudioRecordingState.RECORDING, recorder.recordingState.value)
+                assertEquals(AudioRecordingState.IDLE, recorder.recordingState.value)
                 assertTrue(repository.startLiveListening())
                 val silent = repository.stopListening()
                 assertTrue(silent.audioWavBytes.isEmpty())

@@ -4,11 +4,14 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +20,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -323,8 +328,21 @@ class SpeakingAiFragment : Fragment() {
         return binding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val statusBarInset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            binding.layoutTopBar.setPadding(
+                binding.layoutTopBar.paddingLeft,
+                statusBarInset + (12 * resources.displayMetrics.density).toInt(),
+                binding.layoutTopBar.paddingRight,
+                binding.layoutTopBar.paddingBottom
+            )
+            insets
+        }
 
         val requestedTopicId = arguments?.getString(AppConstants.ARG_TOPIC_ID)
         viewModel.initializeSpeakingSession(requestedTopicId, arguments?.getString(AppConstants.ARG_SECTION_ID))
@@ -635,6 +653,13 @@ class SpeakingAiFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        activity?.window?.let { window ->
+            window.statusBarColor = Color.TRANSPARENT
+            window.navigationBarColor = Color.TRANSPARENT
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                window.isNavigationBarContrastEnforced = false
+            }
+        }
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) ==
             PackageManager.PERMISSION_GRANTED
         ) {
@@ -655,6 +680,15 @@ class SpeakingAiFragment : Fragment() {
 
     override fun onPause() {
         viewModel.stopConversation()
+        activity?.window?.let { window ->
+            val typedValue = TypedValue()
+            requireContext().theme.resolveAttribute(android.R.attr.navigationBarColor, typedValue, true)
+            window.navigationBarColor = typedValue.data
+
+            val sbTyped = TypedValue()
+            requireContext().theme.resolveAttribute(android.R.attr.statusBarColor, sbTyped, true)
+            window.statusBarColor = sbTyped.data
+        }
         super.onPause()
     }
 

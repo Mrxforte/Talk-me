@@ -93,3 +93,9 @@ Checked the speaking destination, ViewBinding references, and its layout smoke t
 The live portrait no longer uses an overlaid waveform, tint scrim, or drawn mouth and
 eyelid shapes. Facial motion uses the existing portrait mesh. Tutor transcript bubbles
 are read-only in Speaking so tapping prior messages does not start a new playback.
+# 2026-11-23 — Unity source relocation
+
+Moved `unity/TalkMeAvatarBridge.cs` and `unity/TalkMeAvatarBehaviour.cs` into
+`unity/Assets/TalkMe/Runtime/` so Unity imports their source. Their namespace
+and Android GameObject/message contract remain available. No Android navigation
+destination or learning content was removed.

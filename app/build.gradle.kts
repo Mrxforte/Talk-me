@@ -92,6 +92,9 @@ secrets {
 googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.WARN }
 
 dependencies {
+  if (findProject(":unityLibrary") != null) {
+    implementation(project(":unityLibrary"))
+  }
   implementation(platform(libs.firebase.bom))
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.appcompat)

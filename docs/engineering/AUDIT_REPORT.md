@@ -1,5 +1,16 @@
 # TalkMe Android Architecture, Code Quality & Clean Architecture Audit Report
 
+## 2026-11-23: Unity and Blender authoring project
+
+Added a Unity source project, full-body camera/bootstrap, rig binding, asset
+validation and Android-library exporter. Added a Blender reference workspace
+and guarded FBX export. Android Gradle linkage requires an explicit flag and a
+real Unity export. Commands now forward tutor selection and semantic delivery.
+Approved character meshes, verified likeness, Unity Editor compilation, exported
+Unity binaries and native UnityPlayer hosting remain missing. The APK still uses
+its native tutor. See `unity/README.md`; this is not a completed 3D avatar.
+
+
 ## 2026-11-23: Explicit Speaking recording and submission
 
 The microphone's second tap previously stopped the conversation and discarded

@@ -5,6 +5,15 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SpeakingAvatarMapperTest {
+    @Test fun semanticDeliveryAlsoReachesUnity() {
+        val command = SpeakingAvatarMapper.map(
+            ConversationState.AI_SPEAKING("turn", "That was correct.", "joyful:double_nod"), tutorAmplitude = .4f
+        )
+        assertEquals("JOYFUL", command.mood)
+        assertEquals("DOUBLE_NOD", command.gesture)
+        assertEquals(.4f, command.speechAmplitude, .001f)
+    }
+
     @Test fun speakingUsesTutorAmplitudeNotMicrophoneAmplitude() {
         val command = SpeakingAvatarMapper.map(
             ConversationState.AI_SPEAKING("turn1", "Hello!"),

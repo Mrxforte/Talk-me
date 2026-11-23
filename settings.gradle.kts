@@ -29,3 +29,13 @@ dependencyResolutionManagement {
 rootProject.name = "TalkMe"
 
 include(":app")
+
+// Explicit opt-in: source authoring files alone are not a Unity Android runtime.
+if (providers.gradleProperty("talkmeUnity").orNull == "true") {
+  val unityExport = file("unity-export/unityLibrary")
+  require(unityExport.resolve("build.gradle").isFile || unityExport.resolve("build.gradle.kts").isFile) {
+    "Missing Unity Android export. Export the approved characters from the unity project first."
+  }
+  include(":unityLibrary")
+  project(":unityLibrary").projectDir = unityExport
+}

@@ -15,6 +15,10 @@ class UnityAvatarBridge(
     private val sender: UnityMessageSender,
     private val gameObject: String = "TalkMeAvatarBridge"
 ) {
+    fun selectTutor(female: Boolean) {
+        sender.send(gameObject, "OnSelectTutor", if (female) "lera" else "alex")
+    }
+
     fun update(command: Avatar3dCommand) {
         sender.send(gameObject, "OnAvatarCommand", command.toUnityPayload())
     }

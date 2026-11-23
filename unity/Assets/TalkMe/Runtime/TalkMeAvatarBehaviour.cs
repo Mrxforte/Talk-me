@@ -41,12 +41,46 @@ namespace TalkMe.Avatar
         private float gestureUntil;
         private float gestureYaw;
         private float gesturePitch;
+        private float gestureStarted;
+        private string gestureCue;
         private Quaternion headBase;
         private Vector3 chestBase;
         private float currentJaw;
         private float currentSmile;
         private float currentBrowUp;
         private float currentBrowDown;
+        private bool rigBound;
+
+        public void BindRig(Animator body, SkinnedMeshRenderer mesh)
+        {
+            if (rigBound || body == null || !body.isHuman || mesh == null || mesh.sharedMesh == null) return;
+            head = body.GetBoneTransform(HumanBodyBones.Head);
+            chest = body.GetBoneTransform(HumanBodyBones.Chest);
+            face = mesh;
+            jawOpen = mesh.sharedMesh.GetBlendShapeIndex("jawOpen");
+            blinkLeft = mesh.sharedMesh.GetBlendShapeIndex("eyeBlinkLeft");
+            blinkRight = mesh.sharedMesh.GetBlendShapeIndex("eyeBlinkRight");
+            smileLeft = mesh.sharedMesh.GetBlendShapeIndex("mouthSmileLeft");
+            smileRight = mesh.sharedMesh.GetBlendShapeIndex("mouthSmileRight");
+            browUp = mesh.sharedMesh.GetBlendShapeIndex("browInnerUp");
+            browDown = mesh.sharedMesh.GetBlendShapeIndex("browDownLeft");
+            if (head != null) headBase = head.localRotation;
+            if (chest != null) chestBase = chest.localPosition;
+            rigBound = true;
+        }
+
+        private void OnDisable()
+        {
+            amplitude = 0f;
+            currentJaw = currentSmile = currentBrowUp = currentBrowDown = 0f;
+            activity = Activity.Idle;
+            if (!rigBound) return;
+            if (head != null) head.localRotation = headBase;
+            if (chest != null) chest.localPosition = chestBase;
+            Blend(jawOpen, 0f);
+            Blend(blinkLeft, 0f);
+            Blend(blinkRight, 0f);
+        }
 
         private void Awake()
         {
@@ -71,8 +105,18 @@ namespace TalkMe.Avatar
         /// </summary>
         public void TriggerTopicGesture(string cue)
         {
-            switch ((cue ?? "").ToUpperInvariant())
+            gestureCue = (cue ?? "").ToUpperInvariant();
+            gestureStarted = Time.time;
+            switch (gestureCue)
             {
+                case "NOD": case "DOUBLE_NOD": gestureYaw = 0f; gesturePitch = 7f; break;
+                case "TILT_LEFT": gestureYaw = -6f; gesturePitch = -2f; break;
+                case "TILT_RIGHT": gestureYaw = 6f; gesturePitch = -2f; break;
+                case "GLANCE_UP": gestureYaw = 2f; gesturePitch = -5f; break;
+                case "GLANCE_DOWN": gestureYaw = -2f; gesturePitch = 5f; break;
+                case "LEAN_IN": gestureYaw = 0f; gesturePitch = 4f; break;
+                case "EASE_BACK": gestureYaw = 0f; gesturePitch = -3f; break;
+                case "SHAKE": gestureYaw = -7f; gesturePitch = 0f; break;
                 case "GREETING": gestureYaw = -8f; gesturePitch = -3f; break;
                 case "QUESTION": gestureYaw = 8f; gesturePitch = -5f; break;
                 case "EXPLAINING": gestureYaw = -5f; gesturePitch = 5f; break;
@@ -84,7 +128,7 @@ namespace TalkMe.Avatar
             gestureUntil = Time.time + 1.3f;
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             float t = Time.time;
             float dt = 1f - Mathf.Exp(-smoothing * Time.deltaTime);
@@ -104,17 +148,25 @@ namespace TalkMe.Avatar
                 nextGesture = t + UnityEngine.Random.Range(3.5f, 7f);
                 gestureYaw = UnityEngine.Random.Range(-3f, 3f);
                 gesturePitch = UnityEngine.Random.Range(-2f, 2f);
-                gestureUntil = t + 1f;
+                gestureCue = "STEADY";
+                gestureStarted = t;
+                gestureUntil = t + 1.3f;
             }
 
             float activityMultiplier = activity == Activity.Thinking ? 0.6f : 1f;
             float sway = Mathf.Sin(t * 0.55f) * headSwayDegrees * activityMultiplier;
-            float gestureWeight = Mathf.Clamp01((gestureUntil - t) * 2f);
+            float gesturePhase = Mathf.Clamp01((t - gestureStarted) / 1.3f);
+            float gestureWeight = t < gestureUntil ? Mathf.Sin(gesturePhase * Mathf.PI) : 0f;
+            float pitch = gesturePitch * gestureWeight;
+            float yaw = gestureYaw * gestureWeight;
+            if (gestureCue == "NOD" || gestureCue == "DOUBLE_NOD")
+                pitch *= Mathf.Sin(gesturePhase * Mathf.PI * 2f * (gestureCue == "DOUBLE_NOD" ? 2f : 1f));
+            if (gestureCue == "SHAKE") yaw *= Mathf.Sin(gesturePhase * Mathf.PI * 4f);
             if (head != null)
             {
                 var target = headBase * Quaternion.Euler(
-                    Mathf.Sin(t * 0.78f) * 1.1f + gesturePitch * gestureWeight,
-                    sway + gestureYaw * gestureWeight, 0f);
+                    Mathf.Sin(t * 0.78f) * 1.1f + pitch,
+                    sway + yaw, 0f);
                 head.localRotation = Quaternion.Slerp(head.localRotation, target, dt);
             }
 

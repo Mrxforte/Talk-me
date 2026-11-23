@@ -5,6 +5,17 @@ import org.junit.Test
 
 class UnityAvatarBridgeTest {
     @Test
+    fun tutorSelectionUsesTheUnityResourceIds() {
+        val messages = mutableListOf<String>()
+        val bridge = UnityAvatarBridge(UnityMessageSender { obj, method, payload ->
+            messages.add("$obj:$method:$payload")
+        })
+        bridge.selectTutor(false)
+        bridge.selectTutor(true)
+        assertEquals(listOf("TalkMeAvatarBridge:OnSelectTutor:alex", "TalkMeAvatarBridge:OnSelectTutor:lera"), messages)
+    }
+
+    @Test
     fun sendsSpeakingCommandToUnity() {
         var received = ""
         val bridge = UnityAvatarBridge(UnityMessageSender { obj, method, payload ->

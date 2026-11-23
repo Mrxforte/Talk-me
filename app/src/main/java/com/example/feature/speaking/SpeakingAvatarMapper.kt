@@ -3,6 +3,7 @@ package com.example.feature.speaking
 import com.example.feature.avatar3d.Avatar3dCommand
 import com.example.feature.avatar3d.Avatar3dDirector
 import com.example.feature.avatar3d.Avatar3dState
+import com.example.feature.pro.AvatarPerformance
 
 /**
  * One source of truth for Unity and the existing Android avatar fallback.
@@ -22,12 +23,14 @@ object SpeakingAvatarMapper {
             director.forConversation(Avatar3dState.LISTENING, amplitude = audioAmplitude)
         is ConversationState.FINALIZING, is ConversationState.AI_THINKING ->
             director.forConversation(Avatar3dState.THINKING)
-        is ConversationState.AI_SPEAKING ->
+        is ConversationState.AI_SPEAKING -> {
+            val performance = AvatarPerformance.forReply(state.delivery, state.spokenResponse)
             director.forConversation(
                 Avatar3dState.SPEAKING,
                 reply = state.spokenResponse,
                 amplitude = tutorAmplitude
-            )
+            ).copy(mood = performance.mood.name, gesture = performance.gesture.name)
+        }
         is ConversationState.ERROR -> director.forConversation(Avatar3dState.ERROR)
     }
 }

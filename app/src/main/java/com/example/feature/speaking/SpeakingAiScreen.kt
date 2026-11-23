@@ -612,6 +612,7 @@ class SpeakingAiFragment : Fragment() {
         if (spokenRange != null && (spokenRange.amplitude ?: 1f) > .04f) {
             avatarSpeakingTurnId = spokenRange.turnId
         }
+        optionalUnityAvatar.selectTutor(femaleTutor)
         optionalUnityAvatar.update(
             SpeakingAvatarMapper.map(
                 state = state.conversationState,
